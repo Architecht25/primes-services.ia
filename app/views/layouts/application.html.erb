@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="fr-BE">
+  <head>
+    <title><%= content_for(:title) || "Primes Services IA - Expert en subsides belges" %></title>
+    <meta name="description" content="<%= content_for(:description) || 'Assistant IA spécialisé en primes et subsides belges. 324 subsides référencés, calculs instantanés, accompagnement expert. Wallonie, Flandre, Bruxelles.' %>">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="theme-color" content="#2563eb">
+    <%= csrf_meta_tags %>
+    <%= csp_meta_tag %>
+
+    <%= yield :head %>
+
+    <%# Enable PWA manifest for installable apps (make sure to enable in config/routes.rb too!) %>
+    <%#= tag.link rel: "manifest", href: pwa_manifest_path(format: :json) %>
+
+    <link rel="icon" href="/icon.png" type="image/png">
+    <link rel="icon" href="/icon.svg" type="image/svg+xml">
+    <link rel="apple-touch-icon" href="/icon.png">
+
+    <%# SEO et Open Graph %>
+    <meta property="og:title" content="<%= content_for(:title) || 'Primes Services IA - Expert en subsides belges' %>">
+    <meta property="og:description" content="<%= content_for(:description) || 'Assistant IA spécialisé en primes et subsides belges. 324 subsides référencés.' %>">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="<%= request.original_url %>">
+    <meta property="og:image" content="<%= request.base_url %>/icon.png">
+    
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="<%= content_for(:title) || 'Primes Services IA' %>">
+    <meta name="twitter:description" content="<%= content_for(:description) || 'Assistant IA spécialisé en subsides belges' %>">
+
+    <%# Includes all stylesheet files in app/assets/stylesheets %>
+    <%= stylesheet_link_tag :app, "data-turbo-track": "reload" %>
+    <%= javascript_importmap_tags %>
+  </head>
+
+  <body class="bg-gray-50 min-h-screen flex flex-col">
+    <!-- Navigation -->
+    <%= render 'shared/navbar' %>
+
+    <!-- Contenu principal -->
+    <main class="flex-1">
+      <%= yield %>
+    </main>
+
+    <!-- Footer -->
+    <%= render 'shared/footer' %>
+
+    <!-- Widget chatbot flottant -->
+    <%= render 'shared/ai_chatbot' %>
+
+    <!-- Flash messages (si nécessaire) -->
+    <% if notice %>
+      <div id="flash-notice" class="fixed top-20 right-4 z-50 bg-green-500 text-white px-4 py-2 rounded-lg shadow-lg">
+        <%= notice %>
+      </div>
+    <% end %>
+    
+    <% if alert %>
+      <div id="flash-alert" class="fixed top-20 right-4 z-50 bg-red-500 text-white px-4 py-2 rounded-lg shadow-lg">
+        <%= alert %>
+      </div>
+    <% end %>
+
+    <!-- Script pour auto-masquer les flash messages -->
+    <script>
+      document.addEventListener('DOMContentLoaded', function() {
+        const flashMessages = document.querySelectorAll('[id^="flash-"]');
+        flashMessages.forEach(message => {
+          setTimeout(() => {
+            message.style.opacity = '0';
+            setTimeout(() => message.remove(), 300);
+          }, 5000);
+        });
+      });
+    </script>
+  </body>
+</html>

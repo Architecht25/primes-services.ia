@@ -1,0 +1,187 @@
+<div class="max-w-4xl mx-auto px-4 py-8">
+  <div class="mb-8">
+    <%= link_to new_contact_path, class: "inline-flex items-center text-blue-600 hover:text-blue-800" do %>
+      <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
+      </svg>
+      Retour à la sélection
+    <% end %>
+  </div>
+
+  <div class="bg-white rounded-lg shadow-lg p-8">
+    <div class="text-center mb-8">
+      <h1 class="text-3xl font-bold text-gray-900 mb-4">
+        <%= case @contact_type
+            when 'particulier'
+              'Formulaire Particuliers'
+            when 'acp'
+              'Formulaire Copropriétés (ACP)'
+            when 'entreprise_immo'
+              'Formulaire Entreprises Immobilières'
+            when 'entreprise_comm'
+              'Formulaire Entreprises Commerciales'
+            end %>
+      </h1>
+      <p class="text-lg text-gray-600">
+        Remplissez ce formulaire pour recevoir une analyse personnalisée de vos opportunités de primes et subsides.
+      </p>
+    </div>
+
+    <%= form_with model: @contact, url: contacts_path, local: true, data: { contact_type: @contact_type } do |form| %>
+      <%= hidden_field_tag :contact_type, @contact_type %>
+      
+      <% if @contact.errors.any? %>
+        <div class="bg-red-50 border border-red-200 rounded-lg p-4 mb-6">
+          <h3 class="text-red-800 font-semibold mb-2">Erreurs dans le formulaire :</h3>
+          <ul class="text-red-700 list-disc list-inside">
+            <% @contact.errors.full_messages.each do |message| %>
+              <li><%= message %></li>
+            <% end %>
+          </ul>
+        </div>
+      <% end %>
+
+      <!-- Informations de contact communes -->
+      <div class="mb-8">
+        <h3 class="text-xl font-semibold text-gray-900 mb-4">Informations de contact</h3>
+        <div class="grid md:grid-cols-2 gap-6">
+          <div>
+            <%= form.label :name, "Nom complet *", class: "block text-sm font-medium text-gray-700 mb-2" %>
+            <%= form.text_field :name, class: "w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500", required: true %>
+          </div>
+          
+          <div>
+            <%= form.label :email, "Email *", class: "block text-sm font-medium text-gray-700 mb-2" %>
+            <%= form.email_field :email, class: "w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500", required: true %>
+          </div>
+          
+          <div>
+            <%= form.label :phone, "Téléphone", class: "block text-sm font-medium text-gray-700 mb-2" %>
+            <%= form.text_field :phone, class: "w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500", type: "tel" %>
+          </div>
+          
+          <div>
+            <%= form.label :region, "Région *", class: "block text-sm font-medium text-gray-700 mb-2" %>
+            <%= form.select :region, 
+                options_for_select([
+                  ['Wallonie', 'wallonie'],
+                  ['Flandre', 'flandre'],
+                  ['Bruxelles-Capitale', 'bruxelles']
+                ], ''),
+                { prompt: 'Sélectionnez votre région' },
+                { class: "w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500", required: true } %>
+          </div>
+        </div>
+        
+        <div class="mt-4">
+          <%= form.label :address, "Adresse complète", class: "block text-sm font-medium text-gray-700 mb-2" %>
+          <%= form.text_area :address, rows: 2, class: "w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500" %>
+        </div>
+      </div>
+
+      <!-- Champs spécifiques selon le type -->
+      <div class="mb-8">
+        <h3 class="text-xl font-semibold text-gray-900 mb-4">
+          <%= case @contact_type
+              when 'particulier'
+                'Informations sur votre logement'
+              when 'acp'
+                'Informations sur votre copropriété'
+              when 'entreprise_immo'
+                'Informations sur votre projet immobilier'
+              when 'entreprise_comm'
+                'Informations sur votre entreprise'
+              end %>
+        </h3>
+
+        <%= render "contacts/forms/#{@contact_type}_fields", form: form %>
+      </div>
+
+      <!-- Message et budget -->
+      <div class="mb-8">
+        <h3 class="text-xl font-semibold text-gray-900 mb-4">Détails de votre projet</h3>
+        
+        <div class="grid md:grid-cols-2 gap-6 mb-4">
+          <div>
+            <%= form.label :estimated_budget, "Budget estimé (€)", class: "block text-sm font-medium text-gray-700 mb-2" %>
+            <%= form.number_field :estimated_budget, class: "w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500", step: 1000, min: 0 %>
+          </div>
+          
+          <div>
+            <%= form.label :timeline, "Échéance souhaitée", class: "block text-sm font-medium text-gray-700 mb-2" %>
+            <%= form.select :timeline,
+                options_for_select([
+                  ['Immédiat (moins de 3 mois)', 'immediate'],
+                  ['Court terme (3-6 mois)', 'court_terme'],
+                  ['Moyen terme (6-12 mois)', 'moyen_terme'],
+                  ['Long terme (plus d\'1 an)', 'long_terme']
+                ], ''),
+                { prompt: 'Sélectionnez l\'échéance' },
+                { class: "w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500" } %>
+          </div>
+        </div>
+        
+        <div>
+          <%= form.label :message, "Décrivez votre projet (optionnel)", class: "block text-sm font-medium text-gray-700 mb-2" %>
+          <%= form.text_area :message, rows: 4, 
+              placeholder: "Décrivez vos travaux, vos besoins spécifiques, vos questions...",
+              class: "w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500" %>
+        </div>
+      </div>
+
+      <!-- AI Integration Notice -->
+      <div class="bg-blue-50 border border-blue-200 rounded-lg p-4 mb-6">
+        <div class="flex items-start">
+          <svg class="w-5 h-5 text-blue-600 mt-0.5 mr-3 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+          </svg>
+          <div>
+            <h4 class="text-blue-900 font-semibold mb-1">Intelligence Artificielle</h4>
+            <p class="text-blue-800 text-sm">
+              Nos algorithmes IA analyseront automatiquement votre profil pour vous proposer les primes et subsides les plus pertinents. Vous recevrez des suggestions personnalisées par email.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Submit Button -->
+      <div class="text-center">
+        <%= form.submit "Obtenir mes suggestions de primes", 
+            class: "bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 px-8 rounded-lg transition-colors duration-200 inline-flex items-center" %>
+      </div>
+    <% end %>
+  </div>
+
+  <!-- AI Chatbot Integration -->
+  <div class="mt-8 bg-gradient-to-r from-blue-50 to-indigo-50 rounded-lg p-6">
+    <div class="text-center">
+      <h3 class="text-lg font-semibold text-gray-900 mb-2">
+        💬 Besoin d'aide pour remplir le formulaire ?
+      </h3>
+      <p class="text-gray-600 mb-4">
+        Notre assistant IA peut vous aider à compléter votre demande et répondre à vos questions.
+      </p>
+      <button onclick="toggleChatbot()" class="bg-indigo-600 hover:bg-indigo-700 text-white font-semibold py-2 px-6 rounded-lg transition-colors duration-200">
+        Parler à l'assistant IA
+      </button>
+    </div>
+  </div>
+</div>
+
+<script>
+// Intégration avec le chatbot existant
+function toggleChatbot() {
+  const chatWidget = document.querySelector('[data-ai-chatbot-target="widget"]');
+  if (chatWidget) {
+    chatWidget.classList.remove('hidden');
+    // Pré-remplir un message contextuel selon le type de formulaire
+    const contactType = '<%= @contact_type %>';
+    const contextMessage = `Je remplis le formulaire ${contactType} et j'aurais besoin d'aide pour comprendre les primes disponibles.`;
+    
+    // Déclencher l'ouverture du chat avec contexte
+    window.dispatchEvent(new CustomEvent('ai-chat-context', { 
+      detail: { message: contextMessage, formType: contactType }
+    }));
+  }
+}
+</script>

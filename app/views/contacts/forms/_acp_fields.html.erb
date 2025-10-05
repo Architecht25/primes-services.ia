@@ -1,0 +1,111 @@
+<!-- Champs spécifiques aux ACP (Associations de Copropriétaires) -->
+<div class="grid md:grid-cols-2 gap-6">
+  <div>
+    <%= form.label :number_of_units, "Nombre d'unités/logements *", class: "block text-sm font-medium text-gray-700 mb-2" %>
+    <%= form.number_field :number_of_units, 
+        class: "w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500",
+        min: 2, max: 1000, 
+        placeholder: "Ex: 25",
+        required: true %>
+  </div>
+
+  <div>
+    <%= form.label :building_type, "Type d'immeuble", class: "block text-sm font-medium text-gray-700 mb-2" %>
+    <%= form.select :building_type,
+        options_for_select([
+          ['Résidentiel pur', 'residentiel'],
+          ['Mixte (résidentiel + commercial)', 'mixte'],
+          ['Principalement commercial', 'commercial']
+        ], ''),
+        { prompt: 'Sélectionnez le type' },
+        { class: "w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500" } %>
+  </div>
+
+  <div>
+    <%= form.label :building_work_type, "Type de travaux envisagés *", class: "block text-sm font-medium text-gray-700 mb-2" %>
+    <%= form.select :building_work_type,
+        options_for_select([
+          ['Rénovation façade', 'facade'],
+          ['Réfection toiture', 'toiture'],
+          ['Chauffage collectif', 'chauffage'],
+          ['Isolation générale', 'isolation'],
+          ['Modernisation ascenseur', 'ascenseur'],
+          ['Rénovation parties communes', 'communs'],
+          ['Sécurisation/accessibilité', 'securite'],
+          ['Audit énergétique global', 'audit']
+        ], ''),
+        { prompt: 'Sélectionnez le type de travaux' },
+        { class: "w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500", required: true } %>
+  </div>
+
+  <div>
+    <%= form.label :voted_budget, "Budget voté en AG (€)", class: "block text-sm font-medium text-gray-700 mb-2" %>
+    <%= form.number_field :voted_budget, 
+        class: "w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500",
+        min: 0, step: 1000,
+        placeholder: "Ex: 50000" %>
+  </div>
+
+  <div>
+    <%= form.label :work_urgency, "Urgence des travaux", class: "block text-sm font-medium text-gray-700 mb-2" %>
+    <%= form.select :work_urgency,
+        options_for_select([
+          ['Urgents (problèmes structurels)', 'urgent'],
+          ['Planifiés (prochaine AG)', 'planifie'],
+          ['À l\'étude (réflexion)', 'etude']
+        ], ''),
+        { prompt: 'Niveau d\'urgence' },
+        { class: "w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500" } %>
+  </div>
+</div>
+
+<div class="mt-4">
+  <%= form.label :syndic_contact, "Coordonnées du syndic (nom, email, téléphone)", class: "block text-sm font-medium text-gray-700 mb-2" %>
+  <%= form.text_area :syndic_contact, rows: 3,
+      placeholder: "Ex: Syndic Immobilier Plus - contact@syndic-plus.be - 02/123.45.67",
+      class: "w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500" %>
+  <p class="text-sm text-gray-500 mt-1">
+    Ces informations nous aident à coordonner avec votre syndic pour les démarches administratives
+  </p>
+</div>
+
+<!-- Informations spécifiques copropriété -->
+<div class="mt-6 bg-blue-50 border border-blue-200 rounded-lg p-4">
+  <h4 class="text-blue-900 font-semibold mb-3">Informations copropriété</h4>
+  <div class="grid md:grid-cols-2 gap-4">
+    <div>
+      <label class="block text-sm font-medium text-blue-800 mb-1">Année de construction approximative</label>
+      <%= number_field_tag 'building_year', '', 
+          class: "w-full px-3 py-2 border border-blue-300 rounded focus:ring-1 focus:ring-blue-500",
+          min: 1800, max: Date.current.year,
+          placeholder: "Ex: 1975" %>
+    </div>
+    <div>
+      <label class="block text-sm font-medium text-blue-800 mb-1">Dernière rénovation majeure</label>
+      <%= number_field_tag 'last_renovation', '', 
+          class: "w-full px-3 py-2 border border-blue-300 rounded focus:ring-1 focus:ring-blue-500",
+          min: 1900, max: Date.current.year,
+          placeholder: "Ex: 2010" %>
+    </div>
+  </div>
+</div>
+
+<!-- Aide contextuelle ACP -->
+<div class="mt-6 bg-green-50 border border-green-200 rounded-lg p-4">
+  <div class="flex items-start">
+    <svg class="w-5 h-5 text-green-600 mt-0.5 mr-3 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"></path>
+    </svg>
+    <div>
+      <h4 class="text-green-900 font-semibold mb-1">Primes copropriétés disponibles</h4>
+      <ul class="text-green-800 text-sm space-y-1">
+        <li>• Prime façade collective jusqu'à 70% des coûts</li>
+        <li>• Prime toiture jusqu'à 15€/m² en Wallonie</li>
+        <li>• Prime chauffage collectif jusqu'à 50% du coût</li>
+        <li>• Audit énergétique remboursé à 100%</li>
+        <li>• Primes majorées pour >5 logements</li>
+        <li>• Accompagnement syndic gratuit</li>
+      </ul>
+    </div>
+  </div>
+</div>

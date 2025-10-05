@@ -1,0 +1,132 @@
+<!-- Champs spécifiques aux entreprises immobilières -->
+<div class="grid md:grid-cols-2 gap-6">
+  <div>
+    <%= form.label :business_activity, "Activité principale *", class: "block text-sm font-medium text-gray-700 mb-2" %>
+    <%= form.select :business_activity,
+        options_for_select([
+          ['Promotion immobilière', 'promotion'],
+          ['Construction/Entrepreneur', 'construction'],
+          ['Rénovation spécialisée', 'renovation'],
+          ['Gestion immobilière', 'gestion'],
+          ['Syndic professionnel', 'syndic'],
+          ['Marchand de biens', 'marchand']
+        ], ''),
+        { prompt: 'Sélectionnez votre activité' },
+        { class: "w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-purple-500", required: true } %>
+  </div>
+
+  <div>
+    <%= form.label :investment_region, "Région d'investissement *", class: "block text-sm font-medium text-gray-700 mb-2" %>
+    <%= form.select :investment_region,
+        options_for_select([
+          ['Wallonie', 'wallonie'],
+          ['Flandre', 'flandre'],
+          ['Bruxelles-Capitale', 'bruxelles'],
+          ['Multi-régional (Belgique)', 'multi'],
+          ['International', 'international']
+        ], ''),
+        { prompt: 'Sélectionnez la région' },
+        { class: "w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-purple-500", required: true } %>
+  </div>
+
+  <div>
+    <%= form.label :project_scale, "Échelle du projet", class: "block text-sm font-medium text-gray-700 mb-2" %>
+    <%= form.select :project_scale,
+        options_for_select([
+          ['Projet unitaire (1 bien)', 'unitaire'],
+          ['Petit ensemble (2-10 biens)', 'petit_ensemble'],
+          ['Grand ensemble (11+ biens)', 'grand_ensemble'],
+          ['Développement de quartier', 'quartier']
+        ], ''),
+        { prompt: 'Échelle de votre projet' },
+        { class: "w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-purple-500" } %>
+  </div>
+
+  <div>
+    <%= form.label :target_market, "Marché cible", class: "block text-sm font-medium text-gray-700 mb-2" %>
+    <%= form.select :target_market,
+        options_for_select([
+          ['Logement social', 'social'],
+          ['Marché privé', 'prive'],
+          ['Mixte (social + privé)', 'mixte'],
+          ['Haut de gamme/Luxe', 'luxe'],
+          ['Logement étudiant', 'etudiant'],
+          ['Résidences seniors', 'senior']
+        ], ''),
+        { prompt: 'Votre marché cible' },
+        { class: "w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-purple-500" } %>
+  </div>
+</div>
+
+<!-- Informations financières -->
+<div class="mt-6 bg-purple-50 border border-purple-200 rounded-lg p-4">
+  <h4 class="text-purple-900 font-semibold mb-3">Informations financières</h4>
+  <div class="grid md:grid-cols-2 gap-4">
+    <div>
+      <label class="block text-sm font-medium text-purple-800 mb-1">Chiffre d'affaires annuel (€)</label>
+      <%= number_field_tag 'annual_revenue', '', 
+          class: "w-full px-3 py-2 border border-purple-300 rounded focus:ring-1 focus:ring-purple-500",
+          min: 0, step: 10000,
+          placeholder: "Ex: 500000" %>
+    </div>
+    <div>
+      <label class="block text-sm font-medium text-purple-800 mb-1">Nombre d'employés</label>
+      <%= number_field_tag 'employees_count', '', 
+          class: "w-full px-3 py-2 border border-purple-300 rounded focus:ring-1 focus:ring-purple-500",
+          min: 0, max: 1000,
+          placeholder: "Ex: 15" %>
+    </div>
+  </div>
+</div>
+
+<!-- Certifications et agréments -->
+<div class="mt-4">
+  <label class="block text-sm font-medium text-gray-700 mb-2">Certifications et agréments</label>
+  <div class="space-y-2">
+    <label class="flex items-center">
+      <%= check_box_tag 'certifications[]', 'rge', false, class: "rounded border-gray-300 text-purple-600 focus:ring-purple-500" %>
+      <span class="ml-2 text-sm text-gray-700">Certification RGE (Reconnu Garant Environnement)</span>
+    </label>
+    <label class="flex items-center">
+      <%= check_box_tag 'certifications[]', 'iso', false, class: "rounded border-gray-300 text-purple-600 focus:ring-purple-500" %>
+      <span class="ml-2 text-sm text-gray-700">ISO 9001/14001</span>
+    </label>
+    <label class="flex items-center">
+      <%= check_box_tag 'certifications[]', 'passivhaus', false, class: "rounded border-gray-300 text-purple-600 focus:ring-purple-500" %>
+      <span class="ml-2 text-sm text-gray-700">Passivhaus Institut</span>
+    </label>
+    <label class="flex items-center">
+      <%= check_box_tag 'certifications[]', 'breeam', false, class: "rounded border-gray-300 text-purple-600 focus:ring-purple-500" %>
+      <span class="ml-2 text-sm text-gray-700">BREEAM</span>
+    </label>
+  </div>
+</div>
+
+<!-- Spécificités du projet -->
+<div class="mt-6">
+  <label class="block text-sm font-medium text-gray-700 mb-2">Spécificités techniques du projet</label>
+  <%= text_area_tag 'project_specifics', '', 
+      rows: 3,
+      placeholder: "Ex: Construction passive, rénovation énergétique, logements sociaux, certification environnementale...",
+      class: "w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-purple-500" %>
+</div>
+
+<!-- Aide contextuelle entreprises immobilières -->
+<div class="mt-6 bg-green-50 border border-green-200 rounded-lg p-4">
+  <div class="flex items-start">
+    <svg class="w-5 h-5 text-green-600 mt-0.5 mr-3 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 14v3m4-3v3m4-3v3M3 21h18M3 10h18M3 7l9-4 9 4M4 10h16v11H4V10z"></path>
+    </svg>
+    <div>
+      <h4 class="text-green-900 font-semibold mb-1">Aides entreprises immobilières</h4>
+      <ul class="text-green-800 text-sm space-y-1">
+        <li>• Aide aux promoteurs sociaux (SLRB, SWL)</li>
+        <li>• Prime construction durable jusqu'à 30%</li>
+        <li>• Crédit professionnel vert à taux réduit</li>
+        <li>• Subventions innovation construction</li>
+        <li>• Accompagnement juridique et fiscal</li>
+        <li>• Certification BREEAM/DGNB subventionnée</li>
+      </ul>
+    </div>
+  </div>
+</div>

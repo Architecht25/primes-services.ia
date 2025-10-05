@@ -1,0 +1,120 @@
+<<div class="max-w-4xl mx-auto px-4 py-8">
+  <div class="text-center mb-8">
+    <h1 class="text-3xl font-bold text-gray-900 mb-4">
+      Obtenir des Primes et Subsides
+    </h1>
+    <p class="text-lg text-gray-600 max-w-2xl mx-auto">
+      Sélectionnez votre profil pour accéder aux aides et primes qui vous correspondent.
+      Notre intelligence artificielle vous guidera vers les meilleures opportunités.
+    </p>
+  </div>
+
+  <div class="grid md:grid-cols-2 gap-6">
+    <!-- Particuliers -->
+    <div class="bg-white rounded-lg shadow-lg p-6 border-2 border-transparent hover:border-blue-500 transition-all duration-300">
+      <%= link_to particulier_contacts_path, class: "block" do %>
+        <div class="text-center">
+          <div class="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4">
+            <svg class="w-8 h-8 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"></path>
+            </svg>
+          </div>
+          <h3 class="text-xl font-semibold text-gray-900 mb-2">Particuliers</h3>
+          <p class="text-gray-600 mb-4">
+            Propriétaires de maisons, appartements, et résidences privées
+          </p>
+          <ul class="text-sm text-gray-500 space-y-1">
+            <li>• Primes rénovation énergétique</li>
+            <li>• Isolation et chauffage</li>
+            <li>• Panneaux solaires</li>
+            <li>• Rénovation façade</li>
+          </ul>
+        </div>
+      <% end %>
+    </div>
+
+    <!-- ACP - Associations de Copropriétaires -->
+    <div class="bg-white rounded-lg shadow-lg p-6 border-2 border-transparent hover:border-green-500 transition-all duration-300">
+      <%= link_to acp_contacts_path, class: "block" do %>
+        <div class="text-center">
+          <div class="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
+            <svg class="w-8 h-8 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"></path>
+            </svg>
+          </div>
+          <h3 class="text-xl font-semibold text-gray-900 mb-2">Copropriétés (ACP)</h3>
+          <p class="text-gray-600 mb-4">
+            Associations de copropriétaires et syndics professionnels
+          </p>
+          <ul class="text-sm text-gray-500 space-y-1">
+            <li>• Primes façade collective</li>
+            <li>• Chauffage commun</li>
+            <li>• Rénovation toiture</li>
+            <li>• Ascenseurs et parties communes</li>
+          </ul>
+        </div>
+      <% end %>
+    </div>
+
+    <!-- Entreprises Immobilières -->
+    <div class="bg-white rounded-lg shadow-lg p-6 border-2 border-transparent hover:border-purple-500 transition-all duration-300">
+      <%= link_to entreprise_immo_contacts_path, class: "block" do %>
+        <div class="text-center">
+          <div class="w-16 h-16 bg-purple-100 rounded-full flex items-center justify-center mx-auto mb-4">
+            <svg class="w-8 h-8 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 14v3m4-3v3m4-3v3M3 21h18M3 10h18M3 7l9-4 9 4M4 10h16v11H4V10z"></path>
+            </svg>
+          </div>
+          <h3 class="text-xl font-semibold text-gray-900 mb-2">Entreprises Immobilières</h3>
+          <p class="text-gray-600 mb-4">
+            Promoteurs, constructeurs, gestionnaires immobiliers
+          </p>
+          <ul class="text-sm text-gray-500 space-y-1">
+            <li>• Aides aux promoteurs</li>
+            <li>• Logement social</li>
+            <li>• Construction durable</li>
+            <li>• Investissements immobiliers</li>
+          </ul>
+        </div>
+      <% end %>
+    </div>
+
+    <!-- Entreprises Commerciales -->
+    <div class="bg-white rounded-lg shadow-lg p-6 border-2 border-transparent hover:border-orange-500 transition-all duration-300">
+      <%= link_to entreprise_comm_contacts_path, class: "block" do %>
+        <div class="text-center">
+          <div class="w-16 h-16 bg-orange-100 rounded-full flex items-center justify-center mx-auto mb-4">
+            <svg class="w-8 h-8 text-orange-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2-2v2m8 0H8m8 0v2a2 2 0 01-2 2H10a2 2 0 01-2-2V6m8 0V4a2 2 0 00-2-2H10a2 2 0 00-2 2v2"></path>
+            </svg>
+          </div>
+          <h3 class="text-xl font-semibold text-gray-900 mb-2">Entreprises Commerciales</h3>
+          <p class="text-gray-600 mb-4">
+            Commerces, industries, services, startups et PME
+          </p>
+          <ul class="text-sm text-gray-500 space-y-1">
+            <li>• Primes innovation</li>
+            <li>• Digitalisation</li>
+            <li>• Export et international</li>
+            <li>• Transition énergétique</li>
+          </ul>
+        </div>
+      <% end %>
+    </div>
+  </div>
+
+  <div class="mt-8 text-center">
+    <div class="bg-blue-50 rounded-lg p-6">
+      <h3 class="text-lg font-semibold text-blue-900 mb-2">
+        🤖 Intelligence Artificielle Intégrée
+      </h3>
+      <p class="text-blue-700">
+        Notre IA analyse votre profil et vos besoins pour vous proposer les aides les plus pertinentes.
+        Chaque formulaire est optimisé pour maximiser vos chances d'obtenir des primes.
+      </p>
+    </div>
+  </div>
+</div>v>
+  <h1 class="font-bold text-4xl">Contacts#new</h1>
+  <p>Find me in app/views/contacts/new.html.erb</p>
+</div>

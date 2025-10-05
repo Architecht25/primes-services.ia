@@ -1,0 +1,181 @@
+<!-- Champs spécifiques aux entreprises commerciales -->
+<        ], ''),iv class="grid md:grid-cols-2 gap-6">
+  <div>
+    <%= form.label :business_activity, "Secteur d'activité *", class: "block text-sm font-medium text-gray-700 mb-2" %>
+    <%= form.select :business_activity,
+        options_for_select([
+          ['Commerce/Retail', 'retail'],
+          ['Services aux entreprises', 'services'],
+          ['Industrie/Manufacturing', 'manufacturing'],
+          ['HORECA (hôtels, restaurants)', 'hospitality'],
+          ['Agriculture/Agroalimentaire', 'agriculture'],
+          ['Technologie/IT', 'technology'],
+          ['Consulting/Conseil', 'consulting'],
+          ['Secteur santé', 'healthcare']
+        ], ''),
+        { prompt: 'Sélectionnez votre secteur' },
+        { class: "w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-orange-500", required: true } %>
+  </div>
+
+  <div>
+    <%= form.label :company_size, "Taille de l'entreprise *", class: "block text-sm font-medium text-gray-700 mb-2" %>
+    <%= form.select :company_size,
+        options_for_select([
+          ['Startup/Jeune entreprise', 'startup'],
+          ['PME (< 250 employés)', 'pme'],
+          ['ETI (250-5000 employés)', 'eti'],
+          ['Grande entreprise (>5000)', 'grande_entreprise']
+        ], ''),
+        { prompt: 'Taille de votre entreprise' },
+        { class: "w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-orange-500", required: true } %>
+  </div>
+
+  <div>
+    <%= form.label :investment_region, "Zone d'activité principale", class: "block text-sm font-medium text-gray-700 mb-2" %>
+    <%= form.select :investment_region,
+        options_for_select([
+          ['Wallonie', 'wallonie'],
+          ['Flandre', 'flandre'],
+          ['Bruxelles-Capitale', 'bruxelles'],
+          ['Belgique (multi-régional)', 'belgique'],
+          ['Europe', 'europe'],
+          ['International', 'international']
+        ], ''),
+        { prompt: 'Zone d\'activité' },
+        { class: "w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-orange-500" } %>
+  </div>
+
+  <div>
+    <%= form.label :target_market, "Marché cible", class: "block text-sm font-medium text-gray-700 mb-2" %>
+    <%= form.select :target_market,
+        options_for_select([
+          ['B2B (entreprises)', 'b2b'],
+          ['B2C (consommateurs)', 'b2c'],
+          ['B2G (secteur public)', 'b2g'],
+          ['Marketplace/Plateforme', 'marketplace'],
+          ['Marché local/régional', 'local'],
+          ['Marché national', 'national'],
+          ['Export/International', 'export']
+        ], form.object.target_market || ''),
+        { prompt: 'Votre marché cible' },
+        { class: "w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-orange-500" } %>
+  </div>
+
+  <div>
+    <%= form.label :project_scale, "Échelle du projet", class: "block text-sm font-medium text-gray-700 mb-2" %>
+    <%= form.select :project_scale,
+        options_for_select([
+          ['Local/Régional', 'local'],
+          ['National (Belgique)', 'national'],
+          ['Européen', 'european'],
+          ['International', 'international']
+        ], ''),
+        { prompt: 'Échelle de développement' },
+        { class: "w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-orange-500" } %>
+  </div>
+</div>
+
+<!-- Type d'investissement -->
+<div class="mt-6 bg-orange-50 border border-orange-200 rounded-lg p-4">
+  <h4 class="text-orange-900 font-semibold mb-3">Type d'investissement</h4>
+  <div class="space-y-2">
+    <label class="flex items-center">
+      <%= radio_button_tag 'investment_type', 'innovation', false, class: "text-orange-600 focus:ring-orange-500" %>
+      <span class="ml-2 text-sm text-gray-700">Innovation/R&D</span>
+    </label>
+    <label class="flex items-center">
+      <%= radio_button_tag 'investment_type', 'equipment', false, class: "text-orange-600 focus:ring-orange-500" %>
+      <span class="ml-2 text-sm text-gray-700">Équipement/Machinery</span>
+    </label>
+    <label class="flex items-center">
+      <%= radio_button_tag 'investment_type', 'digital', false, class: "text-orange-600 focus:ring-orange-500" %>
+      <span class="ml-2 text-sm text-gray-700">Digitalisation/Transformation numérique</span>
+    </label>
+    <label class="flex items-center">
+      <%= radio_button_tag 'investment_type', 'energy', false, class: "text-orange-600 focus:ring-orange-500" %>
+      <span class="ml-2 text-sm text-gray-700">Transition énergétique</span>
+    </label>
+    <label class="flex items-center">
+      <%= radio_button_tag 'investment_type', 'expansion', false, class: "text-orange-600 focus:ring-orange-500" %>
+      <span class="ml-2 text-sm text-gray-700">Expansion/Développement</span>
+    </label>
+    <label class="flex items-center">
+      <%= radio_button_tag 'investment_type', 'formation', false, class: "text-orange-600 focus:ring-orange-500" %>
+      <span class="ml-2 text-sm text-gray-700">Formation/Capital humain</span>
+    </label>
+  </div>
+</div>
+
+<!-- Informations entreprise -->
+<div class="mt-6 grid md:grid-cols-2 gap-4">
+  <div>
+    <label class="block text-sm font-medium text-gray-700 mb-1">Chiffre d'affaires annuel (€)</label>
+    <%= number_field_tag 'annual_revenue', '', 
+        class: "w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-orange-500",
+        min: 0, step: 1000,
+        placeholder: "Ex: 250000" %>
+  </div>
+  <div>
+    <label class="block text-sm font-medium text-gray-700 mb-1">Nombre d'employés</label>
+    <%= number_field_tag 'employees_count', '', 
+        class: "w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-orange-500",
+        min: 0, max: 10000,
+        placeholder: "Ex: 8" %>
+  </div>
+</div>
+
+<!-- Besoins spécifiques -->
+<div class="mt-6">
+  <label class="block text-sm font-medium text-gray-700 mb-2">Besoins spécifiques ou défis</label>
+  <div class="space-y-2">
+    <label class="flex items-center">
+      <%= check_box_tag 'specific_needs[]', 'financement', false, class: "rounded border-gray-300 text-orange-600 focus:ring-orange-500" %>
+      <span class="ml-2 text-sm text-gray-700">Financement/Accès au capital</span>
+    </label>
+    <label class="flex items-center">
+      <%= check_box_tag 'specific_needs[]', 'export', false, class: "rounded border-gray-300 text-orange-600 focus:ring-orange-500" %>
+      <span class="ml-2 text-sm text-gray-700">Développement export</span>
+    </label>
+    <label class="flex items-center">
+      <%= check_box_tag 'specific_needs[]', 'digital', false, class: "rounded border-gray-300 text-orange-600 focus:ring-orange-500" %>
+      <span class="ml-2 text-sm text-gray-700">Transformation digitale</span>
+    </label>
+    <label class="flex items-center">
+      <%= check_box_tag 'specific_needs[]', 'rh', false, class: "rounded border-gray-300 text-orange-600 focus:ring-orange-500" %>
+      <span class="ml-2 text-sm text-gray-700">Recrutement/Formation</span>
+    </label>
+    <label class="flex items-center">
+      <%= check_box_tag 'specific_needs[]', 'sustainability', false, class: "rounded border-gray-300 text-orange-600 focus:ring-orange-500" %>
+      <span class="ml-2 text-sm text-gray-700">Durabilité/ESG</span>
+    </label>
+  </div>
+</div>
+
+<!-- Objectifs de croissance -->
+<div class="mt-6">
+  <label class="block text-sm font-medium text-gray-700 mb-2">Objectifs de croissance (2-3 ans)</label>
+  <%= text_area_tag 'growth_objectives', '', 
+      rows: 3,
+      placeholder: "Ex: Doubler le CA, expansion Europe, lancement nouveau produit, certification ISO...",
+      class: "w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-orange-500" %>
+</div>
+
+<!-- Aide contextuelle entreprises commerciales -->
+<div class="mt-6 bg-green-50 border border-green-200 rounded-lg p-4">
+  <div class="flex items-start">
+    <svg class="w-5 h-5 text-green-600 mt-0.5 mr-3 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2-2v2m8 0H8m8 0v2a2 2 0 01-2 2H10a2 2 0 01-2-2V6m8 0V4a2 2 0 00-2-2H10a2 2 0 00-2 2v2"></path>
+    </svg>
+    <div>
+      <h4 class="text-green-900 font-semibold mb-1">Aides entreprises disponibles</h4>
+      <ul class="text-green-800 text-sm space-y-1">
+        <li>• Chèques-entreprises (conseil, formation)</li>
+        <li>• Primes innovation jusqu'à 200.000€</li>
+        <li>• Crédit d'impôt R&D jusqu'à 80%</li>
+        <li>• Aides export et internationalisation</li>
+        <li>• Digitalisation : jusqu'à 12.000€</li>
+        <li>• Transition énergétique entreprise</li>
+      </ul>
+    </div>
+  </div>
+</div>
