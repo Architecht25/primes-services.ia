@@ -1,34 +1,34 @@
 # Modèle spécialisé pour les contacts Entreprises Immobilières
 class EntrepriseImmoContact < ContactSubmission
   # Validations spécifiques aux entreprises immobilières
-  validates :business_activity, inclusion: { 
-    in: %w[promotion construction renovation gestion syndic marchand], 
-    allow_blank: true 
-  }
-  validates :investment_region, inclusion: { 
-    in: %w[wallonie flandre bruxelles international], 
-    allow_blank: true 
-  }
-  validates :project_scale, inclusion: { 
-    in: %w[unitaire petit_ensemble grand_ensemble quartier], 
-    allow_blank: true 
-  }
-  validates :timeline, inclusion: { 
-    in: %w[immediate court_terme moyen_terme long_terme], 
-    allow_blank: true 
-  }
-  validates :estimated_budget, 
-    numericality: { greater_than: 0 }, 
+  validates :business_activity, inclusion: {
+    in: %w[promotion construction renovation gestion syndic marchand],
     allow_blank: true
-  validates :target_market, inclusion: { 
-    in: %w[social prive mixte luxe etudiant senior], 
-    allow_blank: true 
+  }
+  validates :investment_region, inclusion: {
+    in: %w[wallonie flandre bruxelles international],
+    allow_blank: true
+  }
+  validates :project_scale, inclusion: {
+    in: %w[unitaire petit_ensemble grand_ensemble quartier],
+    allow_blank: true
+  }
+  validates :timeline, inclusion: {
+    in: %w[immediate court_terme moyen_terme long_terme],
+    allow_blank: true
+  }
+  validates :estimated_budget,
+    numericality: { greater_than: 0 },
+    allow_blank: true
+  validates :target_market, inclusion: {
+    in: %w[social prive mixte luxe etudiant senior],
+    allow_blank: true
   }
 
   # Méthodes spécifiques aux entreprises immobilières
   def investment_category
     return 'non_specifie' unless estimated_budget
-    
+
     case estimated_budget
     when 0..100_000
       'petit_investissement'
@@ -42,18 +42,18 @@ class EntrepriseImmoContact < ContactSubmission
   end
 
   def requires_environmental_certification?
-    %w[grand_ensemble quartier].include?(project_scale) || 
+    %w[grand_ensemble quartier].include?(project_scale) ||
     estimated_budget.to_i > 1_000_000
   end
 
   def eligible_for_developer_incentives?
-    business_activity == 'promotion' && 
+    business_activity == 'promotion' &&
     %w[social mixte].include?(target_market)
   end
 
   def suggested_subsidies
     subsidies = []
-    
+
     # Aides selon l'activité
     case business_activity
     when 'promotion'
@@ -135,14 +135,14 @@ class EntrepriseImmoContact < ContactSubmission
   def business_complexity_score
     # Score de 1 à 10 selon la complexité business
     score = 2 # Base entreprise
-    
+
     score += 1 if %w[grand_ensemble quartier].include?(project_scale)
     score += 1 if business_activity == 'promotion'
     score += 1 if estimated_budget.to_i > 1_000_000
     score += 1 if investment_region == 'international'
     score += 1 if target_market == 'social'
     score += 2 if requires_environmental_certification?
-    
+
     [score, 10].min
   end
 
@@ -152,7 +152,7 @@ class EntrepriseImmoContact < ContactSubmission
 
   def legal_framework_requirements
     requirements = []
-    
+
     case business_activity
     when 'promotion'
       requirements << 'Garantie promoteur'
@@ -181,7 +181,7 @@ class EntrepriseImmoContact < ContactSubmission
     message_parts = []
     message_parts << "Bonjour,"
     message_parts << ""
-    
+
     if business_activity.present?
       activity_label = {
         'promotion' => 'promotion immobilière',
@@ -191,17 +191,17 @@ class EntrepriseImmoContact < ContactSubmission
         'syndic' => 'syndic professionnel',
         'marchand' => 'marchand de biens'
       }
-      
+
       message_parts << "Merci pour votre demande concernant votre activité de #{activity_label[business_activity]}"
       message_parts << "en région #{investment_region.humanize}."
     end
-    
+
     if project_scale.present? || estimated_budget.present?
       message_parts << ""
       message_parts << "Votre projet (#{project_scale&.humanize&.downcase}, budget: #{estimated_budget&.to_i}&€) peut bénéficier de :"
       suggested_subsidies.take(5).each { |subsidy| message_parts << "• #{subsidy}" }
     end
-    
+
     if requires_business_expert?
       message_parts << ""
       message_parts << "🏢 Ce projet nécessite un accompagnement business spécialisé."
@@ -210,26 +210,26 @@ class EntrepriseImmoContact < ContactSubmission
       message_parts << "• Montage juridique optimal"
       message_parts << "• Maximisation des aides publiques"
     end
-    
+
     legal_reqs = legal_framework_requirements
     if legal_reqs.any?
       message_parts << ""
       message_parts << "📋 Cadre légal requis :"
       legal_reqs.take(3).each { |req| message_parts << "• #{req}" }
     end
-    
+
     message_parts << ""
     message_parts << "Un expert business vous recontacte sous 24h pour un audit personnalisé."
     message_parts << ""
     message_parts << "Cordialement,"
     message_parts << "L'équipe Primes Services - Division Entreprises Immobilières"
-    
+
     message_parts.join("\n")
   end
 
   def fiscal_optimization_potential
     return 'faible' unless estimated_budget
-    
+
     case investment_category
     when 'petit_investissement'
       'faible'
@@ -259,21 +259,21 @@ class EntrepriseImmoContact < ContactSubmission
 
   def partnership_opportunities
     opportunities = []
-    
+
     if business_activity == 'promotion' && target_market == 'social'
       opportunities << 'Partenariat société logement social'
     end
-    
+
     if project_scale == 'quartier'
       opportunities << 'Partenariat commune'
       opportunities << 'Fonds européens FEDER'
     end
-    
+
     if requires_environmental_certification?
       opportunities << 'Partenariat bureau études environnement'
       opportunities << 'Certification écologique'
     end
-    
+
     opportunities
   end
 end

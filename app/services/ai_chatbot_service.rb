@@ -20,27 +20,27 @@ class AiChatbotService
       begin
         # 1. Ajouter le message utilisateur à la conversation
         @conversation.add_message(
-          role: 'user', 
-          content: user_message, 
+          role: 'user',
+          content: user_message,
           metadata: metadata
         )
 
         # 2. Analyser l'intent et le contexte
         intent_analysis = analyze_user_intent(user_message)
-        
+
         # 3. Préparer le contexte spécialisé
         specialized_context = build_specialized_context(intent_analysis)
-        
+
         # 4. Générer la réponse IA
         ai_response = generate_ai_response(user_message, specialized_context)
-        
+
         # 5. Post-traitement et enrichissement
         enhanced_response = enhance_response(ai_response, intent_analysis)
-        
+
         # 6. Sauvegarder la réponse
         @conversation.add_message(
-          role: 'assistant', 
-          content: enhanced_response[:content], 
+          role: 'assistant',
+          content: enhanced_response[:content],
           metadata: enhanced_response[:metadata]
         )
 
@@ -165,7 +165,7 @@ class AiChatbotService
 
   def get_regional_context
     region = @conversation.user_region || @config.dig(:regions, :default)
-    
+
     case region
     when 'wallonie'
       {
@@ -235,8 +235,8 @@ class AiChatbotService
     )
 
     content = response.dig('choices', 0, 'message', 'content')
-    
-    log_debug "OpenAI Response", { 
+
+    log_debug "OpenAI Response", {
       model: @config.dig(:openai, :model),
       tokens_used: response.dig('usage', 'total_tokens'),
       content_preview: content&.truncate(100)
@@ -251,7 +251,7 @@ class AiChatbotService
   def enhance_response(ai_content, intent_analysis)
     # Enrichir la réponse avec des actions suggérées
     actions = build_suggested_actions(intent_analysis)
-    
+
     {
       content: ai_content,
       actions: actions,
@@ -266,7 +266,7 @@ class AiChatbotService
 
   def build_suggested_actions(intent_analysis)
     actions = []
-    
+
     case intent_analysis[:category]
     when 'isolation', 'chauffage', 'renovation_generale'
       actions << {
@@ -307,7 +307,7 @@ class AiChatbotService
       profile: @conversation.user_type || 'particulier',
       region: @conversation.user_region || 'auto'
     }
-    
+
     "#{base_url}?#{params.to_query}"
   end
 
@@ -359,23 +359,23 @@ class AiChatbotService
   # Gestion des erreurs et logging
   def handle_error(error, user_message)
     log_error "AiChatbotService Error", error, { user_message: user_message }
-    
+
     error_response(
       "Je suis désolé, je rencontre une difficulté. Un expert peut vous aider : equipe@primes-services.be"
     )
   end
 
   def success_response(data)
-    { 
-      success: true, 
+    {
+      success: true,
       data: data,
       conversation_id: @conversation.session_id
     }
   end
 
   def error_response(message)
-    { 
-      success: false, 
+    {
+      success: false,
       error: message,
       conversation_id: @conversation&.session_id
     }

@@ -7,9 +7,9 @@ class ContactSubmission < ApplicationRecord
   validates :email, presence: true, format: { with: URI::MailTo::EMAIL_REGEXP }
   validates :phone, format: { with: /\A[\+]?[0-9\s\-\(\)]{10,20}\z/ }, allow_blank: true
   validates :region, presence: true, inclusion: { in: %w[wallonie flandre bruxelles] }
-  validates :status, inclusion: { 
-    in: %w[pending processed completed archived], 
-    message: "%{value} is not a valid status" 
+  validates :status, inclusion: {
+    in: %w[pending processed completed archived],
+    message: "%{value} is not a valid status"
   }
 
   # Callbacks

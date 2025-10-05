@@ -1,26 +1,26 @@
 # Modèle spécialisé pour les contacts Particuliers
 class ParticulierContact < ContactSubmission
   # Validations spécifiques aux particuliers
-  validates :property_type, inclusion: { 
-    in: %w[maison appartement], 
-    allow_blank: true 
-  }
-  validates :construction_year, 
-    numericality: { 
-      greater_than: 1800, 
-      less_than_or_equal_to: Date.current.year 
-    }, 
+  validates :property_type, inclusion: {
+    in: %w[maison appartement],
     allow_blank: true
-  validates :work_type, inclusion: { 
-    in: %w[isolation chauffage renovation_globale photovoltaique ventilation], 
-    allow_blank: true 
   }
-  validates :estimated_budget, 
-    numericality: { greater_than: 0 }, 
+  validates :construction_year,
+    numericality: {
+      greater_than: 1800,
+      less_than_or_equal_to: Date.current.year
+    },
     allow_blank: true
-  validates :realization_deadline, inclusion: { 
-    in: %w[urgent cette_annee flexible], 
-    allow_blank: true 
+  validates :work_type, inclusion: {
+    in: %w[isolation chauffage renovation_globale photovoltaique ventilation],
+    allow_blank: true
+  }
+  validates :estimated_budget,
+    numericality: { greater_than: 0 },
+    allow_blank: true
+  validates :realization_deadline, inclusion: {
+    in: %w[urgent cette_annee flexible],
+    allow_blank: true
   }
 
   # Méthodes spécifiques aux particuliers
@@ -35,7 +35,7 @@ class ParticulierContact < ContactSubmission
 
   def budget_category
     return 'non_specifie' unless estimated_budget
-    
+
     case estimated_budget
     when 0..5000
       'petit_budget'
@@ -55,7 +55,7 @@ class ParticulierContact < ContactSubmission
 
   def suggested_subsidies
     subsidies = []
-    
+
     case work_type
     when 'isolation'
       subsidies << 'Prime isolation toiture'
@@ -91,24 +91,24 @@ class ParticulierContact < ContactSubmission
     message_parts = []
     message_parts << "Bonjour #{name},"
     message_parts << ""
-    
+
     if property_type.present?
       message_parts << "Merci pour votre demande concernant votre #{property_type}"
       message_parts << "construite en #{construction_year}." if construction_year.present?
     end
-    
+
     if work_type.present?
       message_parts << ""
       message_parts << "Pour vos travaux de #{work_type.humanize.downcase}, voici les primes potentielles :"
       suggested_subsidies.each { |subsidy| message_parts << "• #{subsidy}" }
     end
-    
+
     message_parts << ""
     message_parts << "Notre équipe va analyser votre dossier et vous recontacter sous 24h."
     message_parts << ""
     message_parts << "Cordialement,"
     message_parts << "L'équipe Primes Services"
-    
+
     message_parts.join("\n")
   end
 

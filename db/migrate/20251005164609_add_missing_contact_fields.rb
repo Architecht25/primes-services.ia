@@ -11,7 +11,7 @@ class AddMissingContactFields < ActiveRecord::Migration[8.0]
     add_column :contact_submissions, :income_range, :string
     add_column :contact_submissions, :project_scale, :string
     add_column :contact_submissions, :target_market, :string
-    
+
     # Ajouter index pour les nouveaux champs
     add_index :contact_submissions, :postal_code
     add_index :contact_submissions, :city

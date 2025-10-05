@@ -1,17 +1,17 @@
 class AiConversation < ApplicationRecord
   # Validations
   validates :session_id, presence: true, uniqueness: true
-  validates :user_type, inclusion: { 
-    in: %w[particulier acp entreprise_immo entreprise_comm], 
-    allow_nil: true 
+  validates :user_type, inclusion: {
+    in: %w[particulier acp entreprise_immo entreprise_comm],
+    allow_nil: true
   }
-  validates :user_region, inclusion: { 
-    in: %w[wallonie flandre bruxelles], 
-    allow_nil: true 
+  validates :user_region, inclusion: {
+    in: %w[wallonie flandre bruxelles],
+    allow_nil: true
   }
-  validates :status, inclusion: { 
-    in: %w[active completed archived], 
-    message: "%{value} is not a valid status" 
+  validates :status, inclusion: {
+    in: %w[active completed archived],
+    message: "%{value} is not a valid status"
   }
 
   # Callbacks

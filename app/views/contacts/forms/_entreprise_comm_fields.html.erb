@@ -110,14 +110,14 @@
 <div class="mt-6 grid md:grid-cols-2 gap-4">
   <div>
     <label class="block text-sm font-medium text-gray-700 mb-1">Chiffre d'affaires annuel (€)</label>
-    <%= number_field_tag 'annual_revenue', '', 
+    <%= number_field_tag 'annual_revenue', '',
         class: "w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-orange-500",
         min: 0, step: 1000,
         placeholder: "Ex: 250000" %>
   </div>
   <div>
     <label class="block text-sm font-medium text-gray-700 mb-1">Nombre d'employés</label>
-    <%= number_field_tag 'employees_count', '', 
+    <%= number_field_tag 'employees_count', '',
         class: "w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-orange-500",
         min: 0, max: 10000,
         placeholder: "Ex: 8" %>
@@ -154,7 +154,7 @@
 <!-- Objectifs de croissance -->
 <div class="mt-6">
   <label class="block text-sm font-medium text-gray-700 mb-2">Objectifs de croissance (2-3 ans)</label>
-  <%= text_area_tag 'growth_objectives', '', 
+  <%= text_area_tag 'growth_objectives', '',
       rows: 3,
       placeholder: "Ex: Doubler le CA, expansion Europe, lancement nouveau produit, certification ISO...",
       class: "w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-orange-500" %>

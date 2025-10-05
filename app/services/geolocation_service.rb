@@ -19,7 +19,7 @@ class GeolocationService
     # Identifier les spécificités locales qui peuvent affecter les primes
     def get_local_specifics(contact)
       specifics = []
-      
+
       case contact.region
       when 'wallonie'
         specifics.concat(get_wallonie_specifics(contact))
@@ -55,7 +55,7 @@ class GeolocationService
 
       # Points de service par région
       service_points = get_service_points(contact.region)
-      
+
       distances = {}
       service_points.each do |service, locations|
         distances[service] = find_nearest_location(contact.postal_code, locations)
@@ -67,13 +67,13 @@ class GeolocationService
     # Recommandations spécifiques à la zone géographique
     def get_geographic_recommendations(contact)
       recommendations = []
-      
+
       # Recommandations climatiques
       recommendations.concat(get_climate_recommendations(contact.region))
-      
+
       # Recommandations urbaines vs rurales
       recommendations.concat(get_urban_rural_recommendations(contact))
-      
+
       # Recommandations selon la typologie locale
       recommendations.concat(get_local_building_recommendations(contact))
 
@@ -84,7 +84,7 @@ class GeolocationService
 
     def enrich_with_regional_data(location_data)
       enriched = location_data.dup
-      
+
       case location_data[:region]
       when 'wallonie'
         enriched.merge!(
@@ -117,18 +117,18 @@ class GeolocationService
 
     def get_wallonie_specifics(contact)
       specifics = []
-      
+
       # Zones rurales vs urbaines
       if rural_area?(contact.postal_code)
         specifics << 'Prime majorée zone rurale disponible'
         specifics << 'Aide spécifique mazout vers alternatives'
       end
-      
+
       # Zones de revitalisation urbaine
       if revitalization_zone?(contact.postal_code)
         specifics << 'Zone de revitalisation urbaine - primes majorées'
       end
-      
+
       # Zones inondables
       if flood_prone_area?(contact.postal_code)
         specifics << 'Zone inondable - primes spéciales résilience'
@@ -139,12 +139,12 @@ class GeolocationService
 
     def get_flandre_specifics(contact)
       specifics = []
-      
+
       # Zones côtières
       if coastal_area?(contact.postal_code)
         specifics << 'Zone côtière - primes isolation renforcée'
       end
-      
+
       # Zones urbaines denses
       if dense_urban_area?(contact.postal_code)
         specifics << 'Zone urbaine dense - primes air et bruit'
@@ -155,17 +155,17 @@ class GeolocationService
 
     def get_bruxelles_specifics(contact)
       specifics = []
-      
+
       # Communes spécifiques
       commune = get_commune_from_postal_code(contact.postal_code)
-      
+
       case commune
       when 'Ixelles', 'Uccle', 'Woluwe-Saint-Pierre'
         specifics << 'Commune avec primes communales complémentaires'
       when 'Molenbeek', 'Anderlecht', 'Saint-Josse'
         specifics << 'Zone de revitalisation - aides majorées'
       end
-      
+
       specifics << 'Prime Energie Bruxelles disponible'
       specifics << 'Accompagnement Homegrade gratuit'
 
@@ -174,16 +174,16 @@ class GeolocationService
 
     def get_postal_code_specifics(postal_code)
       return [] unless postal_code.present?
-      
+
       specifics = []
       code = postal_code.to_i
-      
+
       # Zones rurales (codes postaux généralement plus élevés)
       if rural_postal_codes.include?(code)
         specifics << 'Zone rurale - prime isolation majorée'
         specifics << 'Aide spécifique énergies renouvelables'
       end
-      
+
       # Zones urbaines centrales
       if urban_postal_codes.include?(code)
         specifics << 'Zone urbaine - prime qualité air'
@@ -220,7 +220,7 @@ class GeolocationService
 
     def get_local_authorities_by_postal_code(postal_code)
       return {} unless postal_code.present?
-      
+
       # Mapping simplifié code postal -> commune
       # En production, utiliser une base de données complète
       commune_mapping = {
@@ -232,9 +232,9 @@ class GeolocationService
         9000 => 'Gand'
         # ... etc
       }
-      
+
       commune = commune_mapping[postal_code.to_i]
-      
+
       if commune
         {
           commune: commune,
@@ -332,12 +332,12 @@ class GeolocationService
       # Algorithme simplifié de calcul de distance
       # En production, utiliser une API de géolocalisation
       return locations.first if locations.empty?
-      
+
       user_code = postal_code.to_i
       nearest = locations.min_by do |location|
         (location[:postal_code] - user_code).abs
       end
-      
+
       {
         location: nearest,
         estimated_distance: "#{((nearest[:postal_code] - user_code).abs / 10)}km"
@@ -368,7 +368,7 @@ class GeolocationService
 
     def get_urban_rural_recommendations(contact)
       return [] unless contact.postal_code.present?
-      
+
       if rural_area?(contact.postal_code)
         [
           'Énergies renouvelables favorisées (espace disponible)',
@@ -387,7 +387,7 @@ class GeolocationService
     def get_local_building_recommendations(contact)
       # Recommandations selon le type de bâtiment local typique
       recommendations = []
-      
+
       if contact.respond_to?(:construction_year) && contact.construction_year
         if contact.construction_year < 1945
           recommendations << 'Bâtiment ancien - isolation intérieure privilégiée'
@@ -403,7 +403,7 @@ class GeolocationService
     # Méthodes utilitaires pour identifier les zones
     def rural_area?(postal_code)
       return false unless postal_code.present?
-      
+
       # Codes postaux ruraux (simplification)
       rural_codes = (6600..6999).to_a + (4920..4999).to_a + (5580..5680).to_a
       rural_codes.include?(postal_code.to_i)

@@ -4,10 +4,10 @@ import { Controller } from "@hotwired/stimulus"
 
 export default class extends Controller {
   static targets = [
-    "messages", 
-    "input", 
-    "sendButton", 
-    "typingIndicator", 
+    "messages",
+    "input",
+    "sendButton",
+    "typingIndicator",
     "suggestions",
     "actions"
   ]
@@ -21,14 +21,14 @@ export default class extends Controller {
 
   connect() {
     console.log("🤖 AI Chat controller connected")
-    
+
     this.initializeChat()
     this.bindEvents()
     this.loadSuggestions()
-    
+
     // Auto-scroll vers le bas lors du chargement
     this.scrollToBottom()
-    
+
     // Focus automatique sur l'input
     if (this.hasInputTarget) {
       this.inputTarget.focus()
@@ -39,10 +39,10 @@ export default class extends Controller {
     this.isTyping = false
     this.messageQueue = []
     this.conversationActive = true
-    
+
     // Configuration de l'API
     this.apiBaseUrl = this.apiUrlValue || '/ai'
-    
+
     // Initialiser les métadonnées utilisateur
     this.userMetadata = {
       userType: this.userTypeValue,
@@ -76,7 +76,7 @@ export default class extends Controller {
 
   handleInputChange(event) {
     const message = event.target.value.trim()
-    
+
     // Activer/désactiver le bouton d'envoi
     if (this.hasSendButtonTarget) {
       this.sendButtonTarget.disabled = message.length === 0 || this.isTyping
@@ -91,7 +91,7 @@ export default class extends Controller {
     if (!actionButton) return
 
     event.preventDefault()
-    
+
     const actionType = actionButton.dataset.actionType
     const actionData = JSON.parse(actionButton.dataset.actionData || '{}')
 
@@ -101,33 +101,33 @@ export default class extends Controller {
   // Envoi d'un message utilisateur
   async sendMessage(messageText = null) {
     const message = messageText || this.inputTarget.value.trim()
-    
+
     if (!message || this.isTyping) return
 
     try {
       // Afficher le message utilisateur immédiatement
       this.addMessage('user', message)
-      
+
       // Vider l'input et désactiver l'envoi
       this.clearInput()
       this.setTypingState(true)
-      
+
       // Afficher l'indicateur de frappe
       this.showTypingIndicator()
 
       // Envoyer à l'API
       const response = await this.sendToAPI(message)
-      
+
       if (response.success) {
         // Afficher la réponse de l'IA
         this.addMessage('assistant', response.message, {
           actions: response.actions,
           metadata: response.metadata
         })
-        
+
         // Mettre à jour les suggestions
         this.updateSuggestions(response.actions || [])
-        
+
       } else {
         this.addMessage('system', `Erreur: ${response.error}`)
       }
@@ -171,7 +171,7 @@ export default class extends Controller {
   addMessage(role, content, options = {}) {
     const messageElement = this.createMessageElement(role, content, options)
     this.messagesTarget.appendChild(messageElement)
-    
+
     // Animation d'apparition
     requestAnimationFrame(() => {
       messageElement.classList.add('opacity-100', 'translate-y-0')
@@ -183,10 +183,10 @@ export default class extends Controller {
   createMessageElement(role, content, options = {}) {
     const messageDiv = document.createElement('div')
     messageDiv.className = `message message-${role} opacity-0 translate-y-2 transition-all duration-300`
-    
-    const timestamp = new Date().toLocaleTimeString('fr-BE', { 
-      hour: '2-digit', 
-      minute: '2-digit' 
+
+    const timestamp = new Date().toLocaleTimeString('fr-BE', {
+      hour: '2-digit',
+      minute: '2-digit'
     })
 
     let messageHTML = ''
@@ -202,7 +202,7 @@ export default class extends Controller {
       `
     } else if (role === 'assistant') {
       const actionsHTML = this.buildActionsHTML(options.actions || [])
-      
+
       messageHTML = `
         <div class="flex justify-start mb-4">
           <div class="bg-gray-100 text-gray-800 rounded-lg px-4 py-2 max-w-xs lg:max-w-md">
@@ -238,9 +238,9 @@ export default class extends Controller {
 
     const buttonsHTML = actions.map(action => {
       const isPrimary = action.primary ? 'bg-blue-500 text-white hover:bg-blue-600' : 'bg-gray-200 text-gray-700 hover:bg-gray-300'
-      
+
       return `
-        <button 
+        <button
           data-action-type="${action.type}"
           data-action-data='${JSON.stringify(action)}'
           class="inline-block px-3 py-1 rounded text-xs font-medium transition-colors mr-2 mb-1 ${isPrimary}"
@@ -256,16 +256,16 @@ export default class extends Controller {
   formatAIContent(content) {
     // Formater le contenu de l'IA (markdown simple, liens, etc.)
     let formatted = this.escapeHtml(content)
-    
+
     // Gras **texte**
     formatted = formatted.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
-    
+
     // Italique *texte*
     formatted = formatted.replace(/\*(.*?)\*/g, '<em>$1</em>')
-    
+
     // Liens simples
     formatted = formatted.replace(/(https?:\/\/[^\s]+)/g, '<a href="$1" target="_blank" class="text-blue-600 underline">$1</a>')
-    
+
     return formatted
   }
 
@@ -342,7 +342,7 @@ export default class extends Controller {
     if (!this.hasSuggestionsTarget || !suggestions.length) return
 
     const suggestionsHTML = suggestions.map(suggestion => `
-      <button 
+      <button
         data-action="click->ai-chat#sendSuggestion"
         data-message="${this.escapeHtml(suggestion)}"
         class="suggestion-button bg-gray-100 hover:bg-gray-200 text-gray-700 text-sm px-3 py-2 rounded-full mr-2 mb-2 transition-colors"
@@ -368,11 +368,11 @@ export default class extends Controller {
 
   setTypingState(isTyping) {
     this.isTyping = isTyping
-    
+
     if (this.hasSendButtonTarget) {
       this.sendButtonTarget.disabled = isTyping || !this.inputTarget.value.trim()
     }
-    
+
     if (this.hasInputTarget) {
       this.inputTarget.disabled = isTyping
     }

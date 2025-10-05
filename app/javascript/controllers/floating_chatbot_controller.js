@@ -8,7 +8,7 @@ export default class extends Controller {
     console.log("Floating chatbot connected")
     this.isOpen = false
     this.messageCount = 0
-    
+
     // Gérer l'input Enter
     if (this.hasInputTarget) {
       this.inputTarget.addEventListener('keydown', this.handleKeyDown.bind(this))
@@ -27,12 +27,12 @@ export default class extends Controller {
     this.isOpen = true
     this.windowTarget.classList.remove('hidden', 'scale-95', 'opacity-0')
     this.windowTarget.classList.add('scale-100', 'opacity-100')
-    
+
     // Focus sur l'input
     if (this.hasInputTarget) {
       setTimeout(() => this.inputTarget.focus(), 100)
     }
-    
+
     // Cacher l'intro si elle est visible
     this.dismissIntro()
   }
@@ -84,10 +84,10 @@ export default class extends Controller {
   addMessage(role, content) {
     const messageDiv = document.createElement('div')
     messageDiv.className = `flex ${role === 'user' ? 'justify-end' : 'justify-start'}`
-    
-    const timestamp = new Date().toLocaleTimeString('fr-BE', { 
-      hour: '2-digit', 
-      minute: '2-digit' 
+
+    const timestamp = new Date().toLocaleTimeString('fr-BE', {
+      hour: '2-digit',
+      minute: '2-digit'
     })
 
     if (role === 'user') {
@@ -115,7 +115,7 @@ export default class extends Controller {
 
     this.messagesTarget.appendChild(messageDiv)
     this.scrollToBottom()
-    
+
     this.messageCount++
     this.updateBadge()
   }

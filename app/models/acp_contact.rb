@@ -1,29 +1,29 @@
 # Modèle spécialisé pour les contacts ACP (Associations de Copropriétaires)
 class AcpContact < ContactSubmission
   # Validations spécifiques aux ACP
-  validates :number_of_units, 
-    numericality: { greater_than: 1, less_than: 1000 }, 
+  validates :number_of_units,
+    numericality: { greater_than: 1, less_than: 1000 },
     allow_blank: true
-  validates :building_type, inclusion: { 
-    in: %w[residentiel mixte commercial], 
-    allow_blank: true 
-  }
-  validates :building_work_type, inclusion: { 
-    in: %w[facade toiture chauffage isolation ascenseur communs], 
-    allow_blank: true 
-  }
-  validates :voted_budget, 
-    numericality: { greater_than: 0 }, 
+  validates :building_type, inclusion: {
+    in: %w[residentiel mixte commercial],
     allow_blank: true
-  validates :work_urgency, inclusion: { 
-    in: %w[urgent planifie etude], 
-    allow_blank: true 
+  }
+  validates :building_work_type, inclusion: {
+    in: %w[facade toiture chauffage isolation ascenseur communs],
+    allow_blank: true
+  }
+  validates :voted_budget,
+    numericality: { greater_than: 0 },
+    allow_blank: true
+  validates :work_urgency, inclusion: {
+    in: %w[urgent planifie etude],
+    allow_blank: true
   }
 
   # Méthodes spécifiques aux ACP
   def building_size_category
     return 'non_specifie' unless number_of_units
-    
+
     case number_of_units
     when 1..4
       'petite_copropriete'
@@ -47,7 +47,7 @@ class AcpContact < ContactSubmission
 
   def suggested_subsidies
     subsidies = []
-    
+
     case building_work_type
     when 'facade'
       subsidies << 'Prime rénovation façade copropriété'
@@ -95,13 +95,13 @@ class AcpContact < ContactSubmission
   def administrative_complexity_score
     # Score de 1 à 10 selon la complexité administrative
     score = 3 # Base
-    
+
     score += 1 if number_of_units && number_of_units > 20
     score += 1 if building_work_type == 'chauffage'
     score += 1 if work_urgency == 'urgent'
     score += 1 if building_type == 'mixte'
     score += 2 if voted_budget && voted_budget > 100000
-    
+
     [score, 10].min
   end
 
@@ -113,36 +113,36 @@ class AcpContact < ContactSubmission
     message_parts = []
     message_parts << "Bonjour,"
     message_parts << ""
-    
+
     if number_of_units.present?
       message_parts << "Merci pour votre demande concernant votre copropriété de #{number_of_units} logements"
       message_parts << "en région #{region.humanize}."
     end
-    
+
     if building_work_type.present?
       message_parts << ""
       message_parts << "Pour vos travaux de #{building_work_type.humanize.downcase}, voici les aides disponibles :"
       suggested_subsidies.each { |subsidy| message_parts << "• #{subsidy}" }
     end
-    
+
     if requires_expert_assistance?
       message_parts << ""
       message_parts << "⚠️ Ce dossier nécessite un accompagnement expert en raison de sa complexité."
       message_parts << "Nos spécialistes copropriété vous contacteront pour un accompagnement personnalisé."
     end
-    
+
     message_parts << ""
     message_parts << "Nous analysons votre demande et revenons vers vous sous 48h."
     message_parts << ""
     message_parts << "Cordialement,"
     message_parts << "L'équipe Primes Services - Spécialistes Copropriétés"
-    
+
     message_parts.join("\n")
   end
 
   def syndic_contact_info
     return {} unless syndic_contact.present?
-    
+
     # Parsing basique des infos syndic (nom, email, téléphone)
     info = {}
     if syndic_contact.include?('@')
@@ -151,7 +151,7 @@ class AcpContact < ContactSubmission
     if syndic_contact.match?(/[\d\s\+\-\(\)]{10,}/)
       info[:phone] = syndic_contact.scan(/[\d\s\+\-\(\)]{10,}/).first
     end
-    
+
     info[:name] = syndic_contact.gsub(info[:email] || '', '').gsub(info[:phone] || '', '').strip
     info.compact
   end

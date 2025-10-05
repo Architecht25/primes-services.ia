@@ -17,7 +17,7 @@ class CreateAiConversations < ActiveRecord::Migration[8.0]
     add_index :ai_conversations, :user_region
     add_index :ai_conversations, :status
     add_index :ai_conversations, :created_at
-    
+
     # Index composé pour les requêtes courantes
     add_index :ai_conversations, [:session_id, :status]
     add_index :ai_conversations, [:user_type, :user_region]

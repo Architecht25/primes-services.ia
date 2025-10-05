@@ -28,7 +28,7 @@
           </svg>
           Primes et Aides Disponibles
         </h2>
-        
+
         <% if @suggested_subsidies && @suggested_subsidies.any? %>
           <div class="space-y-4">
             <% @suggested_subsidies.each_with_index do |subsidy, index| %>
@@ -216,10 +216,10 @@ function toggleChatbot() {
     chatWidget.classList.remove('hidden');
     // Contexte post-soumission
     const contextMessage = `J'ai soumis une demande (référence #<%= @contact.id %>) et j'aimerais des clarifications sur les primes suggérées.`;
-    
-    window.dispatchEvent(new CustomEvent('ai-chat-context', { 
-      detail: { 
-        message: contextMessage, 
+
+    window.dispatchEvent(new CustomEvent('ai-chat-context', {
+      detail: {
+        message: contextMessage,
         contactId: '<%= @contact.id %>',
         contactType: '<%= @contact.type %>'
       }

@@ -2,9 +2,9 @@
 <div class="grid md:grid-cols-2 gap-6">
   <div>
     <%= form.label :number_of_units, "Nombre d'unités/logements *", class: "block text-sm font-medium text-gray-700 mb-2" %>
-    <%= form.number_field :number_of_units, 
+    <%= form.number_field :number_of_units,
         class: "w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500",
-        min: 2, max: 1000, 
+        min: 2, max: 1000,
         placeholder: "Ex: 25",
         required: true %>
   </div>
@@ -40,7 +40,7 @@
 
   <div>
     <%= form.label :voted_budget, "Budget voté en AG (€)", class: "block text-sm font-medium text-gray-700 mb-2" %>
-    <%= form.number_field :voted_budget, 
+    <%= form.number_field :voted_budget,
         class: "w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500",
         min: 0, step: 1000,
         placeholder: "Ex: 50000" %>
@@ -75,14 +75,14 @@
   <div class="grid md:grid-cols-2 gap-4">
     <div>
       <label class="block text-sm font-medium text-blue-800 mb-1">Année de construction approximative</label>
-      <%= number_field_tag 'building_year', '', 
+      <%= number_field_tag 'building_year', '',
           class: "w-full px-3 py-2 border border-blue-300 rounded focus:ring-1 focus:ring-blue-500",
           min: 1800, max: Date.current.year,
           placeholder: "Ex: 1975" %>
     </div>
     <div>
       <label class="block text-sm font-medium text-blue-800 mb-1">Dernière rénovation majeure</label>
-      <%= number_field_tag 'last_renovation', '', 
+      <%= number_field_tag 'last_renovation', '',
           class: "w-full px-3 py-2 border border-blue-300 rounded focus:ring-1 focus:ring-blue-500",
           min: 1900, max: Date.current.year,
           placeholder: "Ex: 2010" %>

@@ -35,7 +35,7 @@ class ContactsController < ApplicationController
 
   def create
     @contact_type = params[:contact_type]
-    
+
     case @contact_type
     when 'particulier'
       @contact = ParticulierContact.new(particulier_params)

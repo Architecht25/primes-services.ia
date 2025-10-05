@@ -1,7 +1,7 @@
 # Service de traitement du langage naturel pour primes-services.ia
 # Analyse l'intent des messages utilisateurs et extrait les informations pertinentes
 class NaturalLanguageProcessor
-  
+
   # Catégories principales d'intent pour les subsides
   INTENT_CATEGORIES = {
     isolation: {
@@ -76,12 +76,12 @@ class NaturalLanguageProcessor
 
     # Calcul de la confiance globale
     analysis[:confidence] = calculate_confidence(analysis)
-    
+
     # Ajout de suggestions basées sur l'analyse
     analysis[:suggestions] = generate_suggestions(analysis)
 
     log_analysis(analysis) if Rails.application.config.ai.dig(:debug, :enabled)
-    
+
     analysis
   end
 
@@ -98,10 +98,10 @@ class NaturalLanguageProcessor
   def extract_intent(message)
     cleaned = clean_message(message)
     words = cleaned.split(/\s+/)
-    
+
     # Calcul des scores pour chaque catégorie
     category_scores = {}
-    
+
     INTENT_CATEGORIES.each do |category, config|
       score = calculate_category_score(words, config)
       category_scores[category] = score if score > 0
@@ -153,7 +153,7 @@ class NaturalLanguageProcessor
 
   def extract_matched_keywords(words)
     matched = []
-    
+
     INTENT_CATEGORIES.each do |category, config|
       keywords = config[:keywords] & words
       synonyms = config[:synonyms] & words
@@ -171,7 +171,7 @@ class NaturalLanguageProcessor
     return :question_when if message.match?(/quand|délai|temps|durée/i)
     return :question_what if message.match?(/qu(e|oi)|quel/i)
     return :request_calculation if message.match?(/calculer|estimer|simulation/i)
-    
+
     :statement
   end
 
@@ -188,7 +188,7 @@ class NaturalLanguageProcessor
   def extract_regions(message)
     detected = []
     cleaned = clean_message(message)
-    
+
     REGIONS.each do |region, keywords|
       if keywords.any? { |keyword| cleaned.include?(keyword) }
         detected << region
@@ -201,7 +201,7 @@ class NaturalLanguageProcessor
   def extract_property_types(message)
     detected = []
     cleaned = clean_message(message)
-    
+
     PROPERTY_TYPES.each do |type, keywords|
       if keywords.any? { |keyword| cleaned.include?(keyword) }
         detected << type
@@ -213,7 +213,7 @@ class NaturalLanguageProcessor
 
   def extract_amounts(message)
     amounts = []
-    
+
     # Recherche des montants en euros
     message.scan(/(\d+(?:[.,]\d+)?)\s*(?:€|euros?|eur)/i) do |match|
       amounts << {
@@ -235,7 +235,7 @@ class NaturalLanguageProcessor
 
   def extract_timeframes(message)
     timeframes = []
-    
+
     timeframes << :urgent if message.match?(/urgent|rapidement|vite|asap/i)
     timeframes << :this_year if message.match?(/cette année|2025/i)
     timeframes << :flexible if message.match?(/pas pressé|flexible|quand possible/i)
@@ -245,7 +245,7 @@ class NaturalLanguageProcessor
 
   def extract_contact_preferences(message)
     preferences = []
-    
+
     preferences << :phone if message.match?(/téléphone|appeler|tel/i)
     preferences << :email if message.match?(/email|mail|courriel/i)
     preferences << :meeting if message.match?(/rendez-vous|rencontre|bureau/i)
@@ -283,7 +283,7 @@ class NaturalLanguageProcessor
 
   def determine_expertise_level(user_profile)
     interaction_count = user_profile.dig(:metadata, :interaction_count) || 0
-    
+
     return :expert if interaction_count > 10
     return :intermediate if interaction_count > 3
     :beginner
@@ -300,7 +300,7 @@ class NaturalLanguageProcessor
 
   def generate_suggestions(analysis)
     suggestions = []
-    
+
     case analysis[:intent][:category]
     when :isolation
       suggestions << "Voulez-vous connaître les primes pour l'isolation de votre région ?"

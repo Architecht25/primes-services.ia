@@ -1,22 +1,89 @@
 {
-  "name": "PrimesServicesIa",
+  "name": "Primes Services IA - Assistant Primes Belgique",
+  "short_name": "Primes Services",
+  "description": "Assistant IA spécialisé pour les primes et subsides en Belgique. Particuliers, ACP, Entreprises - Wallonie, Flandre, Bruxelles.",
+  "scope": "/",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#3b82f6",
+  "orientation": "portrait-primary",
+  "categories": ["business", "finance", "productivity"],
+  "lang": "fr-BE",
   "icons": [
     {
       "src": "/icon.png",
       "type": "image/png",
-      "sizes": "512x512"
+      "sizes": "512x512",
+      "purpose": "any"
     },
     {
       "src": "/icon.png",
       "type": "image/png",
       "sizes": "512x512",
       "purpose": "maskable"
+    },
+    {
+      "src": "/icon.png",
+      "type": "image/png",
+      "sizes": "192x192",
+      "purpose": "any"
     }
   ],
-  "start_url": "/",
-  "display": "standalone",
-  "scope": "/",
-  "description": "PrimesServicesIa.",
-  "theme_color": "red",
-  "background_color": "red"
+  "shortcuts": [
+    {
+      "name": "Formulaire Particuliers",
+      "short_name": "Particuliers",
+      "description": "Demande de primes pour particuliers",
+      "url": "/contacts/particulier",
+      "icons": [{ "src": "/icon.png", "sizes": "192x192" }]
+    },
+    {
+      "name": "Formulaire ACP",
+      "short_name": "ACP",
+      "description": "Demande de primes pour copropriétés",
+      "url": "/contacts/acp",
+      "icons": [{ "src": "/icon.png", "sizes": "192x192" }]
+    },
+    {
+      "name": "Chat IA",
+      "short_name": "Assistant",
+      "description": "Poser une question à l'assistant IA",
+      "url": "/ai/chat",
+      "icons": [{ "src": "/icon.png", "sizes": "192x192" }]
+    }
+  ],
+  "screenshots": [
+    {
+      "src": "/screenshots/desktop-home.png",
+      "type": "image/png",
+      "sizes": "1280x720",
+      "form_factor": "wide",
+      "label": "Page d'accueil sur desktop"
+    },
+    {
+      "src": "/screenshots/mobile-form.png",
+      "type": "image/png",
+      "sizes": "390x844",
+      "form_factor": "narrow",
+      "label": "Formulaire sur mobile"
+    }
+  ],
+  "related_applications": [],
+  "prefer_related_applications": false,
+  "features": [
+    "Cross Platform",
+    "Background Sync",
+    "Push Notifications",
+    "Offline Support"
+  ],
+  "edge_side_panel": {
+    "preferred_width": 400
+  },
+  "protocol_handlers": [
+    {
+      "protocol": "web+primesservices",
+      "url": "/?action=%s"
+    }
+  ]
 }

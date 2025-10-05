@@ -7,24 +7,24 @@ development:
     model: <%= ENV.fetch("OPENAI_MODEL") { "gpt-4o-mini" } %>
     max_tokens: <%= ENV.fetch("OPENAI_MAX_TOKENS") { 2000 } %>
     temperature: <%= ENV.fetch("OPENAI_TEMPERATURE") { 0.3 } %>
-  
+
   assistant:
     name: <%= ENV.fetch("AI_ASSISTANT_NAME") { "Assistant Primes Services" } %>
     language: <%= ENV.fetch("AI_LANGUAGE") { "fr-BE" } %>
     fallback_language: <%= ENV.fetch("AI_FALLBACK_LANGUAGE") { "fr" } %>
-  
+
   regions:
     default: <%= ENV.fetch("DEFAULT_REGION") { "wallonie" } %>
     supported: <%= ENV.fetch("SUPPORTED_REGIONS") { "wallonie,flandre,bruxelles" }.split(",") %>
-  
+
   integrations:
     renovate_base_url: <%= ENV.fetch("RENOVATE_BASE_URL") { "https://ren0vate.primes/" } %>
     team_email: <%= ENV.fetch("TEAM_EMAIL") { "equipe@primes-services.be" } %>
-  
+
   debug:
     enabled: <%= ENV.fetch("AI_DEBUG_MODE") { true } %>
     log_conversations: <%= ENV.fetch("AI_LOG_CONVERSATIONS") { true } %>
-  
+
   cache:
     enabled: <%= ENV.fetch("AI_CACHE_ENABLED") { true } %>
     duration: <%= ENV.fetch("AI_CACHE_DURATION") { 3600 } %>
@@ -35,20 +35,20 @@ test:
     model: "gpt-3.5-turbo"
     max_tokens: 1000
     temperature: 0.1
-  
+
   assistant:
     name: "Assistant Test"
     language: "fr-BE"
     fallback_language: "fr"
-  
+
   regions:
     default: "wallonie"
     supported: ["wallonie", "flandre", "bruxelles"]
-  
+
   debug:
     enabled: true
     log_conversations: false
-  
+
   cache:
     enabled: false
     duration: 300
@@ -59,24 +59,24 @@ production:
     model: <%= ENV.fetch("OPENAI_MODEL") { "gpt-4o-mini" } %>
     max_tokens: <%= ENV.fetch("OPENAI_MAX_TOKENS") { 2000 } %>
     temperature: <%= ENV.fetch("OPENAI_TEMPERATURE") { 0.3 } %>
-  
+
   assistant:
     name: <%= ENV.fetch("AI_ASSISTANT_NAME") { "Assistant Primes Services" } %>
     language: <%= ENV.fetch("AI_LANGUAGE") { "fr-BE" } %>
     fallback_language: <%= ENV.fetch("AI_FALLBACK_LANGUAGE") { "fr" } %>
-  
+
   regions:
     default: <%= ENV.fetch("DEFAULT_REGION") { "wallonie" } %>
     supported: <%= ENV.fetch("SUPPORTED_REGIONS") { "wallonie,flandre,bruxelles" }.split(",") %>
-  
+
   integrations:
     renovate_base_url: <%= ENV.fetch("RENOVATE_BASE_URL") %>
     team_email: <%= ENV.fetch("TEAM_EMAIL") %>
-  
+
   debug:
     enabled: false
     log_conversations: <%= ENV.fetch("AI_LOG_CONVERSATIONS") { false } %>
-  
+
   cache:
     enabled: <%= ENV.fetch("AI_CACHE_ENABLED") { true } %>
     duration: <%= ENV.fetch("AI_CACHE_DURATION") { 3600 } %>

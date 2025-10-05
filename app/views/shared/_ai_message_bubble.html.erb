@@ -1,7 +1,7 @@
-<%# 
+<%#
   Partiel pour afficher une bulle de message de chat
   Utilisé dans l'interface de chat IA et potentiellement dans d'autres vues
-  
+
   Variables requises:
   - role: 'user', 'assistant', ou 'system'
   - content: le contenu du message
@@ -26,7 +26,7 @@
         </span>
       </div>
     </div>
-    
+
   <% when 'assistant' %>
     <div class="flex justify-start">
       <div class="bg-gray-100 text-gray-800 rounded-lg px-4 py-2 max-w-xs lg:max-w-md">
@@ -38,26 +38,26 @@
             <div class="text-sm whitespace-pre-wrap">
               <%= simple_format(content, {}, wrapper_tag: "div") %>
             </div>
-            
+
             <!-- Actions suggérées -->
             <% if actions.present? %>
               <div class="mt-3 space-y-1">
                 <% actions.each do |action| %>
-                  <% 
-                    button_class = action[:primary] ? 
-                      "bg-blue-500 text-white hover:bg-blue-600" : 
+                  <%
+                    button_class = action[:primary] ?
+                      "bg-blue-500 text-white hover:bg-blue-600" :
                       "bg-gray-200 text-gray-700 hover:bg-gray-300"
                   %>
-                  
+
                   <% case action[:type] %>
                   <% when 'form', 'internal' %>
-                    <%= link_to action[:url], 
+                    <%= link_to action[:url],
                         class: "inline-block px-3 py-1 rounded text-xs font-medium transition-colors mr-2 mb-1 #{button_class}" do %>
                       <%= action[:label] %>
                     <% end %>
-                    
+
                   <% when 'redirect', 'contact' %>
-                    <%= link_to action[:url], 
+                    <%= link_to action[:url],
                         target: action[:type] == 'redirect' ? '_blank' : '_self',
                         class: "inline-block px-3 py-1 rounded text-xs font-medium transition-colors mr-2 mb-1 #{button_class}" do %>
                       <%= action[:label] %>
@@ -65,9 +65,9 @@
                         <span class="ml-1">↗</span>
                       <% end %>
                     <% end %>
-                    
+
                   <% when 'quick_message' %>
-                    <button 
+                    <button
                       data-action="click->ai-chat#sendMessage"
                       data-message="<%= action[:message] %>"
                       class="inline-block px-3 py-1 rounded text-xs font-medium transition-colors mr-2 mb-1 <%= button_class %>"
@@ -78,7 +78,7 @@
                 <% end %>
               </div>
             <% end %>
-            
+
             <span class="text-xs opacity-75 block mt-2">
               <%= timestamp.strftime('%H:%M') %>
               <% if metadata[:model_used] %>
@@ -89,14 +89,14 @@
         </div>
       </div>
     </div>
-    
+
   <% when 'system' %>
     <div class="flex justify-center">
       <div class="bg-yellow-100 text-yellow-800 rounded-lg px-3 py-2 text-sm max-w-md text-center">
         <%= content %>
       </div>
     </div>
-    
+
   <% else %>
     <!-- Fallback pour types de messages inconnus -->
     <div class="flex justify-center">

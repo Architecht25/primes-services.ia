@@ -1,38 +1,38 @@
 # Modèle spécialisé pour les contacts Entreprises Commerciales (non-immobilières)
 class EntrepriseCommContact < ContactSubmission
   # Validations spécifiques aux entreprises commerciales
-  validates :business_activity, inclusion: { 
-    in: %w[retail services manufacturing hospitality agriculture technology consulting healthcare], 
-    allow_blank: true 
-  }
-  validates :investment_region, inclusion: { 
-    in: %w[wallonie flandre bruxelles europe international], 
-    allow_blank: true 
-  }
-  validates :project_scale, inclusion: { 
-    in: %w[local regional national international], 
-    allow_blank: true 
-  }
-  validates :timeline, inclusion: { 
-    in: %w[immediate court_terme moyen_terme long_terme], 
-    allow_blank: true 
-  }
-  validates :estimated_budget, 
-    numericality: { greater_than: 0 }, 
+  validates :business_activity, inclusion: {
+    in: %w[retail services manufacturing hospitality agriculture technology consulting healthcare],
     allow_blank: true
-  validates :target_market, inclusion: { 
-    in: %w[b2b b2c b2g marketplace local national export], 
-    allow_blank: true 
   }
-  validates :company_size, inclusion: { 
-    in: %w[startup pme eti grande_entreprise], 
-    allow_blank: true 
+  validates :investment_region, inclusion: {
+    in: %w[wallonie flandre bruxelles europe international],
+    allow_blank: true
+  }
+  validates :project_scale, inclusion: {
+    in: %w[local regional national international],
+    allow_blank: true
+  }
+  validates :timeline, inclusion: {
+    in: %w[immediate court_terme moyen_terme long_terme],
+    allow_blank: true
+  }
+  validates :estimated_budget,
+    numericality: { greater_than: 0 },
+    allow_blank: true
+  validates :target_market, inclusion: {
+    in: %w[b2b b2c b2g marketplace local national export],
+    allow_blank: true
+  }
+  validates :company_size, inclusion: {
+    in: %w[startup pme eti grande_entreprise],
+    allow_blank: true
   }
 
   # Méthodes spécifiques aux entreprises commerciales
   def investment_category
     return 'non_specifie' unless estimated_budget
-    
+
     case estimated_budget
     when 0..25_000
       'micro_investissement'
@@ -48,7 +48,7 @@ class EntrepriseCommContact < ContactSubmission
   end
 
   def requires_innovation_support?
-    business_activity == 'technology' || 
+    business_activity == 'technology' ||
     %w[national international].include?(project_scale) ||
     estimated_budget.to_i > 500_000
   end
@@ -60,7 +60,7 @@ class EntrepriseCommContact < ContactSubmission
 
   def suggested_subsidies
     subsidies = []
-    
+
     # Aides selon l'activité commerciale
     case business_activity
     when 'retail'
@@ -170,7 +170,7 @@ class EntrepriseCommContact < ContactSubmission
   def business_complexity_score
     # Score de 1 à 10 selon la complexité business
     score = 1 # Base entreprise commerciale
-    
+
     score += 1 if %w[national international].include?(project_scale)
     score += 1 if business_activity == 'technology'
     score += 1 if estimated_budget.to_i > 500_000
@@ -178,7 +178,7 @@ class EntrepriseCommContact < ContactSubmission
     score += 1 if target_market == 'export'
     score += 2 if requires_innovation_support?
     score += 1 if investment_region == 'international'
-    
+
     [score, 10].min
   end
 
@@ -188,7 +188,7 @@ class EntrepriseCommContact < ContactSubmission
 
   def sector_specific_requirements
     requirements = []
-    
+
     case business_activity
     when 'retail'
       requirements << 'Autorisation commerciale'
@@ -220,7 +220,7 @@ class EntrepriseCommContact < ContactSubmission
     message_parts = []
     message_parts << "Bonjour,"
     message_parts << ""
-    
+
     if business_activity.present? && company_size.present?
       activity_labels = {
         'retail' => 'commerce',
@@ -232,24 +232,24 @@ class EntrepriseCommContact < ContactSubmission
         'consulting' => 'conseil',
         'healthcare' => 'secteur santé'
       }
-      
+
       size_labels = {
         'startup' => 'startup',
         'pme' => 'PME',
         'eti' => 'ETI',
         'grande_entreprise' => 'grande entreprise'
       }
-      
+
       message_parts << "Merci pour votre demande concernant votre #{size_labels[company_size]} "
       message_parts << "dans le secteur #{activity_labels[business_activity]} (région #{investment_region.humanize})."
     end
-    
+
     if estimated_budget.present?
       message_parts << ""
       message_parts << "Pour votre investissement de #{estimated_budget.to_i}€, voici les principales aides :"
       suggested_subsidies.take(6).each { |subsidy| message_parts << "• #{subsidy}" }
     end
-    
+
     if requires_specialized_expert?
       message_parts << ""
       message_parts << "🚀 Ce projet nécessite un accompagnement expert spécialisé."
@@ -258,31 +258,31 @@ class EntrepriseCommContact < ContactSubmission
       message_parts << "• Accompagnement réglementaire"
       message_parts << "• Stratégie de développement"
     end
-    
+
     sector_reqs = sector_specific_requirements
     if sector_reqs.any?
       message_parts << ""
       message_parts << "📋 Prérequis sectoriels :"
       sector_reqs.take(3).each { |req| message_parts << "• #{req}" }
     end
-    
+
     if eligible_for_export_aid?
       message_parts << ""
       message_parts << "🌍 Votre projet d'internationalisation peut bénéficier d'aides spécifiques à l'export."
     end
-    
+
     message_parts << ""
     message_parts << "Un consultant expert vous recontacte sous 24h pour un diagnostic personnalisé."
     message_parts << ""
     message_parts << "Cordialement,"
     message_parts << "L'équipe Primes Services - Division Entreprises & Innovation"
-    
+
     message_parts.join("\n")
   end
 
   def financing_needs_analysis
     needs = []
-    
+
     case investment_category
     when 'micro_investissement', 'petit_investissement'
       needs << 'Microcrédit professionnel'
@@ -306,10 +306,10 @@ class EntrepriseCommContact < ContactSubmission
 
   def digital_transformation_level
     return 'basique' unless business_activity
-    
+
     tech_intensive = %w[technology services consulting]
     traditional = %w[retail manufacturing hospitality agriculture]
-    
+
     if tech_intensive.include?(business_activity)
       'avance'
     elsif traditional.include?(business_activity)
@@ -340,29 +340,29 @@ class EntrepriseCommContact < ContactSubmission
 
   def innovation_potential_score
     score = 1
-    
+
     score += 2 if business_activity == 'technology'
     score += 1 if company_size == 'startup'
     score += 1 if requires_innovation_support?
     score += 1 if %w[national international].include?(project_scale)
     score += 1 if estimated_budget.to_i > 100_000
-    
+
     [score, 10].min
   end
 
   def sustainability_opportunities
     opportunities = []
-    
+
     opportunities << 'Certification B-Corp' if company_size != 'startup'
     opportunities << 'Label entreprise responsable'
     opportunities << 'Transition énergétique'
     opportunities << 'Économie circulaire'
-    
+
     if business_activity == 'manufacturing'
       opportunities << 'Industrie verte'
       opportunities << 'Décarbonation production'
     end
-    
+
     opportunities
   end
 end

@@ -5,25 +5,25 @@ class EmailService
       begin
         # Log pour développement
         Rails.logger.info "Envoi email de confirmation pour contact ##{contact.id} (#{contact.email})"
-        
+
         # En production, ici on intégrerait avec un service d'email comme:
         # - SendGrid
-        # - Mailgun  
+        # - Mailgun
         # - Amazon SES
         # - Service email Rails (Action Mailer)
-        
+
         # Pour l'instant, simulation avec log
         email_content = generate_confirmation_email(contact)
-        
+
         # Simulation d'envoi
         simulate_email_sending(contact.email, "Confirmation de votre demande de primes ##{contact.id}", email_content)
-        
+
         # Marquer comme envoyé
         contact.update(
           email_sent: true,
           email_sent_at: Time.current
         )
-        
+
         true
       rescue => e
         Rails.logger.error "Erreur envoi email pour contact ##{contact.id}: #{e.message}"
@@ -34,20 +34,20 @@ class EmailService
     def send_ai_analysis_email(contact, ai_analysis)
       begin
         Rails.logger.info "Envoi analyse IA pour contact ##{contact.id}"
-        
+
         email_content = generate_ai_analysis_email(contact, ai_analysis)
-        
+
         simulate_email_sending(
-          contact.email, 
-          "Analyse IA de vos opportunités de primes ##{contact.id}", 
+          contact.email,
+          "Analyse IA de vos opportunités de primes ##{contact.id}",
           email_content
         )
-        
+
         contact.update(
           ai_analysis_sent: true,
           ai_analysis_sent_at: Time.current
         )
-        
+
         true
       rescue => e
         Rails.logger.error "Erreur envoi analyse IA pour contact ##{contact.id}: #{e.message}"
@@ -58,15 +58,15 @@ class EmailService
     def send_expert_referral_email(contact, expert_info)
       begin
         Rails.logger.info "Envoi référence expert pour contact ##{contact.id}"
-        
+
         email_content = generate_expert_referral_email(contact, expert_info)
-        
+
         simulate_email_sending(
           contact.email,
           "Votre expert dédié pour optimiser vos primes ##{contact.id}",
           email_content
         )
-        
+
         # Également notifier l'expert
         if expert_info[:email]
           expert_content = generate_expert_notification_email(contact)
@@ -76,7 +76,7 @@ class EmailService
             expert_content
           )
         end
-        
+
         true
       rescue => e
         Rails.logger.error "Erreur envoi référence expert pour contact ##{contact.id}: #{e.message}"
@@ -124,7 +124,7 @@ class EmailService
 
         Cordialement,
         L'équipe Primes Services IA
-        
+
         ---
         Cet email est généré automatiquement par notre système d'IA spécialisé en primes belges.
       EMAIL
@@ -212,7 +212,7 @@ class EmailService
           ================== EMAIL SIMULATION ==================
           TO: #{to_email}
           SUBJECT: #{subject}
-          
+
           #{content}
           =======================================================
         LOG

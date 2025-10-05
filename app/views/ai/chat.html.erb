@@ -13,17 +13,17 @@
           <p class="text-sm text-gray-600">Expert en subsides belges • Disponible 24/7</p>
         </div>
       </div>
-      
+
       <div class="flex items-center space-x-2">
-        <button 
+        <button
           data-action="click->ai-chat#resetChat"
           class="text-gray-600 hover:text-gray-800 px-3 py-1 rounded text-sm transition-colors"
           title="Nouvelle conversation"
         >
           🔄 Reset
         </button>
-        
-        <button 
+
+        <button
           data-action="click->ai-chat#completeChat"
           class="bg-blue-500 text-white px-3 py-1 rounded text-sm hover:bg-blue-600 transition-colors"
           title="Terminer la conversation"
@@ -36,14 +36,14 @@
 
   <!-- Zone de chat -->
   <main class="flex-1 flex flex-col max-w-4xl mx-auto w-full">
-    
+
     <!-- Messages container -->
-    <div 
+    <div
       data-ai-chat-target="messages"
       class="flex-1 overflow-y-auto px-4 py-6 space-y-4"
       style="max-height: calc(100vh - 200px);"
     >
-      
+
       <!-- Message de bienvenue -->
       <div class="flex justify-start mb-4">
         <div class="bg-gray-100 text-gray-800 rounded-lg px-4 py-3 max-w-md">
@@ -53,7 +53,7 @@
             </div>
             <div class="flex-1">
               <p class="text-sm">
-                Bonjour ! Je suis votre assistant spécialisé en <strong>primes et subsides belges</strong>. 
+                Bonjour ! Je suis votre assistant spécialisé en <strong>primes et subsides belges</strong>.
                 <br><br>
                 Je connais les <strong>324 subsides disponibles</strong> et je peux vous aider à :
                 <br>
@@ -114,31 +114,31 @@
       <div class="suggestions-container">
         <p class="text-sm text-gray-600 mb-2">Suggestions pour commencer :</p>
         <div class="flex flex-wrap gap-2">
-          <button 
+          <button
             data-action="click->ai-chat#sendSuggestion"
             data-message="Combien puis-je avoir pour isoler ma maison ?"
             class="bg-gray-100 hover:bg-gray-200 text-gray-700 text-sm px-3 py-2 rounded-full transition-colors"
           >
             💰 Primes isolation
           </button>
-          
-          <button 
+
+          <button
             data-action="click->ai-chat#sendSuggestion"
             data-message="Quelles sont les aides pour une pompe à chaleur ?"
             class="bg-gray-100 hover:bg-gray-200 text-gray-700 text-sm px-3 py-2 rounded-full transition-colors"
           >
             🔥 Aide chauffage
           </button>
-          
-          <button 
+
+          <button
             data-action="click->ai-chat#sendSuggestion"
             data-message="Comment rénover avec les subsides wallons ?"
             class="bg-gray-100 hover:bg-gray-200 text-gray-700 text-sm px-3 py-2 rounded-full transition-colors"
           >
             🏠 Rénovation globale
           </button>
-          
-          <button 
+
+          <button
             data-action="click->ai-chat#sendSuggestion"
             data-message="Qui êtes-vous et comment m'aidez-vous ?"
             class="bg-gray-100 hover:bg-gray-200 text-gray-700 text-sm px-3 py-2 rounded-full transition-colors"
@@ -164,7 +164,7 @@
             style="min-height: 40px; max-height: 120px;"
           ></textarea>
         </div>
-        
+
         <button
           data-ai-chat-target="sendButton"
           data-action="click->ai-chat#sendMessage"
@@ -175,9 +175,9 @@
           <span class="sm:hidden">📤</span>
         </button>
       </div>
-      
+
       <div class="mt-2 text-xs text-gray-500 text-center">
-        Appuyez sur <kbd class="bg-gray-100 px-1 rounded">Entrée</kbd> pour envoyer, 
+        Appuyez sur <kbd class="bg-gray-100 px-1 rounded">Entrée</kbd> pour envoyer,
         <kbd class="bg-gray-100 px-1 rounded">Shift + Entrée</kbd> pour une nouvelle ligne
       </div>
     </div>
@@ -185,7 +185,7 @@
 </div>
 
 <!-- Contrôleur Stimulus -->
-<div 
+<div
   data-controller="ai-chat"
   data-ai-chat-conversation-id-value="<%= @conversation_stats[:session_id] %>"
   data-ai-chat-user-type-value="<%= session[:user_type] || 'visiteur' %>"
@@ -202,7 +202,7 @@
     align-items: center;
     gap: 4px;
   }
-  
+
   .typing-dots span {
     width: 6px;
     height: 6px;
@@ -210,15 +210,15 @@
     border-radius: 50%;
     animation: typing 1.4s infinite;
   }
-  
+
   .typing-dots span:nth-child(2) {
     animation-delay: 0.2s;
   }
-  
+
   .typing-dots span:nth-child(3) {
     animation-delay: 0.4s;
   }
-  
+
   @keyframes typing {
     0%, 60%, 100% {
       transform: translateY(0);
@@ -229,30 +229,30 @@
       opacity: 1;
     }
   }
-  
+
   /* Scroll personnalisé */
   .messages::-webkit-scrollbar {
     width: 6px;
   }
-  
+
   .messages::-webkit-scrollbar-track {
     background: #f1f5f9;
   }
-  
+
   .messages::-webkit-scrollbar-thumb {
     background: #cbd5e1;
     border-radius: 3px;
   }
-  
+
   .messages::-webkit-scrollbar-thumb:hover {
     background: #94a3b8;
   }
-  
+
   /* Animation des messages */
   .message {
     animation: messageSlideIn 0.3s ease-out;
   }
-  
+
   @keyframes messageSlideIn {
     from {
       opacity: 0;
@@ -263,13 +263,13 @@
       transform: translateY(0);
     }
   }
-  
+
   /* Responsive adjustments */
   @media (max-width: 640px) {
     .max-w-xs {
       max-width: 85%;
     }
-    
+
     .max-w-md {
       max-width: 85%;
     }

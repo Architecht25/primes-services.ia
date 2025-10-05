@@ -14,16 +14,16 @@ class AiController < ApplicationController
     user_metadata = extract_user_metadata
 
     if message.blank?
-      render json: { 
-        success: false, 
-        error: "Message vide" 
+      render json: {
+        success: false,
+        error: "Message vide"
       }, status: 422
       return
     end
 
     begin
       result = @ai_service.process_message(message, metadata: user_metadata)
-      
+
       if result[:success]
         render json: {
           success: true,
@@ -42,9 +42,9 @@ class AiController < ApplicationController
 
     rescue => e
       Rails.logger.error "[AiController] Error processing message: #{e.message}"
-      render json: { 
-        success: false, 
-        error: "Erreur technique. Veuillez réessayer." 
+      render json: {
+        success: false,
+        error: "Erreur technique. Veuillez réessayer."
       }, status: 500
     end
   end
@@ -56,7 +56,7 @@ class AiController < ApplicationController
 
     respond_to do |format|
       format.html
-      format.json { 
+      format.json {
         render json: {
           history: @conversation_history,
           stats: @conversation_stats
@@ -68,7 +68,7 @@ class AiController < ApplicationController
   # POST /ai/reset - Réinitialisation de conversation
   def reset
     @ai_service.reset_conversation!
-    
+
     respond_to do |format|
       format.html { redirect_to ai_chat_path, notice: "Conversation réinitialisée" }
       format.json { render json: { success: true, message: "Conversation réinitialisée" } }
@@ -89,7 +89,7 @@ class AiController < ApplicationController
   # POST /ai/complete - Marquer conversation comme terminée
   def complete
     @ai_service.complete_conversation!
-    
+
     respond_to do |format|
       format.html { redirect_to root_path, notice: "Merci pour votre visite !" }
       format.json { render json: { success: true, message: "Conversation terminée" } }
@@ -158,7 +158,7 @@ class AiController < ApplicationController
 
   def gather_conversation_analytics
     conversation = @ai_service.conversation
-    
+
     {
       total_messages: conversation.message_count,
       conversation_duration: conversation.duration_minutes,
@@ -173,11 +173,11 @@ class AiController < ApplicationController
     return 0 if messages.empty?
 
     user_messages = messages.select { |m| m['role'] == 'user' }
-    
+
     # Score basé sur nombre de messages et longueur moyenne
     message_score = [user_messages.count / 10.0, 1.0].min
     length_score = user_messages.map { |m| m['content'].length }.sum / [user_messages.count * 50.0, 1.0].max
-    
+
     ((message_score + length_score) / 2 * 100).round
   end
 
@@ -185,7 +185,7 @@ class AiController < ApplicationController
     # Analyser les intents des messages utilisateur
     nlp = NaturalLanguageProcessor.new
     user_messages = conversation.messages_array.select { |m| m['role'] == 'user' }
-    
+
     intents = user_messages.map do |message|
       analysis = nlp.analyze(message['content'])
       analysis[:intent][:category]
@@ -199,10 +199,10 @@ class AiController < ApplicationController
   def detect_conversion_signals(conversation)
     signals = []
     user_messages = conversation.messages_array.select { |m| m['role'] == 'user' }
-    
+
     user_messages.each do |message|
       content = message['content'].downcase
-      
+
       signals << 'contact_request' if content.match?(/contact|téléphone|email|rendez-vous/)
       signals << 'calculation_request' if content.match?(/calculer|combien|montant|estimation/)
       signals << 'form_interest' if content.match?(/formulaire|dossier|demande/)

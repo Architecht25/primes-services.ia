@@ -2,7 +2,7 @@
 <nav class="bg-white shadow-lg fixed w-full top-0 z-50">
   <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
     <div class="flex justify-between items-center h-16">
-      
+
       <!-- Logo et nom -->
       <div class="flex items-center">
         <%= link_to root_path, class: "flex items-center space-x-3" do %>
@@ -18,24 +18,24 @@
 
       <!-- Navigation desktop -->
       <div class="hidden md:flex items-center space-x-8">
-        <%= link_to root_path, 
+        <%= link_to root_path,
             class: "text-gray-700 hover:text-blue-600 font-medium transition-colors #{'text-blue-600' if current_page?(root_path)}" do %>
           🏠 Accueil
         <% end %>
-        
-        <%= link_to about_path, 
+
+        <%= link_to about_path,
             class: "text-gray-700 hover:text-blue-600 font-medium transition-colors #{'text-blue-600' if current_page?(about_path)}" do %>
           👥 À propos
         <% end %>
-        
-        <%= link_to ai_chat_path, 
+
+        <%= link_to ai_chat_path,
             class: "text-gray-700 hover:text-blue-600 font-medium transition-colors #{'text-blue-600' if current_page?(ai_chat_path)}" do %>
           🤖 Chat IA
         <% end %>
 
         <!-- Dropdown Formulaires -->
         <div class="relative" data-controller="dropdown">
-          <button 
+          <button
             data-action="click->dropdown#toggle"
             class="text-gray-700 hover:text-blue-600 font-medium transition-colors flex items-center space-x-1"
           >
@@ -44,8 +44,8 @@
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
             </svg>
           </button>
-          
-          <div 
+
+          <div
             data-dropdown-target="menu"
             class="absolute right-0 mt-2 w-56 bg-white rounded-md shadow-lg border border-gray-200 hidden"
           >
@@ -71,7 +71,7 @@
         </div>
 
         <!-- CTA Principal -->
-        <%= link_to ai_chat_path, 
+        <%= link_to ai_chat_path,
             class: "bg-blue-500 text-white px-4 py-2 rounded-lg font-semibold hover:bg-blue-600 transition-colors" do %>
           💬 Commencer
         <% end %>
@@ -79,7 +79,7 @@
 
       <!-- Menu mobile toggle -->
       <div class="md:hidden">
-        <button 
+        <button
           data-controller="mobile-menu"
           data-action="click->mobile-menu#toggle"
           class="text-gray-700 hover:text-blue-600 focus:outline-none"
@@ -92,26 +92,26 @@
     </div>
 
     <!-- Menu mobile -->
-    <div 
+    <div
       data-mobile-menu-target="menu"
       class="md:hidden border-t border-gray-200 bg-white hidden"
     >
       <div class="px-2 pt-2 pb-3 space-y-1">
-        <%= link_to root_path, 
+        <%= link_to root_path,
             class: "block px-3 py-2 text-gray-700 hover:text-blue-600 hover:bg-blue-50 rounded-md font-medium" do %>
           🏠 Accueil
         <% end %>
-        
-        <%= link_to about_path, 
+
+        <%= link_to about_path,
             class: "block px-3 py-2 text-gray-700 hover:text-blue-600 hover:bg-blue-50 rounded-md font-medium" do %>
           👥 À propos
         <% end %>
-        
-        <%= link_to ai_chat_path, 
+
+        <%= link_to ai_chat_path,
             class: "block px-3 py-2 text-gray-700 hover:text-blue-600 hover:bg-blue-50 rounded-md font-medium" do %>
           🤖 Chat IA
         <% end %>
-        
+
         <!-- Sous-menu Formulaires mobile -->
         <div class="pl-4 space-y-1">
           <p class="px-3 py-2 text-sm font-semibold text-gray-500">📋 Formulaires</p>
@@ -128,9 +128,9 @@
             🏭 Entreprises Comm
           </a>
         </div>
-        
+
         <!-- CTA Mobile -->
-        <%= link_to ai_chat_path, 
+        <%= link_to ai_chat_path,
             class: "block mx-3 mt-4 bg-blue-500 text-white px-4 py-2 rounded-lg font-semibold text-center hover:bg-blue-600 transition-colors" do %>
           💬 Commencer maintenant
         <% end %>

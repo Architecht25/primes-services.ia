@@ -41,7 +41,7 @@
 # STI (Single Table Inheritance)
 ContactSubmission (base)
 ├── ParticulierContact
-├── AcpContact  
+├── AcpContact
 ├── EntrepriseImmoContact
 └── EntrepriseCommContact
 
@@ -236,7 +236,7 @@ Ce projet est sous licence MIT.
 - **GitHub Issues** : Pour les bugs et feature requests
 
 ### Architecture 25
-Développé avec ❤️ par l'équipe **Architecture 25**  
+Développé avec ❤️ par l'équipe **Architecture 25**
 Spécialistes en solutions numériques innovantes pour le secteur de la construction et des primes énergétiques.
 
 ---
