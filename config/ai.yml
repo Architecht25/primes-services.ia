@@ -55,7 +55,7 @@ test:
 
 production:
   openai:
-    api_key: <%= ENV.fetch("OPENAI_API_KEY") %>
+    api_key: <%= ENV.fetch("OPENAI_API_KEY") { nil } %>
     model: <%= ENV.fetch("OPENAI_MODEL") { "gpt-4o-mini" } %>
     max_tokens: <%= ENV.fetch("OPENAI_MAX_TOKENS") { 2000 } %>
     temperature: <%= ENV.fetch("OPENAI_TEMPERATURE") { 0.3 } %>
