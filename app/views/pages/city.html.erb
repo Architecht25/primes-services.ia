@@ -1,0 +1,190 @@
+<% content_for :title, seo_title("Primes #{@city_name} (#{@region_data[:name]}) - Subsides locaux") %>
+<% content_for :description, "Primes et subsides à #{@city_name}, #{@region_data[:name]}. Assistant IA expert, calculs gratuits, accompagnement personnalisé. #{@region_data[:programs].join(', ')}." %>
+<% content_for :keywords, geo_keywords(@region, ["primes #{@city_name.downcase}", "subsides #{@city_name.downcase}", "aide #{@city_name.downcase}"]) %>
+<% content_for :canonical, "#{geo_canonical_url(@region)}/#{@city}" %>
+
+<%# Schema.org pour la ville %>
+<%= city_service_schema(@city_name, @region) %>
+
+<%# Breadcrumbs avec ville %>
+<%= breadcrumb_schema(geo_breadcrumbs(@region, @city_name)) %>
+
+<!-- Hero Section Ville -->
+<section class="bg-gradient-to-r from-blue-600 to-green-600 text-white py-16">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+    <h1 class="text-4xl lg:text-5xl font-bold mb-6">
+      Primes et Subsides à <span class="text-yellow-300"><%= @city_name %></span>
+    </h1>
+    <p class="text-xl lg:text-2xl text-blue-100 max-w-3xl mx-auto mb-8">
+      Assistant IA expert en primes locales pour <%= @city_name %>, <%= @region_data[:name] %>
+    </p>
+
+    <!-- Badges spécificités locales -->
+    <div class="flex flex-wrap justify-center gap-3 mb-8">
+      <span class="bg-white/20 backdrop-blur-sm px-4 py-2 rounded-full text-sm">
+        <%= @region_data[:name] %>
+      </span>
+      <span class="bg-white/20 backdrop-blur-sm px-4 py-2 rounded-full text-sm">
+        Primes communales
+      </span>
+      <span class="bg-white/20 backdrop-blur-sm px-4 py-2 rounded-full text-sm">
+        Accompagnement local
+      </span>
+    </div>
+
+    <%= link_to ai_chat_path,
+        class: "inline-block bg-yellow-400 text-blue-900 px-8 py-4 rounded-lg font-bold text-lg hover:bg-yellow-300 transition-colors shadow-lg" do %>
+      🤖 Calculer mes primes à <%= @city_name %>
+    <% end %>
+  </div>
+</section>
+
+<!-- Primes Spécifiques à la Ville -->
+<section class="py-16">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="text-center mb-12">
+      <h2 class="text-3xl lg:text-4xl font-bold text-gray-900 mb-4">
+        Primes disponibles à <%= @city_name %>
+      </h2>
+      <p class="text-xl text-gray-600">
+        Combinez les primes régionales et communales pour maximiser vos aides
+      </p>
+    </div>
+
+    <div class="grid lg:grid-cols-2 gap-8">
+      <!-- Primes Régionales -->
+      <div class="bg-blue-50 rounded-xl p-8">
+        <h3 class="text-2xl font-bold text-blue-900 mb-6">
+          Primes <%= @region_data[:name] %>
+        </h3>
+
+        <div class="space-y-4">
+          <% @region_data[:programs].each do |program| %>
+            <div class="bg-white rounded-lg p-4 border border-blue-200">
+              <h4 class="font-semibold text-gray-900 mb-2"><%= program %></h4>
+              <p class="text-sm text-gray-600 mb-3">
+                Prime régionale disponible pour tous les habitants de <%= @city_name %>
+              </p>
+              <%= link_to ai_chat_path,
+                  class: "text-blue-600 hover:text-blue-800 font-medium text-sm" do %>
+                Calculer ma prime →
+              <% end %>
+            </div>
+          <% end %>
+        </div>
+      </div>
+
+      <!-- Primes Communales -->
+      <div class="bg-green-50 rounded-xl p-8">
+        <h3 class="text-2xl font-bold text-green-900 mb-6">
+          Primes communales <%= @city_name %>
+        </h3>
+
+        <div class="space-y-4">
+          <div class="bg-white rounded-lg p-4 border border-green-200">
+            <h4 class="font-semibold text-gray-900 mb-2">Prime communale isolation</h4>
+            <p class="text-sm text-gray-600 mb-3">
+              Complément aux primes régionales pour les habitants de <%= @city_name %>
+            </p>
+            <%= link_to ai_chat_path,
+                class: "text-green-600 hover:text-green-800 font-medium text-sm" do %>
+              En savoir plus →
+            <% end %>
+          </div>
+
+          <div class="bg-white rounded-lg p-4 border border-green-200">
+            <h4 class="font-semibold text-gray-900 mb-2">Prime mobilité verte</h4>
+            <p class="text-sm text-gray-600 mb-3">
+              Aide pour bornes de recharge et vélos électriques
+            </p>
+            <%= link_to ai_chat_path,
+                class: "text-green-600 hover:text-green-800 font-medium text-sm" do %>
+              Calculer →
+            <% end %>
+          </div>
+
+          <div class="bg-white rounded-lg p-4 border border-green-200">
+            <h4 class="font-semibold text-gray-900 mb-2">Audit énergétique gratuit</h4>
+            <p class="text-sm text-gray-600 mb-3">
+              Service communal d'audit pour les résidents
+            </p>
+            <%= link_to contacts_path,
+                class: "text-green-600 hover:text-green-800 font-medium text-sm" do %>
+              Réserver →
+            <% end %>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Spécificités Locales -->
+<section class="py-16 bg-gray-50">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="text-center mb-12">
+      <h2 class="text-3xl font-bold text-gray-900 mb-4">
+        Pourquoi choisir l'accompagnement local à <%= @city_name %> ?
+      </h2>
+    </div>
+
+    <div class="grid md:grid-cols-3 gap-8">
+      <div class="text-center">
+        <div class="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4">
+          <span class="text-3xl">🏛️</span>
+        </div>
+        <h3 class="text-xl font-semibold text-gray-900 mb-3">Expertise locale</h3>
+        <p class="text-gray-600">
+          Connaissance parfaite des spécificités de <%= @city_name %> et des primes communales
+        </p>
+      </div>
+
+      <div class="text-center">
+        <div class="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
+          <span class="text-3xl">🤝</span>
+        </div>
+        <h3 class="text-xl font-semibold text-gray-900 mb-3">Réseau local</h3>
+        <p class="text-gray-600">
+          Partenariats avec les services communaux et les entreprises locales
+        </p>
+      </div>
+
+      <div class="text-center">
+        <div class="w-16 h-16 bg-yellow-100 rounded-full flex items-center justify-center mx-auto mb-4">
+          <span class="text-3xl">⚡</span>
+        </div>
+        <h3 class="text-xl font-semibold text-gray-900 mb-3">Rapidité</h3>
+        <p class="text-gray-600">
+          Traitement accéléré grâce à notre connaissance des processus locaux
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Contact Local -->
+<section class="py-16">
+  <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="bg-blue-600 text-white rounded-2xl p-8 lg:p-12 text-center">
+      <h2 class="text-3xl font-bold mb-6">
+        Prêt à obtenir vos primes à <%= @city_name %> ?
+      </h2>
+      <p class="text-xl text-blue-100 mb-8 max-w-2xl mx-auto">
+        Notre assistant IA connaît tous les subsides disponibles pour les habitants de <%= @city_name %>.
+        Commencez dès maintenant !
+      </p>
+
+      <div class="space-y-4 sm:space-y-0 sm:space-x-4 sm:flex sm:justify-center">
+        <%= link_to ai_chat_path,
+            class: "block sm:inline-block bg-yellow-400 text-blue-900 px-8 py-4 rounded-lg font-bold text-lg hover:bg-yellow-300 transition-colors" do %>
+          🤖 Discuter avec l'IA
+        <% end %>
+
+        <%= link_to contacts_path,
+            class: "block sm:inline-block bg-white text-blue-600 px-8 py-4 rounded-lg font-bold text-lg hover:bg-gray-100 transition-colors" do %>
+          Parler à un expert
+        <% end %>
+      </div>
+    </div>
+  </div>
+</section>

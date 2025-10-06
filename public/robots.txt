@@ -1,1 +1,19 @@
+# Configuration robots.txt pour optimisation SEO
 # See https://www.robotstxt.org/robotstxt.html for documentation on how to use the robots.txt file
+
+User-agent: *
+Allow: /
+
+# Pages à ne pas indexer
+Disallow: /up
+Disallow: /api/
+Disallow: /pwa/
+Disallow: /redirections/
+Disallow: /rails/
+Disallow: /ping
+
+# Sitemap XML
+Sitemap: https://primes-services.ia/sitemap.xml
+
+# Politique d'exploration
+Crawl-delay: 1

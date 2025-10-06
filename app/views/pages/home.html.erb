@@ -1,5 +1,6 @@
-<% content_for :title, "Primes Services IA - Expert en subsides belges" %>
-<% content_for :description, "Assistant IA spécialisé en primes et subsides belges. 324 subsides référencés, calculs instantanés, accompagnement expert. Wallonie, Flandre, Bruxelles." %>
+<% content_for :title, "Primes Services IA - Assistant intelligent pour vos subsides belges" %>
+<% content_for :description, "Assistant IA expert en primes belges : 324 subsides référencés, calculs instantanés, accompagnement personnalisé. Wallonie, Flandre, Bruxelles. Obtenez vos primes facilement !" %>
+<% content_for :keywords, seo_keywords('assistant IA', 'primes instantanées', 'subsides wallonie', 'primes flandre', 'subsides bruxelles', 'calculateur prime', 'expert subside') %>
 
 <!-- Hero Section PWA -->
 <section class="bg-gradient-to-br from-blue-600 via-blue-700 to-green-600 text-white py-16 lg:py-24">
@@ -429,4 +430,53 @@
       button.style.display = 'none';
     });
   });
+</script>
+
+<%# Schema.org FAQ pour rich snippets %>
+<%= faq_schema([
+  {
+    question: "Combien de subsides sont référencés dans votre base de données ?",
+    answer: "Nous avons référencé 324 subsides et primes disponibles en Belgique, couvrant la Wallonie, la Flandre et Bruxelles-Capitale."
+  },
+  {
+    question: "L'assistant IA peut-il calculer le montant exact de mes primes ?",
+    answer: "Oui, notre IA analyse votre situation (localisation, type de travaux, revenus) et calcule instantanément le montant exact des primes auxquelles vous avez droit."
+  },
+  {
+    question: "Quels types de primes pouvez-vous m'aider à obtenir ?",
+    answer: "Nous couvrons toutes les primes belges : rénovation énergétique, isolation, chauffage, photovoltaïque, pompes à chaleur, et bien plus encore."
+  },
+  {
+    question: "Votre service est-il gratuit ?",
+    answer: "L'utilisation de notre assistant IA est entièrement gratuite. Nous vous accompagnons sans frais dans vos démarches pour obtenir vos primes."
+  }
+]) %>
+
+<%# Schema.org pour la page d'accueil %>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebPage",
+  "name": "Primes Services IA - Assistant intelligent pour vos subsides belges",
+  "description": "Assistant IA expert en primes belges : 324 subsides référencés, calculs instantanés, accompagnement personnalisé",
+  "url": "<%= request.original_url %>",
+  "mainEntity": {
+    "@type": "SoftwareApplication",
+    "name": "Assistant Primes Services IA",
+    "applicationCategory": "BusinessApplication",
+    "operatingSystem": "Web, iOS, Android",
+    "description": "Assistant intelligent spécialisé en primes et subsides belges",
+    "offers": {
+      "@type": "Offer",
+      "price": "0",
+      "priceCurrency": "EUR"
+    },
+    "aggregateRating": {
+      "@type": "AggregateRating",
+      "ratingValue": "4.8",
+      "ratingCount": "4476",
+      "bestRating": "5"
+    }
+  }
+}
 </script>

@@ -1,0 +1,59 @@
+<!-- Navigation géographique pour améliorer le Local SEO -->
+<div class="bg-blue-50 border-b border-blue-200">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="py-3">
+      <div class="flex items-center justify-between">
+        <div class="flex items-center space-x-1 text-sm">
+          <span class="text-gray-600">Primes par région :</span>
+
+          <%= link_to region_wallonie_path,
+              class: "text-blue-600 hover:text-blue-800 hover:underline px-2 py-1 rounded #{request.path.include?('wallonie') ? 'bg-blue-200' : ''}" do %>
+            Wallonie
+          <% end %>
+
+          <span class="text-gray-400">•</span>
+
+          <%= link_to region_flandre_path,
+              class: "text-blue-600 hover:text-blue-800 hover:underline px-2 py-1 rounded #{request.path.include?('flandre') ? 'bg-blue-200' : ''}" do %>
+            Flandre
+          <% end %>
+
+          <span class="text-gray-400">•</span>
+
+          <%= link_to region_bruxelles_path,
+              class: "text-blue-600 hover:text-blue-800 hover:underline px-2 py-1 rounded #{request.path.include?('bruxelles') ? 'bg-blue-200' : ''}" do %>
+            Bruxelles
+          <% end %>
+        </div>
+
+        <!-- Détection automatique de région -->
+        <div class="hidden sm:flex items-center space-x-2 text-sm text-gray-600">
+          <span class="text-xs">📍</span>
+          <span id="detected-region">Détection automatique...</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Script pour détecter la région (optionnel) -->
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  // Détecter la région via géolocalisation du navigateur
+  if (navigator.geolocation) {
+    navigator.geolocation.getCurrentPosition(
+      function(position) {
+        // Ici on pourrait faire un appel à notre API de géolocalisation
+        // Pour la démo, on utilise une logique simplifiée
+        document.getElementById('detected-region').textContent = 'Votre région';
+      },
+      function(error) {
+        document.getElementById('detected-region').textContent = 'Toute la Belgique';
+      },
+      { timeout: 5000 }
+    );
+  } else {
+    document.getElementById('detected-region').textContent = 'Toute la Belgique';
+  }
+});
+</script>

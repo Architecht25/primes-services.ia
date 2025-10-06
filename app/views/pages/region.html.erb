@@ -1,0 +1,187 @@
+<% content_for :title, seo_title("Primes #{@region_data[:name]} - Subsides et accompagnement") %>
+<% content_for :description, geo_meta_description(@region) %>
+<% content_for :keywords, geo_keywords(@region, ['IA assistant', 'expert primes', 'accompagnement gratuit']) %>
+<% content_for :canonical, geo_canonical_url(@region) %>
+
+<%# Schema.org pour la région %>
+<%= region_local_business_schema(@region) %>
+
+<%# Breadcrumbs géographiques %>
+<%= breadcrumb_schema(geo_breadcrumbs(@region)) %>
+
+<!-- Hero Section Régional -->
+<section class="bg-gradient-to-br from-blue-600 via-blue-700 to-green-600 text-white py-16 lg:py-20">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="text-center">
+      <h1 class="text-4xl lg:text-6xl font-bold leading-tight mb-6">
+        Primes et Subsides
+        <span class="text-yellow-300"><%= @region_data[:name] %></span>
+      </h1>
+
+      <p class="text-xl lg:text-2xl mb-8 text-blue-100 max-w-4xl mx-auto">
+        Assistant IA expert en <strong>primes <%= @region_data[:name].downcase %></strong><br>
+        <%= @region_data[:programs].join(' • ') %> • Accompagnement gratuit
+      </p>
+
+      <!-- Statistiques régionales -->
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8 max-w-4xl mx-auto">
+        <div class="bg-white/10 rounded-lg p-6 backdrop-blur-sm">
+          <div class="text-3xl font-bold text-yellow-300"><%= @region_data[:programs].count %>+</div>
+          <div class="text-sm text-blue-100">Types de primes</div>
+        </div>
+        <div class="bg-white/10 rounded-lg p-6 backdrop-blur-sm">
+          <div class="text-3xl font-bold text-yellow-300"><%= @region_data[:major_cities].count %></div>
+          <div class="text-sm text-blue-100">Villes principales</div>
+        </div>
+        <div class="bg-white/10 rounded-lg p-6 backdrop-blur-sm">
+          <div class="text-3xl font-bold text-yellow-300">24/7</div>
+          <div class="text-sm text-blue-100">Assistant disponible</div>
+        </div>
+      </div>
+
+      <!-- CTA Principal -->
+      <div class="space-y-4 sm:space-y-0 sm:space-x-4 sm:flex sm:justify-center">
+        <%= link_to ai_chat_path,
+            class: "block sm:inline-block bg-yellow-400 text-blue-900 px-8 py-4 rounded-lg font-bold text-lg hover:bg-yellow-300 transition-colors shadow-lg" do %>
+          🤖 Découvrir mes primes <%= @region_data[:name].downcase %>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Programmes Spécifiques de la Région -->
+<section class="py-16 bg-gray-50">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="text-center mb-12">
+      <h2 class="text-3xl lg:text-4xl font-bold text-gray-900 mb-4">
+        Programmes de primes en <%= @region_data[:name] %>
+      </h2>
+      <p class="text-xl text-gray-600 max-w-3xl mx-auto">
+        Découvrez tous les subsides disponibles dans votre région avec notre assistant IA spécialisé
+      </p>
+    </div>
+
+    <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+      <% @region_data[:programs].each_with_index do |program, index| %>
+        <div class="bg-white rounded-xl shadow-lg p-6 hover:shadow-xl transition-shadow">
+          <div class="flex items-start space-x-4">
+            <div class="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center flex-shrink-0">
+              <span class="text-2xl"><%= ['🏠', '⚡', '🔥', '🌱'][index % 4] %></span>
+            </div>
+            <div>
+              <h3 class="font-bold text-lg text-gray-900 mb-2"><%= program %></h3>
+              <p class="text-gray-600 text-sm mb-4">
+                Aide financière pour vos projets de rénovation énergétique en <%= @region_data[:name] %>
+              </p>
+              <%= link_to ai_chat_path,
+                  class: "text-blue-600 hover:text-blue-800 font-semibold text-sm" do %>
+                Calculer ma prime →
+              <% end %>
+            </div>
+          </div>
+        </div>
+      <% end %>
+    </div>
+  </div>
+</section>
+
+<!-- Villes Principales -->
+<section class="py-16">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="text-center mb-12">
+      <h2 class="text-3xl lg:text-4xl font-bold text-gray-900 mb-4">
+        Primes par ville en <%= @region_data[:name] %>
+      </h2>
+      <p class="text-xl text-gray-600">
+        Spécificités locales et primes communales complémentaires
+      </p>
+    </div>
+
+    <div class="grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+      <% @region_data[:major_cities].each do |city| %>
+        <div class="bg-white border border-gray-200 rounded-lg p-4 hover:border-blue-300 hover:shadow-md transition-all">
+          <%= link_to "/regions/#{@region}/#{city.parameterize}",
+              class: "block" do %>
+            <h3 class="font-semibold text-gray-900 mb-2"><%= city %></h3>
+            <p class="text-sm text-gray-600 mb-3">
+              Primes et subsides spécifiques à <%= city %>
+            </p>
+            <span class="text-blue-600 text-sm font-medium">
+              Voir les primes →
+            </span>
+          <% end %>
+        </div>
+      <% end %>
+    </div>
+  </div>
+</section>
+
+<!-- Contact Régional -->
+<section class="py-16 bg-blue-50">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="bg-white rounded-2xl shadow-xl p-8 lg:p-12">
+      <div class="grid lg:grid-cols-2 gap-8 items-center">
+        <div>
+          <h2 class="text-3xl font-bold text-gray-900 mb-6">
+            Besoin d'aide pour vos primes en <%= @region_data[:name] %> ?
+          </h2>
+          <p class="text-lg text-gray-600 mb-6">
+            Nos experts connaissent parfaitement les spécificités des primes <%= @region_data[:name].downcase %>.
+            Obtenez un accompagnement personnalisé pour maximiser vos aides.
+          </p>
+
+          <div class="space-y-4">
+            <div class="flex items-center space-x-3">
+              <span class="w-6 h-6 bg-green-100 rounded-full flex items-center justify-center">
+                <span class="text-green-600 text-sm">✓</span>
+              </span>
+              <span class="text-gray-700">Analyse gratuite de votre situation</span>
+            </div>
+            <div class="flex items-center space-x-3">
+              <span class="w-6 h-6 bg-green-100 rounded-full flex items-center justify-center">
+                <span class="text-green-600 text-sm">✓</span>
+              </span>
+              <span class="text-gray-700">Calcul précis de vos primes</span>
+            </div>
+            <div class="flex items-center space-x-3">
+              <span class="w-6 h-6 bg-green-100 rounded-full flex items-center justify-center">
+                <span class="text-green-600 text-sm">✓</span>
+              </span>
+              <span class="text-gray-700">Accompagnement jusqu'à l'obtention</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="bg-gray-50 rounded-xl p-6">
+          <h3 class="font-bold text-lg mb-4">Contact <%= @region_data[:name] %></h3>
+
+          <div class="space-y-3 text-sm">
+            <div>
+              <span class="font-medium text-gray-900">Autorité compétente :</span><br>
+              <span class="text-gray-600"><%= @region_data[:authority] %></span>
+            </div>
+
+            <div>
+              <span class="font-medium text-gray-900">Numéro d'information :</span><br>
+              <span class="text-gray-600"><%= @region_data[:contact_number] %></span>
+            </div>
+
+            <div>
+              <span class="font-medium text-gray-900">Site officiel :</span><br>
+              <%= link_to @region_data[:website], @region_data[:website],
+                  class: "text-blue-600 hover:underline", target: "_blank" %>
+            </div>
+          </div>
+
+          <div class="mt-6">
+            <%= link_to contacts_path,
+                class: "block w-full bg-blue-600 text-white text-center py-3 rounded-lg font-semibold hover:bg-blue-700 transition-colors" do %>
+              Demander un accompagnement
+            <% end %>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

@@ -3,6 +3,22 @@
   <head>
     <title><%= content_for(:title) || "Primes Services IA - Expert en subsides belges" %></title>
     <meta name="description" content="<%= content_for(:description) || 'Assistant IA spécialisé en primes et subsides belges. 324 subsides référencés, calculs instantanés, accompagnement expert. Wallonie, Flandre, Bruxelles.' %>">
+
+    <%# SEO Meta tags %>
+    <meta name="keywords" content="<%= content_for(:keywords) || 'primes belges, subsides, wallonie, flandre, bruxelles, IA assistant, primes énergétiques, primes rénovation, aide publique' %>">
+    <meta name="author" content="Primes Services">
+    <meta name="robots" content="<%= content_for(:robots) || 'index, follow' %>">
+    <link rel="canonical" href="<%= content_for(:canonical) || request.original_url %>">
+
+    <%# Géolocalisation et ciblage géographique %>
+    <meta name="geo.region" content="BE">
+    <meta name="geo.placename" content="Belgique">
+    <meta name="geo.position" content="50.8503;4.3517">
+    <meta name="ICBM" content="50.8503, 4.3517">
+
+    <%# Langue et régions (hreflang sera ajouté dynamiquement si multilingue) %>
+    <meta name="language" content="fr-BE">
+
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="mobile-web-app-capable" content="yes">
@@ -25,10 +41,38 @@
     <meta property="og:type" content="website">
     <meta property="og:url" content="<%= request.original_url %>">
     <meta property="og:image" content="<%= request.base_url %>/icon.png">
+    <meta property="og:site_name" content="Primes Services IA">
+    <meta property="og:locale" content="fr_BE">
 
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="<%= content_for(:title) || 'Primes Services IA' %>">
     <meta name="twitter:description" content="<%= content_for(:description) || 'Assistant IA spécialisé en subsides belges' %>">
+    <meta name="twitter:image" content="<%= request.base_url %>/icon.png">
+
+    <%# Schema.org JSON-LD pour référencement local %>
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "LocalBusiness",
+      "name": "Primes Services IA",
+      "description": "Assistant IA spécialisé en primes et subsides belges",
+      "url": "<%= request.base_url %>",
+      "logo": "<%= request.base_url %>/icon.png",
+      "image": "<%= request.base_url %>/icon.png",
+      "address": {
+        "@type": "PostalAddress",
+        "addressCountry": "BE"
+      },
+      "areaServed": ["Belgique", "Wallonie", "Flandre", "Bruxelles"],
+      "serviceType": "Conseil en subsides et primes",
+      "knowsAbout": ["Primes énergétiques", "Subsides belges", "Primes rénovation", "Aides publiques"],
+      "offers": {
+        "@type": "Service",
+        "name": "Accompagnement intelligent pour obtenir vos primes",
+        "description": "Assistant IA avec 324 subsides référencés pour un accompagnement expert"
+      }
+    }
+    </script>
 
     <%# Includes all stylesheet files in app/assets/stylesheets %>
     <%= stylesheet_link_tag :app, "data-turbo-track": "reload" %>
@@ -38,6 +82,9 @@
   <body class="bg-gray-50 min-h-screen flex flex-col">
     <!-- Navigation -->
     <%= render 'shared/navbar' %>
+
+    <!-- Navigation géographique -->
+    <%= render 'shared/geo_navigation' %>
 
     <!-- Contenu principal -->
     <main class="flex-1">
