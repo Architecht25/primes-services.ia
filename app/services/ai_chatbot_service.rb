@@ -126,6 +126,7 @@ class AiChatbotService
     assistant_name = @config.dig(:assistant, :name)
     user_region = @conversation.user_region || @config.dig(:regions, :default)
     user_type = @conversation.user_type || "visiteur"
+    regional_info = get_regional_context
 
     <<~PROMPT
       Tu es #{assistant_name}, l'assistant IA spécialisé en subsides et primes en Belgique.
@@ -140,18 +141,26 @@ class AiChatbotService
       - Conseiller personnalisé selon le profil et la région
       - Guide vers les bonnes démarches et Ren0vate pour l'accompagnement complet
 
+      SOURCES OFFICIELLES (#{regional_info[:name]}):
+      #{regional_info[:official_urls]&.map { |type, url| "- #{type.to_s.humanize}: #{url}" }&.join("\n") || "Sources non disponibles"}
+
+      IMPORTANT: #{regional_info[:key_info]}
+
       RÈGLES IMPORTANTES:
       1. Réponds toujours en français belge (#{@config.dig(:assistant, :language)})
       2. Sois précis sur les montants et conditions selon la région
-      3. Propose toujours des actions concrètes
-      4. Redirige vers Ren0vate pour l'accompagnement détaillé
-      5. Si tu ne sais pas, dis-le et propose de contacter un expert humain
+      3. TOUJOURS mentionner les sources officielles dans tes réponses
+      4. Propose toujours des actions concrètes
+      5. Redirige vers Ren0vate pour l'accompagnement détaillé
+      6. Inclus les liens vers les sites officiels quand pertinent
+      7. Si tu ne sais pas, dis-le et propose de contacter un expert humain
 
       STYLE:
       - Professionnel mais accessible
       - Utilise des exemples concrets
       - Structure tes réponses clairement
       - Propose des boutons d'action quand pertinent
+      - Mentionne les sources officielles pour la crédibilité
 
       Tu as accès aux données temps réel des subsides belges et aux spécificités régionales.
     PROMPT
@@ -178,7 +187,16 @@ class AiChatbotService
         authority: 'Région wallonne',
         language: 'fr',
         specific_programs: ['Rénopack', 'Prime Habitation', 'Audits énergétiques'],
-        contact_info: 'Service Public de Wallonie'
+        contact_info: 'Service Public de Wallonie',
+        official_urls: {
+          main: 'https://energie.wallonie.be/',
+          prime_habitation: 'https://energie.wallonie.be/fr/prime-habitation.html',
+          audit_energetique: 'https://energie.wallonie.be/fr/audit-energetique-et-architectural.html',
+          isolation: 'https://energie.wallonie.be/fr/prime-isolation.html',
+          chauffage: 'https://energie.wallonie.be/fr/prime-chauffage.html',
+          renovation: 'https://energie.wallonie.be/fr/prime-renovation.html'
+        },
+        key_info: 'Référez-vous toujours aux informations officielles du Service Public de Wallonie pour les montants et conditions exactes.'
       }
     when 'flandre'
       {
@@ -186,7 +204,15 @@ class AiChatbotService
         authority: 'Vlaams Gewest',
         language: 'nl',
         specific_programs: ['Vlaamse renovatiepremie', 'Energiepremie'],
-        contact_info: 'Vlaams Energie- en Klimaatagentschap'
+        contact_info: 'Vlaams Energie- en Klimaatagentschap',
+        official_urls: {
+          main: 'https://www.vlaanderen.be/',
+          renovation: 'https://www.vlaanderen.be/premies-voor-verbouwingen',
+          energie: 'https://www.vlaanderen.be/bouwen-wonen-en-energie',
+          isolation: 'https://www.vlaanderen.be/premie-voor-isolatie',
+          chauffage: 'https://www.vlaanderen.be/premie-voor-verwarmingsinstallatie'
+        },
+        key_info: 'Verwijs altijd naar de officiële informatie van de Vlaamse overheid voor exacte bedragen en voorwaarden.'
       }
     when 'bruxelles'
       {
@@ -194,7 +220,15 @@ class AiChatbotService
         authority: 'Région de Bruxelles-Capitale',
         language: 'fr/nl',
         specific_programs: ['Prime Renolution', 'Prime énergie'],
-        contact_info: 'Bruxelles Environnement'
+        contact_info: 'Bruxelles Environnement',
+        official_urls: {
+          main: 'https://www.bruxellesenvironnement.be/',
+          primes: 'https://www.bruxellesenvironnement.be/particuliers/mes-aides-financieres-et-primes',
+          renolution: 'https://www.renolution.brussels/',
+          isolation: 'https://www.bruxellesenvironnement.be/particuliers/mes-aides-financieres-et-primes/prime-energie/isolation',
+          chauffage: 'https://www.bruxellesenvironnement.be/particuliers/mes-aides-financieres-et-primes/prime-energie/chauffage'
+        },
+        key_info: 'Référez-vous toujours aux informations officielles de Bruxelles Environnement pour les montants et conditions exactes.'
       }
     else
       {
@@ -202,7 +236,9 @@ class AiChatbotService
         authority: 'National',
         language: 'fr/nl',
         specific_programs: [],
-        contact_info: 'Service fédéral'
+        contact_info: 'Service fédéral',
+        official_urls: {},
+        key_info: 'Veuillez spécifier votre région pour obtenir des informations précises sur les primes disponibles.'
       }
     end
   end
@@ -254,19 +290,53 @@ class AiChatbotService
   end
 
   def enhance_response(ai_content, intent_analysis)
-    # Enrichir la réponse avec des actions suggérées
+    # Enrichir la réponse avec des actions suggérées et les liens officiels
     actions = build_suggested_actions(intent_analysis)
+    enhanced_content = add_official_links(ai_content, intent_analysis)
 
     {
-      content: ai_content,
+      content: enhanced_content,
       actions: actions,
       metadata: {
         intent: intent_analysis,
-        response_type: determine_response_type(ai_content),
+        response_type: determine_response_type(enhanced_content),
         timestamp: Time.current.iso8601,
         model_used: @config.dig(:openai, :model)
       }
     }
+  end
+
+  def add_official_links(content, intent_analysis)
+    regional_info = get_regional_context
+    return content unless regional_info[:official_urls]&.any?
+
+    # Ajouter les liens pertinents selon l'intent
+    relevant_links = []
+
+    case intent_analysis[:category]
+    when :isolation
+      relevant_links << { text: "Prime isolation", url: regional_info[:official_urls][:isolation] } if regional_info[:official_urls][:isolation]
+    when :chauffage
+      relevant_links << { text: "Prime chauffage", url: regional_info[:official_urls][:chauffage] } if regional_info[:official_urls][:chauffage]
+    when :renovation_generale, :aide_financiere
+      relevant_links << { text: "Prime rénovation", url: regional_info[:official_urls][:renovation] } if regional_info[:official_urls][:renovation]
+      relevant_links << { text: "Prime habitation", url: regional_info[:official_urls][:prime_habitation] } if regional_info[:official_urls][:prime_habitation]
+    when :audit_energetique
+      relevant_links << { text: "Audit énergétique", url: regional_info[:official_urls][:audit_energetique] } if regional_info[:official_urls][:audit_energetique]
+    end
+
+    # Toujours ajouter le lien principal
+    relevant_links << { text: "Site officiel #{regional_info[:name]}", url: regional_info[:official_urls][:main] } if regional_info[:official_urls][:main]
+
+    if relevant_links.any?
+      links_section = "\n\n**📋 Sources officielles :**\n"
+      relevant_links.each do |link|
+        links_section += "- [#{link[:text]}](#{link[:url]})\n"
+      end
+      content + links_section
+    else
+      content
+    end
   end
 
   def build_suggested_actions(intent_analysis)
