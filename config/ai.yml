@@ -18,7 +18,7 @@ development:
     supported: <%= ENV.fetch("SUPPORTED_REGIONS") { "wallonie,flandre,bruxelles" }.split(",") %>
 
   integrations:
-    renovate_base_url: <%= ENV.fetch("RENOVATE_BASE_URL") { "https://ren0vate.primes/" } %>
+    renovate_base_url: <%= ENV.fetch("RENOVATE_BASE_URL") { "https://ren0vate-630b5136c442.herokuapp.com/" } %>
     team_email: <%= ENV.fetch("TEAM_EMAIL") { "equipe@primes-services.be" } %>
 
   debug:

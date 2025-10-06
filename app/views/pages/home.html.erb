@@ -21,11 +21,11 @@
         <!-- Statistiques en temps réel -->
         <div class="grid grid-cols-3 gap-4 mb-8 text-center">
           <div class="bg-white/10 rounded-lg p-4 backdrop-blur-sm">
-            <div class="text-2xl font-bold text-yellow-300">68M€</div>
+            <div class="text-2xl font-bold text-yellow-300">+100M€</div>
             <div class="text-sm text-blue-100">Primes obtenues</div>
           </div>
           <div class="bg-white/10 rounded-lg p-4 backdrop-blur-sm">
-            <div class="text-2xl font-bold text-yellow-300">4.476</div>
+            <div class="text-2xl font-bold text-yellow-300">+15.000</div>
             <div class="text-sm text-blue-100">Dossiers traités</div>
           </div>
           <div class="bg-white/10 rounded-lg p-4 backdrop-blur-sm">
@@ -158,11 +158,11 @@
         <div>
           <h4 class="font-semibold text-green-600 mb-4">✅ Assistant Primes Services</h4>
           <ul class="space-y-2 text-gray-700">
-            <li>• Base de données officielle des 324 subsides</li>
+            <li>• Base de données officielle de +150 subsides</li>
             <li>• Mise à jour réglementaire temps réel</li>
             <li>• Calculs précis par région belge</li>
             <li>• Accompagnement humain expert</li>
-            <li>• Workflow complet jusqu'au dépôt</li>
+            <li>• Workflow complet jusqu'au dépôt</li> 
           </ul>
         </div>
 
@@ -215,9 +215,11 @@
               📋 Formulaire spécialisé
             </button>
 
-            <button class="w-full bg-blue-200 text-blue-800 py-2 px-4 rounded-lg text-sm font-medium hover:bg-blue-300 transition-colors">
+            <%= link_to "https://ren0vate-630b5136c442.herokuapp.com?source=primes-services&profile=particulier",
+                target: "_blank",
+                class: "block w-full bg-blue-200 text-blue-800 py-2 px-4 rounded-lg text-sm font-medium hover:bg-blue-300 transition-colors text-center" do %>
               🔄 Vers Ren0vate
-            </button>
+            <% end %>
           </div>
         </div>
       </div>
@@ -243,9 +245,11 @@
               📋 Formulaire ACP
             </button>
 
-            <button class="w-full bg-green-200 text-green-800 py-2 px-4 rounded-lg text-sm font-medium hover:bg-green-300 transition-colors">
+            <%= link_to "https://ren0vate-630b5136c442.herokuapp.com?source=primes-services&profile=acp",
+                target: "_blank",
+                class: "block w-full bg-green-200 text-green-800 py-2 px-4 rounded-lg text-sm font-medium hover:bg-green-300 transition-colors text-center" do %>
               🔄 Vers Ren0vate
-            </button>
+            <% end %>
           </div>
         </div>
       </div>
@@ -271,9 +275,11 @@
               📋 Formulaire Pro
             </button>
 
-            <button class="w-full bg-purple-200 text-purple-800 py-2 px-4 rounded-lg text-sm font-medium hover:bg-purple-300 transition-colors">
+            <%= link_to "https://ren0vate-630b5136c442.herokuapp.com?source=primes-services&profile=entreprise_immo",
+                target: "_blank",
+                class: "block w-full bg-purple-200 text-purple-800 py-2 px-4 rounded-lg text-sm font-medium hover:bg-purple-300 transition-colors text-center" do %>
               🔄 Vers Ren0vate
-            </button>
+            <% end %>
           </div>
         </div>
       </div>
@@ -299,9 +305,11 @@
               📋 Formulaire Business
             </button>
 
-            <button class="w-full bg-orange-200 text-orange-800 py-2 px-4 rounded-lg text-sm font-medium hover:bg-orange-300 transition-colors">
+            <%= link_to "https://ren0vate-630b5136c442.herokuapp.com?source=primes-services&profile=entreprise_comm",
+                target: "_blank",
+                class: "block w-full bg-orange-200 text-orange-800 py-2 px-4 rounded-lg text-sm font-medium hover:bg-orange-300 transition-colors text-center" do %>
               🔄 Vers Ren0vate
-            </button>
+            <% end %>
           </div>
         </div>
       </div>
