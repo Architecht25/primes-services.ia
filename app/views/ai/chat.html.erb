@@ -1,6 +1,13 @@
 <% content_for :title, "Chat IA - Assistant Primes Services" %>
 
-<div class="min-h-screen bg-gray-50 flex flex-col">
+<div 
+  class="min-h-screen bg-gray-50 flex flex-col"
+  data-controller="ai-chat"
+  data-ai-chat-conversation-id-value="<%= @conversation_stats[:session_id] %>"
+  data-ai-chat-user-type-value="<%= session[:user_type] || 'visiteur' %>"
+  data-ai-chat-user-region-value="<%= session[:user_region] || 'wallonie' %>"
+  data-ai-chat-api-url-value="/ai"
+>
   <!-- Header du chat -->
   <header class="bg-white shadow-sm border-b border-gray-200 px-4 py-3">
     <div class="max-w-4xl mx-auto flex items-center justify-between">
@@ -183,16 +190,6 @@
     </div>
   </main>
 </div>
-
-<!-- Contrôleur Stimulus -->
-<div
-  data-controller="ai-chat"
-  data-ai-chat-conversation-id-value="<%= @conversation_stats[:session_id] %>"
-  data-ai-chat-user-type-value="<%= session[:user_type] || 'visiteur' %>"
-  data-ai-chat-user-region-value="<%= session[:user_region] || 'wallonie' %>"
-  data-ai-chat-api-url-value="/ai"
-  class="hidden"
-></div>
 
 <!-- Styles CSS personnalisés -->
 <style>

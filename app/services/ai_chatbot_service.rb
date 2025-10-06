@@ -12,6 +12,11 @@ class AiChatbotService
     @logger = Rails.logger
   end
 
+  # Méthode logger pour le module Benchmarkable
+  def logger
+    @logger
+  end
+
   # Point d'entrée principal pour traiter un message utilisateur
   def process_message(user_message, metadata: {})
     return error_response("Message vide") if user_message.blank?
@@ -314,7 +319,7 @@ class AiChatbotService
   def determine_response_type(content)
     return 'calculation' if content.match?(/€|EUR|euros?/i)
     return 'procedure' if content.match?(/étapes?|démarches?|procédure/i)
-    return 'information' if content.match?/conditions?|critères?/i
+    return 'information' if content.match?(/conditions?|critères?/i)
     'general'
   end
 
