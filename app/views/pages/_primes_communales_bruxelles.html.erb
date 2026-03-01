@@ -1,0 +1,93 @@
+<div class="bg-gradient-to-br from-emerald-50 to-emerald-100 rounded-xl shadow-lg p-6 lg:p-8 border border-emerald-200 hover:shadow-xl transition-shadow">
+  <div class="flex items-start space-x-4">
+    <div class="flex-shrink-0 w-16 h-16 bg-emerald-600 rounded-full flex items-center justify-center text-3xl">
+      🏘️
+    </div>
+    <div class="flex-1">
+      <h3 class="text-2xl font-bold text-gray-900 mb-3">
+        Primes Communales Bruxelloises
+      </h3>
+      <p class="text-gray-700 mb-4">
+        Les 19 communes de Bruxelles proposent des primes complémentaires pour la rénovation énergétique et l'embellissement des façades. Ces primes se cumulent avec les primes régionales !
+      </p>
+
+      <div class="grid md:grid-cols-2 gap-4 mb-4">
+        <div class="bg-white rounded-lg p-4">
+          <div class="text-sm font-semibold text-emerald-900 mb-1">💰 Montant</div>
+          <div class="text-lg font-bold text-emerald-700">400€ à 6 000€</div>
+          <div class="text-sm text-gray-600">selon la commune et travaux</div>
+        </div>
+        <div class="bg-white rounded-lg p-4">
+          <div class="text-sm font-semibold text-emerald-900 mb-1">🗺️ Couverture</div>
+          <div class="text-sm text-gray-700">19 communes bruxelloises</div>
+        </div>
+      </div>
+
+      <div class="bg-white rounded-lg p-4 mb-4">
+        <h4 class="font-semibold text-gray-900 mb-2">✓ Exemples de primes communales :</h4>
+        <ul class="space-y-1 text-sm text-gray-700">
+          <li>• <strong>Bruxelles-Ville :</strong> Jusqu'à 5 000€ pour rénovation de façade</li>
+          <li>• <strong>Ixelles :</strong> Prime isolation + prime énergie renouvelable</li>
+          <li>• <strong>Schaerbeek :</strong> Jusqu'à 4 000€ pour travaux énergétiques</li>
+          <li>• <strong>Uccle :</strong> Prime embellissement façade + prime verte</li>
+          <li>• <strong>Etterbeek :</strong> Bonus photovoltaïque et pompe à chaleur</li>
+          <li>• <strong>Saint-Gilles :</strong> Primes rénovation façade et isolation</li>
+          <li>• <em>Et 13 autres communes...</em></li>
+        </ul>
+      </div>
+
+      <div class="bg-white rounded-lg p-4 mb-4">
+        <h4 class="font-semibold text-gray-900 mb-2">📋 Types de primes disponibles :</h4>
+        <div class="grid md:grid-cols-2 gap-2 text-sm text-gray-700">
+          <div class="flex items-start space-x-2">
+            <span class="text-emerald-600">✓</span>
+            <div>Rénovation de façade</div>
+          </div>
+          <div class="flex items-start space-x-2">
+            <span class="text-emerald-600">✓</span>
+            <div>Isolation thermique</div>
+          </div>
+          <div class="flex items-start space-x-2">
+            <span class="text-emerald-600">✓</span>
+            <div>Toitures vertes</div>
+          </div>
+          <div class="flex items-start space-x-2">
+            <span class="text-emerald-600">✓</span>
+            <div>Panneaux solaires</div>
+          </div>
+          <div class="flex items-start space-x-2">
+            <span class="text-emerald-600">✓</span>
+            <div>Pompes à chaleur</div>
+          </div>
+          <div class="flex items-start space-x-2">
+            <span class="text-emerald-600">✓</span>
+            <div>Châssis performants</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="bg-amber-50 rounded-lg p-4 mb-4 border border-amber-200">
+        <div class="flex items-start space-x-2">
+          <span class="text-xl">💡</span>
+          <div class="text-sm text-gray-700">
+            <strong>Astuce :</strong> Chaque commune a ses propres critères et délais. Contactez votre administration communale avant de débuter les travaux ou utilisez notre assistant IA pour identifier automatiquement les primes de votre commune.
+          </div>
+        </div>
+      </div>
+
+      <div class="flex flex-wrap gap-3">
+        <%= link_to "https://1819.brussels/infotheque/primes-aides-subventions/renovation/primes-communales-bruxelles", target: "_blank", rel: "noopener",
+            class: "inline-flex items-center px-5 py-3 bg-emerald-600 text-white font-semibold rounded-lg hover:bg-emerald-700 transition-colors shadow-md" do %>
+          🔍 Rechercher ma commune
+          <svg class="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path>
+          </svg>
+        <% end %>
+        <%= link_to ai_chat_path,
+            class: "inline-flex items-center px-5 py-3 bg-white text-emerald-600 font-semibold rounded-lg hover:bg-emerald-50 transition-colors border border-emerald-300" do %>
+          💬 Poser une question
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>

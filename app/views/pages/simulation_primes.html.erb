@@ -1,20 +1,58 @@
 <%
   region_config = {
-    'wallonie' => { name: 'Wallonie', color: 'blue', icon: '🟦' },
-    'flandre' => { name: 'Flandre', color: 'orange', icon: '🟧' },
-    'bruxelles' => { name: 'Bruxelles', color: 'green', icon: '🟩' }
+    'wallonie' => { name: 'Wallonie', color: 'blue', icon: '🟦', 
+                    hero_bg: 'bg-gradient-to-br from-blue-600 via-blue-700 to-green-600',
+                    text_light: 'text-blue-100',
+                    link_color: 'text-blue-100 hover:text-white' },
+    'flandre' => { name: 'Flandre', color: 'orange', icon: '🟧',
+                   hero_bg: 'bg-gradient-to-br from-orange-600 via-orange-700 to-green-600',
+                   text_light: 'text-orange-100',
+                   link_color: 'text-orange-100 hover:text-white' },
+    'bruxelles' => { name: 'Bruxelles', color: 'green', icon: '🟩',
+                     hero_bg: 'bg-gradient-to-br from-green-600 via-green-700 to-emerald-600',
+                     text_light: 'text-green-100',
+                     link_color: 'text-green-100 hover:text-white' }
   }
   config = region_config[@region] || region_config['wallonie']
+  
+  # Classes CSS selon la région
+  input_focus = @region == 'wallonie' ? 'focus:ring-blue-500 focus:border-blue-500' : 
+                @region == 'flandre' ? 'focus:ring-orange-500 focus:border-orange-500' : 
+                'focus:ring-green-500 focus:border-green-500'
+  
+  checkbox_color = @region == 'wallonie' ? 'text-blue-600 focus:ring-blue-500' :
+                   @region == 'flandre' ? 'text-orange-600 focus:ring-orange-500' :
+                   'text-green-600 focus:ring-green-500'
+  
+  btn_gradient = @region == 'wallonie' ? 'bg-gradient-to-r from-blue-600 to-green-600 hover:from-blue-700 hover:to-green-700' :
+                 @region == 'flandre' ? 'bg-gradient-to-r from-orange-600 to-green-600 hover:from-orange-700 hover:to-green-700' :
+                 'bg-gradient-to-r from-green-600 to-emerald-600 hover:from-green-700 hover:to-emerald-700'
+  
+  results_bg = @region == 'wallonie' ? 'bg-gradient-to-r from-green-50 to-blue-50' :
+               @region == 'flandre' ? 'bg-gradient-to-r from-green-50 to-orange-50' :
+               'bg-gradient-to-r from-green-50 to-emerald-50'
+  
+  cta_bg = @region == 'wallonie' ? 'bg-gradient-to-r from-blue-600 to-green-600' :
+           @region == 'flandre' ? 'bg-gradient-to-r from-orange-600 to-green-600' :
+           'bg-gradient-to-r from-green-600 to-emerald-600'
+  
+  cta_btn_white = @region == 'wallonie' ? 'bg-white text-blue-600 hover:bg-gray-100' :
+                  @region == 'flandre' ? 'bg-white text-orange-600 hover:bg-gray-100' :
+                  'bg-white text-green-600 hover:bg-gray-100'
+  
+  cta_btn_light = @region == 'wallonie' ? 'bg-blue-100 text-blue-900 hover:bg-blue-200' :
+                  @region == 'flandre' ? 'bg-orange-100 text-orange-900 hover:bg-orange-200' :
+                  'bg-green-100 text-green-900 hover:bg-green-200'
 %>
 
 <% content_for :title, "Simulation Primes #{config[:name]} - Calculez vos aides" %>
 <% content_for :description, "Simulateur de primes de rénovation pour la #{config[:name]}. Calcul instantané selon vos revenus et travaux." %>
 
 <!-- Hero -->
-<section class="bg-gradient-to-br from-<%= config[:color] %>-600 via-<%= config[:color] %>-700 to-green-600 text-white py-16">
+<section class="<%= config[:hero_bg] %> text-white py-16">
   <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
     <div class="mb-4">
-      <%= link_to simulation_region_path(@region), class: "text-<%= config[:color] %>-100 hover:text-white text-sm" do %>
+      <%= link_to simulation_region_path(@region), class: "#{config[:link_color]} text-sm" do %>
         ← Retour
       <% end %>
     </div>
@@ -25,12 +63,116 @@
       Simulation Primes - <%= config[:name] %>
     </h1>
 
-    <p class="text-xl text-<%= config[:color] %>-100">
+    <p class="text-xl <%= config[:text_light] %>">
       Calculez instantanément le montant des primes auxquelles vous avez droit
     </p>
   </div>
 </section>
 
+<% if @region == 'wallonie' %>
+<!-- Primes spécifiques Wallonie -->
+<section class="py-12 bg-white">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="text-center mb-10">
+      <h2 class="text-3xl lg:text-4xl font-bold text-gray-900 mb-4">
+        Primes spécifiques disponibles en Wallonie
+      </h2>
+      <p class="text-lg text-gray-600">
+        Découvrez les primes adaptées à votre situation
+      </p>
+    </div>
+
+    <div class="space-y-6">
+      <!-- Prime Monuments et Sites -->
+      <%= render partial: 'pages/prime_monuments_sites' %>
+
+      <!-- Primes Communales -->
+      <%= render partial: 'pages/primes_communales' %>
+
+      <!-- Prime Audit -->
+      <%= render partial: 'pages/prime_audit' %>
+    </div>
+  </div>
+</section>
+<% end %>
+
+<% if @region == 'flandre' %>
+<!-- Primes spécifiques Flandre -->
+<section class="py-12 bg-white">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="text-center mb-10">
+      <h2 class="text-3xl lg:text-4xl font-bold text-gray-900 mb-4">
+        Primes spécifiques disponibles en Flandre
+      </h2>
+      <p class="text-lg text-gray-600">
+        Découvrez les primes adaptées à votre situation
+      </p>
+    </div>
+
+    <div class="space-y-6">
+      <!-- Prime Monuments et Sites -->
+      <%= render partial: 'pages/prime_monuments_sites_flandre' %>
+
+      <!-- Primes Communales -->
+      <%= render partial: 'pages/primes_communales_flandre' %>
+
+      <!-- Prime PEB -->
+      <%= render partial: 'pages/prime_peb' %>
+    </div>
+  </div>
+</section>
+<% end %>
+
+<% if @region == 'bruxelles' %>
+<!-- Primes spécifiques Bruxelles -->
+<section class="py-12 bg-white">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="text-center mb-10">
+      <h2 class="text-3xl lg:text-4xl font-bold text-gray-900 mb-4">
+        Primes spécifiques disponibles à Bruxelles
+      </h2>
+      <p class="text-lg text-gray-600">
+        Découvrez les primes adaptées à votre situation
+      </p>
+    </div>
+
+    <div class="space-y-6">
+      <!-- Prime Monuments et Sites -->
+      <%= render partial: 'pages/prime_monuments_sites_bruxelles' %>
+
+      <!-- Primes Communales -->
+      <%= render partial: 'pages/primes_communales_bruxelles' %>
+
+      <!-- Prime Petit Patrimoine -->
+      <%= render partial: 'pages/prime_petit_patrimoine' %>
+    </div>
+
+    <!-- CTA vers assistant IA -->
+    <div class="mt-12 text-center">
+      <div class="bg-gradient-to-r from-green-50 to-emerald-50 rounded-xl p-8 border border-green-200">
+        <h3 class="text-2xl font-bold text-gray-900 mb-3">
+          💬 Besoin d'aide pour votre projet ?
+        </h3>
+        <p class="text-gray-700 mb-6">
+          Notre assistant IA peut vous aider à identifier toutes les primes auxquelles vous avez droit et vous accompagner dans vos démarches.
+        </p>
+        <div class="flex flex-col sm:flex-row gap-4 justify-center">
+          <%= link_to ai_chat_path,
+              class: "inline-flex items-center justify-center px-8 py-4 bg-green-600 text-white font-bold text-lg rounded-lg hover:bg-green-700 transition-colors shadow-lg" do %>
+            💬 Discuter avec l'assistant IA
+          <% end %>
+          <%= link_to simulation_prets_path(@region),
+              class: "inline-flex items-center justify-center px-8 py-4 bg-white text-green-600 font-bold text-lg rounded-lg hover:bg-green-50 transition-colors border-2 border-green-600" do %>
+            🏦 Découvrir les prêts disponibles
+          <% end %>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<% end %>
+
+<% if @region != 'bruxelles' %>
 <!-- Formulaire de simulation -->
 <section class="py-12 bg-gray-50">
   <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -47,7 +189,7 @@
           </label>
           <input type="number" id="revenus" name="revenus" required
                  placeholder="Ex: 45000"
-                 class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-<%= config[:color] %>-500 focus:border-<%= config[:color] %>-500">
+                 class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 <%= input_focus %>">
           <p class="text-sm text-gray-500 mt-1">Revenus nets imposables de l'année précédente</p>
         </div>
 
@@ -59,7 +201,7 @@
           <div class="space-y-3">
             <label class="flex items-center space-x-3 p-3 hover:bg-gray-50 rounded-lg cursor-pointer">
               <input type="checkbox" name="travaux" value="isolation_toiture"
-                     class="w-5 h-5 text-<%= config[:color] %>-600 rounded focus:ring-<%= config[:color] %>-500">
+                     class="w-5 h-5 <%= checkbox_color %> rounded">
               <span class="flex-1">
                 <strong>Isolation de toiture</strong>
                 <span class="block text-sm text-gray-500">Toit, combles, grenier</span>
@@ -67,7 +209,7 @@
             </label>
             <label class="flex items-center space-x-3 p-3 hover:bg-gray-50 rounded-lg cursor-pointer">
               <input type="checkbox" name="travaux" value="isolation_murs"
-                     class="w-5 h-5 text-<%= config[:color] %>-600 rounded focus:ring-<%= config[:color] %>-500">
+                     class="w-5 h-5 <%= checkbox_color %> rounded">
               <span class="flex-1">
                 <strong>Isolation des murs</strong>
                 <span class="block text-sm text-gray-500">Murs creux, façades</span>
@@ -75,7 +217,7 @@
             </label>
             <label class="flex items-center space-x-3 p-3 hover:bg-gray-50 rounded-lg cursor-pointer">
               <input type="checkbox" name="travaux" value="chaudiere"
-                     class="w-5 h-5 text-<%= config[:color] %>-600 rounded focus:ring-<%= config[:color] %>-500">
+                     class="w-5 h-5 <%= checkbox_color %> rounded">
               <span class="flex-1">
                 <strong>Chaudière / Pompe à chaleur</strong>
                 <span class="block text-sm text-gray-500">Système de chauffage performant</span>
@@ -83,7 +225,7 @@
             </label>
             <label class="flex items-center space-x-3 p-3 hover:bg-gray-50 rounded-lg cursor-pointer">
               <input type="checkbox" name="travaux" value="chauffe_eau"
-                     class="w-5 h-5 text-<%= config[:color] %>-600 rounded focus:ring-<%= config[:color] %>-500">
+                     class="w-5 h-5 <%= checkbox_color %> rounded">
               <span class="flex-1">
                 <strong>Chauffe-eau solaire</strong>
                 <span class="block text-sm text-gray-500">Production eau chaude sanitaire</span>
@@ -91,7 +233,7 @@
             </label>
             <label class="flex items-center space-x-3 p-3 hover:bg-gray-50 rounded-lg cursor-pointer">
               <input type="checkbox" name="travaux" value="photovoltaique"
-                     class="w-5 h-5 text-<%= config[:color] %>-600 rounded focus:ring-<%= config[:color] %>-500">
+                     class="w-5 h-5 <%= checkbox_color %> rounded">
               <span class="flex-1">
                 <strong>Panneaux photovoltaïques</strong>
                 <span class="block text-sm text-gray-500">Production électricité verte</span>
@@ -99,7 +241,7 @@
             </label>
             <label class="flex items-center space-x-3 p-3 hover:bg-gray-50 rounded-lg cursor-pointer">
               <input type="checkbox" name="travaux" value="ventilation"
-                     class="w-5 h-5 text-<%= config[:color] %>-600 rounded focus:ring-<%= config[:color] %>-500">
+                     class="w-5 h-5 <%= checkbox_color %> rounded">
               <span class="flex-1">
                 <strong>Ventilation double flux</strong>
                 <span class="block text-sm text-gray-500">Système de ventilation mécanique</span>
@@ -115,19 +257,19 @@
           </label>
           <input type="number" id="budget" name="budget" required
                  placeholder="Ex: 25000"
-                 class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-<%= config[:color] %>-500 focus:border-<%= config[:color] %>-500">
+                 class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 <%= input_focus %>">
           <p class="text-sm text-gray-500 mt-1">Montant total TTC de votre projet</p>
         </div>
 
         <!-- Bouton de simulation -->
         <button type="submit"
-                class="w-full bg-gradient-to-r from-<%= config[:color] %>-600 to-green-600 text-white px-8 py-4 rounded-lg font-bold text-lg hover:from-<%= config[:color] %>-700 hover:to-green-700 transition-all shadow-lg">
+                class="w-full <%= btn_gradient %> text-white px-8 py-4 rounded-lg font-bold text-lg transition-all shadow-lg">
           🎯 Calculer mes primes
         </button>
       </form>
 
       <!-- Résultats -->
-      <div id="results" class="hidden mt-8 p-6 bg-gradient-to-r from-green-50 to-<%= config[:color] %>-50 rounded-xl">
+      <div id="results" class="hidden mt-8 p-6 <%= results_bg %> rounded-xl">
         <h3 class="text-2xl font-bold text-gray-900 mb-4">📊 Résultats de votre simulation</h3>
         <div id="results-content" class="space-y-4"></div>
       </div>
@@ -136,23 +278,23 @@
 </section>
 
 <!-- CTA -->
-<section class="py-12 bg-gradient-to-r from-<%= config[:color] %>-600 to-green-600 text-white">
+<section class="py-12 <%= cta_bg %> text-white">
   <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
     <h2 class="text-3xl font-bold mb-4">
       Et les prêts à taux 0% ?
     </h2>
-    <p class="text-xl mb-8 text-<%= config[:color] %>-100">
+    <p class="text-xl mb-8 <%= config[:text_light] %>">
       Complétez votre plan de financement avec les prêts avantageux
     </p>
 
     <div class="flex flex-col sm:flex-row gap-4 justify-center">
       <%= link_to simulation_prets_path(@region),
-          class: "bg-white text-<%= config[:color] %>-600 px-8 py-4 rounded-lg font-bold text-lg hover:bg-gray-100 transition-colors shadow-lg" do %>
+          class: "#{cta_btn_white} px-8 py-4 rounded-lg font-bold text-lg transition-colors shadow-lg" do %>
         🏦 Simuler les prêts
       <% end %>
 
       <%= link_to ai_chat_path,
-          class: "bg-<%= config[:color] %>-100 text-<%= config[:color] %>-900 px-8 py-4 rounded-lg font-bold text-lg hover:bg-<%= config[:color] %>-200 transition-colors" do %>
+          class: "#{cta_btn_light} px-8 py-4 rounded-lg font-bold text-lg transition-colors" do %>
         💬 Poser une question
       <% end %>
     </div>
@@ -241,3 +383,4 @@ document.addEventListener('DOMContentLoaded', function() {
   });
 });
 </script>
+<% end %>
