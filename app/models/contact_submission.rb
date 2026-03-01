@@ -25,6 +25,8 @@ class ContactSubmission < ApplicationRecord
   scope :processed, -> { where(status: 'processed') }
   scope :recent, -> { order(submitted_at: :desc) }
   scope :this_month, -> { where(submitted_at: 1.month.ago..Time.current) }
+  scope :unread, -> { where(read_at: nil) }
+  scope :read, -> { where.not(read_at: nil) }
 
   # Méthodes d'instance
   def processed?
@@ -45,6 +47,14 @@ class ContactSubmission < ApplicationRecord
 
   def mark_as_completed!
     update!(status: 'completed')
+  end
+
+  def read?
+    read_at.present?
+  end
+
+  def mark_as_read!
+    update!(read_at: Time.current) unless read?
   end
 
   def processing_time

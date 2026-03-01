@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_10_05_164609) do
+ActiveRecord::Schema[8.0].define(version: 2026_03_01_125616) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -98,8 +98,30 @@ ActiveRecord::Schema[8.0].define(version: 2025_10_05_164609) do
     t.string "income_range"
     t.string "project_scale"
     t.string "target_market"
+    t.datetime "read_at"
+    t.string "ip_address"
+    t.text "user_agent"
+    t.string "first_name"
+    t.string "last_name"
+    t.string "property_type"
+    t.string "work_type"
+    t.string "submission_type"
     t.index ["city"], name: "index_contact_submissions_on_city"
     t.index ["postal_code"], name: "index_contact_submissions_on_postal_code"
+  end
+
+  create_table "page_visits", force: :cascade do |t|
+    t.string "visitor_id"
+    t.string "page_path"
+    t.string "referrer"
+    t.text "user_agent"
+    t.string "ip_address"
+    t.string "user_region"
+    t.string "device_type"
+    t.string "session_id"
+    t.integer "time_on_page"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "primes", force: :cascade do |t|
@@ -110,6 +132,17 @@ ActiveRecord::Schema[8.0].define(version: 2025_10_05_164609) do
     t.index ["created_at"], name: "index_primes_on_created_at"
     t.index ["position"], name: "index_primes_on_position", unique: true
     t.index ["value"], name: "index_primes_on_value", unique: true
+  end
+
+  create_table "security_logs", force: :cascade do |t|
+    t.string "event_type"
+    t.string "severity"
+    t.string "ip_address"
+    t.text "user_agent"
+    t.jsonb "details"
+    t.text "description"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   add_foreign_key "ai_insights", "calculations"

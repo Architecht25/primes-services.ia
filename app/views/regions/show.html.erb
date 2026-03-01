@@ -1,0 +1,172 @@
+<% content_for :title, page_title("Primes et subsides en #{@region_info[:name]}", region: @region) %>
+<% content_for :description, "Découvrez toutes les primes et subsides en #{@region_info[:name]}. #{@region_info[:description]} Prêts à 0%, primes régionales et communales. Calcul instantané." %>
+<% content_for :keywords, page_keywords(region: @region, additional: [@region_info[:full_name], @region_info[:authority]]) %>
+
+<%# Schema.org LocalBusiness pour la région %>
+<%= local_business_schema_json_ld(region: @region) %>
+
+<%# Breadcrumbs %>
+<%= breadcrumbs_json_ld([
+  ['Accueil', root_path],
+  [@region_info[:name], nil]
+]) %>
+
+<%# FAQ Schema pour SEO %>
+<%= faq_schema_json_ld(@faqs) %>
+
+<div class="min-h-screen bg-gray-50">
+  <!-- Hero Section SEO-optimized -->
+  <section class="bg-gradient-to-br from-<%= @region_info[:color] %>-600 to-<%= @region_info[:color] %>-800 text-white py-20">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center">
+        <span class="inline-block px-4 py-2 bg-white bg-opacity-20 rounded-full text-sm font-semibold mb-4">
+          <%= @region_info[:full_name] %>
+        </span>
+        <h1 class="text-4xl md:text-5xl font-bold mb-6">
+          Primes et Subsides en <%= @region_info[:name] %>
+        </h1>
+        <p class="text-xl md:text-2xl max-w-3xl mx-auto mb-8 text-<%= @region_info[:color] %>-100">
+          <%= @region_info[:description] %>
+        </p>
+        
+        <div class="flex flex-col sm:flex-row gap-4 justify-center">
+          <%= link_to simulation_primes_path(region: @region), class: "bg-white text-#{@region_info[:color]}-600 px-8 py-4 rounded-lg font-bold text-lg hover:bg-gray-100 transition" do %>
+            🧮 Calculer mes primes
+          <% end %>
+          <%= link_to ai_chat_path, class: "bg-#{@region_info[:color]}-700 px-8 py-4 rounded-lg font-bold text-lg hover:bg-#{@region_info[:color]}-600 transition border-2 border-white" do %>
+            💬 Parler à l'assistant IA
+          <% end %>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Informations de contact régional -->
+  <section class="py-12 bg-white border-b">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <div class="text-center p-6">
+          <div class="text-3xl mb-2">🏛️</div>
+          <h3 class="font-bold text-lg mb-2">Autorité</h3>
+          <p class="text-gray-600"><%= @region_info[:authority] %></p>
+        </div>
+        <div class="text-center p-6">
+          <div class="text-3xl mb-2">📞</div>
+          <h3 class="font-bold text-lg mb-2">Contact</h3>
+          <p class="text-gray-600"><%= @region_info[:contact] %></p>
+        </div>
+        <div class="text-center p-6">
+          <div class="text-3xl mb-2">🌐</div>
+          <h3 class="font-bold text-lg mb-2">Site officiel</h3>
+          <%= link_to @region_info[:website], @region_info[:website], target: '_blank', class: 'text-blue-600 hover:underline' %>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Programmes de primes -->
+  <section class="py-16">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <h2 class="text-3xl font-bold mb-12 text-center">
+        Programmes de primes en <%= @region_info[:name] %>
+      </h2>
+      
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+        <% @prime_programs.each do |program| %>
+          <div class="bg-white rounded-xl shadow-lg p-6 hover:shadow-xl transition">
+            <h3 class="font-bold text-xl mb-3 text-<%= @region_info[:color] %>-600">
+              <%= program[:name] %>
+            </h3>
+            <p class="text-gray-600 text-sm mb-4">
+              <%= program[:description] %>
+            </p>
+            <div class="bg-<%= @region_info[:color] %>-50 rounded-lg p-3">
+              <p class="font-bold text-<%= @region_info[:color] %>-800">
+                <%= program[:amount] %>
+              </p>
+            </div>
+          </div>
+        <% end %>
+      </div>
+
+      <div class="text-center mt-12">
+        <%= link_to simulation_primes_path(region: @region), class: "inline-flex items-center gap-2 bg-#{@region_info[:color]}-600 text-white px-8 py-4 rounded-lg font-bold text-lg hover:bg-#{@region_info[:color]}-700 transition" do %>
+          <span>Voir toutes les primes en détail</span>
+          <span>→</span>
+        <% end %>
+      </div>
+    </div>
+  </section>
+
+  <!-- Villes principales SEO -->
+  <section class="py-16 bg-gray-100">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <h2 class="text-3xl font-bold mb-12 text-center">
+        Primes disponibles dans les principales villes
+      </h2>
+      
+      <div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-4 gap-4">
+        <% @major_cities.each do |city| %>
+          <div class="bg-white rounded-lg p-4 text-center hover:shadow-lg transition">
+            <h3 class="font-semibold text-lg">
+              <%= city %>
+            </h3>
+            <p class="text-sm text-gray-600 mt-2">
+              Primes <%= @region_info[:name] %>
+            </p>
+          </div>
+        <% end %>
+      </div>
+
+      <div class="mt-8 p-6 bg-white rounded-xl">
+        <p class="text-gray-600 text-center">
+          Les primes sont identiques dans toute la <%= @region_info[:name] %>, 
+          mais certaines communes offrent des primes complémentaires. 
+          <%= link_to "Vérifiez votre commune →", simulation_primes_path(region: @region), class: 'text-blue-600 font-semibold hover:underline' %>
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ Section pour SEO -->
+  <section class="py-16 bg-white">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+      <h2 class="text-3xl font-bold mb-12 text-center">
+        Questions fréquentes - Primes en <%= @region_info[:name] %>
+      </h2>
+      
+      <div class="space-y-6">
+        <% @faqs.each do |faq| %>
+          <div class="bg-gray-50 rounded-xl p-6">
+            <h3 class="font-bold text-xl mb-3 text-gray-900">
+              <%= faq[:question] %>
+            </h3>
+            <p class="text-gray-700">
+              <%= faq[:answer] %>
+            </p>
+          </div>
+        <% end %>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA Final -->
+  <section class="py-16 bg-gradient-to-r from-<%= @region_info[:color] %>-600 to-<%= @region_info[:color] %>-800 text-white">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+      <h2 class="text-3xl font-bold mb-6">
+        Prêt à découvrir vos primes en <%= @region_info[:name] %> ?
+      </h2>
+      <p class="text-xl mb-8">
+        Notre assistant IA analyse votre situation en quelques secondes
+      </p>
+      <div class="flex flex-col sm:flex-row gap-4 justify-center">
+        <%= link_to simulation_primes_path(region: @region), class: "bg-white text-#{@region_info[:color]}-600 px-8 py-4 rounded-lg font-bold text-lg hover:bg-gray-100 transition inline-block" do %>
+          Calculer mes primes
+        <% end %>
+        <%= link_to contacts_path, class: "bg-#{@region_info[:color]}-700 px-8 py-4 rounded-lg font-bold text-lg hover:bg-#{@region_info[:color]}-600 transition border-2 border-white inline-block" do %>
+          Être accompagné par un expert
+        <% end %>
+      </div>
+    </div>
+  </section>
+</div>

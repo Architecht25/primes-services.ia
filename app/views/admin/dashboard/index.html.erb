@@ -1,0 +1,198 @@
+<div>
+  <div style="margin-bottom: 2rem;">
+    <h1 style="font-size: 2rem; font-weight: bold; color: #2d3748;">
+      📊 Tableau de Bord
+    </h1>
+    <p style="color: #718096; margin-top: 0.5rem;">
+      Vue d'ensemble de l'activité du site
+    </p>
+  </div>
+
+  <!-- Stats rapides -->
+  <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1.5rem; margin-bottom: 2rem;">
+    <!-- Contacts -->
+    <div class="stat-card">
+      <div style="display: flex; justify-content: space-between; align-items: start;">
+        <div>
+          <p style="color: #718096; font-size: 0.875rem; margin: 0;">Contacts Total</p>
+          <p style="font-size: 2rem; font-weight: bold; color: #2d3748; margin: 0.5rem 0 0 0;">
+            <%= @stats.dig(:contacts, :total) || 0 %>
+          </p>
+        </div>
+        <div style="background: #667eea; color: white; padding: 0.75rem; border-radius: 0.5rem;">
+          📧
+        </div>
+      </div>
+      <div style="margin-top: 1rem; padding-top: 1rem; border-top: 1px solid #e2e8f0;">
+        <span style="color: #48bb78; font-weight: 600;">+<%= @stats.dig(:contacts, :today) || 0 %></span>
+        <span style="color: #718096; font-size: 0.875rem;"> aujourd'hui</span>
+      </div>
+    </div>
+
+    <!-- Conversations IA -->
+    <div class="stat-card">
+      <div style="display: flex; justify-content: space-between; align-items: start;">
+        <div>
+          <p style="color: #718096; font-size: 0.875rem; margin: 0;">Conversations IA</p>
+          <p style="font-size: 2rem; font-weight: bold; color: #2d3748; margin: 0.5rem 0 0 0;">
+            <%= @stats.dig(:ai_conversations, :total) || 0 %>
+          </p>
+        </div>
+        <div style="background: #48bb78; color: white; padding: 0.75rem; border-radius: 0.5rem;">
+          🤖
+        </div>
+      </div>
+      <div style="margin-top: 1rem; padding-top: 1rem; border-top: 1px solid #e2e8f0;">
+        <span style="color: #667eea; font-weight: 600;"><%= @stats.dig(:ai_conversations, :active) || 0 %></span>
+        <span style="color: #718096; font-size: 0.875rem;"> actives</span>
+      </div>
+    </div>
+
+    <!-- Visites -->
+    <div class="stat-card">
+      <div style="display: flex; justify-content: space-between; align-items: start;">
+        <div>
+          <p style="color: #718096; font-size: 0.875rem; margin: 0;">Visites Totales</p>
+          <p style="font-size: 2rem; font-weight: bold; color: #2d3748; margin: 0.5rem 0 0 0;">
+            <%= @stats.dig(:analytics, :total_visits) || 0 %>
+          </p>
+        </div>
+        <div style="background: #ed8936; color: white; padding: 0.75rem; border-radius: 0.5rem;">
+          👥
+        </div>
+      </div>
+      <div style="margin-top: 1rem; padding-top: 1rem; border-top: 1px solid #e2e8f0;">
+        <span style="color: #718096; font-size: 0.875rem;">Visiteurs uniques: </span>
+        <span style="font-weight: 600;"><%= @stats.dig(:analytics, :unique_visitors) || 0 %></span>
+      </div>
+    </div>
+
+    <!-- Status Système -->
+    <div class="stat-card">
+      <div style="display: flex; justify-content: space-between; align-items: start;">
+        <div>
+          <p style="color: #718096; font-size: 0.875rem; margin: 0;">État Système</p>
+          <p style="font-size: 2rem; font-weight: bold; margin: 0.5rem 0 0 0;">
+            <% if @stats.dig(:security, :status) == 'healthy' %>
+              <span style="color: #48bb78;">✓ OK</span>
+            <% else %>
+              <span style="color: #f56565;">⚠ Alert</span>
+            <% end %>
+          </p>
+        </div>
+        <div style="background: #4299e1; color: white; padding: 0.75rem; border-radius: 0.5rem;">
+          🛡️
+        </div>
+      </div>
+      <div style="margin-top: 1rem; padding-top: 1rem; border-top: 1px solid #e2e8f0;">
+        <span style="color: #718096; font-size: 0.875rem;">DB: </span>
+        <span class="<%= @stats.dig(:security, :database, :status) == 'ok' ? 'badge-success' : 'badge-danger' %> badge">
+          <%= @stats.dig(:security, :database, :status) %>
+        </span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Graphiques et détails -->
+  <div style="display: grid; grid-template-columns: 2fr 1fr; gap: 1.5rem;">
+    <!-- Contacts par type -->
+    <div class="stat-card">
+      <h2 style="font-size: 1.25rem; font-weight: bold; color: #2d3748; margin: 0 0 1.5rem 0;">
+        📊 Contacts par Type
+      </h2>
+      <% if @stats.dig(:contacts, :by_type).present? %>
+        <div style="display: flex; flex-direction: column; gap: 1rem;">
+          <% @stats.dig(:contacts, :by_type).each do |type, count| %>
+            <div>
+              <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem;">
+                <span style="font-weight: 500;"><%= type || 'Non spécifié' %></span>
+                <span style="color: #718096;"><%= count %></span>
+              </div>
+              <div style="background: #e2e8f0; height: 8px; border-radius: 4px;">
+                <% percentage = (@stats.dig(:contacts, :total) > 0) ? (count.to_f / @stats.dig(:contacts, :total) * 100) : 0 %>
+                <div style="background: #667eea; height: 100%; width: <%= percentage %>%; border-radius: 4px;"></div>
+              </div>
+            </div>
+          <% end %>
+        </div>
+      <% else %>
+        <p style="color: #718096; text-align: center; padding: 2rem;">Aucune donnée disponible</p>
+      <% end %>
+    </div>
+
+    <!-- Activité récente -->
+    <div class="stat-card">
+      <h2 style="font-size: 1.25rem; font-weight: bold; color: #2d3748; margin: 0 0 1.5rem 0;">
+        ⏱️ Activité Récente
+      </h2>
+      <div style="display: flex; flex-direction: column; gap: 1rem;">
+        <div>
+          <p style="color: #718096; font-size: 0.875rem; margin: 0;">Aujourd'hui</p>
+          <p style="font-size: 1.5rem; font-weight: bold; color: #2d3748; margin: 0.25rem 0;">
+            <%= @stats.dig(:contacts, :today) || 0 %>
+          </p>
+        </div>
+        <div>
+          <p style="color: #718096; font-size: 0.875rem; margin: 0;">Cette semaine</p>
+          <p style="font-size: 1.5rem; font-weight: bold; color: #2d3748; margin: 0.25rem 0;">
+            <%= @stats.dig(:contacts, :week) || 0 %>
+          </p>
+        </div>
+        <div>
+          <p style="color: #718096; font-size: 0.875rem; margin: 0;">Ce mois</p>
+          <p style="font-size: 1.5rem; font-weight: bold; color: #2d3748; margin: 0.25rem 0;">
+            <%= @stats.dig(:contacts, :month) || 0 %>
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Actions rapides -->
+  <div class="stat-card" style="margin-top: 1.5rem;">
+    <h2 style="font-size: 1.25rem; font-weight: bold; color: #2d3748; margin: 0 0 1.5rem 0;">
+      ⚡ Actions Rapides
+    </h2>
+    <div style="display: flex; gap: 1rem; flex-wrap: wrap;">
+      <%= link_to admin_contacts_path, style: "background: #667eea; color: white; padding: 0.75rem 1.5rem; border-radius: 0.5rem; text-decoration: none; font-weight: 600;" do %>
+        Voir les contacts
+      <% end %>
+      <%= link_to admin_analytics_path, style: "background: #48bb78; color: white; padding: 0.75rem 1.5rem; border-radius: 0.5rem; text-decoration: none; font-weight: 600;" do %>
+        Analytics détaillées
+      <% end %>
+      <%= link_to admin_security_path, style: "background: #ed8936; color: white; padding: 0.75rem 1.5rem; border-radius: 0.5rem; text-decoration: none; font-weight: 600;" do %>
+        Vérifier sécurité
+      <% end %>
+      <%= link_to export_admin_contacts_path(format: :csv), style: "background: #4299e1; color: white; padding: 0.75rem 1.5rem; border-radius: 0.5rem; text-decoration: none; font-weight: 600;" do %>
+        Exporter contacts CSV
+      <% end %>
+    </div>
+  </div>
+
+  <!-- Info système -->
+  <div class="stat-card" style="margin-top: 1.5rem;">
+    <h2 style="font-size: 1.25rem; font-weight: bold; color: #2d3748; margin: 0 0 1rem 0;">
+      💻 Informations Système
+    </h2>
+    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem;">
+      <div>
+        <p style="color: #718096; font-size: 0.875rem; margin: 0;">Rails Version</p>
+        <p style="font-weight: 600; margin: 0.25rem 0 0 0;"><%= @stats.dig(:system, :rails_version) %></p>
+      </div>
+      <div>
+        <p style="color: #718096; font-size: 0.875rem; margin: 0;">Ruby Version</p>
+        <p style="font-weight: 600; margin: 0.25rem 0 0 0;"><%= @stats.dig(:system, :ruby_version) %></p>
+      </div>
+      <div>
+        <p style="color: #718096; font-size: 0.875rem; margin: 0;">Environnement</p>
+        <p style="font-weight: 600; margin: 0.25rem 0 0 0;"><%= @stats.dig(:system, :environment) %></p>
+      </div>
+      <div>
+        <p style="color: #718096; font-size: 0.875rem; margin: 0;">Uptime</p>
+        <p style="font-weight: 600; margin: 0.25rem 0 0 0;">
+          <%= distance_of_time_in_words(@stats.dig(:system, :uptime) || 0) %>
+        </p>
+      </div>
+    </div>
+  </div>
+</div>

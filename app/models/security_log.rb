@@ -1,0 +1,2 @@
+class SecurityLog < ApplicationRecord
+end

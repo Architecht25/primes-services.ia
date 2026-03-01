@@ -1,0 +1,138 @@
+<div>
+  <h1 style="font-size: 2rem; font-weight: bold; color: #2d3748; margin-bottom: 2rem;">
+    🔒 Monitoring Sécurité
+  </h1>
+
+  <!-- Status global -->
+  <div class="stat-card" style="margin-bottom: 2rem;">
+    <div style="display: flex; align-items: center; gap: 1rem;">
+      <div style="font-size: 3rem;">
+        <% if @security_status[:health][:status] == 'healthy' %>
+          ✅
+        <% else %>
+          ⚠️
+        <% end %>
+      </div>
+      <div>
+        <h2 style="font-size: 1.5rem; font-weight: bold; margin: 0;">
+          Statut: <%= @security_status[:health][:status]&.titleize || 'Unknown' %>
+        </h2>
+        <p style="color: #718096; margin: 0.25rem 0 0 0;">
+          Dernière vérification: <%= Time.current.strftime('%d/%m/%Y à %H:%M') %>
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Checks de sécurité -->
+  <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1.5rem; margin-bottom: 2rem;">
+    <!-- Database Health -->
+    <div class="stat-card">
+      <h3 style="font-size: 1rem; font-weight: 600; margin: 0 0 1rem 0;">🗄️ Base de données</h3>
+      <% db_status = @security_status.dig(:health, :database, :status) %>
+      <div style="display: flex; justify-content: space-between; align-items: center;">
+        <span>Statut</span>
+        <span class="badge <%= db_status == 'ok' ? 'badge-success' : 'badge-danger' %>">
+          <%= db_status %>
+        </span>
+      </div>
+      <% if @security_status.dig(:health, :database, :latency_ms) %>
+        <div style="margin-top: 0.5rem; color: #718096; font-size: 0.875rem;">
+          Latence: <%= @security_status.dig(:health, :database, :latency_ms) %>ms
+        </div>
+      <% end %>
+    </div>
+
+    <!-- SSL Status -->
+    <div class="stat-card">
+      <h3 style="font-size: 1rem; font-weight: 600; margin: 0 0 1rem 0;">🔐 SSL/HTTPS</h3>
+      <% ssl_valid = @security_status.dig(:ssl_status, :valid) %>
+      <div style="display: flex; justify-content: space-between; align-items: center;">
+        <span>Statut</span>
+        <span class="badge <%= ssl_valid ? 'badge-success' : 'badge-warning' %>">
+          <%= ssl_valid ? 'Actif' : 'Inactif' %>
+        </span>
+      </div>
+      <% if @security_status.dig(:ssl_status, :force_ssl) %>
+        <div style="margin-top: 0.5rem; color: #718096; font-size: 0.875rem;">
+          Force SSL: <%= @security_status.dig(:ssl_status, :force_ssl) %>
+        </div>
+      <% end %>
+    </div>
+
+    <!-- Disk Usage -->
+    <div class="stat-card">
+      <h3 style="font-size: 1rem; font-weight: 600; margin: 0 0 1rem 0;">💾 Espace disque</h3>
+      <% disk_status = @security_status.dig(:health, :disk_usage, :status) %>
+      <div style="display: flex; justify-content: space-between; align-items: center;">
+        <span>Utilisation</span>
+        <span class="badge <%= disk_status == 'ok' ? 'badge-success' : (disk_status == 'warning' ? 'badge-warning' : 'badge-danger') %>">
+          <%= @security_status.dig(:health, :disk_usage, :usage_percent) || 0 %>%
+        </span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Recommandations de sécurité -->
+  <div class="stat-card" style="margin-bottom: 2rem;">
+    <h2 style="font-size: 1.25rem; font-weight: bold; color: #2d3748; margin: 0 0 1.5rem 0;">
+      📋 Recommandations de sécurité
+    </h2>
+    <% if @security_status[:recommendations]&.any? %>
+      <div style="display: flex; flex-direction: column; gap: 1rem;">
+        <% @security_status[:recommendations].each do |rec| %>
+          <div style="padding: 1rem; background: #fef5e7; border-left: 4px solid <%= rec[:priority] == 'critical' ? '#f56565' : (rec[:priority] == 'high' ? '#ed8936' : '#4299e1') %>; border-radius: 0.25rem;">
+            <div style="display: flex; justify-content: space-between; align-items: start; margin-bottom: 0.5rem;">
+              <h3 style="font-weight: 600; margin: 0;"><%= rec[:title] %></h3>
+              <span class="badge <%= rec[:priority] == 'critical' ? 'badge-danger' : (rec[:priority] == 'high' ? 'badge-warning' : 'badge-info') %>">
+                <%= rec[:priority]&.upcase %>
+              </span>
+            </div>
+            <p style="color: #718096; margin: 0; font-size: 0.875rem;">
+              <%= rec[:description] %>
+            </p>
+          </div>
+        <% end %>
+      </div>
+    <% else %>
+      <p style="color: #48bb78; text-align: center; padding: 2rem;">
+        ✅ Aucune recommandation - Tout est en ordre !
+      </p>
+    <% end %>
+  </div>
+
+  <!-- Activité suspecte -->
+  <% if @security_status[:suspicious_activity]&.any? %>
+    <div class="stat-card" style="margin-bottom: 2rem; border: 2px solid #f56565;">
+      <h2 style="font-size: 1.25rem; font-weight: bold; color: #f56565; margin: 0 0 1.5rem 0;">
+        ⚠️ Activités suspectes détectées
+      </h2>
+      <div style="display: flex; flex-direction: column; gap: 1rem;">
+        <% @security_status[:suspicious_activity].each do |activity| %>
+          <div style="padding: 1rem; background: #fff5f5; border-radius: 0.5rem;">
+            <div style="display: flex; justify-content: space-between;">
+              <span style="font-weight: 600;"><%= activity[:type] %></span>
+              <span class="badge badge-danger"><%= activity[:severity] %></span>
+            </div>
+            <p style="margin: 0.5rem 0 0 0; color: #718096; font-size: 0.875rem;">
+              IP: <%= activity[:ip] %> | Tentatives: <%= activity[:count] %>
+            </p>
+          </div>
+        <% end %>
+      </div>
+    </div>
+  <% end %>
+
+  <!-- Actions -->
+  <div style="display: flex; gap: 1rem; flex-wrap: wrap;">
+    <%= link_to admin_security_scan_path, style: "background: #667eea; color: white; padding: 0.75rem 1.5rem; border-radius: 0.5rem; text-decoration: none; font-weight: 600;" do %>
+      🔍 Lancer un scan complet
+    <% end %>
+    <%= link_to admin_security_health_path, style: "background: #48bb78; color: white; padding: 0.75rem 1.5rem; border-radius: 0.5rem; text-decoration: none; font-weight: 600;" do %>
+      💓 Health Check
+    <% end %>
+    <%= link_to admin_security_logs_path, style: "background: #ed8936; color: white; padding: 0.75rem 1.5rem; border-radius: 0.5rem; text-decoration: none; font-weight: 600;" do %>
+      📜 Logs de sécurité
+    <% end %>
+  </div>
+</div>

@@ -238,19 +238,22 @@ export default class extends Controller {
 
     const buttonsHTML = actions.map(action => {
       const isPrimary = action.primary ? 'bg-blue-500 text-white hover:bg-blue-600' : 'bg-gray-200 text-gray-700 hover:bg-gray-300'
+      const description = action.description ? `<span class="block text-xs opacity-75 mt-0.5">${this.escapeHtml(action.description)}</span>` : ''
 
       return `
         <button
           data-action-type="${action.type}"
           data-action-data='${JSON.stringify(action)}'
-          class="inline-block px-3 py-1 rounded text-xs font-medium transition-colors mr-2 mb-1 ${isPrimary}"
+          class="inline-flex flex-col items-start px-3 py-2 rounded text-xs font-medium transition-colors mr-2 mb-2 ${isPrimary}"
+          title="${this.escapeHtml(action.description || action.label)}"
         >
-          ${this.escapeHtml(action.label)}
+          <span>${this.escapeHtml(action.label)}</span>
+          ${description}
         </button>
       `
     }).join('')
 
-    return `<div class="mt-2">${buttonsHTML}</div>`
+    return `<div class="mt-3 flex flex-wrap">${buttonsHTML}</div>`
   }
 
   formatAIContent(content) {
@@ -273,6 +276,10 @@ export default class extends Controller {
     console.log('Executing action:', actionType, actionData)
 
     switch (actionType) {
+      case 'simulator':
+        // Navigation vers les simulateurs de primes ou prêts
+        window.location.href = actionData.url
+        break
       case 'form':
         window.location.href = actionData.url
         break

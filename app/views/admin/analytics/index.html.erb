@@ -1,0 +1,103 @@
+<div>
+  <h1 style="font-size: 2rem; font-weight: bold; color: #2d3748; margin-bottom: 2rem;">
+    📈 Analytics & Statistiques
+  </h1>
+
+  <!-- Navigation période -->
+  <div style="display: flex; gap: 1rem; margin-bottom: 2rem;">
+    <%= link_to admin_analytics_path(period: 'today'),
+        class: "#{params[:period] == 'today' ? 'badge-info' : 'badge'} badge",
+        style: "padding: 0.5rem 1rem; text-decoration: none; cursor: pointer;" do %>
+      Aujourd'hui
+    <% end %>
+    <%= link_to admin_analytics_path(period: 'week'),
+        class: "#{params[:period] == 'week' || params[:period].blank? ? 'badge-info' : 'badge'} badge",
+        style: "padding: 0.5rem 1rem; text-decoration: none; cursor: pointer; background: #e2e8f0; color: #2d3748;" do %>
+      7 jours
+    <% end %>
+    <%= link_to admin_analytics_path(period: 'month'),
+        class: "#{params[:period] == 'month' ? 'badge-info' : 'badge'} badge",
+        style: "padding: 0.5rem 1rem; text-decoration: none; cursor: pointer; background: #e2e8f0; color: #2d3748;" do %>
+      30 jours
+    <% end %>
+  </div>
+
+  <!-- Stats principales -->
+  <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1.5rem; margin-bottom: 2rem;">
+    <div class="stat-card">
+      <p style="color: #718096; font-size: 0.875rem; margin: 0;">Visites totales</p>
+      <p style="font-size: 2rem; font-weight: bold; color: #2d3748; margin: 0.5rem 0 0 0;">
+        <%= @analytics[:total_visits] || 0 %>
+      </p>
+    </div>
+    <div class="stat-card">
+      <p style="color: #718096; font-size: 0.875rem; margin: 0;">Visiteurs uniques</p>
+      <p style="font-size: 2rem; font-weight: bold; color: #2d3748; margin: 0.5rem 0 0 0;">
+        <%= @analytics[:unique_visitors] || 0 %>
+      </p>
+    </div>
+    <div class="stat-card">
+      <p style="color: #718096; font-size: 0.875rem; margin: 0;">Taux de rebond</p>
+      <p style="font-size: 2rem; font-weight: bold; color: #2d3748; margin: 0.5rem 0 0 0;">
+        --%
+      </p>
+    </div>
+  </div>
+
+  <!-- Top pages -->
+  <div class="stat-card" style="margin-bottom: 1.5rem;">
+    <h2 style="font-size: 1.25rem; font-weight: bold; color: #2d3748; margin: 0 0 1.5rem 0;">
+      🔝 Pages les plus visitées
+    </h2>
+    <% if @analytics[:top_pages]&.any? %>
+      <div style="display: flex; flex-direction: column; gap: 1rem;">
+        <% @analytics[:top_pages].first(10).each do |page, count| %>
+          <div>
+            <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem;">
+              <span style="font-family: monospace; font-size: 0.875rem;"><%= page %></span>
+              <span style="font-weight: 600;"><%= count %> visites</span>
+            </div>
+            <div style="background: #e2e8f0; height: 6px; border-radius: 3px;">
+              <% max_count = @analytics[:top_pages].values.max %>
+              <% percentage = max_count > 0 ? (count.to_f / max_count * 100) : 0 %>
+              <div style="background: #667eea; height: 100%; width: <%= percentage %>%; border-radius: 3px;"></div>
+            </div>
+          </div>
+        <% end %>
+      </div>
+    <% else %>
+      <p style="color: #718096; text-align: center; padding: 2rem;">
+        Aucune donnée disponible pour la période sélectionnée
+      </p>
+    <% end %>
+  </div>
+
+  <!-- Visites par région -->
+  <div class="stat-card">
+    <h2 style="font-size: 1.25rem; font-weight: bold; color: #2d3748; margin: 0 0 1.5rem 0;">
+      🌍 Visites par région
+    </h2>
+    <% if @analytics[:by_region]&.any? %>
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 1rem;">
+        <% @analytics[:by_region].each do |region, count| %>
+          <div style="padding: 1rem; background: #f7fafc; border-radius: 0.5rem;">
+            <p style="color: #718096; font-size: 0.875rem; margin: 0;"><%= region&.titleize || 'Non spécifiée' %></p>
+            <p style="font-size: 1.5rem; font-weight: bold; color: #2d3748; margin: 0.25rem 0 0 0;"><%= count %></p>
+          </div>
+        <% end %>
+      </div>
+    <% else %>
+      <p style="color: #718096; text-align: center; padding: 2rem;">Aucune donnée de région disponible</p>
+    <% end %>
+  </div>
+
+  <!-- Actions -->
+  <div style="margin-top: 2rem; display: flex; gap: 1rem;">
+    <%= link_to admin_analytics_real_time_path, style: "background: #48bb78; color: white; padding: 0.75rem 1.5rem; border-radius: 0.5rem; text-decoration: none; font-weight: 600;" do %>
+      📊 Données en temps réel
+    <% end %>
+    <%= link_to admin_analytics_pages_path, style: "background: #667eea; color: white; padding: 0.75rem 1.5rem; border-radius: 0.5rem; text-decoration: none; font-weight: 600;" do %>
+      📄 Détails par page
+    <% end %>
+  </div>
+</div>

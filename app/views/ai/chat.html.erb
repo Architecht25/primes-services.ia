@@ -17,7 +17,7 @@
         </div>
         <div>
           <h1 class="text-lg font-semibold text-gray-900">Assistant Primes Services</h1>
-          <p class="text-sm text-gray-600">Expert en subsides belges • Disponible 24/7</p>
+          <p class="text-sm text-gray-600">Expert en primes de rénovation & prêts à taux 0% • Disponible 24/7</p>
         </div>
       </div>
 
@@ -60,17 +60,21 @@
             </div>
             <div class="flex-1">
               <p class="text-sm">
-                Bonjour ! Je suis votre assistant spécialisé en <strong>primes et subsides belges</strong>.
+                Bonjour ! Je suis votre assistant spécialisé en <strong>primes de rénovation énergétique et prêts à taux 0%</strong> en Belgique.
                 <br><br>
-                Je connais les <strong>324 subsides disponibles</strong> et je peux vous aider à :
+                Je peux vous aider à :
                 <br>
-                • Calculer vos montants de primes
+                💰 <strong>Calculer vos primes</strong> (régionales, communales, spécifiques)
                 <br>
-                • Identifier les aides selon votre région
+                🏦 <strong>Découvrir les prêts à 0%</strong> (Rénopack, Energielening, prêts verts)
                 <br>
-                • Vous guider dans vos démarches
+                🏛️ <strong>Primes patrimoine</strong> (monuments classés, petit patrimoine)
+                <br>
+                📊 <strong>Audits & PEB</strong> (certifications énergétiques)
+                <br>
+                🏘️ <strong>Primes communales</strong> (cumulables avec les régionales)
                 <br><br>
-                Que puis-je faire pour vous aujourd'hui ?
+                Posez-moi vos questions sur votre projet de rénovation !
               </p>
               <span class="text-xs opacity-75 block mt-2">
                 <%= Time.current.strftime('%H:%M') %>
@@ -119,11 +123,11 @@
     <!-- Suggestions rapides -->
     <div data-ai-chat-target="suggestions" class="px-4 py-2">
       <div class="suggestions-container">
-        <p class="text-sm text-gray-600 mb-2">Suggestions pour commencer :</p>
+        <p class="text-sm text-gray-600 mb-2">Questions populaires :</p>
         <div class="flex flex-wrap gap-2">
           <button
             data-action="click->ai-chat#sendSuggestion"
-            data-message="Combien puis-je avoir pour isoler ma maison ?"
+            data-message="Combien puis-je avoir pour isoler ma toiture en Wallonie ?"
             class="bg-gray-100 hover:bg-gray-200 text-gray-700 text-sm px-3 py-2 rounded-full transition-colors"
           >
             💰 Primes isolation
@@ -131,26 +135,34 @@
 
           <button
             data-action="click->ai-chat#sendSuggestion"
-            data-message="Quelles sont les aides pour une pompe à chaleur ?"
+            data-message="Quels prêts à taux 0% sont disponibles pour mes travaux ?"
             class="bg-gray-100 hover:bg-gray-200 text-gray-700 text-sm px-3 py-2 rounded-full transition-colors"
           >
-            🔥 Aide chauffage
+            🏦 Prêts à 0%
           </button>
 
           <button
             data-action="click->ai-chat#sendSuggestion"
-            data-message="Comment rénover avec les subsides wallons ?"
+            data-message="Ma maison est classée, quelles primes pour le patrimoine ?"
             class="bg-gray-100 hover:bg-gray-200 text-gray-700 text-sm px-3 py-2 rounded-full transition-colors"
           >
-            🏠 Rénovation globale
+            🏛️ Patrimoine
           </button>
 
           <button
             data-action="click->ai-chat#sendSuggestion"
-            data-message="Qui êtes-vous et comment m'aidez-vous ?"
+            data-message="Quelles primes communales puis-je cumuler avec les régionales ?"
             class="bg-gray-100 hover:bg-gray-200 text-gray-700 text-sm px-3 py-2 rounded-full transition-colors"
           >
-            ℹ️ À propos
+            🏘️ Primes communales
+          </button>
+
+          <button
+            data-action="click->ai-chat#sendSuggestion"
+            data-message="J'ai besoin d'un audit PEB, comment obtenir la prime ?"
+            class="bg-gray-100 hover:bg-gray-200 text-gray-700 text-sm px-3 py-2 rounded-full transition-colors"
+          >
+            📊 Audit/PEB
           </button>
         </div>
       </div>
@@ -165,7 +177,7 @@
         <div class="flex-1">
           <textarea
             data-ai-chat-target="input"
-            placeholder="Tapez votre question sur les primes et subsides..."
+            placeholder="Posez votre question sur les primes, prêts à 0%, patrimoine..."
             class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent resize-none"
             rows="1"
             style="min-height: 40px; max-height: 120px;"

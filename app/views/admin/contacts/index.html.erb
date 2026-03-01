@@ -1,0 +1,125 @@
+<div>
+  <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem;">
+    <div>
+      <h1 style="font-size: 2rem; font-weight: bold; color: #2d3748; margin: 0;">
+        📧 Liste des Contacts
+      </h1>
+      <p style="color: #718096; margin-top: 0.5rem;">
+        <%= @contacts_total || @contacts.count %> contacts au total
+      </p>
+    </div>
+    <div style="display: flex; gap: 1rem;">
+      <%= link_to export_admin_contacts_path(format: :csv), style: "background: #48bb78; color: white; padding: 0.75rem 1.5rem; border-radius: 0.5rem; text-decoration: none; font-weight: 600;" do %>
+        📥 Exporter CSV
+      <% end %>
+    </div>
+  </div>
+
+  <!-- Filtres et recherche -->
+  <div class="stat-card" style="margin-bottom: 1.5rem;">
+    <%= form_with url: admin_contacts_path, method: :get, local: true, style: "display: flex; gap: 1rem; flex-wrap: wrap;" do |f| %>
+      <%= f.text_field :search,
+          placeholder: "Rechercher par nom, email, téléphone...",
+          value: params[:search],
+          style: "flex: 1; padding: 0.75rem; border: 1px solid #e2e8f0; border-radius: 0.5rem; min-width: 250px;" %>
+
+      <%= f.select :type,
+          options_for_select([['Tous les types', ''], ['Particulier', 'ParticulierContact'], ['ACP', 'AcpContact'], ['Entreprise Immo', 'EntrepriseImmoContact'], ['Entreprise Comm', 'EntrepriseCommContact']], params[:type]),
+          {},
+          style: "padding: 0.75rem; border: 1px solid #e2e8f0; border-radius: 0.5rem;" %>
+
+      <%= f.submit "Filtrer", style: "background: #667eea; color: white; padding: 0.75rem 1.5rem; border-radius: 0.5rem; border: none; font-weight: 600; cursor: pointer;" %>
+
+      <% if params[:search].present? || params[:type].present? %>
+        <%= link_to "Réinitialiser", admin_contacts_path, style: "padding: 0.75rem 1.5rem; border: 1px solid #e2e8f0; border-radius: 0.5rem; text-decoration: none; color: #718096;" %>
+      <% end %>
+    <% end %>
+  </div>
+
+  <!-- Stats rapides -->
+  <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 1rem; margin-bottom: 1.5rem;">
+    <% @stats[:by_type].each do |type, count| %>
+      <div class="stat-card" style="padding: 1rem;">
+        <p style="color: #718096; font-size: 0.75rem; margin: 0;"><%= type || 'Non spécifié' %></p>
+        <p style="font-size: 1.5rem; font-weight: bold; color: #2d3748; margin: 0.25rem 0 0 0;"><%= count %></p>
+      </div>
+    <% end %>
+    <div class="stat-card" style="padding: 1rem; background: #fef5e7;">
+      <p style="color: #d68910; font-size: 0.75rem; margin: 0;">Dernières 24h</p>
+      <p style="font-size: 1.5rem; font-weight: bold; color: #d68910; margin: 0.25rem 0 0 0;"><%= @stats[:recent] %></p>
+    </div>
+  </div>
+
+  <!-- Table des contacts -->
+  <div class="stat-card" style="overflow-x: auto;">
+    <table style="width: 100%; border-collapse: collapse;">
+      <thead>
+        <tr style="border-bottom: 2px solid #e2e8f0;">
+          <th style="padding: 1rem; text-align: left; color: #718096; font-size: 0.875rem;">Date</th>
+          <th style="padding: 1rem; text-align: left; color: #718096; font-size: 0.875rem;">Nom</th>
+          <th style="padding: 1rem; text-align: left; color: #718096; font-size: 0.875rem;">Email</th>
+          <th style="padding: 1rem; text-align: left; color: #718096; font-size: 0.875rem;">Téléphone</th>
+          <th style="padding: 1rem; text-align: left; color: #718096; font-size: 0.875rem;">Type</th>
+          <th style="padding: 1rem; text-align: left; color: #718096; font-size: 0.875rem;">Région</th>
+          <th style="padding: 1rem; text-align: left; color: #718096; font-size: 0.875rem;">Statut</th>
+          <th style="padding: 1rem; text-align: left; color: #718096; font-size: 0.875rem;">Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% if @contacts.any? %>
+          <% @contacts.each do |contact| %>
+            <tr style="border-bottom: 1px solid #e2e8f0;">
+              <td style="padding: 1rem;">
+                <%= contact.created_at.strftime('%d/%m/%Y %H:%M') %>
+                <% unless contact.read? %>
+                  <span class="badge badge-warning" style="margin-left: 0.5rem;">Nouveau</span>
+                <% end %>
+              </td>
+              <td style="padding: 1rem; font-weight: 600;">
+                <%= contact.name %>
+              </td>
+              <td style="padding: 1rem; color: #718096;">
+                <%= contact.email %>
+              </td>
+              <td style="padding: 1rem; color: #718096;">
+                <%= contact.phone || '-' %>
+              </td>
+              <td style="padding: 1rem;">
+                <span class="badge badge-info">
+                  <%= contact.submission_type || contact.type %>
+                </span>
+              </td>
+              <td style="padding: 1rem;">
+                <%= contact.region&.titleize || '-' %>
+              </td>
+              <td style="padding: 1rem;">
+                <% case contact.status %>
+                <% when 'pending' %>
+                  <span class="badge badge-warning">En attente</span>
+                <% when 'processed' %>
+                  <span class="badge badge-info">Traité</span>
+                <% when 'completed' %>
+                  <span class="badge badge-success">Terminé</span>
+                <% else %>
+                  <span class="badge" style="background: #718096;">-</span>
+                <% end %>
+              </td>
+              <td style="padding: 1rem;">
+                <%= link_to "Voir", admin_contact_path(contact), style: "color: #667eea; text-decoration: none; font-weight: 600; margin-right: 1rem;" %>
+                <% unless contact.read? %>
+                  <%= button_to "Marquer lu", mark_read_admin_contact_path(contact), method: :post, style: "display: inline; background: none; border: none; color: #48bb78; font-weight: 600; cursor: pointer; padding: 0;" %>
+                <% end %>
+              </td>
+            </tr>
+          <% end %>
+        <% else %>
+          <tr>
+            <td colspan="8" style="padding: 3rem; text-align: center; color: #718096;">
+              Aucun contact trouvé
+            </td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+</div>

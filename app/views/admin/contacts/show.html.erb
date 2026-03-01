@@ -1,0 +1,185 @@
+<div>
+  <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem;">
+    <div>
+      <h1 style="font-size: 2rem; font-weight: bold; color: #2d3748; margin: 0;">
+        📧 Détail du Contact
+      </h1>
+      <p style="color: #718096; margin-top: 0.5rem;">
+        Soumis le <%= @contact.created_at.strftime('%d/%m/%Y à %H:%M') %>
+      </p>
+    </div>
+    <%= link_to "← Retour à la liste", admin_contacts_path, style: "padding: 0.75rem 1.5rem; border: 1px solid #e2e8f0; border-radius: 0.5rem; text-decoration: none; color: #718096; font-weight: 600;" %>
+  </div>
+
+  <!-- Info principale -->
+  <div class="stat-card" style="margin-bottom: 1.5rem;">
+    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1.5rem;">
+      <div>
+        <p style="color: #718096; font-size: 0.875rem; margin: 0;">Nom complet</p>
+        <p style="font-size: 1.125rem; font-weight: 600; color: #2d3748; margin: 0.25rem 0 0 0;">
+          <%= @contact.name %>
+        </p>
+      </div>
+      <div>
+        <p style="color: #718096; font-size: 0.875rem; margin: 0;">Email</p>
+        <p style="font-size: 1.125rem; font-weight: 600; color: #2d3748; margin: 0.25rem 0 0 0;">
+          <%= mail_to @contact.email %>
+        </p>
+      </div>
+      <div>
+        <p style="color: #718096; font-size: 0.875rem; margin: 0;">Téléphone</p>
+        <p style="font-size: 1.125rem; font-weight: 600; color: #2d3748; margin: 0.25rem 0 0 0;">
+          <%= @contact.phone || '-' %>
+        </p>
+      </div>
+      <div>
+        <p style="color: #718096; font-size: 0.875rem; margin: 0;">Région</p>
+        <p style="font-size: 1.125rem; font-weight: 600; color: #2d3748; margin: 0.25rem 0 0 0;">
+          <%= @contact.region&.titleize || '-' %>
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Statuts -->
+  <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem; margin-bottom: 1.5rem;">
+    <div class="stat-card">
+      <p style="color: #718096; font-size: 0.875rem; margin: 0;">Type de soumission</p>
+      <p style="margin: 0.5rem 0 0 0;">
+        <span class="badge badge-info">
+          <%= @contact.submission_type || @contact.type %>
+        </span>
+      </p>
+    </div>
+    <div class="stat-card">
+      <p style="color: #718096; font-size: 0.875rem; margin: 0;">Statut</p>
+      <p style="margin: 0.5rem 0 0 0;">
+        <% case @contact.status %>
+        <% when 'pending' %>
+          <span class="badge badge-warning">En attente</span>
+        <% when 'processed' %>
+          <span class="badge badge-info">Traité</span>
+        <% when 'completed' %>
+          <span class="badge badge-success">Terminé</span>
+        <% else %>
+          <span class="badge" style="background: #718096;">Non défini</span>
+        <% end %>
+      </p>
+    </div>
+    <div class="stat-card">
+      <p style="color: #718096; font-size: 0.875rem; margin: 0;">Lu/Non lu</p>
+      <p style="margin: 0.5rem 0 0 0;">
+        <% if @contact.read? %>
+          <span class="badge badge-success">Lu le <%= @contact.read_at.strftime('%d/%m/%Y') %></span>
+        <% else %>
+          <span class="badge badge-warning">Non lu</span>
+        <% end %>
+      </p>
+    </div>
+  </div>
+
+  <!-- Message -->
+  <% if @contact.message.present? %>
+    <div class="stat-card" style="margin-bottom: 1.5rem;">
+      <h2 style="font-size: 1.25rem; font-weight: bold; color: #2d3748; margin: 0 0 1rem 0;">
+        💬 Message
+      </h2>
+      <div style="background: #f7fafc; padding: 1.5rem; border-radius: 0.5rem; border-left: 4px solid #667eea;">
+        <%= simple_format(@contact.message) %>
+      </div>
+    </div>
+  <% end %>
+
+  <!-- Informations supplémentaires -->
+  <% specialized = @contact.specialized_fields %>
+  <% if specialized.any? %>
+    <div class="stat-card" style="margin-bottom: 1.5rem;">
+      <h2 style="font-size: 1.25rem; font-weight: bold; color: #2d3748; margin: 0 0 1rem 0;">
+        📋 Informations complémentaires
+      </h2>
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1rem;">
+        <% specialized.each do |key, value| %>
+          <div>
+            <p style="color: #718096; font-size: 0.875rem; margin: 0;">
+              <%= key.to_s.humanize %>
+            </p>
+            <p style="font-weight: 600; margin: 0.25rem 0 0 0;">
+              <%= value %>
+            </p>
+          </div>
+        <% end %>
+      </div>
+    </div>
+  <% end %>
+
+  <!-- Localisation -->
+  <% if @contact.address.present? || @contact.city.present? %>
+    <div class="stat-card" style="margin-bottom: 1.5rem;">
+      <h2 style="font-size: 1.25rem; font-weight: bold; color: #2d3748; margin: 0 0 1rem 0;">
+        📍 Localisation
+      </h2>
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1rem;">
+        <% if @contact.address.present? %>
+          <div>
+            <p style="color: #718096; font-size: 0.875rem; margin: 0;">Adresse</p>
+            <p style="font-weight: 600; margin: 0.25rem 0 0 0;"><%= @contact.address %></p>
+          </div>
+        <% end %>
+        <% if @contact.postal_code.present? %>
+          <div>
+            <p style="color: #718096; font-size: 0.875rem; margin: 0;">Code postal</p>
+            <p style="font-weight: 600; margin: 0.25rem 0 0 0;"><%= @contact.postal_code %></p>
+          </div>
+        <% end %>
+        <% if @contact.city.present? %>
+          <div>
+            <p style="color: #718096; font-size: 0.875rem; margin: 0;">Ville</p>
+            <p style="font-weight: 600; margin: 0.25rem 0 0 0;"><%= @contact.city %></p>
+          </div>
+        <% end %>
+      </div>
+    </div>
+  <% end %>
+
+  <!-- Metadata technique -->
+  <div class="stat-card">
+    <h2 style="font-size: 1.25rem; font-weight: bold; color: #2d3748; margin: 0 0 1rem 0;">
+      🔧 Informations techniques
+    </h2>
+    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1rem;">
+      <div>
+        <p style="color: #718096; font-size: 0.875rem; margin: 0;">ID de contact</p>
+        <p style="font-family: monospace; font-weight: 600; margin: 0.25rem 0 0 0;"><%= @contact.id %></p>
+      </div>
+      <div>
+        <p style="color: #718096; font-size: 0.875rem; margin: 0;">Date de soumission</p>
+        <p style="font-weight: 600; margin: 0.25rem 0 0 0;">
+          <%= @contact.submitted_at&.strftime('%d/%m/%Y à %H:%M') || @contact.created_at.strftime('%d/%m/%Y à %H:%M') %>
+        </p>
+      </div>
+      <% if @contact.ip_address.present? %>
+        <div>
+          <p style="color: #718096; font-size: 0.875rem; margin: 0;">Adresse IP</p>
+          <p style="font-family: monospace; font-weight: 600; margin: 0.25rem 0 0 0;"><%= @contact.ip_address %></p>
+        </div>
+      <% end %>
+      <% if @contact.processed_at.present? %>
+        <div>
+          <p style="color: #718096; font-size: 0.875rem; margin: 0;">Traité le</p>
+          <p style="font-weight: 600; margin: 0.25rem 0 0 0;"><%= @contact.processed_at.strftime('%d/%m/%Y à %H:%M') %></p>
+        </div>
+      <% end %>
+    </div>
+  </div>
+
+  <!-- Actions -->
+  <div style="margin-top: 2rem; display: flex; gap: 1rem; flex-wrap: wrap;">
+    <% unless @contact.read? %>
+      <%= button_to "Marquer comme lu", mark_read_admin_contact_path(@contact), method: :post, style: "background: #48bb78; color: white; padding: 0.75rem 1.5rem; border-radius: 0.5rem; border: none; font-weight: 600; cursor: pointer;" %>
+    <% end %>
+
+    <%= link_to admin_contacts_path, style: "background: #667eea; color: white; padding: 0.75rem 1.5rem; border-radius: 0.5rem; text-decoration: none; font-weight: 600;" do %>
+      ← Retour à la liste
+    <% end %>
+  </div>
+</div>

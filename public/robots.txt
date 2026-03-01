@@ -1,19 +1,46 @@
 # Configuration robots.txt pour optimisation SEO
-# See https://www.robotstxt.org/robotstxt.html for documentation on how to use the robots.txt file
+# See https://www.robotstxt.org/robotstxt.html for documentation
 
+# Règles pour tous les robots
 User-agent: *
 Allow: /
 
-# Pages à ne pas indexer
+# Pages à ne pas indexer - Admin et technique
+Disallow: /admin
+Disallow: /admin/
 Disallow: /up
-Disallow: /api/
-Disallow: /pwa/
-Disallow: /redirections/
 Disallow: /rails/
 Disallow: /ping
 
-# Sitemap XML
-Sitemap: https://primes-services.ia/sitemap.xml
+# API et redirections internes - Pas d'intérêt SEO
+Disallow: /api/
+Disallow: /redirections/
 
-# Politique d'exploration
+# PWA et ressources techniques
+Disallow: /pwa/manifest
+Disallow: /pwa/service-worker
+
+# Fichiers et dossiers système
+Disallow: /assets/builds/
+Disallow: /*.json$
+Disallow: /*?*  # Paramètres GET (pour éviter duplication)
+
+# Règles spécifiques pour Google
+User-agent: Googlebot
+Allow: /
+Disallow: /admin/
+Disallow: /api/
+
+# Règles spécifiques pour Bing
+User-agent: Bingbot
+Allow: /
+Disallow: /admin/
+Disallow: /api/
+
+# Référence au sitemap XML - CRUCIAL pour SEO
+Sitemap: https://primes-services-ia-cc4318abe295.herokuapp.com/sitemap.xml.gz
+Sitemap: https://primes-services-ia-cc4318abe295.herokuapp.com/sitemap.xml
+
+# Politique d'exploration (évite surcharge serveur)
 Crawl-delay: 1
+

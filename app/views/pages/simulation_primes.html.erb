@@ -1,6 +1,6 @@
 <%
   region_config = {
-    'wallonie' => { name: 'Wallonie', color: 'blue', icon: '🟦', 
+    'wallonie' => { name: 'Wallonie', color: 'blue', icon: '🟦',
                     hero_bg: 'bg-gradient-to-br from-blue-600 via-blue-700 to-green-600',
                     text_light: 'text-blue-100',
                     link_color: 'text-blue-100 hover:text-white' },
@@ -14,32 +14,32 @@
                      link_color: 'text-green-100 hover:text-white' }
   }
   config = region_config[@region] || region_config['wallonie']
-  
+
   # Classes CSS selon la région
-  input_focus = @region == 'wallonie' ? 'focus:ring-blue-500 focus:border-blue-500' : 
-                @region == 'flandre' ? 'focus:ring-orange-500 focus:border-orange-500' : 
+  input_focus = @region == 'wallonie' ? 'focus:ring-blue-500 focus:border-blue-500' :
+                @region == 'flandre' ? 'focus:ring-orange-500 focus:border-orange-500' :
                 'focus:ring-green-500 focus:border-green-500'
-  
+
   checkbox_color = @region == 'wallonie' ? 'text-blue-600 focus:ring-blue-500' :
                    @region == 'flandre' ? 'text-orange-600 focus:ring-orange-500' :
                    'text-green-600 focus:ring-green-500'
-  
+
   btn_gradient = @region == 'wallonie' ? 'bg-gradient-to-r from-blue-600 to-green-600 hover:from-blue-700 hover:to-green-700' :
                  @region == 'flandre' ? 'bg-gradient-to-r from-orange-600 to-green-600 hover:from-orange-700 hover:to-green-700' :
                  'bg-gradient-to-r from-green-600 to-emerald-600 hover:from-green-700 hover:to-emerald-700'
-  
+
   results_bg = @region == 'wallonie' ? 'bg-gradient-to-r from-green-50 to-blue-50' :
                @region == 'flandre' ? 'bg-gradient-to-r from-green-50 to-orange-50' :
                'bg-gradient-to-r from-green-50 to-emerald-50'
-  
+
   cta_bg = @region == 'wallonie' ? 'bg-gradient-to-r from-blue-600 to-green-600' :
            @region == 'flandre' ? 'bg-gradient-to-r from-orange-600 to-green-600' :
            'bg-gradient-to-r from-green-600 to-emerald-600'
-  
+
   cta_btn_white = @region == 'wallonie' ? 'bg-white text-blue-600 hover:bg-gray-100' :
                   @region == 'flandre' ? 'bg-white text-orange-600 hover:bg-gray-100' :
                   'bg-white text-green-600 hover:bg-gray-100'
-  
+
   cta_btn_light = @region == 'wallonie' ? 'bg-blue-100 text-blue-900 hover:bg-blue-200' :
                   @region == 'flandre' ? 'bg-orange-100 text-orange-900 hover:bg-orange-200' :
                   'bg-green-100 text-green-900 hover:bg-green-200'
