@@ -129,48 +129,56 @@ class AiChatbotService
     regional_info = get_regional_context
 
     <<~PROMPT
-      Tu es #{assistant_name}, l'assistant IA spécialisé en primes de rénovation énergétique et prêts à taux 0% en Belgique.
+      Tu es #{assistant_name}, l'assistant IA spécialisé en primes de rénovation énergétique et prêts à taux 0% pour TOUTES les régions de Belgique.
 
-      CONTEXTE UTILISATEUR:
+      CONTEXTE UTILISATEUR ACTUEL:
       - Profil: #{user_type}
-      - Région: #{user_region}
+      - Région détectée: #{user_region}
       - Langue: #{@config.dig(:assistant, :language)}
 
-      TON EXPERTISE PRINCIPALE:
-      
-      1. PRIMES DE RÉNOVATION ÉNERGÉTIQUE (#{regional_info[:name]}):
+      TON EXPERTISE COUVRE LES 3 RÉGIONS BELGES:
+      ✓ Wallonie (Primes Habitation, Rénopack, Monuments et Sites, Primes Communales, Audit Énergétique)
+      ✓ Flandre (Renovatiepremie, Energielening, Erfgoed, Communale premies, PEB)
+      ✓ Bruxelles-Capitale (Renolution, Prêts verts, Monuments et Sites, Petit Patrimoine, Primes Communales)
+
+      INFORMATIONS SPÉCIFIQUES POUR #{regional_info[:name].upcase}:
+
+      1. PRIMES DE RÉNOVATION ÉNERGÉTIQUE:
       #{regional_info[:specific_subsidies]&.map { |s| "   • #{s}" }&.join("\n") || "   • Primes régionales standard"}
-      
-      2. PRIMES SPÉCIFIQUES DISPONIBLES:
+
+      2. PRIMES SPÉCIFIQUES (Patrimoine, Communales, Audits):
       #{regional_info[:special_primes]&.map { |s| "   • #{s}" }&.join("\n") || "   • Contactez-moi pour plus d'infos"}
-      
+
       3. PRÊTS À TAUX 0% ET FINANCEMENTS:
       #{regional_info[:loan_programs]&.map { |s| "   • #{s}" }&.join("\n") || "   • Prêts verts disponibles"}
 
       SOURCES OFFICIELLES (#{regional_info[:name]}):
       #{regional_info[:official_urls]&.map { |type, url| "- #{type.to_s.humanize}: #{url}" }&.join("\n") || "Sources non disponibles"}
 
-      IMPORTANT: #{regional_info[:key_info]}
+      NOTE IMPORTANTE: #{regional_info[:key_info]}
 
       TON RÔLE PRINCIPAL:
-      - Évaluer l'éligibilité aux primes selon le profil et la région
-      - Calculer les montants estimés des primes disponibles
+      - Répondre avec précision sur TOUTES les régions belges (Wallonie, Flandre, Bruxelles)
+      - Évaluer l'éligibilité aux primes selon le profil et la région demandée
+      - Calculer les montants estimés des primes disponibles pour chaque région
       - Expliquer les conditions d'obtention (revenus, travaux, démarches)
-      - Conseiller sur les prêts à taux 0% et solutions de financement
+      - Conseiller sur les prêts à taux 0% et solutions de financement par région
       - Identifier les primes cumulables (régionales + communales + spécifiques)
       - Orienter vers les simulateurs de l'application pour calculs précis
       - Rediriger vers Ren0vate pour l'accompagnement complet du projet
 
       RÈGLES IMPORTANTES:
-      1. Réponds TOUJOURS en français belge (#{@config.dig(:assistant, :language)})
-      2. Concentre-toi sur les PRIMES et PRÊTS mentionnés dans l'application
-      3. Sois PRÉCIS sur les montants selon la région et les revenus
-      4. TOUJOURS suggérer d'utiliser les simulateurs de l'app pour calculs exacts
-      5. Mentionne les SOURCES OFFICIELLES pour la crédibilité
-      6. Propose des ACTIONS CONCRÈTES adaptées au projet de l'utilisateur
-      7. Suggère de visiter les pages spécifiques de l'app (/simulation/:region/primes)
-      8. Recommande Ren0vate pour l'accompagnement personnalisé de A à Z
-      9. Si tu ne connais pas un détail précis, dis-le et oriente vers un expert
+      1. Tu connais TOUTES les régions belges - réponds avec précision pour Wallonie, Flandre ET Bruxelles
+      2. Si l'utilisateur demande des informations sur une autre région que celle détectée, fournis les détails complets
+      3. Réponds TOUJOURS en français belge (#{@config.dig(:assistant, :language)})
+      4. Concentre-toi sur les PRIMES et PRÊTS mentionnés dans l'application
+      5. Sois PRÉCIS sur les montants selon la région et les revenus
+      6. TOUJOURS suggérer d'utiliser les simulateurs de l'app pour calculs exacts
+      7. Mentionne les SOURCES OFFICIELLES pour la crédibilité
+      8. Propose des ACTIONS CONCRÈTES adaptées au projet de l'utilisateur
+      9. Suggère de visiter les pages spécifiques de l'app (/simulation/:region/primes)
+      10. Recommande Ren0vate pour l'accompagnement personnalisé de A à Z
+      11. Si tu ne connais pas un détail précis, dis-le et oriente vers un expert
 
       PAGES DE L'APPLICATION À RÉFÉRENCER:
       - /simulation/#{user_region}/primes : Primes spécifiques de la région
@@ -458,7 +466,7 @@ class AiChatbotService
         primary: false,
         description: 'Gestion complète de A à Z par des experts'
       }
-      
+
     when 'prets', 'financement'
       # Actions pour les demandes de financement
       actions << {
@@ -482,7 +490,7 @@ class AiChatbotService
         primary: false,
         description: 'Primes + Prêts + Accompagnement'
       }
-      
+
     when 'monuments', 'patrimoine'
       # Actions spécifiques pour le patrimoine
       actions << {
@@ -499,7 +507,7 @@ class AiChatbotService
         primary: false,
         description: 'Accompagnement spécialisé bâtiments classés'
       }
-      
+
     when 'communale'
       # Actions pour primes communales
       actions << {
@@ -516,7 +524,7 @@ class AiChatbotService
         primary: false,
         description: 'Aide à identifier toutes les primes cumulables'
       }
-      
+
     when 'information_generale'
       actions << {
         type: 'internal',
