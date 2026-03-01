@@ -6,7 +6,7 @@
       <!-- Logo et nom -->
       <div class="flex items-center">
         <%= link_to root_path, class: "flex items-center space-x-3" do %>
-          <div class="w-10 h-10 bg-gradient-to-br from-blue-600 to-green-600 rounded-lg flex items-center justify-center">
+          <div class="w-10 h-10 bg-gradient-to-br from-primary-600 to-secondary-500 rounded-lg flex items-center justify-center">
             <span class="text-white font-bold text-sm">PS</span>
           </div>
           <div class="hidden sm:block">
@@ -19,27 +19,27 @@
       <!-- Navigation desktop -->
       <div class="hidden md:flex items-center space-x-8">
         <%= link_to root_path,
-            class: "text-gray-700 hover:text-blue-600 font-medium transition-colors #{'text-blue-600' if current_page?(root_path)}" do %>
+            class: "text-gray-700 hover:text-primary-600 font-medium transition-colors #{'text-primary-600' if current_page?(root_path)}" do %>
           🏠 Accueil
         <% end %>
 
         <%= link_to simulation_path,
-            class: "text-gray-700 hover:text-blue-600 font-medium transition-colors #{'text-blue-600' if current_page?(simulation_path)}" do %>
+            class: "text-gray-700 hover:text-primary-600 font-medium transition-colors #{'text-primary-600' if current_page?(simulation_path)}" do %>
           🧮 Simulation
         <% end %>
 
         <%= link_to ai_chat_path,
-            class: "text-gray-700 hover:text-blue-600 font-medium transition-colors #{'text-blue-600' if current_page?(ai_chat_path)}" do %>
+            class: "text-gray-700 hover:text-primary-600 font-medium transition-colors #{'text-primary-600' if current_page?(ai_chat_path)}" do %>
           🤖 Chat IA
         <% end %>
 
         <%= link_to renovate_path,
-            class: "text-gray-700 hover:text-blue-600 font-medium transition-colors #{'text-blue-600' if current_page?(renovate_path)}" do %>
+            class: "text-gray-700 hover:text-secondary-600 font-medium transition-colors #{'text-secondary-600' if current_page?(renovate_path)}" do %>
           🚀 Ren0vate
         <% end %>
 
         <%= link_to about_path,
-            class: "text-gray-700 hover:text-blue-600 font-medium transition-colors #{'text-blue-600' if current_page?(about_path)}" do %>
+            class: "text-gray-700 hover:text-primary-600 font-medium transition-colors #{'text-primary-600' if current_page?(about_path)}" do %>
           👥 À propos
         <% end %>
 
@@ -47,7 +47,7 @@
         <div class="relative" data-controller="dropdown">
           <button
             data-action="click->dropdown#toggle"
-            class="text-gray-700 hover:text-blue-600 font-medium transition-colors flex items-center space-x-1"
+            class="text-gray-700 hover:text-primary-600 font-medium transition-colors flex items-center space-x-1"
           >
             <span>📋 Formulaires</span>
             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -60,20 +60,20 @@
             class="absolute right-0 mt-2 w-56 bg-white rounded-md shadow-lg border border-gray-200 hidden"
           >
             <div class="py-1">
-              <%= link_to particulier_contacts_path, class: "block px-4 py-2 text-sm text-gray-700 hover:bg-blue-50 hover:text-blue-600" do %>
+              <%= link_to particulier_contacts_path, class: "block px-4 py-2 text-sm text-gray-700 hover:bg-primary-50 hover:text-primary-600" do %>
                 🏠 Particuliers
               <% end %>
-              <%= link_to acp_contacts_path, class: "block px-4 py-2 text-sm text-gray-700 hover:bg-blue-50 hover:text-blue-600" do %>
+              <%= link_to acp_contacts_path, class: "block px-4 py-2 text-sm text-gray-700 hover:bg-primary-50 hover:text-primary-600" do %>
                 🏢 Copropriétés (ACP)
               <% end %>
-              <%= link_to entreprise_immo_contacts_path, class: "block px-4 py-2 text-sm text-gray-700 hover:bg-blue-50 hover:text-blue-600" do %>
+              <%= link_to entreprise_immo_contacts_path, class: "block px-4 py-2 text-sm text-gray-700 hover:bg-primary-50 hover:text-primary-600" do %>
                 🏗️ Entreprises Immo
               <% end %>
-              <%= link_to entreprise_comm_contacts_path, class: "block px-4 py-2 text-sm text-gray-700 hover:bg-blue-50 hover:text-blue-600" do %>
+              <%= link_to entreprise_comm_contacts_path, class: "block px-4 py-2 text-sm text-gray-700 hover:bg-primary-50 hover:text-primary-600" do %>
                 🏭 Entreprises Comm
               <% end %>
               <div class="border-t border-gray-100 my-1"></div>
-              <%= link_to new_contact_path, class: "block px-4 py-2 text-sm text-blue-600 hover:bg-blue-50 font-medium" do %>
+              <%= link_to new_contact_path, class: "block px-4 py-2 text-sm text-primary-600 hover:bg-primary-50 font-medium" do %>
                 📋 Tous les formulaires
               <% end %>
             </div>
@@ -82,7 +82,7 @@
 
         <!-- CTA Principal -->
         <%= link_to ai_chat_path,
-            class: "bg-blue-500 text-white px-4 py-2 rounded-lg font-semibold hover:bg-blue-600 transition-colors" do %>
+            class: "bg-primary-600 text-white px-4 py-2 rounded-lg font-semibold hover:bg-primary-700 transition-colors" do %>
           💬 Commencer
         <% end %>
       </div>
@@ -92,7 +92,7 @@
         <button
           data-controller="mobile-menu"
           data-action="click->mobile-menu#toggle"
-          class="text-gray-700 hover:text-blue-600 focus:outline-none"
+          class="text-gray-700 hover:text-primary-600 focus:outline-none"
         >
           <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
@@ -108,50 +108,50 @@
     >
       <div class="px-2 pt-2 pb-3 space-y-1">
         <%= link_to root_path,
-            class: "block px-3 py-2 text-gray-700 hover:text-blue-600 hover:bg-blue-50 rounded-md font-medium" do %>
+            class: "block px-3 py-2 text-gray-700 hover:text-primary-600 hover:bg-primary-50 rounded-md font-medium" do %>
           🏠 Accueil
         <% end %>
 
         <%= link_to simulation_path,
-            class: "block px-3 py-2 text-gray-700 hover:text-blue-600 hover:bg-blue-50 rounded-md font-medium" do %>
+            class: "block px-3 py-2 text-gray-700 hover:text-primary-600 hover:bg-primary-50 rounded-md font-medium" do %>
           🧮 Simulation
         <% end %>
 
         <%= link_to ai_chat_path,
-            class: "block px-3 py-2 text-gray-700 hover:text-blue-600 hover:bg-blue-50 rounded-md font-medium" do %>
+            class: "block px-3 py-2 text-gray-700 hover:text-primary-600 hover:bg-primary-50 rounded-md font-medium" do %>
           🤖 Chat IA
         <% end %>
 
         <%= link_to renovate_path,
-            class: "block px-3 py-2 text-gray-700 hover:text-blue-600 hover:bg-blue-50 rounded-md font-medium" do %>
+            class: "block px-3 py-2 text-gray-700 hover:text-secondary-600 hover:bg-secondary-50 rounded-md font-medium" do %>
           🚀 Ren0vate
         <% end %>
 
         <%= link_to about_path,
-            class: "block px-3 py-2 text-gray-700 hover:text-blue-600 hover:bg-blue-50 rounded-md font-medium" do %>
+            class: "block px-3 py-2 text-gray-700 hover:text-primary-600 hover:bg-primary-50 rounded-md font-medium" do %>
           👥 À propos
         <% end %>
 
         <!-- Sous-menu Formulaires mobile -->
         <div class="pl-4 space-y-1">
           <p class="px-3 py-2 text-sm font-semibold text-gray-500">📋 Formulaires</p>
-          <a href="#" class="block px-3 py-2 text-sm text-gray-700 hover:text-blue-600 hover:bg-blue-50 rounded-md">
+          <a href="#" class="block px-3 py-2 text-sm text-gray-700 hover:text-primary-600 hover:bg-primary-50 rounded-md">
             🏠 Particuliers
           </a>
-          <a href="#" class="block px-3 py-2 text-sm text-gray-700 hover:text-blue-600 hover:bg-blue-50 rounded-md">
+          <a href="#" class="block px-3 py-2 text-sm text-gray-700 hover:text-primary-600 hover:bg-primary-50 rounded-md">
             🏢 Copropriétés (ACP)
           </a>
-          <a href="#" class="block px-3 py-2 text-sm text-gray-700 hover:text-blue-600 hover:bg-blue-50 rounded-md">
+          <a href="#" class="block px-3 py-2 text-sm text-gray-700 hover:text-primary-600 hover:bg-primary-50 rounded-md">
             🏗️ Entreprises Immo
           </a>
-          <a href="#" class="block px-3 py-2 text-sm text-gray-700 hover:text-blue-600 hover:bg-blue-50 rounded-md">
+          <a href="#" class="block px-3 py-2 text-sm text-gray-700 hover:text-primary-600 hover:bg-primary-50 rounded-md">
             🏭 Entreprises Comm
           </a>
         </div>
 
         <!-- CTA Mobile -->
         <%= link_to ai_chat_path,
-            class: "block mx-3 mt-4 bg-blue-500 text-white px-4 py-2 rounded-lg font-semibold text-center hover:bg-blue-600 transition-colors" do %>
+            class: "block mx-3 mt-4 bg-primary-600 text-white px-4 py-2 rounded-lg font-semibold text-center hover:bg-primary-700 transition-colors" do %>
           💬 Commencer maintenant
         <% end %>
       </div>

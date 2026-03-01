@@ -1,1 +1,80 @@
 @import "tailwindcss";
+
+/**
+ * Palette de couleurs Primes Services
+ * Identité visuelle personnalisée
+ */
+
+@theme {
+  /* Couleur principale - Bleu Marine */
+  --color-primary-50: #f0f4f7;
+  --color-primary-100: #dae4eb;
+  --color-primary-200: #b8cad8;
+  --color-primary-300: #8ca8be;
+  --color-primary-400: #5a829e;
+  --color-primary-500: #3f6484;
+  --color-primary-600: #1a3c5e;
+  --color-primary-700: #162f4a;
+  --color-primary-800: #11253a;
+  --color-primary-900: #0d1b2a;
+  --color-primary-950: #060e16;
+
+  /* Couleur secondaire - Vert Émeraude */
+  --color-secondary-50: #f0f7f4;
+  --color-secondary-100: #dceee5;
+  --color-secondary-200: #b9ddcb;
+  --color-secondary-300: #8bc5a8;
+  --color-secondary-400: #5ba882;
+  --color-secondary-500: #2e7d52;
+  --color-secondary-600: #246641;
+  --color-secondary-700: #1d5135;
+  --color-secondary-800: #17402a;
+  --color-secondary-900: #123323;
+  --color-secondary-950: #091a12;
+
+  /* Vert Clair - Accents, icônes, highlights */
+  --color-accent-50: #f0faf5;
+  --color-accent-100: #dcf4e8;
+  --color-accent-200: #bce9d5;
+  --color-accent-300: #8ed9b8;
+  --color-accent-400: #4db885;
+  --color-accent-500: #3ea36d;
+  --color-accent-600: #2f8558;
+  --color-accent-700: #276a47;
+  --color-accent-800: #22543b;
+  --color-accent-900: #1d4531;
+  --color-accent-950: #0f261b;
+
+  /* Ambre - Accentuation, alertes, chiffres clés */
+  --color-amber-50: #fef8ed;
+  --color-amber-100: #fcefd3;
+  --color-amber-200: #f9dca5;
+  --color-amber-300: #f5c16d;
+  --color-amber-400: #e8a020;
+  --color-amber-500: #cc8a1a;
+  --color-amber-600: #a36d15;
+  --color-amber-700: #825511;
+  --color-amber-800: #6b4414;
+  --color-amber-900: #5a3914;
+  --color-amber-950: #311e09;
+
+  /* Gris Perle - Fond de page, sections alternées */
+  --color-pearl-50: #f4f7fa;
+  --color-pearl-100: #e9eef4;
+  --color-pearl-200: #d8e2ec;
+  --color-pearl-300: #bfcede;
+  --color-pearl-400: #a0b4ca;
+  --color-pearl-500: #8799b5;
+  --color-pearl-600: #7382a2;
+  --color-pearl-700: #616f8d;
+  --color-pearl-800: #505c75;
+  --color-pearl-900: #434d60;
+  --color-pearl-950: #2a303b;
+
+  /* Alias sémantiques pour faciliter l'utilisation */
+  --color-marine: var(--color-primary-600);
+  --color-emeraude: var(--color-secondary-500);
+  --color-highlight: var(--color-accent-400);
+  --color-warning: var(--color-amber-400);
+  --color-background: var(--color-pearl-50);
+}

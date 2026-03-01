@@ -1,37 +1,37 @@
 <!-- Footer pour primes-services.ia -->
-<footer class="bg-gray-900 text-white">
+<footer class="bg-primary-900 text-white">
   <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
     <div class="grid md:grid-cols-4 gap-8">
 
       <!-- Logo et description -->
       <div class="md:col-span-2">
         <div class="flex items-center space-x-3 mb-4">
-          <div class="w-10 h-10 bg-gradient-to-br from-blue-600 to-green-600 rounded-lg flex items-center justify-center">
+          <div class="w-10 h-10 bg-gradient-to-br from-primary-600 to-secondary-500 rounded-lg flex items-center justify-center">
             <span class="text-white font-bold text-sm">PS</span>
           </div>
           <div>
             <h3 class="text-xl font-bold">Primes Services</h3>
-            <p class="text-gray-400 text-sm">Assistant IA spécialisé</p>
+            <p class="text-primary-200 text-sm">Assistant IA spécialisé</p>
           </div>
         </div>
 
-        <p class="text-gray-300 mb-6 max-w-md">
+        <p class="text-primary-100 mb-6 max-w-md">
           Experts en subsides belges depuis 15 ans. Notre IA révolutionne l'accompagnement
           pour vos primes et subsides en Flandre, à Bruxelles et en Wallonie.
         </p>
 
         <div class="flex space-x-4">
           <div class="text-center">
-            <div class="text-2xl font-bold text-blue-400">+100M€</div>
-            <div class="text-xs text-gray-400">Primes obtenues</div>
+            <div class="text-2xl font-bold text-amber-400">+100M€</div>
+            <div class="text-xs text-primary-200">Primes obtenues</div>
           </div>
           <div class="text-center">
-            <div class="text-2xl font-bold text-green-400">+6.000</div>
-            <div class="text-xs text-gray-400">Dossiers traités</div>
+            <div class="text-2xl font-bold text-accent-400">+15.000</div>
+            <div class="text-xs text-primary-200">Dossiers accompagnés</div>
           </div>
           <div class="text-center">
-            <div class="text-2xl font-bold text-yellow-400">+15 ans</div>
-            <div class="text-xs text-gray-400">D'expertise</div>
+            <div class="text-2xl font-bold text-secondary-400">+15 ans</div>
+            <div class="text-xs text-primary-200">D'expertise</div>
           </div>
         </div>
       </div>
@@ -41,27 +41,27 @@
         <h4 class="text-lg font-semibold mb-4">Navigation</h4>
         <ul class="space-y-2">
           <li>
-            <%= link_to root_path, class: "text-gray-300 hover:text-white transition-colors" do %>
+            <%= link_to root_path, class: "text-primary-100 hover:text-amber-300 transition-colors" do %>
               🏠 Accueil
             <% end %>
           </li>
           <li>
-            <%= link_to simulation_path, class: "text-gray-300 hover:text-white transition-colors" do %>
+            <%= link_to simulation_path, class: "text-primary-100 hover:text-amber-300 transition-colors" do %>
               📚 Simulations
             <% end %>
           </li>
           <li>
-            <%= link_to ai_chat_path, class: "text-gray-300 hover:text-white transition-colors" do %>
+            <%= link_to ai_chat_path, class: "text-primary-100 hover:text-amber-300 transition-colors" do %>
               🤖 Chat IA
             <% end %>
           </li>
           <li>
-            <a href="https://ren0vate-630b5136c442.herokuapp.com" target="_blank" class="text-gray-300 hover:text-white transition-colors">
+            <a href="https://ren0vate-630b5136c442.herokuapp.com" target="_blank" class="text-primary-100 hover:text-amber-300 transition-colors">
               🔗 Ren0vate
             </a>
           </li>
           <li>
-            <%= link_to about_path, class: "text-gray-300 hover:text-white transition-colors" do %>
+            <%= link_to about_path, class: "text-primary-100 hover:text-amber-300 transition-colors" do %>
               👥 À propos
             <% end %>
           </li>
@@ -71,9 +71,9 @@
       <!-- Contact et régions -->
       <div>
         <h4 class="text-lg font-semibold mb-4">Contact</h4>
-        <ul class="space-y-2 text-gray-300">
+        <ul class="space-y-2 text-primary-100">
           <li>
-            <a href="mailto:robin@architecht.be" class="hover:text-white transition-colors">
+            <a href="mailto:robin@architecht.be" class="hover:text-amber-300 transition-colors">
               📧 robin@architecht.be
             </a>
           </li>
@@ -92,32 +92,32 @@
         <div class="mt-6">
           <h5 class="font-medium mb-2">Spécialisations</h5>
           <div class="flex flex-wrap gap-2 text-xs">
-            <span class="bg-blue-600 px-2 py-1 rounded">Particuliers</span>
-            <span class="bg-green-600 px-2 py-1 rounded">Copropriétés</span>
-            <span class="bg-purple-600 px-2 py-1 rounded">Entreprises</span>
+            <span class="bg-primary-600 px-2 py-1 rounded">Particuliers</span>
+            <span class="bg-secondary-600 px-2 py-1 rounded">Copropriétés</span>
+            <span class="bg-accent-600 px-2 py-1 rounded">Entreprises</span>
           </div>
         </div>
       </div>
     </div>
 
     <!-- Séparateur -->
-    <div class="border-t border-gray-800 mt-8 pt-8">
+    <div class="border-t border-primary-700 mt-8 pt-8">
       <div class="flex flex-col md:flex-row justify-between items-center">
-        <div class="text-gray-400 text-sm">
+        <div class="text-primary-200 text-sm">
           © <%= Date.current.year %> Architecht. Tous droits réservés.
         </div>
 
-        <div class="flex items-center space-x-6 mt-4 md:mt-0 text-sm text-gray-400">
+        <div class="flex items-center space-x-6 mt-4 md:mt-0 text-sm text-primary-200">
           <span>Propulsé par Rails 8.0 + IA</span>
           <span>•</span>
           <span>PWA Ready</span>
           <span>•</span>
-          <a href="/up" class="hover:text-white transition-colors">Statut système</a>
+          <a href="/up" class="hover:text-amber-300 transition-colors">Statut système</a>
         </div>
       </div>
 
       <!-- Disclaimer légal -->
-      <div class="mt-4 text-xs text-gray-500 text-center">
+      <div class="mt-4 text-xs text-primary-300 text-center">
         <p>
           Les informations fournies par notre assistant IA sont basées sur les réglementations en vigueur
           mais ne constituent pas un conseil juridique. Consultez toujours les organismes officiels pour
