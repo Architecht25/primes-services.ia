@@ -12,27 +12,13 @@ Rails.application.routes.draw do
   # Pages principales
   get "pages/about", as: :about
   get "pages/offline", as: :offline
-  get "pages/faq", as: :faq
-  get "pages/data", as: :data
+  get "pages/simulation", as: :simulation
+  get "pages/renovate", as: :renovate
 
-  # Routes SEO géographiques par région
-  scope path: '/regions' do
-    get '/wallonie', to: 'pages#wallonie', as: :region_wallonie
-    get '/flandre', to: 'pages#flandre', as: :region_flandre
-    get '/bruxelles', to: 'pages#bruxelles', as: :region_bruxelles
-
-    # Pages par ville principale (SEO longue traîne)
-    get '/wallonie/liege', to: 'pages#city', defaults: { region: 'wallonie', city: 'liege' }
-    get '/wallonie/charleroi', to: 'pages#city', defaults: { region: 'wallonie', city: 'charleroi' }
-    get '/wallonie/namur', to: 'pages#city', defaults: { region: 'wallonie', city: 'namur' }
-
-    get '/flandre/anvers', to: 'pages#city', defaults: { region: 'flandre', city: 'anvers' }
-    get '/flandre/gand', to: 'pages#city', defaults: { region: 'flandre', city: 'gand' }
-    get '/flandre/bruges', to: 'pages#city', defaults: { region: 'flandre', city: 'bruges' }
-
-    get '/bruxelles/ixelles', to: 'pages#city', defaults: { region: 'bruxelles', city: 'ixelles' }
-    get '/bruxelles/uccle', to: 'pages#city', defaults: { region: 'bruxelles', city: 'uccle' }
-  end
+  # Routes de simulation par région
+  get "simulation/:region", to: "pages#simulation_region", as: :simulation_region
+  get "simulation/:region/primes", to: "pages#simulation_primes", as: :simulation_primes
+  get "simulation/:region/prets", to: "pages#simulation_prets", as: :simulation_prets
 
   # Routes IA Chatbot
   namespace :ai do

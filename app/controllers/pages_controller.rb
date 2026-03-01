@@ -5,43 +5,38 @@ class PagesController < ApplicationController
   def about
   end
 
-  def faq
+  def simulation
   end
 
-  def data
+  def renovate
   end
 
-  # Pages régionales pour le SEO géographique
-  def wallonie
-    @region = 'wallonie'
-    @region_data = GeoSeoHelper::REGIONS_CONFIG[:wallonie]
-    render 'region'
-  end
-
-  def flandre
-    @region = 'flandre'
-    @region_data = GeoSeoHelper::REGIONS_CONFIG[:flandre]
-    render 'region'
-  end
-
-  def bruxelles
-    @region = 'bruxelles'
-    @region_data = GeoSeoHelper::REGIONS_CONFIG[:bruxelles]
-    render 'region'
-  end
-
-  # Pages par ville pour le SEO longue traîne
-  def city
+  # Pages de simulation par région
+  def simulation_region
     @region = params[:region]
-    @city = params[:city]
-    @region_data = GeoSeoHelper::REGIONS_CONFIG[@region.to_sym]
 
-    # Rediriger si ville non valide
-    unless @region_data && @region_data[:major_cities].map(&:parameterize).include?(@city)
-      redirect_to send("region_#{@region}_path"), status: :moved_permanently
+    # Vérifier que la région est valide
+    unless ['wallonie', 'flandre', 'bruxelles'].include?(@region)
+      redirect_to simulation_path, alert: "Région non valide"
       return
     end
+  end
 
-    @city_name = @region_data[:major_cities].find { |c| c.parameterize == @city }
+  def simulation_primes
+    @region = params[:region]
+
+    unless ['wallonie', 'flandre', 'bruxelles'].include?(@region)
+      redirect_to simulation_path, alert: "Région non valide"
+      return
+    end
+  end
+
+  def simulation_prets
+    @region = params[:region]
+
+    unless ['wallonie', 'flandre', 'bruxelles'].include?(@region)
+      redirect_to simulation_path, alert: "Région non valide"
+      return
+    end
   end
 end

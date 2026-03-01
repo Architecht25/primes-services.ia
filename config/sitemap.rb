@@ -7,28 +7,6 @@ SitemapGenerator::Sitemap.create do
   # Pages principales
   add root_path, :priority => 1.0, :changefreq => 'weekly'
   add about_path, :priority => 0.8, :changefreq => 'monthly'
-  add faq_path, :priority => 0.9, :changefreq => 'weekly'
-  add data_path, :priority => 0.8, :changefreq => 'weekly'
-
-  # Pages régionales (Local SEO)
-  add region_wallonie_path, :priority => 0.9, :changefreq => 'weekly'
-  add region_flandre_path, :priority => 0.9, :changefreq => 'weekly'
-  add region_bruxelles_path, :priority => 0.9, :changefreq => 'weekly'
-
-  # Pages par ville (longue traîne SEO)
-  # Wallonie
-  add '/regions/wallonie/liege', :priority => 0.7, :changefreq => 'monthly'
-  add '/regions/wallonie/charleroi', :priority => 0.7, :changefreq => 'monthly'
-  add '/regions/wallonie/namur', :priority => 0.7, :changefreq => 'monthly'
-
-  # Flandre
-  add '/regions/flandre/anvers', :priority => 0.7, :changefreq => 'monthly'
-  add '/regions/flandre/gand', :priority => 0.7, :changefreq => 'monthly'
-  add '/regions/flandre/bruges', :priority => 0.7, :changefreq => 'monthly'
-
-  # Bruxelles
-  add '/regions/bruxelles/ixelles', :priority => 0.7, :changefreq => 'monthly'
-  add '/regions/bruxelles/uccle', :priority => 0.7, :changefreq => 'monthly'
 
   # Pages de contact
   add contacts_path, :priority => 0.9, :changefreq => 'monthly'

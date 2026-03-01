@@ -23,14 +23,24 @@
           🏠 Accueil
         <% end %>
 
-        <%= link_to about_path,
-            class: "text-gray-700 hover:text-blue-600 font-medium transition-colors #{'text-blue-600' if current_page?(about_path)}" do %>
-          👥 À propos
+        <%= link_to simulation_path,
+            class: "text-gray-700 hover:text-blue-600 font-medium transition-colors #{'text-blue-600' if current_page?(simulation_path)}" do %>
+          🧮 Simulation
         <% end %>
 
         <%= link_to ai_chat_path,
             class: "text-gray-700 hover:text-blue-600 font-medium transition-colors #{'text-blue-600' if current_page?(ai_chat_path)}" do %>
           🤖 Chat IA
+        <% end %>
+
+        <%= link_to renovate_path,
+            class: "text-gray-700 hover:text-blue-600 font-medium transition-colors #{'text-blue-600' if current_page?(renovate_path)}" do %>
+          🚀 Ren0vate
+        <% end %>
+
+        <%= link_to about_path,
+            class: "text-gray-700 hover:text-blue-600 font-medium transition-colors #{'text-blue-600' if current_page?(about_path)}" do %>
+          👥 À propos
         <% end %>
 
         <!-- Dropdown Formulaires -->
@@ -102,14 +112,24 @@
           🏠 Accueil
         <% end %>
 
-        <%= link_to about_path,
+        <%= link_to simulation_path,
             class: "block px-3 py-2 text-gray-700 hover:text-blue-600 hover:bg-blue-50 rounded-md font-medium" do %>
-          👥 À propos
+          🧮 Simulation
         <% end %>
 
         <%= link_to ai_chat_path,
             class: "block px-3 py-2 text-gray-700 hover:text-blue-600 hover:bg-blue-50 rounded-md font-medium" do %>
           🤖 Chat IA
+        <% end %>
+
+        <%= link_to renovate_path,
+            class: "block px-3 py-2 text-gray-700 hover:text-blue-600 hover:bg-blue-50 rounded-md font-medium" do %>
+          🚀 Ren0vate
+        <% end %>
+
+        <%= link_to about_path,
+            class: "block px-3 py-2 text-gray-700 hover:text-blue-600 hover:bg-blue-50 rounded-md font-medium" do %>
+          👥 À propos
         <% end %>
 
         <!-- Sous-menu Formulaires mobile -->

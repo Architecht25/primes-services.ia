@@ -1,490 +1,296 @@
-<% content_for :title, "Primes Services IA - Assistant intelligent pour vos subsides belges" %>
-<% content_for :description, "Assistant IA expert en primes belges : 324 subsides référencés, calculs instantanés, accompagnement personnalisé. Wallonie, Flandre, Bruxelles. Obtenez vos primes facilement !" %>
-<% content_for :keywords, seo_keywords('assistant IA', 'primes instantanées', 'subsides wallonie', 'primes flandre', 'subsides bruxelles', 'calculateur prime', 'expert subside') %>
+<% content_for :title, "Primes Services - Simulation de primes et prêts à taux 0% en Belgique" %>
+<% content_for :description, "Après 15 ans d'expertise, Primes Services évolue : simulez vos primes et prêts à taux 0% pour la rénovation en Belgique. Accompagnement digital via Ren0vate." %>
+<% content_for :keywords, seo_keywords('primes rénovation belgique', 'prêt taux zéro', 'simulation primes', 'renovate', 'accompagnement digital', 'rénovation énergétique') %>
 
-<!-- Hero Section PWA -->
-<section class="bg-gradient-to-br from-blue-600 via-blue-700 to-green-600 text-white py-16 lg:py-24">
-  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-    <div class="grid lg:grid-cols-2 gap-12 items-center">
-      <!-- Contenu principal -->
-      <div class="text-center lg:text-left">
-        <h1 class="text-4xl lg:text-6xl font-bold leading-tight mb-6">
-          L'IA qui connaît tous vos
-          <span class="text-yellow-300">subsides</span>
-        </h1>
+<!-- Hero Section - Message principal -->
+<section class="bg-gradient-to-br from-blue-600 via-blue-700 to-green-600 text-white py-20 lg:py-32">
+  <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
 
-        <p class="text-xl lg:text-2xl mb-8 text-blue-100">
-          Assistant intelligent spécialisé en <strong>primes belges</strong><br>
-          324 subsides • Calculs instantanés • Accompagnement expert
+    <!-- Badge "Nouveauté" -->
+    <div class="inline-block bg-yellow-400 text-blue-900 px-6 py-2 rounded-full font-bold text-sm mb-8">
+      📢 Primes Services évolue
+    </div>
+
+    <h1 class="text-4xl lg:text-6xl font-bold leading-tight mb-8">
+      Les primes à la rénovation<br>
+      <span class="text-yellow-300">changent en Belgique</span>
+    </h1>
+
+    <div class="max-w-3xl mx-auto">
+      <p class="text-xl lg:text-2xl mb-6 text-blue-100 leading-relaxed">
+        Après <strong>15 ans d'expertise</strong> en accompagnement humain,<br>
+        nous vous proposons un <strong>accompagnement digital</strong> adapté à la nouvelle réalité :
+      </p>
+
+      <div class="bg-white/10 backdrop-blur-sm rounded-xl p-8 my-8 border border-white/20">
+        <p class="text-2xl font-bold mb-4">La mutation profonde du financement</p>
+        <p class="text-lg text-blue-100">
+          Les primes directes diminuent progressivement au profit des <strong>prêts à taux 0%</strong> et des mécanismes de financement avantageux.
         </p>
-
-        <!-- Statistiques en temps réel -->
-        <div class="grid grid-cols-3 gap-4 mb-8 text-center">
-          <div class="bg-white/10 rounded-lg p-4 backdrop-blur-sm">
-            <div class="text-2xl font-bold text-yellow-300">+100M€</div>
-            <div class="text-sm text-blue-100">Primes obtenues</div>
-          </div>
-          <div class="bg-white/10 rounded-lg p-4 backdrop-blur-sm">
-            <div class="text-2xl font-bold text-yellow-300">+15.000</div>
-            <div class="text-sm text-blue-100">Dossiers traités</div>
-          </div>
-          <div class="bg-white/10 rounded-lg p-4 backdrop-blur-sm">
-            <div class="text-2xl font-bold text-yellow-300">15 ans</div>
-            <div class="text-sm text-blue-100">D'expertise</div>
-          </div>
-        </div>
-
-        <!-- CTA Principal -->
-        <div class="space-y-4 sm:space-y-0 sm:space-x-4 sm:flex sm:justify-center lg:justify-start">
-          <%= link_to ai_chat_path,
-              class: "block sm:inline-block bg-yellow-400 text-blue-900 px-8 py-4 rounded-lg font-bold text-lg hover:bg-yellow-300 transition-colors shadow-lg" do %>
-            🤖 Discuter avec l'IA
-          <% end %>
-
-          <button
-            id="pwa-install-button"
-            class="block sm:inline-block bg-white/10 backdrop-blur-sm text-white px-8 py-4 rounded-lg font-semibold hover:bg-white/20 transition-colors border border-white/20"
-            style="display: none;"
-          >
-            📱 Installer l'app
-          </button>
-        </div>
-
-        <!-- Détection mobile → Prompt installation -->
-        <div class="mt-6 text-center lg:text-left">
-          <p class="text-blue-100 text-sm">
-            💡 Installez l'application pour un accès rapide et des notifications personnalisées
-          </p>
-        </div>
       </div>
+    </div>
 
-      <!-- Demo IA en temps réel -->
-      <div class="bg-white rounded-2xl shadow-2xl p-6 text-gray-800">
-        <div class="flex items-center space-x-3 mb-4">
-          <div class="w-10 h-10 bg-green-500 rounded-full flex items-center justify-center">
-            <span class="text-white text-lg">🤖</span>
-          </div>
-          <div>
-            <h3 class="font-semibold">Assistant Primes Services</h3>
-            <p class="text-sm text-gray-600">En ligne • Répond instantanément</p>
-          </div>
-        </div>
-
-        <!-- Messages de demo -->
-        <div class="space-y-3 mb-4 max-h-60 overflow-y-auto">
-          <div class="flex justify-end">
-            <div class="bg-blue-500 text-white rounded-lg px-3 py-2 text-sm max-w-xs">
-              Combien puis-je avoir pour isoler ma maison à Liège ?
-            </div>
-          </div>
-
-          <div class="flex justify-start">
-            <div class="bg-gray-100 rounded-lg px-3 py-2 text-sm max-w-xs">
-              À Liège (Wallonie), vous pouvez obtenir jusqu'à <strong>6 000€</strong> pour l'isolation !
-              Voulez-vous que je calcule votre montant exact ?
-
-              <div class="mt-2 space-x-2">
-                <button class="bg-blue-500 text-white px-2 py-1 rounded text-xs">Calculer</button>
-                <button class="bg-gray-200 text-gray-700 px-2 py-1 rounded text-xs">En savoir plus</button>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <%= link_to ai_chat_path,
-            class: "block w-full bg-blue-500 text-white text-center py-3 rounded-lg font-semibold hover:bg-blue-600 transition-colors" do %>
-          Commencer la conversation →
-        <% end %>
+    <!-- Statistiques 15 ans -->
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-4xl mx-auto mb-12 mt-12">
+      <div class="bg-white/10 rounded-lg p-6 backdrop-blur-sm border border-white/20">
+        <div class="text-3xl font-bold text-yellow-300">15 ans</div>
+        <div class="text-sm text-blue-100">D'expertise terrain</div>
+      </div>
+      <div class="bg-white/10 rounded-lg p-6 backdrop-blur-sm border border-white/20">
+        <div class="text-3xl font-bold text-yellow-300">+15.000</div>
+        <div class="text-sm text-blue-100">Dossiers accompagnés</div>
+      </div>
+      <div class="bg-white/10 rounded-lg p-6 backdrop-blur-sm border border-white/20">
+        <div class="text-3xl font-bold text-yellow-300">+100M€</div>
+        <div class="text-sm text-blue-100">De financements obtenus</div>
       </div>
     </div>
   </div>
 </section>
 
-<!-- Section IA Assistant Preview -->
-<section class="py-16 bg-gray-50">
-  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+<!-- Notre repositionnement -->
+<section class="py-16 bg-white">
+  <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
     <div class="text-center mb-12">
       <h2 class="text-3xl lg:text-4xl font-bold text-gray-900 mb-4">
-        Pourquoi notre IA est différente ?
+        Notre repositionnement
       </h2>
       <p class="text-xl text-gray-600 max-w-3xl mx-auto">
-        Contrairement aux IA génériques, notre assistant connaît parfaitement les spécificités belges
+        De l'analyse humaine à l'accompagnement digital
       </p>
     </div>
 
-    <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-      <!-- Expertise locale -->
-      <div class="bg-white rounded-xl p-6 shadow-lg text-center">
-        <div class="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4">
-          🇧🇪
-        </div>
-        <h3 class="text-xl font-semibold mb-3">Expertise 100% belge</h3>
-        <p class="text-gray-600">
-          <strong>324 subsides</strong> référencés avec mise à jour réglementaire en temps réel.
-          Spécialisé Wallonie, Flandre, Bruxelles.
-        </p>
+    <div class="grid md:grid-cols-2 gap-12 items-center mb-16">
+      <!-- Avant -->
+      <div class="bg-gray-50 rounded-xl p-8">
+        <div class="text-4xl mb-4 text-center">📋</div>
+        <h3 class="text-2xl font-bold text-gray-900 mb-4 text-center">Avant</h3>
+        <ul class="space-y-3 text-gray-700">
+          <li class="flex items-start">
+            <span class="text-blue-600 mr-2">•</span>
+            <span>Analyse et gestion <strong>100% humaine</strong></span>
+          </li>
+          <li class="flex items-start">
+            <span class="text-blue-600 mr-2">•</span>
+            <span>Focus sur les <strong>primes directes</strong></span>
+          </li>
+          <li class="flex items-start">
+            <span class="text-blue-600 mr-2">•</span>
+            <span>Constitution manuelle de dossiers</span>
+          </li>
+          <li class="flex items-start">
+            <span class="text-blue-600 mr-2">•</span>
+            <span>Accompagnement intensif par conseiller</span>
+          </li>
+        </ul>
       </div>
 
-      <!-- Calculs précis -->
-      <div class="bg-white rounded-xl p-6 shadow-lg text-center">
-        <div class="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
-          💰
-        </div>
-        <h3 class="text-xl font-semibold mb-3">Calculs instantanés</h3>
-        <p class="text-gray-600">
-          Montants exacts selon votre situation, région et type de travaux.
-          <strong>Fini les estimations approximatives.</strong>
-        </p>
-      </div>
-
-      <!-- Accompagnement humain -->
-      <div class="bg-white rounded-xl p-6 shadow-lg text-center">
-        <div class="w-16 h-16 bg-yellow-100 rounded-full flex items-center justify-center mx-auto mb-4">
-          👥
-        </div>
-        <h3 class="text-xl font-semibold mb-3">Équipe d'experts</h3>
-        <p class="text-gray-600">
-          L'IA vous guide, nos experts vous accompagnent.
-          <strong>15 ans d'expérience</strong> à votre service.
-        </p>
-      </div>
-    </div>
-
-    <!-- Comparaison vs ChatGPT -->
-    <div class="mt-12 bg-white rounded-xl p-8 shadow-lg">
-      <h3 class="text-2xl font-bold text-center mb-8">Notre IA vs IA Généraliste</h3>
-
-      <div class="grid md:grid-cols-2 gap-8">
-        <div>
-          <h4 class="font-semibold text-green-600 mb-4">✅ Assistant Primes Services</h4>
-          <ul class="space-y-2 text-gray-700">
-            <li>• Base de données officielle de +150 subsides</li>
-            <li>• Mise à jour réglementaire temps réel</li>
-            <li>• Calculs précis par région belge</li>
-            <li>• Accompagnement humain expert</li>
-            <li>• Workflow complet jusqu'au dépôt</li> 
-          </ul>
-        </div>
-
-        <div>
-          <h4 class="font-semibold text-red-600 mb-4">❌ ChatGPT / IA Généraliste</h4>
-          <ul class="space-y-2 text-gray-700">
-            <li>• Informations générales et parfois obsolètes</li>
-            <li>• Pas de mise à jour en temps réel</li>
-            <li>• Calculs approximatifs ou inexacts</li>
-            <li>• Aucun accompagnement personnalisé</li>
-            <li>• Information uniquement, pas d'action</li>
-          </ul>
-        </div>
+      <!-- Maintenant -->
+      <div class="bg-gradient-to-br from-blue-50 to-green-50 rounded-xl p-8 border-2 border-blue-500">
+        <div class="text-4xl mb-4 text-center">🚀</div>
+        <h3 class="text-2xl font-bold text-blue-900 mb-4 text-center">Aujourd'hui</h3>
+        <ul class="space-y-3 text-gray-700">
+          <li class="flex items-start">
+            <span class="text-green-600 mr-2">✓</span>
+            <span><strong>Accompagnement digital</strong> intelligent</span>
+          </li>
+          <li class="flex items-start">
+            <span class="text-green-600 mr-2">✓</span>
+            <span>Focus <strong>primes + prêts à taux 0%</strong></span>
+          </li>
+          <li class="flex items-start">
+            <span class="text-green-600 mr-2">✓</span>
+            <span>Simulation instantanée en ligne</span>
+          </li>
+          <li class="flex items-start">
+            <span class="text-green-600 mr-2">✓</span>
+            <span>Gestion de chantier via Ren0vate</span>
+          </li>
+        </ul>
       </div>
     </div>
   </div>
 </section>
 
-<!-- Profils Clients Interactifs -->
-<section class="py-16 bg-white">
-  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+<!-- Nos 2 outils -->
+<section class="py-16 bg-gray-50">
+  <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
     <div class="text-center mb-12">
       <h2 class="text-3xl lg:text-4xl font-bold text-gray-900 mb-4">
-        Votre profil, votre accompagnement
+        2 outils pour votre rénovation
       </h2>
       <p class="text-xl text-gray-600">
-        Des solutions personnalisées selon votre situation
+        Une solution complète, de la simulation au chantier
       </p>
     </div>
 
-    <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
-      <!-- Particuliers -->
-      <div class="group bg-gradient-to-br from-blue-50 to-blue-100 rounded-xl p-6 hover:shadow-xl transition-all duration-300 cursor-pointer">
-        <div class="text-center">
-          <div class="w-20 h-20 bg-blue-500 rounded-full flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-transform">
-            <span class="text-white text-2xl">🏠</span>
+    <div class="grid md:grid-cols-2 gap-8">
+      <!-- Outil 1 : Ce site - Simulation -->
+      <div class="bg-white rounded-2xl shadow-xl p-8 relative overflow-hidden">
+        <div class="absolute top-0 right-0 w-32 h-32 bg-blue-100 rounded-full -mr-16 -mt-16"></div>
+
+        <div class="relative">
+          <div class="w-16 h-16 bg-blue-600 rounded-xl flex items-center justify-center text-white text-3xl mb-6">
+            🧮
           </div>
-          <h3 class="text-xl font-semibold mb-3 text-blue-900">Particuliers</h3>
-          <p class="text-blue-700 text-sm mb-4">
-            Isolation, chauffage, rénovation de votre logement
+
+          <h3 class="text-2xl font-bold text-gray-900 mb-4">
+            Primes Services
+          </h3>
+
+          <p class="text-gray-600 mb-6 text-lg">
+            <strong>Ce site</strong> vous permet de simuler facilement vos accès aux primes et prêts à taux 0% en Belgique.
           </p>
 
-          <div class="space-y-2">
-            <%= link_to ai_chat_path(user_type: 'particulier'),
-                class: "block bg-blue-500 text-white py-2 px-4 rounded-lg text-sm font-medium hover:bg-blue-600 transition-colors" do %>
-              🤖 Discuter avec l'IA
-            <% end %>
+          <ul class="space-y-3 mb-8 text-gray-700">
+            <li class="flex items-start">
+              <span class="text-blue-600 mr-2">✓</span>
+              <span>Simulation instantanée primes + prêts</span>
+            </li>
+            <li class="flex items-start">
+              <span class="text-blue-600 mr-2">✓</span>
+              <span>Calculs personnalisés par région</span>
+            </li>
+            <li class="flex items-start">
+              <span class="text-blue-600 mr-2">✓</span>
+              <span>Assistant IA pour vos questions</span>
+            </li>
+            <li class="flex items-start">
+              <span class="text-blue-600 mr-2">✓</span>
+              <span>100% gratuit et sans engagement</span>
+            </li>
+          </ul>
 
-            <button class="w-full bg-white text-blue-500 py-2 px-4 rounded-lg text-sm font-medium hover:bg-blue-50 transition-colors">
-              📋 Formulaire spécialisé
-            </button>
-
-            <%= link_to "https://ren0vate-630b5136c442.herokuapp.com?source=primes-services&profile=particulier",
-                target: "_blank",
-                class: "block w-full bg-blue-200 text-blue-800 py-2 px-4 rounded-lg text-sm font-medium hover:bg-blue-300 transition-colors text-center" do %>
-              🔄 Vers Ren0vate
-            <% end %>
-          </div>
+          <%= link_to simulation_path,
+              class: "block w-full bg-blue-600 text-white text-center px-8 py-4 rounded-lg font-bold text-lg hover:bg-blue-700 transition-colors shadow-lg" do %>
+            🎯 Simuler mes primes et prêts
+          <% end %>
         </div>
       </div>
 
-      <!-- ACP -->
-      <div class="group bg-gradient-to-br from-green-50 to-green-100 rounded-xl p-6 hover:shadow-xl transition-all duration-300 cursor-pointer">
-        <div class="text-center">
-          <div class="w-20 h-20 bg-green-500 rounded-full flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-transform">
-            <span class="text-white text-2xl">🏢</span>
+      <!-- Outil 2 : Ren0vate - Gestion -->
+      <div class="bg-white rounded-2xl shadow-xl p-8 relative overflow-hidden">
+        <div class="absolute top-0 right-0 w-32 h-32 bg-green-100 rounded-full -mr-16 -mt-16"></div>
+
+        <div class="relative">
+          <div class="w-16 h-16 bg-green-600 rounded-xl flex items-center justify-center text-white text-3xl mb-6">
+            🏗️
           </div>
-          <h3 class="text-xl font-semibold mb-3 text-green-900">Copropriétés</h3>
-          <p class="text-green-700 text-sm mb-4">
-            Façades, toitures, chauffage collectif
+
+          <h3 class="text-2xl font-bold text-gray-900 mb-4">
+            Ren<span class="text-green-600">0</span>vate
+          </h3>
+
+          <p class="text-gray-600 mb-6 text-lg">
+            <strong>Notre plateforme de gestion</strong> vous accompagne dans la réalisation de votre chantier et vos dossiers de prêts.
           </p>
 
-          <div class="space-y-2">
-            <%= link_to ai_chat_path(user_type: 'acp'),
-                class: "block bg-green-500 text-white py-2 px-4 rounded-lg text-sm font-medium hover:bg-green-600 transition-colors" do %>
-              🤖 Discuter avec l'IA
-            <% end %>
+          <ul class="space-y-3 mb-8 text-gray-700">
+            <li class="flex items-start">
+              <span class="text-green-600 mr-2">✓</span>
+              <span>Gestion complète du chantier</span>
+            </li>
+            <li class="flex items-start">
+              <span class="text-green-600 mr-2">✓</span>
+              <span>Constitution dossiers de prêts</span>
+            </li>
+            <li class="flex items-start">
+              <span class="text-green-600 mr-2">✓</span>
+              <span>Suivi en temps réel des travaux</span>
+            </li>
+            <li class="flex items-start">
+              <span class="text-green-600 mr-2">✓</span>
+              <span>Réseau entrepreneurs certifiés</span>
+            </li>
+          </ul>
 
-            <button class="w-full bg-white text-green-500 py-2 px-4 rounded-lg text-sm font-medium hover:bg-green-50 transition-colors">
-              📋 Formulaire ACP
-            </button>
-
-            <%= link_to "https://ren0vate-630b5136c442.herokuapp.com?source=primes-services&profile=acp",
-                target: "_blank",
-                class: "block w-full bg-green-200 text-green-800 py-2 px-4 rounded-lg text-sm font-medium hover:bg-green-300 transition-colors text-center" do %>
-              🔄 Vers Ren0vate
-            <% end %>
-          </div>
-        </div>
-      </div>
-
-      <!-- Entreprises Immobilières -->
-      <div class="group bg-gradient-to-br from-purple-50 to-purple-100 rounded-xl p-6 hover:shadow-xl transition-all duration-300 cursor-pointer">
-        <div class="text-center">
-          <div class="w-20 h-20 bg-purple-500 rounded-full flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-transform">
-            <span class="text-white text-2xl">🏗️</span>
-          </div>
-          <h3 class="text-xl font-semibold mb-3 text-purple-900">Entreprises Immo</h3>
-          <p class="text-purple-700 text-sm mb-4">
-            Promotion, gestion, rénovation
-          </p>
-
-          <div class="space-y-2">
-            <%= link_to ai_chat_path(user_type: 'entreprise_immo'),
-                class: "block bg-purple-500 text-white py-2 px-4 rounded-lg text-sm font-medium hover:bg-purple-600 transition-colors" do %>
-              🤖 Discuter avec l'IA
-            <% end %>
-
-            <button class="w-full bg-white text-purple-500 py-2 px-4 rounded-lg text-sm font-medium hover:bg-purple-50 transition-colors">
-              📋 Formulaire Pro
-            </button>
-
-            <%= link_to "https://ren0vate-630b5136c442.herokuapp.com?source=primes-services&profile=entreprise_immo",
-                target: "_blank",
-                class: "block w-full bg-purple-200 text-purple-800 py-2 px-4 rounded-lg text-sm font-medium hover:bg-purple-300 transition-colors text-center" do %>
-              🔄 Vers Ren0vate
-            <% end %>
-          </div>
-        </div>
-      </div>
-
-      <!-- Entreprises Commerciales -->
-      <div class="group bg-gradient-to-br from-orange-50 to-orange-100 rounded-xl p-6 hover:shadow-xl transition-all duration-300 cursor-pointer">
-        <div class="text-center">
-          <div class="w-20 h-20 bg-orange-500 rounded-full flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-transform">
-            <span class="text-white text-2xl">🏭</span>
-          </div>
-          <h3 class="text-xl font-semibold mb-3 text-orange-900">Entreprises</h3>
-          <p class="text-orange-700 text-sm mb-4">
-            Équipements, bâtiments, R&D
-          </p>
-
-          <div class="space-y-2">
-            <%= link_to ai_chat_path(user_type: 'entreprise_comm'),
-                class: "block bg-orange-500 text-white py-2 px-4 rounded-lg text-sm font-medium hover:bg-orange-600 transition-colors" do %>
-              🤖 Discuter avec l'IA
-            <% end %>
-
-            <button class="w-full bg-white text-orange-500 py-2 px-4 rounded-lg text-sm font-medium hover:bg-orange-50 transition-colors">
-              📋 Formulaire Business
-            </button>
-
-            <%= link_to "https://ren0vate-630b5136c442.herokuapp.com?source=primes-services&profile=entreprise_comm",
-                target: "_blank",
-                class: "block w-full bg-orange-200 text-orange-800 py-2 px-4 rounded-lg text-sm font-medium hover:bg-orange-300 transition-colors text-center" do %>
-              🔄 Vers Ren0vate
-            <% end %>
-          </div>
+          <%= link_to renovate_path,
+              class: "block w-full bg-green-600 text-white text-center px-8 py-4 rounded-lg font-bold text-lg hover:bg-green-700 transition-colors shadow-lg" do %>
+            🚀 Découvrir Ren0vate
+          <% end %>
         </div>
       </div>
     </div>
   </div>
 </section>
 
-<!-- PWA Features Showcase -->
-<section class="py-16 bg-gradient-to-r from-indigo-600 to-purple-600 text-white">
-  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-    <div class="text-center mb-12">
-      <h2 class="text-3xl lg:text-4xl font-bold mb-4">
-        📱 L'application qui révolutionne les primes
-      </h2>
-      <p class="text-xl text-indigo-100">
-        Installez notre PWA pour une expérience native optimisée
-      </p>
-    </div>
-
-    <div class="grid md:grid-cols-3 gap-8 text-center">
-      <div class="bg-white/10 rounded-xl p-6 backdrop-blur-sm">
-        <div class="text-4xl mb-4">⚡</div>
-        <h3 class="text-xl font-semibold mb-3">Ultra-rapide</h3>
-        <p class="text-indigo-100">
-          Chargement instantané, même hors ligne. Cache intelligent des données.
-        </p>
-      </div>
-
-      <div class="bg-white/10 rounded-xl p-6 backdrop-blur-sm">
-        <div class="text-4xl mb-4">🔔</div>
-        <h3 class="text-xl font-semibold mb-3">Notifications smart</h3>
-        <p class="text-indigo-100">
-          Nouvelles primes, deadlines, conseils personnalisés directement sur votre écran.
-        </p>
-      </div>
-
-      <div class="bg-white/10 rounded-xl p-6 backdrop-blur-sm">
-        <div class="text-4xl mb-4">📲</div>
-        <h3 class="text-xl font-semibold mb-3">Installation native</h3>
-        <p class="text-indigo-100">
-          Installez comme une vraie app. Icône sur bureau, mode plein écran.
-        </p>
-      </div>
-    </div>
-
-    <div class="text-center mt-12">
-      <button
-        id="pwa-install-button-2"
-        class="bg-yellow-400 text-indigo-900 px-8 py-4 rounded-lg font-bold text-lg hover:bg-yellow-300 transition-colors shadow-lg"
-        style="display: none;"
-      >
-        📱 Installer l'application maintenant
-      </button>
-
-      <p class="text-indigo-100 text-sm mt-4">
-        Compatible avec tous les navigateurs modernes
-      </p>
-    </div>
-  </div>
-</section>
-
-<!-- CTA Final -->
-<section class="py-16 bg-gray-900 text-white text-center">
-  <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-    <h2 class="text-3xl lg:text-4xl font-bold mb-6">
-      Prêt à découvrir vos primes ?
+<!-- Nouveau paradigme -->
+<section class="py-16 bg-gradient-to-r from-blue-900 to-green-900 text-white">
+  <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+    <h2 class="text-3xl lg:text-4xl font-bold mb-8">
+      L'ère des prêts à taux 0%
     </h2>
-    <p class="text-xl text-gray-300 mb-8">
-      Posez votre première question à notre assistant IA spécialisé
+
+    <div class="bg-white/10 backdrop-blur-sm rounded-xl p-8 mb-8 border border-white/20">
+      <p class="text-xl text-blue-100 leading-relaxed mb-6">
+        Les régions belges privilégient désormais les <strong>mécanismes de prêts à taux 0% ou taux réduits</strong>
+        pour financer la rénovation énergétique. Cette mutation profonde nécessite de nouveaux outils
+        et une approche différente.
+      </p>
+
+      <div class="grid md:grid-cols-3 gap-6 mt-8">
+        <div class="bg-white/5 rounded-lg p-4">
+          <div class="text-3xl font-bold text-yellow-300 mb-2">0%</div>
+          <div class="text-sm">Taux prêts verts disponibles</div>
+        </div>
+        <div class="bg-white/5 rounded-lg p-4">
+          <div class="text-3xl font-bold text-yellow-300 mb-2">60 000€</div>
+          <div class="text-sm">Montant max empruntable</div>
+        </div>
+        <div class="bg-white/5 rounded-lg p-4">
+          <div class="text-3xl font-bold text-yellow-300 mb-2">30 ans</div>
+          <div class="text-sm">Durée de remboursement</div>
+        </div>
+      </div>
+    </div>
+
+    <p class="text-lg text-blue-100">
+      Primes Services et Ren0vate vous accompagnent dans cette nouvelle approche du financement de la rénovation.
+    </p>
+  </div>
+</section>
+
+<!-- CTA Final simplifié -->
+<section class="py-16 bg-white">
+  <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+    <h2 class="text-3xl lg:text-4xl font-bold text-gray-900 mb-6">
+      Commencez dès maintenant
+    </h2>
+    <p class="text-xl text-gray-600 mb-10">
+      Première étape : simulez vos primes et prêts disponibles
     </p>
 
-    <div class="space-y-4 sm:space-y-0 sm:space-x-4 sm:flex sm:justify-center">
-      <%= link_to ai_chat_path,
-          class: "block sm:inline-block bg-blue-500 text-white px-8 py-4 rounded-lg font-bold text-lg hover:bg-blue-600 transition-colors" do %>
-        🤖 Commencer maintenant
+    <div class="flex flex-col sm:flex-row gap-4 justify-center">
+      <%= link_to simulation_path,
+          class: "bg-blue-600 text-white px-10 py-5 rounded-xl font-bold text-xl hover:bg-blue-700 transition-all shadow-lg transform hover:scale-105" do %>
+        🧮 Faire une simulation
       <% end %>
 
-      <%= link_to about_path,
-          class: "block sm:inline-block bg-gray-700 text-white px-8 py-4 rounded-lg font-semibold hover:bg-gray-600 transition-colors" do %>
-        👥 Découvrir l'équipe
+      <%= link_to ai_chat_path,
+          class: "bg-gray-100 text-gray-900 px-10 py-5 rounded-xl font-bold text-xl hover:bg-gray-200 transition-all" do %>
+        💬 Poser une question
       <% end %>
     </div>
+
+    <p class="text-gray-500 text-sm mt-8">
+      Gratuit • Sans engagement • Résultats instantanés
+    </p>
   </div>
 </section>
 
-<!-- Widget chatbot flottant (sera ajouté via le layout) -->
-
-<!-- Script PWA Installation -->
-<script>
-  // Détection et gestion de l'installation PWA
-  let deferredPrompt;
-  const installButtons = document.querySelectorAll('[id^="pwa-install-button"]');
-
-  window.addEventListener('beforeinstallprompt', (e) => {
-    // Empêcher l'affichage automatique
-    e.preventDefault();
-    deferredPrompt = e;
-
-    // Afficher nos boutons d'installation
-    installButtons.forEach(button => {
-      button.style.display = 'block';
-    });
-  });
-
-  installButtons.forEach(button => {
-    button.addEventListener('click', async () => {
-      if (deferredPrompt) {
-        deferredPrompt.prompt();
-        const { outcome } = await deferredPrompt.userChoice;
-
-        if (outcome === 'accepted') {
-          console.log('PWA installée avec succès');
-        }
-
-        deferredPrompt = null;
-        installButtons.forEach(btn => {
-          btn.style.display = 'none';
-        });
-      }
-    });
-  });
-
-  // Cacher les boutons si déjà installé
-  window.addEventListener('appinstalled', () => {
-    installButtons.forEach(button => {
-      button.style.display = 'none';
-    });
-  });
-</script>
-
-<%# Schema.org FAQ pour rich snippets %>
-<%= faq_schema([
-  {
-    question: "Combien de subsides sont référencés dans votre base de données ?",
-    answer: "Nous avons référencé 324 subsides et primes disponibles en Belgique, couvrant la Wallonie, la Flandre et Bruxelles-Capitale."
-  },
-  {
-    question: "L'assistant IA peut-il calculer le montant exact de mes primes ?",
-    answer: "Oui, notre IA analyse votre situation (localisation, type de travaux, revenus) et calcule instantanément le montant exact des primes auxquelles vous avez droit."
-  },
-  {
-    question: "Quels types de primes pouvez-vous m'aider à obtenir ?",
-    answer: "Nous couvrons toutes les primes belges : rénovation énergétique, isolation, chauffage, photovoltaïque, pompes à chaleur, et bien plus encore."
-  },
-  {
-    question: "Votre service est-il gratuit ?",
-    answer: "L'utilisation de notre assistant IA est entièrement gratuite. Nous vous accompagnons sans frais dans vos démarches pour obtenir vos primes."
-  }
-]) %>
-
-<%# Schema.org pour la page d'accueil %>
+<!-- Schema.org simplifié -->
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
   "@type": "WebPage",
-  "name": "Primes Services IA - Assistant intelligent pour vos subsides belges",
-  "description": "Assistant IA expert en primes belges : 324 subsides référencés, calculs instantanés, accompagnement personnalisé",
+  "name": "Primes Services - Simulation de primes et prêts à taux 0% en Belgique",
+  "description": "Simulez vos primes et prêts à taux 0% pour la rénovation en Belgique. 15 ans d'expertise, accompagnement digital via Ren0vate.",
   "url": "<%= request.original_url %>",
-  "mainEntity": {
-    "@type": "SoftwareApplication",
-    "name": "Assistant Primes Services IA",
-    "applicationCategory": "BusinessApplication",
-    "operatingSystem": "Web, iOS, Android",
-    "description": "Assistant intelligent spécialisé en primes et subsides belges",
-    "offers": {
-      "@type": "Offer",
-      "price": "0",
-      "priceCurrency": "EUR"
-    },
-    "aggregateRating": {
-      "@type": "AggregateRating",
-      "ratingValue": "4.8",
-      "ratingCount": "4476",
-      "bestRating": "5"
-    }
+  "provider": {
+    "@type": "Organization",
+    "name": "Primes Services",
+    "foundingDate": "2011",
+    "areaServed": ["Belgique", "Wallonie", "Flandre", "Bruxelles"]
   }
 }
 </script>

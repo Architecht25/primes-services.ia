@@ -1,0 +1,261 @@
+<%
+  region_config = {
+    'wallonie' => { name: 'Wallonie', color: 'blue', icon: '🟦', prime_max: '15 000€', pret_max: '60 000€' },
+    'flandre' => { name: 'Flandre', color: 'orange', icon: '🟧', prime_max: '12 000€', pret_max: '50 000€' },
+    'bruxelles' => { name: 'Bruxelles', color: 'green', icon: '🟩', prime_max: '35 000€', pret_max: '25 000€' }
+  }
+  config = region_config[@region] || region_config['wallonie']
+
+  # Classes CSS complètes par région
+  hero_class = case @region
+    when 'wallonie' then 'bg-gradient-to-br from-blue-600 via-blue-700 to-blue-800'
+    when 'flandre' then 'bg-gradient-to-br from-orange-600 via-orange-700 to-orange-800'
+    when 'bruxelles' then 'bg-gradient-to-br from-green-600 via-green-700 to-green-800'
+    else 'bg-gradient-to-br from-blue-600 via-blue-700 to-blue-800'
+  end
+
+  text_light_class = case @region
+    when 'wallonie' then 'text-blue-100'
+    when 'flandre' then 'text-orange-100'
+    when 'bruxelles' then 'text-green-100'
+    else 'text-blue-100'
+  end
+
+  bg_light_class = case @region
+    when 'wallonie' then 'from-blue-50 to-blue-100'
+    when 'flandre' then 'from-orange-50 to-orange-100'
+    when 'bruxelles' then 'from-green-50 to-green-100'
+    else 'from-blue-50 to-blue-100'
+  end
+
+  bg_color_class = case @region
+    when 'wallonie' then 'bg-blue-600'
+    when 'flandre' then 'bg-orange-600'
+    when 'bruxelles' then 'bg-green-600'
+    else 'bg-blue-600'
+  end
+
+  hover_bg_class = case @region
+    when 'wallonie' then 'hover:bg-blue-700'
+    when 'flandre' then 'hover:bg-orange-700'
+    when 'bruxelles' then 'hover:bg-green-700'
+    else 'hover:bg-blue-700'
+  end
+
+  border_color_class = case @region
+    when 'wallonie' then 'hover:border-blue-500'
+    when 'flandre' then 'hover:border-orange-500'
+    when 'bruxelles' then 'hover:border-green-500'
+    else 'hover:border-blue-500'
+  end
+
+  text_color_class = case @region
+    when 'wallonie' then 'text-blue-900'
+    when 'flandre' then 'text-orange-900'
+    when 'bruxelles' then 'text-green-900'
+    else 'text-blue-900'
+  end
+
+  text_medium_class = case @region
+    when 'wallonie' then 'text-blue-700'
+    when 'flandre' then 'text-orange-700'
+    when 'bruxelles' then 'text-green-700'
+    else 'text-blue-700'
+  end
+
+  text_dark_class = case @region
+    when 'wallonie' then 'text-blue-800'
+    when 'flandre' then 'text-orange-800'
+    when 'bruxelles' then 'text-green-800'
+    else 'text-blue-800'
+  end
+
+  text_accent_class = case @region
+    when 'wallonie' then 'text-blue-600'
+    when 'flandre' then 'text-orange-600'
+    when 'bruxelles' then 'text-green-600'
+    else 'text-blue-600'
+  end
+
+  bg_light_solid = case @region
+    when 'wallonie' then 'bg-blue-50'
+    when 'flandre' then 'bg-orange-50'
+    when 'bruxelles' then 'bg-green-50'
+    else 'bg-blue-50'
+  end
+
+  border_light = case @region
+    when 'wallonie' then 'border-blue-200'
+    when 'flandre' then 'border-orange-200'
+    when 'bruxelles' then 'border-green-200'
+    else 'border-blue-200'
+  end
+
+  gradient_footer = case @region
+    when 'wallonie' then 'from-blue-600 to-blue-800'
+    when 'flandre' then 'from-orange-600 to-orange-800'
+    when 'bruxelles' then 'from-green-600 to-green-800'
+    else 'from-blue-600 to-blue-800'
+  end
+%>
+
+<% content_for :title, "Simulation #{config[:name]} - Primes et Prêts à taux 0%" %>
+<% content_for :description, "Simulez vos primes de rénovation et prêts à taux réduits en #{config[:name]}. Calculs précis selon les barèmes 2026." %>
+
+<!-- Hero Section Régional -->
+<section class="<%= hero_class %> text-white py-16 lg:py-20">
+  <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="text-center">
+      <!-- Fil d'Ariane -->
+      <div class="mb-6">
+        <%= link_to simulation_path, class: "#{text_light_class} hover:text-white text-sm" do %>
+          ← Retour aux régions
+        <% end %>
+      </div>
+
+      <div class="text-6xl mb-6"><%= config[:icon] %></div>
+
+      <h1 class="text-4xl lg:text-5xl font-bold leading-tight mb-6">
+        Simulation en <%= config[:name] %>
+      </h1>
+
+      <p class="text-xl lg:text-2xl mb-8 <%= text_light_class %>">
+        Découvrez vos aides financières disponibles
+      </p>
+
+      <!-- Statistiques régionales -->
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-2xl mx-auto">
+        <div class="bg-white/10 rounded-lg p-6 backdrop-blur-sm border border-white/20">
+          <div class="text-3xl font-bold text-yellow-300"><%= config[:prime_max] %></div>
+          <div class="text-sm <%= text_light_class %>">Prime maximale</div>
+        </div>
+        <div class="bg-white/10 rounded-lg p-6 backdrop-blur-sm border border-white/20">
+          <div class="text-3xl font-bold text-yellow-300"><%= config[:pret_max] %></div>
+          <div class="text-sm <%= text_light_class %>">Prêt vert maximum</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Choix Type de Simulation -->
+<section class="py-16 bg-white">
+  <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="text-center mb-12">
+      <h2 class="text-3xl lg:text-4xl font-bold text-gray-900 mb-4">
+        Que souhaitez-vous simuler ?
+      </h2>
+      <p class="text-xl text-gray-600">
+        Choisissez le type d'aide financière à calculer
+      </p>
+    </div>
+
+    <div class="grid md:grid-cols-2 gap-8">
+      <!-- Simulation Primes -->
+      <a href="<%= simulation_primes_path(@region) %>"
+         class="group bg-gradient-to-br <%= bg_light_class %> rounded-2xl p-10 hover:shadow-2xl transition-all duration-300 transform hover:scale-105 cursor-pointer border-2 border-transparent <%= border_color_class %>">
+        <div class="text-center">
+          <div class="w-24 h-24 <%= bg_color_class %> rounded-full flex items-center justify-center mx-auto mb-6 group-hover:scale-110 transition-transform">
+            <span class="text-white text-4xl">💰</span>
+          </div>
+
+          <h3 class="text-2xl font-bold <%= text_color_class %> mb-4">
+            Primes Directes
+          </h3>
+
+          <p class="<%= text_medium_class %> mb-6 text-lg">
+            Calculez le montant des primes auxquelles vous avez droit pour vos travaux de rénovation
+          </p>
+
+          <ul class="space-y-2 text-left mb-8 <%= text_dark_class %>">
+            <li class="flex items-start">
+              <span class="<%= text_accent_class %> mr-2">✓</span>
+              <span>Primes isolation, chauffage, ventilation</span>
+            </li>
+            <li class="flex items-start">
+              <span class="<%= text_accent_class %> mr-2">✓</span>
+              <span>Calcul selon vos revenus</span>
+            </li>
+            <li class="flex items-start">
+              <span class="<%= text_accent_class %> mr-2">✓</span>
+              <span>Barèmes officiels 2026</span>
+            </li>
+          </ul>
+
+          <div class="<%= bg_color_class %> text-white px-8 py-4 rounded-lg font-bold text-lg group-hover:<%= hover_bg_class.gsub('hover:', '') %> transition-colors">
+            Simuler les primes →
+          </div>
+        </div>
+      </a>
+
+      <!-- Simulation Prêts -->
+      <a href="<%= simulation_prets_path(@region) %>"
+         class="group bg-gradient-to-br from-purple-50 to-purple-100 rounded-2xl p-10 hover:shadow-2xl transition-all duration-300 transform hover:scale-105 cursor-pointer border-2 border-transparent hover:border-purple-500">
+        <div class="text-center">
+          <div class="w-24 h-24 bg-purple-600 rounded-full flex items-center justify-center mx-auto mb-6 group-hover:scale-110 transition-transform">
+            <span class="text-white text-4xl">🏦</span>
+          </div>
+
+          <h3 class="text-2xl font-bold text-purple-900 mb-4">
+            Prêts à Taux 0% ou Réduits
+          </h3>
+
+          <p class="text-purple-700 mb-6 text-lg">
+            Découvrez les prêts verts et solutions de financement avantageuses disponibles
+          </p>
+
+          <ul class="space-y-2 text-left mb-8 text-purple-800">
+            <li class="flex items-start">
+              <span class="text-purple-600 mr-2">✓</span>
+              <span>Prêts verts à taux 0% ou réduits</span>
+            </li>
+            <li class="flex items-start">
+              <span class="text-purple-600 mr-2">✓</span>
+              <span>Durée et montants adaptés</span>
+            </li>
+            <li class="flex items-start">
+              <span class="text-purple-600 mr-2">✓</span>
+              <span>Solutions de financement complémentaires</span>
+            </li>
+          </ul>
+
+          <div class="bg-purple-600 text-white px-8 py-4 rounded-lg font-bold text-lg group-hover:bg-purple-700 transition-colors">
+            Simuler les prêts →
+          </div>
+        </div>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- Info Complémentaire -->
+<section class="py-12 bg-gray-50">
+  <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="<%= bg_light_solid %> rounded-xl p-8 border <%= border_light %>">
+      <h3 class="text-2xl font-bold <%= text_color_class %> mb-4">
+        💡 Conseil
+      </h3>
+      <p class="<%= text_dark_class %> text-lg">
+        Pour une vision complète de votre financement, nous vous recommandons de réaliser <strong>les deux simulations</strong>.
+        Les primes et prêts sont complémentaires et peuvent être cumulés pour maximiser votre aide financière.
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- CTA Assistance -->
+<section class="py-12 bg-gradient-to-r <%= gradient_footer %> text-white">
+  <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+    <h2 class="text-3xl font-bold mb-4">
+      Besoin d'aide pour choisir ?
+    </h2>
+    <p class="text-xl mb-8 <%= text_light_class %>">
+      Notre assistant IA peut vous guider dans votre choix
+    </p>
+
+    <%= link_to ai_chat_path,
+        class: "inline-block bg-white #{text_accent_class} px-8 py-4 rounded-lg font-bold text-lg hover:bg-gray-100 transition-colors shadow-lg" do %>
+      💬 Poser une question à l'IA
+    <% end %>
+  </div>
+</section>

@@ -1,0 +1,248 @@
+<%
+  region_config = {
+    'wallonie' => {
+      name: 'Wallonie',
+      color: 'blue',
+      icon: '🟦',
+      prets: [
+        { nom: 'Prêt Vert Wallon', taux: '0% à 2%', montant: '60 000€', duree: '5-30 ans', url: 'https://www.lcl.be' },
+        { nom: 'Prêt Habitation Wallonie', taux: '1% à 3%', montant: '50 000€', duree: '10-25 ans', url: '#' }
+      ]
+    },
+    'flandre' => {
+      name: 'Flandre',
+      color: 'orange',
+      icon: '🟧',
+      prets: [
+        { nom: 'Prêt Rénovation Flamand', taux: '1% à 3%', montant: '50 000€', duree: '5-25 ans', url: 'https://www.vlaanderen.be/energielening' },
+        { nom: 'Energielening', taux: '0% à 2%', montant: '40 000€', duree: '10-20 ans', url: '#' }
+      ]
+    },
+    'bruxelles' => {
+      name: 'Bruxelles',
+      color: 'green',
+      icon: '🟩',
+      prets: [
+        { nom: 'Prêt Vert Bruxellois', taux: '0% à 2%', montant: '25 000€', duree: '5-15 ans', url: 'https://www.flw.brussels/' },
+        { nom: 'Prêt Renolution', taux: '1% à 3%', montant: '30 000€', duree: '10-20 ans', url: '#' }
+      ]
+    }
+  }
+  config = region_config[@region] || region_config['wallonie']
+%>
+
+<% content_for :title, "Prêts à Taux 0% #{config[:name]} - Financez vos travaux" %>
+<% content_for :description, "Découvrez les prêts verts et solutions de financement à taux avantageux en #{config[:name]}." %>
+
+<!-- Hero -->
+<section class="bg-gradient-to-br from-purple-600 via-<%= config[:color] %>-600 to-<%= config[:color] %>-800 text-white py-16">
+  <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+    <div class="mb-4">
+      <%= link_to simulation_region_path(@region), class: "text-purple-100 hover:text-white text-sm" do %>
+        ← Retour
+      <% end %>
+    </div>
+
+    <div class="text-5xl mb-4">🏦</div>
+
+    <h1 class="text-4xl lg:text-5xl font-bold mb-6">
+      Prêts à Taux 0% - <%= config[:name] %>
+    </h1>
+
+    <p class="text-xl text-purple-100">
+      Solutions de financement avantageuses pour vos travaux de rénovation
+    </p>
+  </div>
+</section>
+
+<!-- Prêts disponibles -->
+<section class="py-12 bg-white">
+  <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="text-center mb-12">
+      <h2 class="text-3xl font-bold text-gray-900 mb-4">
+        Prêts disponibles en <%= config[:name] %>
+      </h2>
+      <p class="text-xl text-gray-600">
+        Financez vos travaux avec des taux avantageux
+      </p>
+    </div>
+
+    <div class="grid md:grid-cols-2 gap-8">
+      <% config[:prets].each_with_index do |pret, index| %>
+        <div class="bg-gradient-to-br from-<%= config[:color] %>-50 to-<%= config[:color] %>-100 rounded-xl shadow-lg p-8">
+          <div class="flex items-center mb-4">
+            <div class="w-12 h-12 bg-<%= config[:color] %>-600 rounded-full flex items-center justify-center text-white text-2xl mr-4">
+              <%= index + 1 %>
+            </div>
+            <h3 class="text-2xl font-bold text-<%= config[:color] %>-900"><%= pret[:nom] %></h3>
+          </div>
+
+          <div class="space-y-3 text-gray-700 mb-6">
+            <p><strong>Taux :</strong> <%= pret[:taux] %></p>
+            <p><strong>Montant max :</strong> Jusqu'à <%= pret[:montant] %></p>
+            <p><strong>Durée :</strong> <%= pret[:duree] %></p>
+          </div>
+
+          <% if pret[:url] != '#' %>
+            <a href="<%= pret[:url] %>"
+               target="_blank" rel="noopener"
+               class="block text-center bg-<%= config[:color] %>-600 text-white px-6 py-3 rounded-lg font-semibold hover:bg-<%= config[:color] %>-700 transition-colors">
+              En savoir plus →
+            </a>
+          <% else %>
+            <button class="w-full bg-<%= config[:color] %>-600 text-white px-6 py-3 rounded-lg font-semibold hover:bg-<%= config[:color] %>-700 transition-colors">
+              Demander une simulation
+            </button>
+          <% end %>
+        </div>
+      <% end %>
+    </div>
+  </div>
+</section>
+
+<!-- Simulateur simple -->
+<section class="py-12 bg-gray-50">
+  <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="bg-white rounded-2xl shadow-xl p-8">
+      <h2 class="text-3xl font-bold text-gray-900 mb-6 text-center">
+        💰 Calculez votre mensualité
+      </h2>
+
+      <form id="pret-form" class="space-y-6">
+        <div>
+          <label for="montant" class="block text-sm font-semibold text-gray-700 mb-2">
+            Montant à emprunter (€)
+          </label>
+          <input type="number" id="montant" name="montant" required
+                 placeholder="Ex: 30000"
+                 class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-<%= config[:color] %>-500">
+        </div>
+
+        <div>
+          <label for="duree" class="block text-sm font-semibold text-gray-700 mb-2">
+            Durée (années)
+          </label>
+          <select id="duree" name="duree" required
+                  class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-<%= config[:color] %>-500">
+            <option value="5">5 ans</option>
+            <option value="10">10 ans</option>
+            <option value="15" selected>15 ans</option>
+            <option value="20">20 ans</option>
+            <option value="25">25 ans</option>
+            <option value="30">30 ans</option>
+          </select>
+        </div>
+
+        <div>
+          <label for="taux" class="block text-sm font-semibold text-gray-700 mb-2">
+            Taux d'intérêt (%)
+          </label>
+          <input type="number" id="taux" name="taux" step="0.1" required
+                 placeholder="Ex: 1.5"
+                 class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-<%= config[:color] %>-500">
+          <p class="text-sm text-gray-500 mt-1">Entrez 0 pour un prêt à taux zéro</p>
+        </div>
+
+        <button type="submit"
+                class="w-full bg-gradient-to-r from-<%= config[:color] %>-600 to-purple-600 text-white px-8 py-4 rounded-lg font-bold text-lg hover:from-<%= config[:color] %>-700 hover:to-purple-700 transition-all shadow-lg">
+          📊 Calculer la mensualité
+        </button>
+      </form>
+
+      <div id="pret-results" class="hidden mt-8 p-6 bg-gradient-to-r from-<%= config[:color] %>-50 to-purple-50 rounded-xl">
+        <h3 class="text-2xl font-bold text-gray-900 mb-4">Résultats</h3>
+        <div id="pret-results-content"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="py-12 bg-gradient-to-r from-<%= config[:color] %>-600 to-purple-600 text-white">
+  <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+    <h2 class="text-3xl font-bold mb-4">
+      Optimisez votre plan de financement
+    </h2>
+    <p class="text-xl mb-8 text-<%= config[:color] %>-100">
+      Combinez primes et prêts pour maximiser vos aides
+    </p>
+
+    <div class="flex flex-col sm:flex-row gap-4 justify-center">
+      <%= link_to simulation_primes_path(@region),
+          class: "bg-white text-<%= config[:color] %>-600 px-8 py-4 rounded-lg font-bold text-lg hover:bg-gray-100 transition-colors shadow-lg" do %>
+        💰 Voir les primes
+      <% end %>
+
+      <%= link_to renovate_path,
+          class: "bg-<%= config[:color] %>-100 text-<%= config[:color] %>-900 px-8 py-4 rounded-lg font-bold text-lg hover:bg-<%= config[:color] %>-200 transition-colors" do %>
+        🎯 Accompagnement Ren0vate
+      <% end %>
+    </div>
+  </div>
+</section>
+
+<!-- Script -->
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  const form = document.getElementById('pret-form');
+  const results = document.getElementById('pret-results');
+  const resultsContent = document.getElementById('pret-results-content');
+
+  form.addEventListener('submit', function(e) {
+    e.preventDefault();
+
+    const montant = parseFloat(document.getElementById('montant').value);
+    const duree = parseInt(document.getElementById('duree').value);
+    const taux = parseFloat(document.getElementById('taux').value);
+
+    let mensualite;
+    let coutTotal;
+    let interets;
+
+    if (taux === 0) {
+      mensualite = montant / (duree * 12);
+      coutTotal = montant;
+      interets = 0;
+    } else {
+      const tauxMensuel = taux / 100 / 12;
+      const nombreMensualites = duree * 12;
+      mensualite = (montant * tauxMensuel) / (1 - Math.pow(1 + tauxMensuel, -nombreMensualites));
+      coutTotal = mensualite * nombreMensualites;
+      interets = coutTotal - montant;
+    }
+
+    resultsContent.innerHTML = `
+      <div class="grid md:grid-cols-3 gap-6">
+        <div class="text-center">
+          <div class="text-4xl font-bold text-<%= config[:color] %>-600">
+            ${Math.round(mensualite).toLocaleString('fr-BE')}€
+          </div>
+          <div class="text-sm text-gray-600 mt-1">Mensualité</div>
+        </div>
+        <div class="text-center">
+          <div class="text-4xl font-bold text-purple-600">
+            ${Math.round(coutTotal).toLocaleString('fr-BE')}€
+          </div>
+          <div class="text-sm text-gray-600 mt-1">Coût total</div>
+        </div>
+        <div class="text-center">
+          <div class="text-4xl font-bold text-gray-600">
+            ${Math.round(interets).toLocaleString('fr-BE')}€
+          </div>
+          <div class="text-sm text-gray-600 mt-1">Intérêts</div>
+        </div>
+      </div>
+
+      <div class="mt-6 p-4 bg-white rounded-lg">
+        <p class="text-sm text-gray-700">
+          <strong>Détails :</strong> Pour un prêt de ${montant.toLocaleString('fr-BE')}€
+          sur ${duree} ans à ${taux}%, vous paierez ${Math.round(mensualite).toLocaleString('fr-BE')}€/mois.
+        </p>
+      </div>
+    `;
+
+    results.classList.remove('hidden');
+    results.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+  });
+});
+</script>

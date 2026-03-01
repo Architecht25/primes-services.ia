@@ -1,0 +1,243 @@
+<%
+  region_config = {
+    'wallonie' => { name: 'Wallonie', color: 'blue', icon: '🟦' },
+    'flandre' => { name: 'Flandre', color: 'orange', icon: '🟧' },
+    'bruxelles' => { name: 'Bruxelles', color: 'green', icon: '🟩' }
+  }
+  config = region_config[@region] || region_config['wallonie']
+%>
+
+<% content_for :title, "Simulation Primes #{config[:name]} - Calculez vos aides" %>
+<% content_for :description, "Simulateur de primes de rénovation pour la #{config[:name]}. Calcul instantané selon vos revenus et travaux." %>
+
+<!-- Hero -->
+<section class="bg-gradient-to-br from-<%= config[:color] %>-600 via-<%= config[:color] %>-700 to-green-600 text-white py-16">
+  <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+    <div class="mb-4">
+      <%= link_to simulation_region_path(@region), class: "text-<%= config[:color] %>-100 hover:text-white text-sm" do %>
+        ← Retour
+      <% end %>
+    </div>
+
+    <div class="text-5xl mb-4"><%= config[:icon] %></div>
+
+    <h1 class="text-4xl lg:text-5xl font-bold mb-6">
+      Simulation Primes - <%= config[:name] %>
+    </h1>
+
+    <p class="text-xl text-<%= config[:color] %>-100">
+      Calculez instantanément le montant des primes auxquelles vous avez droit
+    </p>
+  </div>
+</section>
+
+<!-- Formulaire de simulation -->
+<section class="py-12 bg-gray-50">
+  <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="bg-white rounded-2xl shadow-xl p-8">
+      <h2 class="text-3xl font-bold text-gray-900 mb-6 text-center">
+        🧮 Calculateur de Primes - <%= config[:name] %>
+      </h2>
+
+      <form id="simulation-form" class="space-y-6">
+        <!-- Revenus -->
+        <div>
+          <label for="revenus" class="block text-sm font-semibold text-gray-700 mb-2">
+            Revenus annuels du ménage (€)
+          </label>
+          <input type="number" id="revenus" name="revenus" required
+                 placeholder="Ex: 45000"
+                 class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-<%= config[:color] %>-500 focus:border-<%= config[:color] %>-500">
+          <p class="text-sm text-gray-500 mt-1">Revenus nets imposables de l'année précédente</p>
+        </div>
+
+        <!-- Type de travaux -->
+        <div>
+          <label class="block text-sm font-semibold text-gray-700 mb-3">
+            Types de travaux prévus
+          </label>
+          <div class="space-y-3">
+            <label class="flex items-center space-x-3 p-3 hover:bg-gray-50 rounded-lg cursor-pointer">
+              <input type="checkbox" name="travaux" value="isolation_toiture"
+                     class="w-5 h-5 text-<%= config[:color] %>-600 rounded focus:ring-<%= config[:color] %>-500">
+              <span class="flex-1">
+                <strong>Isolation de toiture</strong>
+                <span class="block text-sm text-gray-500">Toit, combles, grenier</span>
+              </span>
+            </label>
+            <label class="flex items-center space-x-3 p-3 hover:bg-gray-50 rounded-lg cursor-pointer">
+              <input type="checkbox" name="travaux" value="isolation_murs"
+                     class="w-5 h-5 text-<%= config[:color] %>-600 rounded focus:ring-<%= config[:color] %>-500">
+              <span class="flex-1">
+                <strong>Isolation des murs</strong>
+                <span class="block text-sm text-gray-500">Murs creux, façades</span>
+              </span>
+            </label>
+            <label class="flex items-center space-x-3 p-3 hover:bg-gray-50 rounded-lg cursor-pointer">
+              <input type="checkbox" name="travaux" value="chaudiere"
+                     class="w-5 h-5 text-<%= config[:color] %>-600 rounded focus:ring-<%= config[:color] %>-500">
+              <span class="flex-1">
+                <strong>Chaudière / Pompe à chaleur</strong>
+                <span class="block text-sm text-gray-500">Système de chauffage performant</span>
+              </span>
+            </label>
+            <label class="flex items-center space-x-3 p-3 hover:bg-gray-50 rounded-lg cursor-pointer">
+              <input type="checkbox" name="travaux" value="chauffe_eau"
+                     class="w-5 h-5 text-<%= config[:color] %>-600 rounded focus:ring-<%= config[:color] %>-500">
+              <span class="flex-1">
+                <strong>Chauffe-eau solaire</strong>
+                <span class="block text-sm text-gray-500">Production eau chaude sanitaire</span>
+              </span>
+            </label>
+            <label class="flex items-center space-x-3 p-3 hover:bg-gray-50 rounded-lg cursor-pointer">
+              <input type="checkbox" name="travaux" value="photovoltaique"
+                     class="w-5 h-5 text-<%= config[:color] %>-600 rounded focus:ring-<%= config[:color] %>-500">
+              <span class="flex-1">
+                <strong>Panneaux photovoltaïques</strong>
+                <span class="block text-sm text-gray-500">Production électricité verte</span>
+              </span>
+            </label>
+            <label class="flex items-center space-x-3 p-3 hover:bg-gray-50 rounded-lg cursor-pointer">
+              <input type="checkbox" name="travaux" value="ventilation"
+                     class="w-5 h-5 text-<%= config[:color] %>-600 rounded focus:ring-<%= config[:color] %>-500">
+              <span class="flex-1">
+                <strong>Ventilation double flux</strong>
+                <span class="block text-sm text-gray-500">Système de ventilation mécanique</span>
+              </span>
+            </label>
+          </div>
+        </div>
+
+        <!-- Budget estimé -->
+        <div>
+          <label for="budget" class="block text-sm font-semibold text-gray-700 mb-2">
+            Budget total estimé des travaux (€)
+          </label>
+          <input type="number" id="budget" name="budget" required
+                 placeholder="Ex: 25000"
+                 class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-<%= config[:color] %>-500 focus:border-<%= config[:color] %>-500">
+          <p class="text-sm text-gray-500 mt-1">Montant total TTC de votre projet</p>
+        </div>
+
+        <!-- Bouton de simulation -->
+        <button type="submit"
+                class="w-full bg-gradient-to-r from-<%= config[:color] %>-600 to-green-600 text-white px-8 py-4 rounded-lg font-bold text-lg hover:from-<%= config[:color] %>-700 hover:to-green-700 transition-all shadow-lg">
+          🎯 Calculer mes primes
+        </button>
+      </form>
+
+      <!-- Résultats -->
+      <div id="results" class="hidden mt-8 p-6 bg-gradient-to-r from-green-50 to-<%= config[:color] %>-50 rounded-xl">
+        <h3 class="text-2xl font-bold text-gray-900 mb-4">📊 Résultats de votre simulation</h3>
+        <div id="results-content" class="space-y-4"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="py-12 bg-gradient-to-r from-<%= config[:color] %>-600 to-green-600 text-white">
+  <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+    <h2 class="text-3xl font-bold mb-4">
+      Et les prêts à taux 0% ?
+    </h2>
+    <p class="text-xl mb-8 text-<%= config[:color] %>-100">
+      Complétez votre plan de financement avec les prêts avantageux
+    </p>
+
+    <div class="flex flex-col sm:flex-row gap-4 justify-center">
+      <%= link_to simulation_prets_path(@region),
+          class: "bg-white text-<%= config[:color] %>-600 px-8 py-4 rounded-lg font-bold text-lg hover:bg-gray-100 transition-colors shadow-lg" do %>
+        🏦 Simuler les prêts
+      <% end %>
+
+      <%= link_to ai_chat_path,
+          class: "bg-<%= config[:color] %>-100 text-<%= config[:color] %>-900 px-8 py-4 rounded-lg font-bold text-lg hover:bg-<%= config[:color] %>-200 transition-colors" do %>
+        💬 Poser une question
+      <% end %>
+    </div>
+  </div>
+</section>
+
+<!-- Script -->
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  const form = document.getElementById('simulation-form');
+  const results = document.getElementById('results');
+  const resultsContent = document.getElementById('results-content');
+
+  const plafonds = {
+    wallonie: 15000,
+    flandre: 12000,
+    bruxelles: 35000
+  };
+
+  form.addEventListener('submit', function(e) {
+    e.preventDefault();
+
+    const region = '<%= @region %>';
+    const revenus = parseInt(document.getElementById('revenus').value);
+    const budget = parseInt(document.getElementById('budget').value);
+    const travaux = Array.from(document.querySelectorAll('input[name="travaux"]:checked'))
+                         .map(cb => cb.value);
+
+    if (travaux.length === 0) {
+      alert('Veuillez sélectionner au moins un type de travaux');
+      return;
+    }
+
+    let primeEstimee = 0;
+    let categorieRevenus = '';
+
+    if (revenus < 25000) {
+      categorieRevenus = 'faibles';
+      primeEstimee = budget * 0.50;
+    } else if (revenus < 45000) {
+      categorieRevenus = 'moyens';
+      primeEstimee = budget * 0.35;
+    } else {
+      categorieRevenus = 'élevés';
+      primeEstimee = budget * 0.20;
+    }
+
+    primeEstimee = Math.min(primeEstimee, plafonds[region]);
+
+    resultsContent.innerHTML = `
+      <div class="bg-white rounded-lg p-6 shadow-md">
+        <div class="text-center mb-4">
+          <div class="text-5xl font-bold text-green-600">
+            ${Math.round(primeEstimee).toLocaleString('fr-BE')}€
+          </div>
+          <div class="text-sm text-gray-600 mt-1">Prime estimée</div>
+        </div>
+
+        <div class="border-t pt-4 space-y-2 text-sm text-gray-700">
+          <p><strong>Région :</strong> ${region.charAt(0).toUpperCase() + region.slice(1)}</p>
+          <p><strong>Catégorie de revenus :</strong> Revenus ${categorieRevenus}</p>
+          <p><strong>Budget travaux :</strong> ${budget.toLocaleString('fr-BE')}€</p>
+          <p><strong>Travaux sélectionnés :</strong> ${travaux.length}</p>
+        </div>
+
+        <div class="mt-4 p-4 bg-blue-50 rounded-lg text-sm">
+          <p class="font-semibold text-blue-900 mb-2">📋 Prochaines étapes :</p>
+          <ul class="space-y-1 text-gray-700">
+            <li>✓ Demander l'audit énergétique (gratuit)</li>
+            <li>✓ Obtenir devis d'entrepreneurs agréés</li>
+            <li>✓ Constituer le dossier de demande de prime</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="mt-4 p-4 bg-yellow-50 rounded-lg border border-yellow-200">
+        <p class="text-sm text-gray-700">
+          <strong>⚠️ Estimation indicative</strong> : Calcul basé sur les barèmes 2026.
+          Pour un montant exact, consultez notre assistant IA ou contactez nos experts.
+        </p>
+      </div>
+    `;
+
+    results.classList.remove('hidden');
+    results.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+  });
+});
+</script>
