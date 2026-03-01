@@ -10,33 +10,53 @@ class NaturalLanguageProcessor
       weight: 1.0
     },
     chauffage: {
-      keywords: %w[chauffage chaudière pompe chaleur gaz mazout électrique radiateurs],
-      synonyms: %w[heating climatisation ventilation],
+      keywords: %w[chauffage chaudière pompe chaleur gaz mazout électrique radiateurs condensation],
+      synonyms: %w[heating climatisation ventilation pac],
       weight: 1.0
     },
     renovation_generale: {
       keywords: %w[rénover rénovation travaux maison appartement logement réhabilitation],
-      synonyms: %w[restaurer moderniser transformer],
+      synonyms: %w[restaurer moderniser transformer refaire],
       weight: 0.8
     },
     energie_renouvelable: {
-      keywords: %w[solaire photovoltaique eolienne biomasse géothermie],
-      synonyms: %w[renouvelable verte écologique],
+      keywords: %w[solaire photovoltaique photovoltaïque eolienne biomasse géothermie panneaux],
+      synonyms: %w[renouvelable verte écologique durable],
       weight: 1.0
     },
+    prets: {
+      keywords: %w[prêt crédit emprunt financement taux intérêt banque],
+      synonyms: %w[prêts crédits emprunts financements rénopack energielening],
+      weight: 1.0
+    },
+    monuments: {
+      keywords: %w[monument classé patrimoine historique architectural awap onroerend erfgoed],
+      synonyms: %w[classement protection sauvegardé remarquable],
+      weight: 1.0
+    },
+    communale: {
+      keywords: %w[commune communale municipal locale ville cité gemeente gemeentelijke],
+      synonyms: %w[communaux municipaux locaux],
+      weight: 0.9
+    },
+    audit: {
+      keywords: %w[audit peb epc certificat énergétique auditeur diagnostic performance],
+      synonyms: %w[audits diagnostics certifications énergie],
+      weight: 0.9
+    },
     aide_financiere: {
-      keywords: %w[prime subside aide financement crédit prêt montant budget],
-      synonyms: %w[subsides primes allocations],
+      keywords: %w[prime subside aide financement montant budget coût euros],
+      synonyms: %w[subsides primes allocations aides financières premie],
       weight: 0.9
     },
     procedure: {
-      keywords: %w[comment démarche procédure étapes dossier formulaire],
-      synonyms: %w[process faire obtenir demander],
+      keywords: %w[comment démarche procédure étapes dossier formulaire demande introduire],
+      synonyms: %w[process faire obtenir demander conditions critères],
       weight: 0.7
     },
     information_generale: {
-      keywords: %w[qui équipe entreprise société contact téléphone],
-      synonyms: %w[about propos informations],
+      keywords: %w[qui équipe entreprise société contact téléphone information],
+      synonyms: %w[about propos informations renseignements],
       weight: 0.5
     }
   }.freeze

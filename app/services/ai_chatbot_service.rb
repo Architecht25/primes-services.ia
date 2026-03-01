@@ -129,40 +129,63 @@ class AiChatbotService
     regional_info = get_regional_context
 
     <<~PROMPT
-      Tu es #{assistant_name}, l'assistant IA spécialisé en subsides et primes en Belgique.
+      Tu es #{assistant_name}, l'assistant IA spécialisé en primes de rénovation énergétique et prêts à taux 0% en Belgique.
 
       CONTEXTE UTILISATEUR:
       - Profil: #{user_type}
       - Région: #{user_region}
       - Langue: #{@config.dig(:assistant, :language)}
 
-      TON RÔLE:
-      - Expert en subsides belges (324 subsides dans ta base de données)
-      - Conseiller personnalisé selon le profil et la région
-      - Guide vers les bonnes démarches et Ren0vate pour l'accompagnement complet
+      TON EXPERTISE PRINCIPALE:
+      
+      1. PRIMES DE RÉNOVATION ÉNERGÉTIQUE (#{regional_info[:name]}):
+      #{regional_info[:specific_subsidies]&.map { |s| "   • #{s}" }&.join("\n") || "   • Primes régionales standard"}
+      
+      2. PRIMES SPÉCIFIQUES DISPONIBLES:
+      #{regional_info[:special_primes]&.map { |s| "   • #{s}" }&.join("\n") || "   • Contactez-moi pour plus d'infos"}
+      
+      3. PRÊTS À TAUX 0% ET FINANCEMENTS:
+      #{regional_info[:loan_programs]&.map { |s| "   • #{s}" }&.join("\n") || "   • Prêts verts disponibles"}
 
       SOURCES OFFICIELLES (#{regional_info[:name]}):
       #{regional_info[:official_urls]&.map { |type, url| "- #{type.to_s.humanize}: #{url}" }&.join("\n") || "Sources non disponibles"}
 
       IMPORTANT: #{regional_info[:key_info]}
 
+      TON RÔLE PRINCIPAL:
+      - Évaluer l'éligibilité aux primes selon le profil et la région
+      - Calculer les montants estimés des primes disponibles
+      - Expliquer les conditions d'obtention (revenus, travaux, démarches)
+      - Conseiller sur les prêts à taux 0% et solutions de financement
+      - Identifier les primes cumulables (régionales + communales + spécifiques)
+      - Orienter vers les simulateurs de l'application pour calculs précis
+      - Rediriger vers Ren0vate pour l'accompagnement complet du projet
+
       RÈGLES IMPORTANTES:
-      1. Réponds toujours en français belge (#{@config.dig(:assistant, :language)})
-      2. Sois précis sur les montants et conditions selon la région
-      3. TOUJOURS mentionner les sources officielles dans tes réponses
-      4. Propose toujours des actions concrètes
-      5. Redirige vers Ren0vate pour l'accompagnement détaillé
-      6. Inclus les liens vers les sites officiels quand pertinent
-      7. Si tu ne sais pas, dis-le et propose de contacter un expert humain
+      1. Réponds TOUJOURS en français belge (#{@config.dig(:assistant, :language)})
+      2. Concentre-toi sur les PRIMES et PRÊTS mentionnés dans l'application
+      3. Sois PRÉCIS sur les montants selon la région et les revenus
+      4. TOUJOURS suggérer d'utiliser les simulateurs de l'app pour calculs exacts
+      5. Mentionne les SOURCES OFFICIELLES pour la crédibilité
+      6. Propose des ACTIONS CONCRÈTES adaptées au projet de l'utilisateur
+      7. Suggère de visiter les pages spécifiques de l'app (/simulation/:region/primes)
+      8. Recommande Ren0vate pour l'accompagnement personnalisé de A à Z
+      9. Si tu ne connais pas un détail précis, dis-le et oriente vers un expert
 
-      STYLE:
-      - Professionnel mais accessible
-      - Utilise des exemples concrets
-      - Structure tes réponses clairement
-      - Propose des boutons d'action quand pertinent
-      - Mentionne les sources officielles pour la crédibilité
+      PAGES DE L'APPLICATION À RÉFÉRENCER:
+      - /simulation/#{user_region}/primes : Primes spécifiques de la région
+      - /simulation/#{user_region}/prets : Prêts à taux 0% disponibles
+      - /renovate : Plateforme Ren0vate pour accompagnement complet
 
-      Tu as accès aux données temps réel des subsides belges et aux spécificités régionales.
+      STYLE DE COMMUNICATION:
+      - Professionnel mais chaleureux et accessible
+      - Utilise des EXEMPLES CONCRETS avec montants
+      - Structure tes réponses clairement (listes, sections)
+      - Mentionne toujours les montants estimés quand possible
+      - Identifie les primes CUMULABLES pour maximiser les aides
+      - Termine avec des boutons d'action pertinents
+
+      EXPERTISE: Connaissance approfondie des primes régionales, communales, spécifiques (monuments, patrimoine, audit/PEB) et prêts à taux 0% en Belgique.
     PROMPT
   end
 
@@ -187,48 +210,116 @@ class AiChatbotService
         authority: 'Région wallonne',
         language: 'fr',
         specific_programs: ['Rénopack', 'Prime Habitation', 'Audits énergétiques'],
+        specific_subsidies: [
+          'Isolation de toiture : jusqu\'à 30€/m² (50€/m² revenus modestes)',
+          'Isolation des murs : jusqu\'à 70€/m² selon technique',
+          'Pompe à chaleur : 4 000€ à 6 000€',
+          'Chaudière biomasse : 3 000€ à 5 000€',
+          'Panneaux photovoltaïques : prime selon kWc installé',
+          'Ventilation double flux : 1 800€ à 2 500€'
+        ],
+        special_primes: [
+          'Prime Monuments et Sites : jusqu\'à 80% du coût pour biens classés',
+          'Primes Communales : 500€ à 5 000€ selon la commune (200+ communes)',
+          'Prime Audit Énergétique : 110€ à 660€ selon type d\'audit',
+          'Possibilité de cumul primes régionales + communales'
+        ],
+        loan_programs: [
+          'Prêt Rénopack : 0% à 2% selon revenus (max 60 000€)',
+          'Prêt vert BNP Paribas Fortis : taux réduit',
+          'Prêt Énergie Belfius : conditions avantageuses',
+          'Prêt travaux à taux 0% pour revenus modestes'
+        ],
         contact_info: 'Service Public de Wallonie',
         official_urls: {
           main: 'https://energie.wallonie.be/',
           prime_habitation: 'https://energie.wallonie.be/fr/prime-habitation.html',
-          audit_energetique: 'https://energie.wallonie.be/fr/audit-energetique-et-architectural.html',
+          audit_energetique: 'https://energie.wallonie.be/fr/audit-energetique.html',
           isolation: 'https://energie.wallonie.be/fr/prime-isolation.html',
           chauffage: 'https://energie.wallonie.be/fr/prime-chauffage.html',
-          renovation: 'https://energie.wallonie.be/fr/prime-renovation.html'
+          renovation: 'https://energie.wallonie.be/fr/prime-renovation.html',
+          monuments: 'https://www.awap.be/',
+          primes_communales: 'https://energie.wallonie.be/fr/primes-communales.html'
         },
-        key_info: 'Référez-vous toujours aux informations officielles du Service Public de Wallonie pour les montants et conditions exactes.'
+        key_info: 'Les primes wallonnes sont modulées selon les revenus. Possibilité de cumuler primes régionales + communales + spécifiques.'
       }
     when 'flandre'
       {
         name: 'Flandre',
         authority: 'Vlaams Gewest',
         language: 'nl',
-        specific_programs: ['Vlaamse renovatiepremie', 'Energiepremie'],
-        contact_info: 'Vlaams Energie- en Klimaatagentschap',
+        specific_programs: ['Vlaamse renovatiepremie', 'Energiepremie', 'Verbouwpremie'],
+        specific_subsidies: [
+          'Dakisolatie (isolation toiture) : jusqu\'à 30€/m²',
+          'Muurisolatie (isolation murs) : jusqu\'à 50€/m²',
+          'Warmtepomp (pompe à chaleur) : jusqu\'à 4 500€',
+          'Zonnepanelen (panneaux solaires) : primes selon installation',
+          'Ventilatiesysteem (ventilation) : jusqu\'à 2 000€',
+          'Hoogrendementsglas (châssis performants) : prime selon m²'
+        ],
+        special_primes: [
+          'Prime Patrimoine (Onroerend Erfgoed) : jusqu\'à 80% pour biens classés',
+          'Primes Communales flamandes : 300€ à 4 000€ selon commune (150+ communes)',
+          'Prime Certificat PEB/EPC : jusqu\'à 100€ pour certification énergétique',
+          'Possibilité de cumul primes régionales + communales + patrimoine'
+        ],
+        loan_programs: [
+          'Energielening (prêt énergie) : 0% à 2% selon revenus (max 60 000€)',
+          'Verbeteringslening : taux avantageux pour rénovation',
+          'Groene lening (prêt vert) : conditions favorables banques',
+          'Prêt à 0% pour revenus modestes et travaux énergétiques prioritaires'
+        ],
+        contact_info: 'Vlaams Energie- en Klimaatagentschap (VEKA)',
         official_urls: {
           main: 'https://www.vlaanderen.be/',
           renovation: 'https://www.vlaanderen.be/premies-voor-verbouwingen',
           energie: 'https://www.vlaanderen.be/bouwen-wonen-en-energie',
           isolation: 'https://www.vlaanderen.be/premie-voor-isolatie',
-          chauffage: 'https://www.vlaanderen.be/premie-voor-verwarmingsinstallatie'
+          chauffage: 'https://www.vlaanderen.be/premie-voor-verwarmingsinstallatie',
+          patrimoine: 'https://www.onroerenderfgoed.be/',
+          peb: 'https://www.energiesparen.be/epb-peb'
         },
-        key_info: 'Verwijs altijd naar de officiële informatie van de Vlaamse overheid voor exacte bedragen en voorwaarden.'
+        key_info: 'Les primes flamandes dépendent des revenus du ménage. Le certificat PEB est souvent obligatoire. Cumul possible des primes régionales, communales et patrimoine.'
       }
     when 'bruxelles'
       {
         name: 'Bruxelles-Capitale',
         authority: 'Région de Bruxelles-Capitale',
         language: 'fr/nl',
-        specific_programs: ['Prime Renolution', 'Prime énergie'],
-        contact_info: 'Bruxelles Environnement',
+        specific_programs: ['Renolution', 'Prime Énergie', 'Prime Rénovation'],
+        specific_subsidies: [
+          'Isolation de toiture : jusqu\'à 50€/m² (75€/m² revenus modestes)',
+          'Isolation des murs : jusqu\'à 100€/m² selon technique',
+          'Pompe à chaleur : jusqu\'à 4 500€ (primes majorées possibles)',
+          'Chaudière condensation : 2 000€ à 3 500€',
+          'Panneaux photovoltaïques : 350€ à 500€/kWc',
+          'Ventilation double flux : jusqu\'à 3 500€',
+          'Châssis performants : jusqu\'à 120€/m²'
+        ],
+        special_primes: [
+          'Prime Monuments et Sites : jusqu\'à 90% pour biens classés (urban.brussels)',
+          'Primes Communales : 400€ à 6 000€ (19 communes bruxelloises)',
+          'Prime Petit Patrimoine : jusqu\'à 50% (max 5 000€) pour éléments remarquables',
+          'Prime embellissement façade : jusqu\'à 80% selon commune',
+          'Cumul possible : primes régionales + communales + patrimoine'
+        ],
+        loan_programs: [
+          'Prêt vert bruxellois : 0% à 2% selon revenus (max 25 000€)',
+          'Prêt RenoFin : conditions avantageuses pour rénovation énergétique',
+          'Fonds du Logement : prêts sociaux pour travaux',
+          'Prêt Financement Habitat Durable : taux réduit avec accompagnement'
+        ],
+        contact_info: 'Bruxelles Environnement / Leefmilieu Brussel',
         official_urls: {
           main: 'https://www.bruxellesenvironnement.be/',
           primes: 'https://www.bruxellesenvironnement.be/particuliers/mes-aides-financieres-et-primes',
           renolution: 'https://www.renolution.brussels/',
           isolation: 'https://www.bruxellesenvironnement.be/particuliers/mes-aides-financieres-et-primes/prime-energie/isolation',
-          chauffage: 'https://www.bruxellesenvironnement.be/particuliers/mes-aides-financieres-et-primes/prime-energie/chauffage'
+          chauffage: 'https://www.bruxellesenvironnement.be/particuliers/mes-aides-financieres-et-primes/prime-energie/chauffage',
+          monuments: 'https://urban.brussels/fr/nos-themes/patrimoine-et-monuments',
+          primes_communales: 'https://1819.brussels/infotheque/primes-aides-subventions/renovation/primes-communales-bruxelles'
         },
-        key_info: 'Référez-vous toujours aux informations officielles de Bruxelles Environnement pour les montants et conditions exactes.'
+        key_info: 'Bruxelles offre les primes les plus généreuses de Belgique, surtout pour les revenus modestes. Les primes communales peuvent significativement augmenter le montant total. Cumul possible entre plusieurs dispositifs.'
       }
     else
       {
@@ -341,35 +432,115 @@ class AiChatbotService
 
   def build_suggested_actions(intent_analysis)
     actions = []
+    user_region = @conversation.user_region || @config.dig(:regions, :default)
 
     case intent_analysis[:category]
-    when 'isolation', 'chauffage', 'renovation_generale'
+    when 'isolation', 'chauffage', 'renovation_generale', 'energie_renouvelable'
+      # Actions principales pour les demandes de primes
       actions << {
-        type: 'form',
-        label: 'Calculer mes primes exactes',
-        url: "/contacts/#{@conversation.user_type || 'particuliers'}",
-        primary: true
+        type: 'simulator',
+        label: '🎯 Simuler mes primes',
+        url: "/simulation/#{user_region}/primes",
+        primary: true,
+        description: 'Calculez le montant des primes auxquelles vous avez droit'
+      }
+      actions << {
+        type: 'simulator',
+        label: '🏦 Découvrir les prêts à 0%',
+        url: "/simulation/#{user_region}/prets",
+        primary: false,
+        description: 'Prêts verts et financements avantageux'
       }
       actions << {
         type: 'redirect',
-        label: 'Être accompagné par un expert',
+        label: '🚀 Accompagnement Ren0vate',
         url: build_renovate_url,
-        primary: false
+        primary: false,
+        description: 'Gestion complète de A à Z par des experts'
       }
+      
+    when 'prets', 'financement'
+      # Actions pour les demandes de financement
+      actions << {
+        type: 'simulator',
+        label: '🏦 Prêts à taux 0%',
+        url: "/simulation/#{user_region}/prets",
+        primary: true,
+        description: 'Découvrez tous les prêts disponibles'
+      }
+      actions << {
+        type: 'simulator',
+        label: '💰 Calculer mes primes',
+        url: "/simulation/#{user_region}/primes",
+        primary: false,
+        description: 'Cumulez primes et prêts pour financer votre projet'
+      }
+      actions << {
+        type: 'redirect',
+        label: '🚀 Solution Ren0vate complète',
+        url: build_renovate_url,
+        primary: false,
+        description: 'Primes + Prêts + Accompagnement'
+      }
+      
+    when 'monuments', 'patrimoine'
+      # Actions spécifiques pour le patrimoine
+      actions << {
+        type: 'simulator',
+        label: '🏛️ Primes patrimoine',
+        url: "/simulation/#{user_region}/primes",
+        primary: true,
+        description: 'Primes Monuments et Sites, Petit Patrimoine'
+      }
+      actions << {
+        type: 'redirect',
+        label: '📞 Experts patrimoine',
+        url: build_renovate_url,
+        primary: false,
+        description: 'Accompagnement spécialisé bâtiments classés'
+      }
+      
+    when 'communale'
+      # Actions pour primes communales
+      actions << {
+        type: 'simulator',
+        label: '🏘️ Primes de ma commune',
+        url: "/simulation/#{user_region}/primes",
+        primary: true,
+        description: 'Découvrez les primes communales disponibles'
+      }
+      actions << {
+        type: 'redirect',
+        label: '💬 Assistance personnalisée',
+        url: build_renovate_url,
+        primary: false,
+        description: 'Aide à identifier toutes les primes cumulables'
+      }
+      
     when 'information_generale'
       actions << {
         type: 'internal',
-        label: 'En savoir plus sur notre équipe',
+        label: 'ℹ️ À propos de Primes Services',
         url: '/about',
-        primary: false
+        primary: false,
+        description: 'Notre mission et notre équipe'
+      }
+      actions << {
+        type: 'simulator',
+        label: '📊 Simuler mes primes',
+        url: "/simulation/#{user_region}/primes",
+        primary: true,
+        description: 'Estimez vos aides financières'
       }
     end
 
+    # Action universelle : contact expert
     actions << {
       type: 'contact',
-      label: 'Parler à un expert humain',
+      label: '👨‍💼 Parler à un expert',
       url: 'mailto:equipe@primes-services.be',
-      primary: false
+      primary: false,
+      description: 'Assistance personnalisée par email'
     }
 
     actions
