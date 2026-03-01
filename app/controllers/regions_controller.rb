@@ -24,7 +24,7 @@ class RegionsController < ApplicationController
 
   def set_region
     @region = params[:region]&.downcase
-    
+
     unless ['wallonie', 'flandre', 'bruxelles'].include?(@region)
       redirect_to root_path, alert: "Région non valide"
     end

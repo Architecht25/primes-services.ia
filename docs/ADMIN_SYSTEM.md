@@ -230,5 +230,5 @@ Pour toute question ou problème:
 
 ---
 
-**Version**: 1.0.0  
+**Version**: 1.0.0
 **Dernière mise à jour**: Mars 2026

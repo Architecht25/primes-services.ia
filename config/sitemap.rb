@@ -10,7 +10,7 @@ SitemapGenerator::Sitemap.create do
 
   # Pages principales - Haute priorité
   add about_path, priority: 0.8, changefreq: 'monthly'
-  
+
   # Interface IA - Très importante pour l'engagement
   add ai_chat_path, priority: 0.9, changefreq: 'weekly'
 
@@ -27,20 +27,20 @@ SitemapGenerator::Sitemap.create do
     add region_path(region: region),
         priority: 0.95,
         changefreq: 'weekly'
-    
+
     # Page simulation principale par région
-    add simulation_region_path(region: region), 
-        priority: 0.95, 
+    add simulation_region_path(region: region),
+        priority: 0.95,
         changefreq: 'weekly'
-    
+
     # Page primes par région - Très important pour SEO local
-    add simulation_primes_path(region: region), 
-        priority: 0.95, 
+    add simulation_primes_path(region: region),
+        priority: 0.95,
         changefreq: 'weekly'
-    
+
     # Page prêts par région
-    add simulation_prets_path(region: region), 
-        priority: 0.90, 
+    add simulation_prets_path(region: region),
+        priority: 0.90,
         changefreq: 'weekly'
   end
 
@@ -54,4 +54,3 @@ SitemapGenerator::Sitemap.create do
   # /pwa/* - ressources PWA
   # /redirections/* - redirections internes
 end
-

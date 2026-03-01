@@ -43,4 +43,3 @@ Sitemap: https://primes-services-ia-cc4318abe295.herokuapp.com/sitemap.xml
 
 # Politique d'exploration (évite surcharge serveur)
 Crawl-delay: 1
-

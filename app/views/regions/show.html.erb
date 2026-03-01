@@ -28,7 +28,7 @@
         <p class="text-xl md:text-2xl max-w-3xl mx-auto mb-8 text-<%= @region_info[:color] %>-100">
           <%= @region_info[:description] %>
         </p>
-        
+
         <div class="flex flex-col sm:flex-row gap-4 justify-center">
           <%= link_to simulation_primes_path(region: @region), class: "bg-white text-#{@region_info[:color]}-600 px-8 py-4 rounded-lg font-bold text-lg hover:bg-gray-100 transition" do %>
             🧮 Calculer mes primes
@@ -70,7 +70,7 @@
       <h2 class="text-3xl font-bold mb-12 text-center">
         Programmes de primes en <%= @region_info[:name] %>
       </h2>
-      
+
       <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
         <% @prime_programs.each do |program| %>
           <div class="bg-white rounded-xl shadow-lg p-6 hover:shadow-xl transition">
@@ -104,7 +104,7 @@
       <h2 class="text-3xl font-bold mb-12 text-center">
         Primes disponibles dans les principales villes
       </h2>
-      
+
       <div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-4 gap-4">
         <% @major_cities.each do |city| %>
           <div class="bg-white rounded-lg p-4 text-center hover:shadow-lg transition">
@@ -120,8 +120,8 @@
 
       <div class="mt-8 p-6 bg-white rounded-xl">
         <p class="text-gray-600 text-center">
-          Les primes sont identiques dans toute la <%= @region_info[:name] %>, 
-          mais certaines communes offrent des primes complémentaires. 
+          Les primes sont identiques dans toute la <%= @region_info[:name] %>,
+          mais certaines communes offrent des primes complémentaires.
           <%= link_to "Vérifiez votre commune →", simulation_primes_path(region: @region), class: 'text-blue-600 font-semibold hover:underline' %>
         </p>
       </div>
@@ -134,7 +134,7 @@
       <h2 class="text-3xl font-bold mb-12 text-center">
         Questions fréquentes - Primes en <%= @region_info[:name] %>
       </h2>
-      
+
       <div class="space-y-6">
         <% @faqs.each do |faq| %>
           <div class="bg-gray-50 rounded-xl p-6">

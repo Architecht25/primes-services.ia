@@ -17,20 +17,20 @@
 
         <p class="text-gray-300 mb-6 max-w-md">
           Experts en subsides belges depuis 15 ans. Notre IA révolutionne l'accompagnement
-          pour vos primes et subsides en Wallonie, Flandre et Bruxelles.
+          pour vos primes et subsides en Flandre, à Bruxelles et en Wallonie.
         </p>
 
         <div class="flex space-x-4">
           <div class="text-center">
-            <div class="text-2xl font-bold text-blue-400">68M€</div>
+            <div class="text-2xl font-bold text-blue-400">+100M€</div>
             <div class="text-xs text-gray-400">Primes obtenues</div>
           </div>
           <div class="text-center">
-            <div class="text-2xl font-bold text-green-400">4.476</div>
+            <div class="text-2xl font-bold text-green-400">+6.000</div>
             <div class="text-xs text-gray-400">Dossiers traités</div>
           </div>
           <div class="text-center">
-            <div class="text-2xl font-bold text-yellow-400">15 ans</div>
+            <div class="text-2xl font-bold text-yellow-400">+15 ans</div>
             <div class="text-xs text-gray-400">D'expertise</div>
           </div>
         </div>
@@ -46,8 +46,8 @@
             <% end %>
           </li>
           <li>
-            <%= link_to about_path, class: "text-gray-300 hover:text-white transition-colors" do %>
-              👥 À propos
+            <%= link_to simulation_path, class: "text-gray-300 hover:text-white transition-colors" do %>
+              📚 Simulations
             <% end %>
           </li>
           <li>
@@ -60,6 +60,11 @@
               🔗 Ren0vate
             </a>
           </li>
+          <li>
+            <%= link_to about_path, class: "text-gray-300 hover:text-white transition-colors" do %>
+              👥 À propos
+            <% end %>
+          </li>
         </ul>
       </div>
 
@@ -68,12 +73,9 @@
         <h4 class="text-lg font-semibold mb-4">Contact</h4>
         <ul class="space-y-2 text-gray-300">
           <li>
-            <a href="mailto:equipe@primes-services.be" class="hover:text-white transition-colors">
-              📧 equipe@primes-services.be
+            <a href="mailto:robin@architecht.be" class="hover:text-white transition-colors">
+              📧 robin@architecht.be
             </a>
-          </li>
-          <li class="text-sm">
-            🌍 <span class="font-medium">Wallonie</span> • Service Public de Wallonie
           </li>
           <li class="text-sm">
             🌍 <span class="font-medium">Flandre</span> • Vlaams Energie Agentschap
@@ -81,6 +83,10 @@
           <li class="text-sm">
             🌍 <span class="font-medium">Bruxelles</span> • Bruxelles Environnement
           </li>
+          <li class="text-sm">
+            🌍 <span class="font-medium">Wallonie</span> • Service Public de Wallonie
+          </li>
+
         </ul>
 
         <div class="mt-6">
@@ -98,7 +104,7 @@
     <div class="border-t border-gray-800 mt-8 pt-8">
       <div class="flex flex-col md:flex-row justify-between items-center">
         <div class="text-gray-400 text-sm">
-          © <%= Date.current.year %> Primes Services. Tous droits réservés.
+          © <%= Date.current.year %> Architecht. Tous droits réservés.
         </div>
 
         <div class="flex items-center space-x-6 mt-4 md:mt-0 text-sm text-gray-400">

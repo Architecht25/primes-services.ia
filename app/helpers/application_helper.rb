@@ -9,7 +9,7 @@ module ApplicationHelper
     parts << title if title.present?
     parts << region_name(region) if region.present?
     parts << "Primes Services IA"
-    
+
     parts.join(' | ')
   end
 
@@ -26,13 +26,13 @@ module ApplicationHelper
 
   # Mots-clés SEO contextuels par région
   def page_keywords(region: nil, additional: [])
-    base = ['primes belges', 'subsides belgique', 'primes énergétiques', 'primes rénovation', 
+    base = ['primes belges', 'subsides belgique', 'primes énergétiques', 'primes rénovation',
             'assistant IA', 'prêts 0%', 'aide publique', 'primes isolation', 'primes chauffage']
-    
+
     if region.present?
       base += region_keywords(region)
     end
-    
+
     (base + additional).uniq.join(', ')
   end
 
@@ -50,7 +50,7 @@ module ApplicationHelper
         }.compact
       end
     }
-    
+
     content_tag(:script, schema.to_json.html_safe, type: 'application/ld+json')
   end
 
@@ -70,7 +70,7 @@ module ApplicationHelper
         }
       end
     }
-    
+
     content_tag(:script, schema.to_json.html_safe, type: 'application/ld+json')
   end
 
@@ -141,13 +141,13 @@ module ApplicationHelper
   def region_keywords(region)
     case region.to_s
     when 'wallonie'
-      ['primes wallonie', 'subsides wallonie', 'rénopack', 'prime habitation wallonie', 
+      ['primes wallonie', 'subsides wallonie', 'rénopack', 'prime habitation wallonie',
        'isolation wallonie', 'chauffage wallonie', 'primes communales wallonie']
     when 'flandre'
-      ['primes flandre', 'subsides vlaanderen', 'vlaamse premie', 'renovatiepremie', 
+      ['primes flandre', 'subsides vlaanderen', 'vlaamse premie', 'renovatiepremie',
        'energielening', 'isolatie premie', 'verwarmingspremie']
     when 'bruxelles'
-      ['primes bruxelles', 'subsides bruxelles', 'renolution', 'prime energie bruxelles', 
+      ['primes bruxelles', 'subsides bruxelles', 'renolution', 'prime energie bruxelles',
        'isolation bruxelles', 'primes communales bruxelles', 'rénovation bruxelles']
     else
       []
@@ -173,7 +173,7 @@ module ApplicationHelper
       'flandre' => { "latitude" => 51.0543, "longitude" => 3.7174 },
       'bruxelles' => { "latitude" => 50.8503, "longitude" => 4.3517 }
     }
-    
+
     coord = coords[region.to_s]
     return nil unless coord
 
@@ -184,4 +184,3 @@ module ApplicationHelper
     }
   end
 end
-
