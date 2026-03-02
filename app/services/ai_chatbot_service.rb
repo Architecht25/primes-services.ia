@@ -458,18 +458,18 @@ class AiChatbotService
 
     case intent_analysis[:category]
     when :isolation
-      relevant_links << { text: "Prime isolation", url: regional_info[:official_urls][:isolation] } if regional_info[:official_urls][:isolation]
+      relevant_links << ({ text: "Prime isolation", url: regional_info[:official_urls][:isolation] }) if regional_info[:official_urls][:isolation]
     when :chauffage
-      relevant_links << { text: "Prime chauffage", url: regional_info[:official_urls][:chauffage] } if regional_info[:official_urls][:chauffage]
+      relevant_links << ({ text: "Prime chauffage", url: regional_info[:official_urls][:chauffage] }) if regional_info[:official_urls][:chauffage]
     when :renovation_generale, :aide_financiere
-      relevant_links << { text: "Prime rénovation", url: regional_info[:official_urls][:renovation] } if regional_info[:official_urls][:renovation]
-      relevant_links << { text: "Prime habitation", url: regional_info[:official_urls][:prime_habitation] } if regional_info[:official_urls][:prime_habitation]
+      relevant_links << ({ text: "Prime rénovation", url: regional_info[:official_urls][:renovation] }) if regional_info[:official_urls][:renovation]
+      relevant_links << ({ text: "Prime habitation", url: regional_info[:official_urls][:prime_habitation] }) if regional_info[:official_urls][:prime_habitation]
     when :audit_energetique
-      relevant_links << { text: "Audit énergétique", url: regional_info[:official_urls][:audit_energetique] } if regional_info[:official_urls][:audit_energetique]
+      relevant_links << ({ text: "Audit énergétique", url: regional_info[:official_urls][:audit_energetique] }) if regional_info[:official_urls][:audit_energetique]
     end
 
     # Toujours ajouter le lien principal
-    relevant_links << { text: "Site officiel #{regional_info[:name]}", url: regional_info[:official_urls][:main] } if regional_info[:official_urls][:main]
+    relevant_links << ({ text: "Site officiel #{regional_info[:name]}", url: regional_info[:official_urls][:main] }) if regional_info[:official_urls][:main]
 
     if relevant_links.any?
       links_section = "\n\n**📋 Sources officielles :**\n"
@@ -489,111 +489,111 @@ class AiChatbotService
     case intent_analysis[:category]
     when 'isolation', 'chauffage', 'renovation_generale', 'energie_renouvelable'
       # Actions principales pour les demandes de primes
-      actions << {
+      actions << ({
         type: 'simulator',
         label: '🎯 Simuler mes primes',
         url: "/simulation/#{user_region}/primes",
         primary: true,
         description: 'Calculez le montant des primes auxquelles vous avez droit'
-      }
-      actions << {
+      })
+      actions << ({
         type: 'simulator',
         label: '🏦 Découvrir les prêts à 0%',
         url: "/simulation/#{user_region}/prets",
         primary: false,
         description: 'Prêts verts et financements avantageux'
-      }
-      actions << {
+      })
+      actions << ({
         type: 'redirect',
         label: '🚀 Accompagnement Ren0vate',
         url: build_renovate_url,
         primary: false,
         description: 'Gestion complète de A à Z par des experts'
-      }
+      })
 
     when 'prets', 'financement'
       # Actions pour les demandes de financement
-      actions << {
+      actions << ({
         type: 'simulator',
         label: '🏦 Prêts à taux 0%',
         url: "/simulation/#{user_region}/prets",
         primary: true,
         description: 'Découvrez tous les prêts disponibles'
-      }
-      actions << {
+      })
+      actions << ({
         type: 'simulator',
         label: '💰 Calculer mes primes',
         url: "/simulation/#{user_region}/primes",
         primary: false,
         description: 'Cumulez primes et prêts pour financer votre projet'
-      }
-      actions << {
+      })
+      actions << ({
         type: 'redirect',
         label: '🚀 Solution Ren0vate complète',
         url: build_renovate_url,
         primary: false,
         description: 'Primes + Prêts + Accompagnement'
-      }
+      })
 
     when 'monuments', 'patrimoine'
       # Actions spécifiques pour le patrimoine
-      actions << {
+      actions << ({
         type: 'simulator',
         label: '🏛️ Primes patrimoine',
         url: "/simulation/#{user_region}/primes",
         primary: true,
         description: 'Primes Monuments et Sites, Petit Patrimoine'
-      }
-      actions << {
+      })
+      actions << ({
         type: 'redirect',
         label: '📞 Experts patrimoine',
         url: build_renovate_url,
         primary: false,
         description: 'Accompagnement spécialisé bâtiments classés'
-      }
+      })
 
     when 'communale'
       # Actions pour primes communales
-      actions << {
+      actions << ({
         type: 'simulator',
         label: '🏘️ Primes de ma commune',
         url: "/simulation/#{user_region}/primes",
         primary: true,
         description: 'Découvrez les primes communales disponibles'
-      }
-      actions << {
+      })
+      actions << ({
         type: 'redirect',
         label: '💬 Assistance personnalisée',
         url: build_renovate_url,
         primary: false,
         description: 'Aide à identifier toutes les primes cumulables'
-      }
+      })
 
     when 'information_generale'
-      actions << {
+      actions << ({
         type: 'internal',
         label: 'ℹ️ À propos de Primes Services',
         url: '/about',
         primary: false,
         description: 'Notre mission et notre équipe'
-      }
-      actions << {
+      })
+      actions << ({
         type: 'simulator',
         label: '📊 Simuler mes primes',
         url: "/simulation/#{user_region}/primes",
         primary: true,
         description: 'Estimez vos aides financières'
-      }
+      })
     end
 
     # Action universelle : contact expert
-    actions << {
+    actions << ({
       type: 'contact',
       label: '👨‍💼 Parler à un expert',
       url: 'mailto:equipe@primes-services.be',
       primary: false,
       description: 'Assistance personnalisée par email'
-    }
+    })
 
     actions
   end
