@@ -65,22 +65,25 @@
   <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
     <div class="text-center mb-10">
       <h2 class="text-3xl lg:text-4xl font-bold text-primary-700 mb-4">
-        Primes spécifiques disponibles en Wallonie
+        Primes et outils disponibles en Wallonie
       </h2>
       <p class="text-lg text-gray-600">
         Découvrez les primes adaptées à votre situation
       </p>
     </div>
 
-    <div class="space-y-6">
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+      <!-- Calculateur de Primes Wallonie -->
+      <%= render partial: 'pages/calculateur_primes_wallonie' %>
+
+      <!-- Prime Audit -->
+      <%= render partial: 'pages/prime_audit' %>
+
       <!-- Prime Monuments et Sites -->
       <%= render partial: 'pages/prime_monuments_sites' %>
 
       <!-- Primes Communales -->
       <%= render partial: 'pages/primes_communales' %>
-
-      <!-- Prime Audit -->
-      <%= render partial: 'pages/prime_audit' %>
     </div>
   </div>
 </section>
@@ -92,22 +95,25 @@
   <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
     <div class="text-center mb-10">
       <h2 class="text-3xl lg:text-4xl font-bold text-primary-700 mb-4">
-        Primes spécifiques disponibles en Flandre
+        Primes et outils disponibles en Flandre
       </h2>
       <p class="text-lg text-gray-600">
         Découvrez les primes adaptées à votre situation
       </p>
     </div>
 
-    <div class="space-y-6">
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+      <!-- Calculateur de Primes Flandre -->
+      <%= render partial: 'pages/calculateur_primes_flandre' %>
+
+      <!-- Prime PEB -->
+      <%= render partial: 'pages/prime_peb' %>
+
       <!-- Prime Monuments et Sites -->
       <%= render partial: 'pages/prime_monuments_sites_flandre' %>
 
       <!-- Primes Communales -->
       <%= render partial: 'pages/primes_communales_flandre' %>
-
-      <!-- Prime PEB -->
-      <%= render partial: 'pages/prime_peb' %>
     </div>
   </div>
 </section>
@@ -119,22 +125,25 @@
   <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
     <div class="text-center mb-10">
       <h2 class="text-3xl lg:text-4xl font-bold text-primary-700 mb-4">
-        Primes spécifiques disponibles à Bruxelles
+        Primes et outils disponibles à Bruxelles
       </h2>
       <p class="text-lg text-gray-600">
         Découvrez les primes adaptées à votre situation
       </p>
     </div>
 
-    <div class="space-y-6">
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+      <!-- Calculateur de Primes Bruxelles -->
+      <%= render partial: 'pages/calculateur_primes_bruxelles' %>
+
+      <!-- Prime Petit Patrimoine -->
+      <%= render partial: 'pages/prime_petit_patrimoine' %>
+
       <!-- Prime Monuments et Sites -->
       <%= render partial: 'pages/prime_monuments_sites_bruxelles' %>
 
       <!-- Primes Communales -->
       <%= render partial: 'pages/primes_communales_bruxelles' %>
-
-      <!-- Prime Petit Patrimoine -->
-      <%= render partial: 'pages/prime_petit_patrimoine' %>
     </div>
 
     <!-- CTA vers assistant IA -->
@@ -160,217 +169,4 @@
     </div>
   </div>
 </section>
-<% end %>
-
-<% if @region != 'bruxelles' %>
-<!-- Formulaire de simulation -->
-<section class="py-12 bg-white">
-  <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-    <div class="bg-white rounded-2xl shadow-xl p-8 border-t-4 border-secondary-500">
-      <h2 class="text-3xl font-bold text-primary-700 mb-6 text-center">
-        🧮 Calculateur de Primes - <%= config[:name] %>
-      </h2>
-
-      <form id="simulation-form" class="space-y-6">
-        <!-- Revenus -->
-        <div>
-          <label for="revenus" class="block text-sm font-semibold text-gray-700 mb-2">
-            Revenus annuels du ménage (€)
-          </label>
-          <input type="number" id="revenus" name="revenus" required
-                 placeholder="Ex: 45000"
-                 class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 <%= input_focus %>">
-          <p class="text-sm text-gray-500 mt-1">Revenus nets imposables de l'année précédente</p>
-        </div>
-
-        <!-- Type de travaux -->
-        <div>
-          <label class="block text-sm font-semibold text-gray-700 mb-3">
-            Types de travaux prévus
-          </label>
-          <div class="space-y-3">
-            <label class="flex items-center space-x-3 p-3 hover:bg-gray-50 rounded-lg cursor-pointer">
-              <input type="checkbox" name="travaux" value="isolation_toiture"
-                     class="w-5 h-5 <%= checkbox_color %> rounded">
-              <span class="flex-1">
-                <strong>Isolation de toiture</strong>
-                <span class="block text-sm text-gray-500">Toit, combles, grenier</span>
-              </span>
-            </label>
-            <label class="flex items-center space-x-3 p-3 hover:bg-gray-50 rounded-lg cursor-pointer">
-              <input type="checkbox" name="travaux" value="isolation_murs"
-                     class="w-5 h-5 <%= checkbox_color %> rounded">
-              <span class="flex-1">
-                <strong>Isolation des murs</strong>
-                <span class="block text-sm text-gray-500">Murs creux, façades</span>
-              </span>
-            </label>
-            <label class="flex items-center space-x-3 p-3 hover:bg-gray-50 rounded-lg cursor-pointer">
-              <input type="checkbox" name="travaux" value="chaudiere"
-                     class="w-5 h-5 <%= checkbox_color %> rounded">
-              <span class="flex-1">
-                <strong>Chaudière / Pompe à chaleur</strong>
-                <span class="block text-sm text-gray-500">Système de chauffage performant</span>
-              </span>
-            </label>
-            <label class="flex items-center space-x-3 p-3 hover:bg-gray-50 rounded-lg cursor-pointer">
-              <input type="checkbox" name="travaux" value="chauffe_eau"
-                     class="w-5 h-5 <%= checkbox_color %> rounded">
-              <span class="flex-1">
-                <strong>Chauffe-eau solaire</strong>
-                <span class="block text-sm text-gray-500">Production eau chaude sanitaire</span>
-              </span>
-            </label>
-            <label class="flex items-center space-x-3 p-3 hover:bg-gray-50 rounded-lg cursor-pointer">
-              <input type="checkbox" name="travaux" value="photovoltaique"
-                     class="w-5 h-5 <%= checkbox_color %> rounded">
-              <span class="flex-1">
-                <strong>Panneaux photovoltaïques</strong>
-                <span class="block text-sm text-gray-500">Production électricité verte</span>
-              </span>
-            </label>
-            <label class="flex items-center space-x-3 p-3 hover:bg-gray-50 rounded-lg cursor-pointer">
-              <input type="checkbox" name="travaux" value="ventilation"
-                     class="w-5 h-5 <%= checkbox_color %> rounded">
-              <span class="flex-1">
-                <strong>Ventilation double flux</strong>
-                <span class="block text-sm text-gray-500">Système de ventilation mécanique</span>
-              </span>
-            </label>
-          </div>
-        </div>
-
-        <!-- Budget estimé -->
-        <div>
-          <label for="budget" class="block text-sm font-semibold text-gray-700 mb-2">
-            Budget total estimé des travaux (€)
-          </label>
-          <input type="number" id="budget" name="budget" required
-                 placeholder="Ex: 25000"
-                 class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 <%= input_focus %>">
-          <p class="text-sm text-gray-500 mt-1">Montant total TTC de votre projet</p>
-        </div>
-
-        <!-- Bouton de simulation -->
-        <button type="submit"
-                class="w-full <%= btn_gradient %> text-white px-8 py-4 rounded-lg font-bold text-lg transition-all shadow-lg">
-          🎯 Calculer mes primes
-        </button>
-      </form>
-
-      <!-- Résultats -->
-      <div id="results" class="hidden mt-8 p-6 <%= results_bg %> rounded-xl border border-accent-200">
-        <h3 class="text-2xl font-bold text-primary-700 mb-4">📊 Résultats de votre simulation</h3>
-        <div id="results-content" class="space-y-4"></div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- CTA -->
-<section class="py-12 <%= cta_bg %> text-white">
-  <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-    <h2 class="text-3xl font-bold mb-4">
-      Et les prêts à taux 0% ?
-    </h2>
-    <p class="text-xl mb-8 <%= config[:text_light] %>">
-      Complétez votre plan de financement avec les prêts avantageux
-    </p>
-
-    <div class="flex flex-col sm:flex-row gap-4 justify-center">
-      <%= link_to simulation_prets_path(@region),
-          class: "#{cta_btn_white} px-8 py-4 rounded-lg font-bold text-lg transition-colors shadow-lg" do %>
-        🏦 Simuler les prêts
-      <% end %>
-
-      <%= link_to ai_chat_path,
-          class: "#{cta_btn_light} px-8 py-4 rounded-lg font-bold text-lg transition-colors" do %>
-        💬 Poser une question
-      <% end %>
-    </div>
-  </div>
-</section>
-
-<!-- Script -->
-<script>
-document.addEventListener('DOMContentLoaded', function() {
-  const form = document.getElementById('simulation-form');
-  const results = document.getElementById('results');
-  const resultsContent = document.getElementById('results-content');
-
-  const plafonds = {
-    wallonie: 15000,
-    flandre: 12000,
-    bruxelles: 35000
-  };
-
-  form.addEventListener('submit', function(e) {
-    e.preventDefault();
-
-    const region = '<%= @region %>';
-    const revenus = parseInt(document.getElementById('revenus').value);
-    const budget = parseInt(document.getElementById('budget').value);
-    const travaux = Array.from(document.querySelectorAll('input[name="travaux"]:checked'))
-                         .map(cb => cb.value);
-
-    if (travaux.length === 0) {
-      alert('Veuillez sélectionner au moins un type de travaux');
-      return;
-    }
-
-    let primeEstimee = 0;
-    let categorieRevenus = '';
-
-    if (revenus < 25000) {
-      categorieRevenus = 'faibles';
-      primeEstimee = budget * 0.50;
-    } else if (revenus < 45000) {
-      categorieRevenus = 'moyens';
-      primeEstimee = budget * 0.35;
-    } else {
-      categorieRevenus = 'élevés';
-      primeEstimee = budget * 0.20;
-    }
-
-    primeEstimee = Math.min(primeEstimee, plafonds[region]);
-
-    resultsContent.innerHTML = `
-      <div class="bg-white rounded-lg p-6 shadow-md border-t-4 border-secondary-500">
-        <div class="text-center mb-4">
-          <div class="text-5xl font-bold text-amber-400">
-            ${Math.round(primeEstimee).toLocaleString('fr-BE')}€
-          </div>
-          <div class="text-sm text-gray-600 mt-1">Prime estimée</div>
-        </div>
-
-        <div class="border-t pt-4 space-y-2 text-sm text-gray-700">
-          <p><strong>Région :</strong> ${region.charAt(0).toUpperCase() + region.slice(1)}</p>
-          <p><strong>Catégorie de revenus :</strong> Revenus ${categorieRevenus}</p>
-          <p><strong>Budget travaux :</strong> ${budget.toLocaleString('fr-BE')}€</p>
-          <p><strong>Travaux sélectionnés :</strong> ${travaux.length}</p>
-        </div>
-
-        <div class="mt-4 p-4 bg-accent-50 rounded-lg text-sm border-l-4 border-accent-400">
-          <p class="font-semibold text-primary-700 mb-2">📋 Prochaines étapes :</p>
-          <ul class="space-y-1 text-gray-700">
-            <li>✓ Demander l'audit énergétique (gratuit)</li>
-            <li>✓ Obtenir devis d'entrepreneurs agréés</li>
-            <li>✓ Constituer le dossier de demande de prime</li>
-          </ul>
-        </div>
-      </div>
-
-      <div class="mt-4 p-4 bg-amber-50 rounded-lg border-l-4 border-amber-400">
-        <p class="text-sm text-gray-700">
-          <strong>⚠️ Estimation indicative</strong> : Calcul basé sur les barèmes 2026.
-          Pour un montant exact, consultez notre assistant IA ou contactez nos experts.
-        </p>
-      </div>
-    `;
-
-    results.classList.remove('hidden');
-    results.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
-  });
-});
-</script>
 <% end %>

@@ -1,6 +1,6 @@
-<div class="bg-gradient-to-br from-blue-50 to-blue-100 rounded-xl shadow-lg p-6 lg:p-8 border border-blue-200 hover:shadow-xl transition-shadow">
+<div class="bg-gradient-to-br from-amber-50 to-amber-100 rounded-xl shadow-lg p-6 lg:p-8 border border-amber-200 hover:shadow-xl transition-shadow">
   <div class="flex items-start space-x-4">
-    <div class="flex-shrink-0 w-16 h-16 bg-blue-600 rounded-full flex items-center justify-center text-3xl">
+    <div class="flex-shrink-0 w-16 h-16 bg-amber-600 rounded-full flex items-center justify-center text-3xl">
       🏘️
     </div>
     <div class="flex-1">
@@ -13,12 +13,12 @@
 
       <div class="grid md:grid-cols-2 gap-4 mb-4">
         <div class="bg-white rounded-lg p-4">
-          <div class="text-sm font-semibold text-blue-900 mb-1">💰 Montant</div>
-          <div class="text-lg font-bold text-blue-700">500€ à 5 000€</div>
+          <div class="text-sm font-semibold text-amber-900 mb-1">💰 Montant</div>
+          <div class="text-lg font-bold text-amber-700">500€ à 5 000€</div>
           <div class="text-sm text-gray-600">selon la commune et travaux</div>
         </div>
         <div class="bg-white rounded-lg p-4">
-          <div class="text-sm font-semibold text-blue-900 mb-1">🗺️ Couverture</div>
+          <div class="text-sm font-semibold text-amber-900 mb-1">🗺️ Couverture</div>
           <div class="text-sm text-gray-700">Plus de 200 communes participantes</div>
         </div>
       </div>
@@ -46,14 +46,14 @@
 
       <div class="flex flex-wrap gap-3">
         <%= link_to "https://energie.wallonie.be/fr/primes-communales.html", target: "_blank", rel: "noopener",
-            class: "inline-flex items-center px-5 py-3 bg-blue-600 text-white font-semibold rounded-lg hover:bg-blue-700 transition-colors shadow-md" do %>
+            class: "inline-flex items-center px-5 py-3 bg-amber-600 text-white font-semibold rounded-lg hover:bg-amber-700 transition-colors shadow-md" do %>
           🔍 Rechercher ma commune
           <svg class="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path>
           </svg>
         <% end %>
         <%= link_to ai_chat_path,
-            class: "inline-flex items-center px-5 py-3 bg-white text-blue-600 font-semibold rounded-lg hover:bg-blue-50 transition-colors border border-blue-300" do %>
+            class: "inline-flex items-center px-5 py-3 bg-white text-amber-600 font-semibold rounded-lg hover:bg-amber-50 transition-colors border border-amber-300" do %>
           💬 Poser une question
         <% end %>
       </div>

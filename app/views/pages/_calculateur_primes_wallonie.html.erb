@@ -1,0 +1,76 @@
+<div class="bg-gradient-to-br from-primary-50 to-primary-100 rounded-xl shadow-lg p-6 lg:p-8 border border-primary-200 hover:shadow-xl transition-shadow">
+  <div class="flex items-start space-x-4">
+    <div class="flex-shrink-0 w-16 h-16 bg-primary-600 rounded-full flex items-center justify-center text-3xl">
+      🧮
+    </div>
+    <div class="flex-1">
+      <h3 class="text-2xl font-bold text-gray-900 mb-3">
+        Calculateur de Primes Wallonie
+      </h3>
+      <p class="text-gray-700 mb-4">
+        Calculez instantanément le montant estimé des primes auxquelles vous avez droit selon vos revenus et vos travaux de rénovation énergétique.
+      </p>
+
+      <div class="grid md:grid-cols-2 gap-4 mb-4">
+        <div class="bg-white rounded-lg p-4">
+          <div class="text-sm font-semibold text-primary-900 mb-1">💰 Montant maximum</div>
+          <div class="text-lg font-bold text-primary-700">Jusqu'à 15 000€</div>
+          <div class="text-sm text-gray-600">selon revenus et travaux</div>
+        </div>
+        <div class="bg-white rounded-lg p-4">
+          <div class="text-sm font-semibold text-primary-900 mb-1">⚡ Résultat</div>
+          <div class="text-sm text-gray-700">Instantané et personnalisé</div>
+        </div>
+      </div>
+
+      <div class="bg-white rounded-lg p-4 mb-4">
+        <h4 class="font-semibold text-gray-900 mb-2">✓ Le calculateur prend en compte :</h4>
+        <ul class="space-y-1 text-sm text-gray-700">
+          <li>• Vos revenus annuels du ménage</li>
+          <li>• Les types de travaux envisagés (isolation, chauffage, ventilation...)</li>
+          <li>• Votre budget total de rénovation</li>
+          <li>• Les plafonds et barèmes officiels 2026</li>
+          <li>• Les majorations selon votre catégorie de revenus</li>
+        </ul>
+      </div>
+
+      <div class="bg-white rounded-lg p-4 mb-4">
+        <h4 class="font-semibold text-gray-900 mb-3">📊 Travaux éligibles :</h4>
+        <div class="grid grid-cols-2 gap-2 text-sm text-gray-700">
+          <div>• Isolation toiture</div>
+          <div>• Isolation des murs</div>
+          <div>• Pompe à chaleur</div>
+          <div>• Chaudière performante</div>
+          <div>• Chauffe-eau solaire</div>
+          <div>• Panneaux photovoltaïques</div>
+          <div>• Ventilation double flux</div>
+          <div>• Et plus encore...</div>
+        </div>
+      </div>
+
+      <div class="bg-amber-50 rounded-lg p-4 mb-4 border border-amber-200">
+        <div class="flex items-start space-x-2">
+          <span class="text-xl">💡</span>
+          <div class="text-sm text-gray-700">
+            <strong>Astuce :</strong> Le résultat est une estimation indicative. Pour un calcul exact et personnalisé,
+            consultez notre assistant IA ou nos experts qui analyseront votre dossier complet.
+          </div>
+        </div>
+      </div>
+
+      <div class="flex flex-wrap gap-3">
+        <a href="#calculateur"
+           class="inline-flex items-center px-5 py-3 bg-primary-600 text-white font-semibold rounded-lg hover:bg-primary-700 transition-colors shadow-md">
+          🎯 Lancer le calculateur
+          <svg class="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+          </svg>
+        </a>
+        <%= link_to ai_chat_path,
+            class: "inline-flex items-center px-5 py-3 bg-white text-primary-600 font-semibold rounded-lg hover:bg-primary-50 transition-colors border border-primary-300" do %>
+          💬 Poser une question
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>
