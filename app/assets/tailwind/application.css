@@ -1,4 +1,7 @@
 @import "tailwindcss";
+@source "../../../app/views/**/*.{erb,html}";
+@source "../../../app/helpers/**/*.rb";
+@source "../../../app/javascript/**/*.js";
 
 /**
  * Palette de couleurs Primes Services
