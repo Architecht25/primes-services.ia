@@ -63,7 +63,7 @@
 <% if @region == 'wallonie' %>
 <!-- Prêts spécifiques Wallonie - SWCS -->
 <section class="py-12 bg-pearl-50">
-  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+  <div class="max-w-[95%] mx-auto px-4 sm:px-6 lg:px-8">
     <div class="text-center mb-10">
       <h2 class="text-3xl lg:text-4xl font-bold text-primary-700 mb-4">
         Prêts à Taux 0% - Société Wallonne du Crédit Social
@@ -92,7 +92,7 @@
 <% elsif @region == 'flandre' %>
 <!-- Prêts spécifiques Flandre - Mijn VerbouwLening -->
 <section class="py-12 bg-pearl-50">
-  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+  <div class="max-w-[95%] mx-auto px-4 sm:px-6 lg:px-8">
     <div class="text-center mb-10">
       <h2 class="text-3xl lg:text-4xl font-bold text-primary-700 mb-4">
         Mijn VerbouwLening - Prêt Rénovation à Taux Réduit
@@ -102,19 +102,24 @@
       </p>
     </div>
 
-    <!-- Mijn VerbouwLening -->
-    <div class="mb-12">
-      <%= render partial: 'pages/pret_mijn_verbouwlening' %>
-    </div>
+    <!-- Grille 2 colonnes -->
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+      <!-- Mijn VerbouwLening -->
+      <div>
+        <%= render partial: 'pages/pret_mijn_verbouwlening' %>
+      </div>
 
-    <!-- Conditions -->
-    <%= render partial: 'pages/pret_conditions_mijn_verbouwlening' %>
+      <!-- Conditions -->
+      <div>
+        <%= render partial: 'pages/pret_conditions_mijn_verbouwlening' %>
+      </div>
+    </div>
   </div>
 </section>
 <% elsif @region == 'bruxelles' %>
 <!-- Prêts spécifiques Bruxelles - Crédit EcoRéno -->
 <section class="py-12 bg-pearl-50">
-  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+  <div class="max-w-[95%] mx-auto px-4 sm:px-6 lg:px-8">
     <div class="text-center mb-10">
       <h2 class="text-3xl lg:text-4xl font-bold text-primary-700 mb-4">
         Crédit EcoRéno - Fonds du Logement de Bruxelles
@@ -124,17 +129,17 @@
       </p>
     </div>
 
-    <!-- Grille des 2 formules -->
-    <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-12">
+    <!-- Grille 3 colonnes -->
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
       <!-- Crédit Hypothécaire -->
       <%= render partial: 'pages/pret_ecoreno_hypothecaire' %>
 
       <!-- Crédit Consommation -->
       <%= render partial: 'pages/pret_ecoreno_consommation' %>
-    </div>
 
-    <!-- Conditions communes -->
-    <%= render partial: 'pages/pret_conditions_ecoreno' %>
+      <!-- Conditions communes -->
+      <%= render partial: 'pages/pret_conditions_ecoreno' %>
+    </div>
   </div>
 </section>
 <% else %>
