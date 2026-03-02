@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2026_03_01_125616) do
+ActiveRecord::Schema[8.0].define(version: 2026_03_02_112515) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -106,6 +106,17 @@ ActiveRecord::Schema[8.0].define(version: 2026_03_01_125616) do
     t.string "property_type"
     t.string "work_type"
     t.string "submission_type"
+    t.integer "construction_year"
+    t.decimal "estimated_budget"
+    t.string "realization_deadline"
+    t.integer "number_of_units"
+    t.string "building_type"
+    t.string "building_work_type"
+    t.decimal "voted_budget"
+    t.string "work_urgency"
+    t.string "business_activity"
+    t.string "investment_region"
+    t.string "company_size"
     t.index ["city"], name: "index_contact_submissions_on_city"
     t.index ["postal_code"], name: "index_contact_submissions_on_postal_code"
   end

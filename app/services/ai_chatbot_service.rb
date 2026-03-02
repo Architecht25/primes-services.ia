@@ -140,9 +140,9 @@ class AiChatbotService
       - Langue: #{@config.dig(:assistant, :language)}
 
       TON EXPERTISE COUVRE LES 3 RÉGIONS BELGES:
-      ✓ Wallonie (Primes Habitation, Rénopack, Monuments et Sites, Primes Communales, Audit Énergétique)
-      ✓ Flandre (Renovatiepremie, Energielening, Erfgoed, Communale premies, PEB)
-      ✓ Bruxelles-Capitale (Renolution, Prêts verts, Monuments et Sites, Petit Patrimoine, Primes Communales)
+      ✓ Wallonie (Primes Habitation, Prêts SWCS 0%, Monuments et Sites, Primes Communales, Audit Énergétique)
+      ✓ Flandre (Renovatiepremie, Mijn VerbouwLening 0-1.5%, Erfgoed, Communale premies, PEB)
+      ✓ Bruxelles-Capitale (Renolution, Crédit EcoRéno 2.5-3.5%, Monuments et Sites, Petit Patrimoine, Primes Communales)
 
       INFORMATION RÉGIONALE DE RÉFÉRENCE (#{regional_info[:name]}):
 
@@ -172,18 +172,35 @@ class AiChatbotService
       2. DANS TON MESSAGE D'ACCUEIL: Mentionne TOUJOURS les 3 régions, jamais une seule
       3. Si l'utilisateur ne précise pas sa région, demande-lui
       4. Réponds TOUJOURS en français belge (#{@config.dig(:assistant, :language)})
-      5. Concentre-toi sur les PRIMES et PRÊTS mentionnés dans l'application
-      6. Sois PRÉCIS sur les montants selon la région et les revenus
-      7. TOUJOURS suggérer d'utiliser les simulateurs de l'app pour calculs exacts
-      8. Mentionne les SOURCES OFFICIELLES pour la crédibilité
-      9. Propose des ACTIONS CONCRÈTES adaptées au projet de l'utilisateur
-      10. Recommande Ren0vate pour l'accompagnement personnalisé de A à Z
-      11. Si tu ne connais pas un détail précis, dis-le et oriente vers un expert
+      5. Pour les montants et conditions PRÉCIS, réfère SYSTÉMATIQUEMENT aux pages de l'app ci-dessus
+      6. Les pages /simulation/{région}/primes et /prets contiennent TOUTES les infos officielles 2026
+      7. TOUJOURS suggérer d'utiliser les calculateurs et simulateurs de l'app pour calculs exacts
+      8. Mentionne les SOURCES OFFICIELLES (SWCS, Mijn VerbouwLening, Fonds du Logement, etc.)
+      9. Propose des ACTIONS CONCRÈTES: consulter la page des primes, utiliser le simulateur, contacter l'organisme
+      10. Recommande Ren0vate (/renovate) pour l'accompagnement personnalisé de A à Z
+      11. Si tu ne connais pas un détail précis, oriente vers les pages de l'app ou vers un expert
+      12. Utilise les informations régionales fournies dans ton contexte mais renvoie vers les pages pour les détails
 
-      PAGES DE L'APPLICATION À RÉFÉRENCER:
-      - /simulation/wallonie/primes - /simulation/flandre/primes - /simulation/bruxelles/primes
-      - /simulation/wallonie/prets - /simulation/flandre/prets - /simulation/bruxelles/prets
-      - /renovate : Plateforme Ren0vate pour accompagnement complet
+      PAGES DE L'APPLICATION À RÉFÉRENCER (informations détaillées disponibles):
+
+      PRIMES par région:
+      - /simulation/wallonie/primes : Calculateur primes + Prime Audit + Prime Monuments & Sites + Primes Communales
+      - /simulation/flandre/primes : Calculateur primes + Prime PEB + Prime Monuments & Sites + Primes Communales
+      - /simulation/bruxelles/primes : Calculateur primes + Prime Petit Patrimoine + Prime Monuments & Sites + Primes Communales
+
+      PRÊTS par région (informations officielles 2026):
+      - /simulation/wallonie/prets : 3 prêts SWCS à 0% (Rénopack 1-60k€, Rénopack SWCS 1-30k€, Rénoprêt 1-30k€) + conditions détaillées
+      - /simulation/flandre/prets : Mijn VerbouwLening 4-60k€ avec taux variable 0-1.5% selon revenus + nouveautés 2026 + conditions
+      - /simulation/bruxelles/prets : Crédit EcoRéno - Hypothécaire (max 120% valeur) et Consommation (1.5-25k€) à 2.5-3.5% + conditions
+
+      ACCOMPAGNEMENT:
+      - /renovate : Plateforme Ren0vate pour accompagnement complet du projet de A à Z
+
+      ⚠️ IMPORTANT: Oriente SYSTÉMATIQUEMENT les utilisateurs vers ces pages pour consulter:
+      - Les montants EXACTS des primes selon leur profil
+      - Les CONDITIONS DÉTAILLÉES d'éligibilité (revenus, logement, travaux)
+      - Les SIMULATEURS en ligne pour calculs précis
+      - Les LIENS vers organismes officiels et formulaires de demande
 
       STYLE DE COMMUNICATION:
       - Professionnel mais chaleureux et accessible
@@ -233,10 +250,12 @@ class AiChatbotService
           'Possibilité de cumul primes régionales + communales'
         ],
         loan_programs: [
-          'Prêt Rénopack : 0% à 2% selon revenus (max 60 000€)',
-          'Prêt vert BNP Paribas Fortis : taux réduit',
-          'Prêt Énergie Belfius : conditions avantageuses',
-          'Prêt travaux à taux 0% pour revenus modestes'
+          'Prêts SWCS (Société Wallonne du Crédit Social) à 0% - 3 formules:',
+          '  • Rénopack : 1 000€ à 60 000€, avec audit énergétique obligatoire, max 30 ans',
+          '  • Rénopack SWCS : 1 000€ à 30 000€, pour toiture et électricité (sans audit), max 15 ans',
+          '  • Rénoprêt : 1 000€ à 30 000€, sans primes, audits ni PEB, max 15 ans',
+          'Conditions SWCS : RIG < 122 827€, logement 15+ ans, mensualité min 75€',
+          'Contact : SWCS - https://www.swcs.be/ - Fédération du Logement Wallonie'
         ],
         contact_info: 'Service Public de Wallonie',
         official_urls: {
@@ -272,10 +291,13 @@ class AiChatbotService
           'Possibilité de cumul primes régionales + communales + patrimoine'
         ],
         loan_programs: [
-          'Energielening (prêt énergie) : 0% à 2% selon revenus (max 60 000€)',
-          'Verbeteringslening : taux avantageux pour rénovation',
-          'Groene lening (prêt vert) : conditions favorables banques',
-          'Prêt à 0% pour revenus modestes et travaux énergétiques prioritaires'
+          'Mijn VerbouwLening (Prêt Rénovation 2026) - Taux variable selon revenus:',
+          '  • Montant : 4 000€ à 60 000€ (max 125% coût travaux)',
+          '  • Taux par catégorie : Cat 4 ≥0% (réduction 5%), Cat 3 ≈0.5% (réduction 4%), Cat 2 ≈1.5% (réduction 3%)',
+          '  • Nouveautés 2026 : Bonus +2% (cat 4) et +1% (cat 3) sur réductions',
+          '  • Durée : max 30 ans, remboursement avant 75 ans',
+          'Conditions : Logement 20+ ans Flandre, revenus cadastraux < 3 000€, travaux via Mijn VerbouwLoket',
+          'Contact : mijnverbouwlening@vlaanderen.be - https://apps.energiesparen.be/simulator-mijnverbouwlening'
         ],
         contact_info: 'Vlaams Energie- en Klimaatagentschap (VEKA)',
         official_urls: {
@@ -312,10 +334,14 @@ class AiChatbotService
           'Cumul possible : primes régionales + communales + patrimoine'
         ],
         loan_programs: [
-          'Prêt vert bruxellois : 0% à 2% selon revenus (max 25 000€)',
-          'Prêt RenoFin : conditions avantageuses pour rénovation énergétique',
-          'Fonds du Logement : prêts sociaux pour travaux',
-          'Prêt Financement Habitat Durable : taux réduit avec accompagnement'
+          'Crédit EcoRéno (Fonds du Logement Bruxelles) - 2 formules au choix:',
+          '  1. CRÉDIT HYPOTHÉCAIRE : jusqu\'à 120% valeur bien, max 30 ans, frais 384€ + notaire',
+          '  2. CRÉDIT CONSOMMATION : 1 500€ à 25 000€, max 10 ans, AUCUN FRAIS, pas d\'hypothèque',
+          '  • Taux 2026 : 2,5% (revenus bas: isolé <45,6k€, ménage <60,6k€) ou 3,5% (revenus moyens: isolé 45,6-73,9k€, ménage 60,6-94k€)',
+          '  • Mensualité minimum : 25€',
+          '  • Cumulable avec primes Renolution (déduction automatique)',
+          'Conditions : Résider à Bruxelles, bien dans les 19 communes, remboursement avant 70 ans',
+          'Contact : infopret@fonds.brussels - Simulateur: https://websimu.wffl.be/ecoreno/lang/fr'
         ],
         contact_info: 'Bruxelles Environnement / Leefmilieu Brussel',
         official_urls: {
@@ -346,9 +372,11 @@ class AiChatbotService
           'Cumul possible : primes régionales + communales + patrimoine dans toutes les régions'
         ],
         loan_programs: [
-          'Wallonie : Prêt Rénopack 0-2% (max 60k€)',
-          'Flandre : Energielening 0-2% (max 60k€)',
-          'Bruxelles : Prêt vert bruxellois 0-2% (max 25k€)',
+          'Wallonie : Prêts SWCS à 0% - Rénopack (1-60k€, avec audit), Rénopack SWCS (1-30k€, toiture/électricité), Rénoprêt (1-30k€, sans primes)',
+          'Flandre : Mijn VerbouwLening 0-1,5% selon revenus (4-60k€, nouveautés 2026 avec bonus)',
+          'Bruxelles : Crédit EcoRéno 2,5-3,5% - Hypothécaire (max 120% valeur) ou Consommation (1,5-25k€, sans frais)',
+          'Toutes régions : Prêts à taux réduit avec conditions avantageuses selon revenus'
+        ],
           'Toutes régions : Prêts verts bancaires et solutions de financement'
         ],
         contact_info: 'Services régionaux selon votre localisation',
