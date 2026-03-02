@@ -1,0 +1,97 @@
+<div class="bg-gradient-to-br from-accent-50 to-accent-100 rounded-xl shadow-lg p-6 lg:p-8 border border-accent-200 hover:shadow-xl transition-shadow">
+  <div class="flex items-start space-x-4">
+    <div class="flex-shrink-0 w-16 h-16 bg-accent-600 rounded-full flex items-center justify-center text-3xl">
+      🔧
+    </div>
+    <div class="flex-1">
+      <h3 class="text-2xl font-bold text-gray-900 mb-3">
+        Rénoprêt - Prêt 0% Sans Primes
+      </h3>
+      <p class="text-gray-700 mb-4">
+        Prêt à taux zéro pour vos travaux de rénovation sans audit énergétique. Vous renoncez aux primes pour certains travaux, mais bénéficiez d'une formule simplifiée et rapide.
+      </p>
+
+      <div class="grid md:grid-cols-2 gap-4 mb-4">
+        <div class="bg-white rounded-lg p-4">
+          <div class="text-sm font-semibold text-accent-900 mb-1">💰 Montant</div>
+          <div class="text-lg font-bold text-accent-700">1 000€ à 60 000€</div>
+          <div class="text-sm text-gray-600">Taux 0% - Sans intérêts</div>
+        </div>
+        <div class="bg-white rounded-lg p-4">
+          <div class="text-sm font-semibold text-accent-900 mb-1">⚡ Rapidité</div>
+          <div class="text-sm text-gray-700">Procédure simplifiée</div>
+        </div>
+      </div>
+
+      <div class="bg-white rounded-lg p-4 mb-4">
+        <h4 class="font-semibold text-gray-900 mb-2">✓ Caractéristiques du Rénoprêt :</h4>
+        <ul class="space-y-1 text-sm text-gray-700">
+          <li>• Taux d'intérêt 0% - Aucun intérêt à payer</li>
+          <li>• Sans audit énergétique obligatoire</li>
+          <li>• Vous renoncez aux primes pour travaux éligibles</li>
+          <li>• Idéal pour travaux sans primes (ex: panneaux photovoltaïques)</li>
+          <li>• Procédure administrative allégée</li>
+          <li>• Délai de traitement plus rapide</li>
+        </ul>
+      </div>
+
+      <div class="bg-white rounded-lg p-4 mb-4">
+        <h4 class="font-semibold text-gray-900 mb-3">🏗️ Exemples de travaux éligibles :</h4>
+        <div class="space-y-2">
+          <div>
+            <span class="font-semibold text-gray-900">Travaux sans primes :</span>
+            <ul class="text-sm text-gray-700 space-y-1 ml-4 mt-1">
+              <li>• Installation de panneaux photovoltaïques</li>
+              <li>• Système de récupération d'eau de pluie</li>
+              <li>• Aménagement intérieur</li>
+              <li>• Extension de l'habitation</li>
+            </ul>
+          </div>
+          <div>
+            <span class="font-semibold text-gray-900">Travaux avec renonciation aux primes :</span>
+            <ul class="text-sm text-gray-700 space-y-1 ml-4 mt-1">
+              <li>• Menuiseries extérieures (fenêtres, portes)</li>
+              <li>• Certains travaux d'isolation</li>
+              <li>• Adaptation pour personnes à mobilité réduite</li>
+              <li>• Travaux de sécurisation</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="bg-white rounded-lg p-4 mb-4">
+        <h4 class="font-semibold text-gray-900 mb-2">🤔 Quand choisir le Rénoprêt ?</h4>
+        <ul class="space-y-1 text-sm text-gray-700">
+          <li>• Vos travaux ne sont pas éligibles aux primes</li>
+          <li>• Vous souhaitez une procédure simplifiée sans audit</li>
+          <li>• Le montant du prêt à 0% est plus avantageux que les primes</li>
+          <li>• Vous voulez combiner plusieurs types de travaux</li>
+        </ul>
+      </div>
+
+      <div class="bg-amber-50 rounded-lg p-4 mb-4 border border-amber-200">
+        <div class="flex items-start space-x-2">
+          <span class="text-xl">⚖️</span>
+          <div class="text-sm text-gray-700">
+            <strong>À noter :</strong> Pesez bien le pour et le contre entre primes et prêt à 0%.
+            Notre assistant IA peut vous aider à calculer quelle option est la plus avantageuse pour votre situation.
+          </div>
+        </div>
+      </div>
+
+      <div class="flex flex-wrap gap-3">
+        <%= link_to "https://www.swcs.be/solutions/renover", target: "_blank", rel: "noopener",
+            class: "inline-flex items-center px-5 py-3 bg-accent-600 text-white font-semibold rounded-lg hover:bg-accent-700 transition-colors shadow-md" do %>
+          📖 Informations détaillées
+          <svg class="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path>
+          </svg>
+        <% end %>
+        <%= link_to ai_chat_path,
+            class: "inline-flex items-center px-5 py-3 bg-white text-accent-600 font-semibold rounded-lg hover:bg-accent-50 transition-colors border border-accent-300" do %>
+          💬 Comparer avec primes
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>

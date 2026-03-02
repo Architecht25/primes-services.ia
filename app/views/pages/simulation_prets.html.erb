@@ -60,7 +60,85 @@
   </div>
 </section>
 
-<!-- Prêts disponibles -->
+<% if @region == 'wallonie' %>
+<!-- Prêts spécifiques Wallonie - SWCS -->
+<section class="py-12 bg-pearl-50">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="text-center mb-10">
+      <h2 class="text-3xl lg:text-4xl font-bold text-primary-700 mb-4">
+        Prêts à Taux 0% - Société Wallonne du Crédit Social
+      </h2>
+      <p class="text-lg text-gray-600">
+        3 formules de prêts sans intérêts pour financer vos travaux de rénovation
+      </p>
+    </div>
+
+    <!-- Grille des 3 prêts -->
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-12">
+      <!-- Rénopack -->
+      <%= render partial: 'pages/pret_renopack' %>
+
+      <!-- Rénopack SWCS -->
+      <%= render partial: 'pages/pret_renopack_swcs' %>
+
+      <!-- Rénoprêt -->
+      <%= render partial: 'pages/pret_renopret' %>
+    </div>
+
+    <!-- Conditions communes -->
+    <%= render partial: 'pages/pret_conditions_swcs' %>
+  </div>
+</section>
+<% elsif @region == 'flandre' %>
+<!-- Prêts spécifiques Flandre - Mijn VerbouwLening -->
+<section class="py-12 bg-pearl-50">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="text-center mb-10">
+      <h2 class="text-3xl lg:text-4xl font-bold text-primary-700 mb-4">
+        Mijn VerbouwLening - Prêt Rénovation à Taux Réduit
+      </h2>
+      <p class="text-lg text-gray-600">
+        Financez vos travaux avec un taux variable selon vos revenus - Nouveautés 2026
+      </p>
+    </div>
+
+    <!-- Mijn VerbouwLening -->
+    <div class="mb-12">
+      <%= render partial: 'pages/pret_mijn_verbouwlening' %>
+    </div>
+
+    <!-- Conditions -->
+    <%= render partial: 'pages/pret_conditions_mijn_verbouwlening' %>
+  </div>
+</section>
+<% elsif @region == 'bruxelles' %>
+<!-- Prêts spécifiques Bruxelles - Crédit EcoRéno -->
+<section class="py-12 bg-pearl-50">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="text-center mb-10">
+      <h2 class="text-3xl lg:text-4xl font-bold text-primary-700 mb-4">
+        Crédit EcoRéno - Fonds du Logement de Bruxelles
+      </h2>
+      <p class="text-lg text-gray-600">
+        2 formules de financement à taux réduit pour vos travaux de rénovation et d'économie d'énergie
+      </p>
+    </div>
+
+    <!-- Grille des 2 formules -->
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-12">
+      <!-- Crédit Hypothécaire -->
+      <%= render partial: 'pages/pret_ecoreno_hypothecaire' %>
+
+      <!-- Crédit Consommation -->
+      <%= render partial: 'pages/pret_ecoreno_consommation' %>
+    </div>
+
+    <!-- Conditions communes -->
+    <%= render partial: 'pages/pret_conditions_ecoreno' %>
+  </div>
+</section>
+<% else %>
+<!-- Prêts disponibles - Fallback générique -->
 <section class="py-12 bg-pearl-50">
   <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
     <div class="text-center mb-12">
@@ -104,6 +182,7 @@
     </div>
   </div>
 </section>
+<% end %>
 
 <!-- Simulateur simple -->
 <section class="py-12 bg-white">

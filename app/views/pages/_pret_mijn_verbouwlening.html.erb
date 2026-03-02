@@ -1,0 +1,112 @@
+<div class="bg-gradient-to-br from-primary-50 to-primary-100 rounded-xl shadow-lg p-6 lg:p-8 border border-primary-200 hover:shadow-xl transition-shadow">
+  <div class="flex items-start space-x-4">
+    <div class="flex-shrink-0 w-16 h-16 bg-primary-600 rounded-full flex items-center justify-center text-3xl">
+      🏡
+    </div>
+    <div class="flex-1">
+      <h3 class="text-2xl font-bold text-gray-900 mb-3">
+        Mijn VerbouwLening - Prêt Rénovation Flandre
+      </h3>
+      <p class="text-gray-700 mb-4">
+        Financez vos travaux de rénovation avec un prêt à taux réduit jusqu'à 60 000€. Taux variable selon vos revenus, avec une réduction supplémentaire en 2026 pour les bas et moyens revenus !
+      </p>
+
+      <div class="grid md:grid-cols-2 gap-4 mb-4">
+        <div class="bg-white rounded-lg p-4">
+          <div class="text-sm font-semibold text-primary-900 mb-1">💰 Montant</div>
+          <div class="text-lg font-bold text-primary-700">4 000€ à 60 000€</div>
+          <div class="text-sm text-gray-600">Durée max. 25 ans</div>
+        </div>
+        <div class="bg-white rounded-lg p-4">
+          <div class="text-sm font-semibold text-primary-900 mb-1">📊 Taux réduit 2026</div>
+          <div class="text-sm text-gray-700">Selon catégorie de revenus</div>
+        </div>
+      </div>
+
+      <div class="bg-white rounded-lg p-4 mb-4">
+        <h4 class="font-semibold text-gray-900 mb-3">💡 Taux d'intérêt par catégorie (2026) :</h4>
+        <div class="space-y-2 text-sm text-gray-700">
+          <div class="flex items-start justify-between p-2 bg-accent-50 rounded">
+            <div class="flex items-center">
+              <span class="text-accent-600 font-bold mr-2">★</span>
+              <div><strong>Catégorie 4</strong> (revenus les plus bas)</div>
+            </div>
+            <div class="font-bold text-accent-700">≥ 0%</div>
+          </div>
+          <div class="flex items-start justify-between p-2 bg-secondary-50 rounded">
+            <div class="flex items-center">
+              <span class="text-secondary-600 font-bold mr-2">★</span>
+              <div><strong>Catégorie 3</strong> (revenus moyens)</div>
+            </div>
+            <div class="font-bold text-secondary-700">≈ 0,5%</div>
+          </div>
+          <div class="flex items-start justify-between p-2 bg-gray-50 rounded">
+            <div class="flex items-center">
+              <span class="text-gray-600 font-bold mr-2">•</span>
+              <div><strong>Catégorie 2</strong> (revenus modérés)</div>
+            </div>
+            <div class="font-bold text-gray-700">≈ 1,5%</div>
+          </div>
+        </div>
+        <p class="text-xs text-gray-600 mt-2">
+          * Réduction de 5% pour cat. 4 (dont 2% supplémentaire en 2026), 4% pour cat. 3 (+1% en 2026), 3% pour cat. 2
+        </p>
+      </div>
+
+      <div class="bg-white rounded-lg p-4 mb-4">
+        <h4 class="font-semibold text-gray-900 mb-2">✓ Avantages de Mijn VerbouwLening :</h4>
+        <ul class="space-y-1 text-sm text-gray-700">
+          <li>• Taux d'intérêt fortement réduits selon revenus</li>
+          <li>• Aucun frais de dossier</li>
+          <li>• Jusqu'à 60 000€ (+ 25 000€/app. pour copropriétés)</li>
+          <li>• Cumulable avec Mijn VerbouwPremie (déduite du prêt)</li>
+          <li>• Jusqu'à 3 tranches pour étaler vos travaux</li>
+          <li>• Accompagnement par votre Energiehuis local</li>
+        </ul>
+      </div>
+
+      <div class="bg-white rounded-lg p-4 mb-4">
+        <h4 class="font-semibold text-gray-900 mb-3">🔧 Travaux éligibles (2026) :</h4>
+        <div class="grid grid-cols-2 gap-2 text-sm text-gray-700">
+          <div>• Isolation toiture</div>
+          <div>• Isolation murs extérieurs</div>
+          <div>• Isolation sols</div>
+          <div>• Châssis performants</div>
+          <div>• Pompe à chaleur</div>
+          <div>• Chauffe-eau thermodynamique</div>
+          <div>• Panneaux solaires</div>
+          <div>• Raccordement réseau chaleur</div>
+          <div>• Travaux préparatoires</div>
+          <div>• Et plus encore...</div>
+        </div>
+      </div>
+
+      <div class="bg-amber-50 rounded-lg p-4 mb-4 border border-amber-200">
+        <div class="flex items-start space-x-2">
+          <span class="text-xl">⚠️</span>
+          <div class="text-sm text-gray-700">
+            <strong>Important :</strong> La demande se fait sur base de devis (valables 6 mois). Les travaux ne peuvent pas avoir débuté. Le paiement s'effectue sur factures. Délai de traitement moyen : 3 mois.
+          </div>
+        </div>
+      </div>
+
+      <div class="flex flex-wrap gap-3">
+        <%= link_to "https://www.vlaanderen.be/lenen-voor-een-woning/mijn-verbouwlening", target: "_blank", rel: "noopener",
+            class: "inline-flex items-center px-5 py-3 bg-primary-600 text-white font-semibold rounded-lg hover:bg-primary-700 transition-colors shadow-md" do %>
+          📖 Plus d'informations
+          <svg class="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path>
+          </svg>
+        <% end %>
+        <%= link_to "https://apps.energiesparen.be/simulator-mijnverbouwlening", target: "_blank", rel: "noopener",
+            class: "inline-flex items-center px-5 py-3 bg-white text-primary-600 font-semibold rounded-lg hover:bg-primary-50 transition-colors border border-primary-300" do %>
+          🧮 Simulateur en ligne
+        <% end %>
+        <%= link_to "https://loket.mijnverbouwpremie.be/", target: "_blank", rel: "noopener",
+            class: "inline-flex items-center px-5 py-3 bg-secondary-600 text-white font-semibold rounded-lg hover:bg-secondary-700 transition-colors shadow-md" do %>
+          📝 Faire une demande
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>
