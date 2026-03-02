@@ -14,6 +14,12 @@
   .max-w-\[95\%\]   { max-width: 95%;    }
 }
 
+/* Conteneur large pour les pages primes (indépendant de Tailwind) */
+.container-primes-wide {
+  max-width: 1600px;
+  width: 100%;
+}
+
 /**
  * Palette de couleurs Primes Services
  * Identité visuelle personnalisée
