@@ -375,8 +375,6 @@ class AiChatbotService
           'Wallonie : Prêts SWCS à 0% - Rénopack (1-60k€, avec audit), Rénopack SWCS (1-30k€, toiture/électricité), Rénoprêt (1-30k€, sans primes)',
           'Flandre : Mijn VerbouwLening 0-1,5% selon revenus (4-60k€, nouveautés 2026 avec bonus)',
           'Bruxelles : Crédit EcoRéno 2,5-3,5% - Hypothécaire (max 120% valeur) ou Consommation (1,5-25k€, sans frais)',
-          'Toutes régions : Prêts à taux réduit avec conditions avantageuses selon revenus'
-        ],
           'Toutes régions : Prêts verts bancaires et solutions de financement'
         ],
         contact_info: 'Services régionaux selon votre localisation',
