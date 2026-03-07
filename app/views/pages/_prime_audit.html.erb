@@ -11,6 +11,76 @@
         Première étape essentielle de votre projet de rénovation : l'audit énergétique vous permet d'identifier les travaux prioritaires et de maximiser vos primes.
       </p>
 
+      <!-- Bannière urgence fin des primes -->
+      <div class="bg-red-50 border-2 border-red-400 rounded-lg p-4 mb-4">
+        <div class="flex items-start space-x-3">
+          <span class="text-2xl flex-shrink-0">🚨</span>
+          <div class="flex-1">
+            <p class="font-bold text-red-800 text-sm mb-1">
+              Cette prime disparaît le 30 septembre 2026 !
+            </p>
+            <p class="text-red-700 text-sm mb-3">
+              La prime audit énergétique sera supprimée au <strong>30/09/2026</strong> avec l'ensemble du régime actuel de primes, remplacé par des <strong>prêts à taux 0%</strong>.
+              Déposez votre demande avant cette date pour en bénéficier encore.
+            </p>
+            <div class="bg-white rounded-lg px-4 py-3 border border-red-200 text-center">
+              <p class="text-xs text-red-600 font-semibold uppercase tracking-wide mb-2">Temps restant pour bénéficier de cette prime</p>
+              <div id="countdown-audit" class="flex justify-center gap-4 text-red-800">
+                <div class="text-center">
+                  <span id="cd-audit-days" class="text-3xl font-bold block">--</span>
+                  <span class="text-xs font-medium">jours</span>
+                </div>
+                <div class="text-center">
+                  <span class="text-3xl font-bold">:</span>
+                </div>
+                <div class="text-center">
+                  <span id="cd-audit-hours" class="text-3xl font-bold block">--</span>
+                  <span class="text-xs font-medium">heures</span>
+                </div>
+                <div class="text-center">
+                  <span class="text-3xl font-bold">:</span>
+                </div>
+                <div class="text-center">
+                  <span id="cd-audit-minutes" class="text-3xl font-bold block">--</span>
+                  <span class="text-xs font-medium">minutes</span>
+                </div>
+                <div class="text-center">
+                  <span class="text-3xl font-bold">:</span>
+                </div>
+                <div class="text-center">
+                  <span id="cd-audit-seconds" class="text-3xl font-bold block">--</span>
+                  <span class="text-xs font-medium">secondes</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <script>
+        (function() {
+          var deadline = new Date('2026-09-30T23:59:59');
+          function updateCountdown() {
+            var now = new Date();
+            var diff = deadline - now;
+            if (diff <= 0) {
+              document.getElementById('countdown-audit').innerHTML = '<span class="text-red-800 font-bold">La prime n\'est plus disponible.</span>';
+              return;
+            }
+            var days    = Math.floor(diff / (1000 * 60 * 60 * 24));
+            var hours   = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            var minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+            var seconds = Math.floor((diff % (1000 * 60)) / 1000);
+            document.getElementById('cd-audit-days').textContent    = String(days).padStart(3, '0');
+            document.getElementById('cd-audit-hours').textContent   = String(hours).padStart(2, '0');
+            document.getElementById('cd-audit-minutes').textContent = String(minutes).padStart(2, '0');
+            document.getElementById('cd-audit-seconds').textContent = String(seconds).padStart(2, '0');
+          }
+          updateCountdown();
+          setInterval(updateCountdown, 1000);
+        })();
+      </script>
+
       <div class="grid md:grid-cols-2 gap-4 mb-4">
         <div class="bg-white rounded-lg p-4">
           <div class="text-sm font-semibold text-secondary-900 mb-1">💰 Montant de la prime</div>

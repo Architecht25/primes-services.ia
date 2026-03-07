@@ -8,43 +8,67 @@
         Calculateur de Primes Flandre
       </h3>
       <p class="text-gray-700 mb-4">
-        Bereken onmiddellijk het geschatte bedrag van de premies waarvoor u in aanmerking komt op basis van uw inkomen en uw energierenovatiewerken.
+        Estimez instantanément le montant des primes auxquelles vous avez droit en fonction de vos revenus et de vos travaux de rénovation énergétique en Flandre.
       </p>
 
       <div class="grid md:grid-cols-2 gap-4 mb-4">
         <div class="bg-white rounded-lg p-4">
-          <div class="text-sm font-semibold text-primary-900 mb-1">💰 Maximum bedrag</div>
-          <div class="text-lg font-bold text-primary-700">Tot 12 000€</div>
-          <div class="text-sm text-gray-600">volgens inkomen en werken</div>
+          <div class="text-sm font-semibold text-primary-900 mb-1">💰 Montant maximum</div>
+          <div class="text-lg font-bold text-primary-700">Jusqu'à 32 000€</div>
+          <div class="text-sm text-gray-600">selon revenus et travaux</div>
         </div>
         <div class="bg-white rounded-lg p-4">
-          <div class="text-sm font-semibold text-primary-900 mb-1">⚡ Resultaat</div>
-          <div class="text-sm text-gray-700">Direct en gepersonaliseerd</div>
+          <div class="text-sm font-semibold text-primary-900 mb-1">⚡ Résultat</div>
+          <div class="text-sm text-gray-700">Instantané et personnalisé</div>
         </div>
       </div>
 
       <div class="bg-white rounded-lg p-4 mb-4">
-        <h4 class="font-semibold text-gray-900 mb-2">✓ De calculator houdt rekening met:</h4>
+        <h4 class="font-semibold text-gray-900 mb-2">✓ Le calculateur tient compte de :</h4>
         <ul class="space-y-1 text-sm text-gray-700">
-          <li>• Uw jaarlijks gezinsinkomen</li>
-          <li>• De geplande soorten werken (isolatie, verwarming, ventilatie...)</li>
-          <li>• Uw totale renovatiebudget</li>
-          <li>• De officiële plafonds en barema's 2026</li>
-          <li>• De verhogingen volgens uw inkomstencategorie</li>
+          <li>• Votre revenu annuel du ménage</li>
+          <li>• Le type de travaux envisagés (isolation, chauffage, ventilation...)</li>
+          <li>• Votre budget total de rénovation</li>
+          <li>• Les plafonds et barèmes officiels 2026</li>
+          <li>• Les majorations selon votre catégorie de revenus</li>
         </ul>
       </div>
 
       <div class="bg-white rounded-lg p-4 mb-4">
-        <h4 class="font-semibold text-gray-900 mb-3">📊 In aanmerking komende werken:</h4>
-        <div class="grid grid-cols-2 gap-2 text-sm text-gray-700">
-          <div>• Dakisolatie</div>
-          <div>• Muurisolatie</div>
-          <div>• Warmtepomp</div>
-          <div>• Hoogrendementketel</div>
-          <div>• Zonneboiler</div>
-          <div>• Zonnepanelen</div>
-          <div>• Dubbele flux ventilatie</div>
-          <div>• En meer...</div>
+        <h4 class="font-semibold text-gray-900 mb-3">📊 Travaux éligibles selon votre catégorie de revenus :</h4>
+
+        <!-- Catégories faibles: toutes les primes -->
+        <div class="mb-3">
+          <div class="flex items-center gap-2 mb-2">
+            <span class="inline-block bg-green-100 text-green-800 text-xs font-bold px-2 py-1 rounded-full">Catégories 3 et 4 — Revenus faibles à modestes</span>
+            <span class="text-green-600 text-xs font-semibold">Toutes les primes</span>
+          </div>
+          <div class="grid grid-cols-2 gap-1 text-sm text-gray-700 pl-2">
+            <div>• Isolation toiture</div>
+            <div>• Isolation murs</div>
+            <div>• Isolation sols</div>
+            <div>• Remplacement châssis</div>
+            <div>• Pompe à chaleur</div>
+            <div>• Boiler thermodynamique</div>
+            <div>• Travaux préparatoires d'isolation</div>
+            <div>• Travaux de sanitaire et d'électricité</div>
+            <div>• Désamiantage</div>
+          </div>
+        </div>
+
+        <!-- Catégories hautes: primes limitées -->
+        <div class="border-t border-gray-100 pt-3">
+          <div class="flex items-center gap-2 mb-2">
+            <span class="inline-block bg-orange-100 text-orange-800 text-xs font-bold px-2 py-1 rounded-full">Catégories 1 et 2 — Revenus élevés</span>
+            <span class="text-orange-600 text-xs font-semibold">Primes limitées</span>
+          </div>
+          <div class="grid grid-cols-2 gap-1 text-sm text-gray-700 pl-2">
+            <div>• Pompe à chaleur</div>
+            <div>• Boiler thermodynamique</div>
+          </div>
+          <p class="text-xs text-orange-700 mt-2 pl-2 italic">
+            ⚠️ Les primes d'isolation, de remplacement de châssis et les travaux préparatoires ne sont actuellement pas accessibles pour ces catégories de revenus.
+          </p>
         </div>
       </div>
 
@@ -52,8 +76,8 @@
         <div class="flex items-start space-x-2">
           <span class="text-xl">💡</span>
           <div class="text-sm text-gray-700">
-            <strong>Tip:</strong> Het resultaat is een indicatieve schatting. Voor een exacte en gepersonaliseerde berekening,
-            raadpleeg onze AI-assistent of onze experts die uw volledige dossier zullen analyseren.
+            <strong>Bon à savoir :</strong> Le résultat est une estimation indicative. Pour un calcul exact et personnalisé,
+            consultez notre assistant IA ou nos experts qui analyseront votre dossier complet.
           </div>
         </div>
       </div>
@@ -61,14 +85,14 @@
       <div class="flex flex-wrap gap-3">
         <%= link_to "https://www.vlaanderen.be/premies-voor-verbouwingen", target: "_blank", rel: "noopener",
             class: "inline-flex items-center px-5 py-3 bg-primary-600 text-white font-semibold rounded-lg hover:bg-primary-700 transition-colors shadow-md" do %>
-          📖 Meer informatie
+          📖 Plus d'informations
           <svg class="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path>
           </svg>
         <% end %>
         <%= link_to ai_chat_path,
             class: "inline-flex items-center px-5 py-3 bg-white text-primary-600 font-semibold rounded-lg hover:bg-primary-50 transition-colors border border-primary-300" do %>
-          💬 Vraag stellen
+          💬 Poser une question
         <% end %>
       </div>
     </div>
