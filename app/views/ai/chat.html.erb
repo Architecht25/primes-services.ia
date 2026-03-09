@@ -5,7 +5,7 @@
   data-controller="ai-chat"
   data-ai-chat-conversation-id-value="<%= @conversation_stats[:session_id] %>"
   data-ai-chat-user-type-value="<%= session[:user_type] || 'visiteur' %>"
-  data-ai-chat-user-region-value="<%= session[:user_region] || 'wallonie' %>"
+  data-ai-chat-user-region-value="<%= session[:user_region] || '' %>"
   data-ai-chat-api-url-value="/ai"
 >
   <!-- Header du chat -->
@@ -127,7 +127,7 @@
         <div class="flex flex-wrap gap-2">
           <button
             data-action="click->ai-chat#sendSuggestion"
-            data-message="Combien puis-je avoir pour isoler ma toiture en Wallonie ?"
+            data-message="Combien puis-je avoir pour isoler ma toiture ?"
             class="bg-amber-50 hover:bg-amber-100 text-amber-700 border border-amber-200 text-sm px-3 py-2 rounded-lg transition-colors font-medium"
           >
             💰 Primes isolation

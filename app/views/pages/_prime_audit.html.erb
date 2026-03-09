@@ -135,17 +135,15 @@
       </div>
 
       <div class="flex flex-wrap gap-3">
-        <%= link_to "https://energie.wallonie.be/fr/audit-energetique.html", target: "_blank", rel: "noopener",
-            class: "inline-flex items-center px-5 py-3 bg-secondary-600 text-white font-semibold rounded-lg hover:bg-secondary-700 transition-colors shadow-md" do %>
-          📖 En savoir plus
+
+        <a href="https://ren0vate-630b5136c442.herokuapp.com/fr/wallonie"
+           target="_blank" rel="noopener noreferrer"
+           class="inline-flex items-center px-5 py-3 bg-primary-600 text-white font-semibold rounded-lg hover:bg-primary-700 transition-colors shadow-md">
+          🎯 Lancer le calculateur
           <svg class="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path>
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
           </svg>
-        <% end %>
-        <%= link_to renovate_path,
-            class: "inline-flex items-center px-5 py-3 bg-white text-secondary-600 font-semibold rounded-lg hover:bg-secondary-50 transition-colors border border-secondary-300" do %>
-          🚀 Demander un audit gratuit
-        <% end %>
+        </a>
         <%= link_to ai_chat_path,
             class: "inline-flex items-center px-5 py-3 bg-white text-secondary-600 font-semibold rounded-lg hover:bg-secondary-50 transition-colors border border-secondary-300" do %>
           💬 Poser une question

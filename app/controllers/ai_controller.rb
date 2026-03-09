@@ -153,7 +153,7 @@ class AiController < ApplicationController
   def detect_user_region
     # Détection basique par IP - peut être améliorée
     # Pour l'instant, retourne la région par défaut
-    Rails.application.config.ai.dig(:regions, :default) || 'wallonie'
+    Rails.application.config.ai.dig(:regions, :default)
   end
 
   def gather_conversation_analytics

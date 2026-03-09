@@ -417,67 +417,26 @@ class AiChatbotService
     )
 
     content = response.dig('choices', 0, 'message', 'content')
-
-    log_debug "OpenAI Response", {
-      model: @config.dig(:openai, :model),
-      tokens_used: response.dig('usage', 'total_tokens'),
-      content_preview: content&.truncate(100)
-    } if @config.dig(:debug, :enabled)
-
-    content
+    content.presence || "Je suis désolé, je n'ai pas pu générer une réponse. Veuillez réessayer."
   rescue => e
     log_error "OpenAI API Error", e
     "Je suis désolé, je rencontre une difficulté technique. Pouvez-vous reformuler votre question ?"
   end
 
   def enhance_response(ai_content, intent_analysis)
-    # Enrichir la réponse avec des actions suggérées et les liens officiels
+    # Enrichir la réponse avec des actions suggérées
     actions = build_suggested_actions(intent_analysis)
-    enhanced_content = add_official_links(ai_content, intent_analysis)
 
     {
-      content: enhanced_content,
+      content: ai_content,
       actions: actions,
       metadata: {
         intent: intent_analysis,
-        response_type: determine_response_type(enhanced_content),
+        response_type: determine_response_type(ai_content),
         timestamp: Time.current.iso8601,
         model_used: @config.dig(:openai, :model)
       }
     }
-  end
-
-  def add_official_links(content, intent_analysis)
-    regional_info = get_regional_context
-    return content unless regional_info[:official_urls]&.any?
-
-    # Ajouter les liens pertinents selon l'intent
-    relevant_links = []
-
-    case intent_analysis[:category]
-    when :isolation
-      relevant_links << ({ text: "Prime isolation", url: regional_info[:official_urls][:isolation] }) if regional_info[:official_urls][:isolation]
-    when :chauffage
-      relevant_links << ({ text: "Prime chauffage", url: regional_info[:official_urls][:chauffage] }) if regional_info[:official_urls][:chauffage]
-    when :renovation_generale, :aide_financiere
-      relevant_links << ({ text: "Prime rénovation", url: regional_info[:official_urls][:renovation] }) if regional_info[:official_urls][:renovation]
-      relevant_links << ({ text: "Prime habitation", url: regional_info[:official_urls][:prime_habitation] }) if regional_info[:official_urls][:prime_habitation]
-    when :audit_energetique
-      relevant_links << ({ text: "Audit énergétique", url: regional_info[:official_urls][:audit_energetique] }) if regional_info[:official_urls][:audit_energetique]
-    end
-
-    # Toujours ajouter le lien principal
-    relevant_links << ({ text: "Site officiel #{regional_info[:name]}", url: regional_info[:official_urls][:main] }) if regional_info[:official_urls][:main]
-
-    if relevant_links.any?
-      links_section = "\n\n**📋 Sources officielles :**\n"
-      relevant_links.each do |link|
-        links_section += "- [#{link[:text]}](#{link[:url]})\n"
-      end
-      content + links_section
-    else
-      content
-    end
   end
 
   def build_suggested_actions(intent_analysis)
@@ -608,6 +567,7 @@ class AiChatbotService
   end
 
   def determine_response_type(content)
+    return 'general' if content.blank?
     return 'calculation' if content.match?(/€|EUR|euros?/i)
     return 'procedure' if content.match?(/étapes?|démarches?|procédure/i)
     return 'information' if content.match?(/conditions?|critères?/i)

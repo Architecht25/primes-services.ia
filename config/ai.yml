@@ -42,7 +42,7 @@ test:
     fallback_language: "fr"
 
   regions:
-    default: "wallonie"
+    default: "belgique"
     supported: ["wallonie", "flandre", "bruxelles"]
 
   debug:
@@ -66,7 +66,7 @@ production:
     fallback_language: <%= ENV.fetch("AI_FALLBACK_LANGUAGE") { "fr" } %>
 
   regions:
-    default: <%= ENV.fetch("DEFAULT_REGION") { "wallonie" } %>
+    default: <%= ENV.fetch("DEFAULT_REGION") { "belgique" } %>
     supported: <%= ENV.fetch("SUPPORTED_REGIONS") { "wallonie,flandre,bruxelles" }.split(",") %>
 
   integrations:
