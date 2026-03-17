@@ -56,6 +56,12 @@ class Admin::ContactsController < Admin::BaseController
     redirect_to admin_contacts_path, notice: 'Contact marqué comme lu'
   end
 
+  def destroy
+    @contact = ContactSubmission.find(params[:id])
+    @contact.destroy
+    redirect_to admin_contacts_path, notice: 'Contact supprimé avec succès'
+  end
+
   def bulk_action
     contact_ids = params[:contact_ids] || []
     action = params[:bulk_action]

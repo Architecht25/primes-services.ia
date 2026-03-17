@@ -5,7 +5,6 @@ Rails.application.routes.draw do
       get :particulier
       get :acp
       get :entreprise_immo
-      get :entreprise_comm
     end
   end
 
@@ -42,7 +41,7 @@ Rails.application.routes.draw do
     # Dashboard et analytics
     get 'dashboard', to: 'dashboard#index'
 
-    resources :contacts, only: [:index, :show] do
+    resources :contacts, only: [:index, :show, :destroy] do
       member do
         post :mark_read
       end

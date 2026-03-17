@@ -9,7 +9,7 @@ class AcpContact < ContactSubmission
     allow_blank: true
   }
   validates :building_work_type, inclusion: {
-    in: %w[facade toiture chauffage isolation ascenseur communs],
+    in: %w[facade toiture chauffage isolation ascenseur communs securite audit],
     allow_blank: true
   }
   validates :voted_budget,

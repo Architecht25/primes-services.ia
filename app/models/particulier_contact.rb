@@ -2,7 +2,7 @@
 class ParticulierContact < ContactSubmission
   # Validations spécifiques aux particuliers
   validates :property_type, inclusion: {
-    in: %w[maison appartement],
+    in: %w[maison appartement duplex maitre fermette autre],
     allow_blank: true
   }
   validates :construction_year,
@@ -12,7 +12,7 @@ class ParticulierContact < ContactSubmission
     },
     allow_blank: true
   validates :work_type, inclusion: {
-    in: %w[isolation chauffage renovation_globale photovoltaique ventilation],
+    in: %w[isolation chauffage renovation_globale photovoltaique ventilation fenetres solaire facade globale audit autre],
     allow_blank: true
   }
   validates :estimated_budget,

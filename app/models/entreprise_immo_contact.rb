@@ -6,7 +6,7 @@ class EntrepriseImmoContact < ContactSubmission
     allow_blank: true
   }
   validates :investment_region, inclusion: {
-    in: %w[wallonie flandre bruxelles international],
+    in: %w[wallonie flandre bruxelles multi international],
     allow_blank: true
   }
   validates :project_scale, inclusion: {

@@ -12,7 +12,6 @@ const urlsToCache = [
   '/contacts/particulier',
   '/contacts/acp',
   '/contacts/entreprise_immo',
-  '/contacts/entreprise_comm',
   '/pwa/offline',
   '/assets/application.css',
   '/assets/application.js',

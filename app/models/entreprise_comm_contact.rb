@@ -6,11 +6,11 @@ class EntrepriseCommContact < ContactSubmission
     allow_blank: true
   }
   validates :investment_region, inclusion: {
-    in: %w[wallonie flandre bruxelles europe international],
+    in: %w[wallonie flandre bruxelles belgique europe international],
     allow_blank: true
   }
   validates :project_scale, inclusion: {
-    in: %w[local regional national international],
+    in: %w[local regional national european international],
     allow_blank: true
   }
   validates :timeline, inclusion: {

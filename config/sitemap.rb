@@ -19,7 +19,6 @@ SitemapGenerator::Sitemap.create do
   add particulier_contacts_path, priority: 0.85, changefreq: 'monthly'
   add acp_contacts_path, priority: 0.85, changefreq: 'monthly'
   add entreprise_immo_contacts_path, priority: 0.85, changefreq: 'monthly'
-  add entreprise_comm_contacts_path, priority: 0.85, changefreq: 'monthly'
 
   # Pages régionales SEO - NOUVEAU pour référencement local
   ['wallonie', 'flandre', 'bruxelles'].each do |region|

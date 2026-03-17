@@ -12,7 +12,6 @@ class PwaCacheService
     '/contacts/particulier',
     '/contacts/acp',
     '/contacts/entreprise_immo',
-    '/contacts/entreprise_comm',
     '/pwa/offline',
     '/assets/application.css',
     '/assets/application.js',
@@ -23,7 +22,7 @@ class PwaCacheService
   CRITICAL_DATA = {
     regions: ['wallonie', 'flandre', 'bruxelles'],
     prime_types: ['isolation', 'chauffage', 'photovoltaique', 'audit_energetique'],
-    contact_types: ['particulier', 'acp', 'entreprise_immo', 'entreprise_comm']
+    contact_types: ['particulier', 'acp', 'entreprise_immo']
   }.freeze
 
   class << self

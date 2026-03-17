@@ -81,10 +81,13 @@ class ContactSubmission < ApplicationRecord
       {
         property_type: property_type,
         construction_year: construction_year,
+        surface_area: surface_area,
         work_type: work_type,
+        current_heating: current_heating,
+        priority: priority,
+        income_range: income_range,
         estimated_budget: estimated_budget,
-        realization_deadline: realization_deadline,
-        family_situation: family_situation
+        realization_deadline: realization_deadline
       }.compact
     when 'AcpContact'
       {
@@ -99,20 +102,10 @@ class ContactSubmission < ApplicationRecord
       {
         business_activity: business_activity,
         investment_region: investment_region,
-        project_type: project_type,
-        project_size: project_size,
-        investment_budget: investment_budget,
-        certifications_targeted: certifications_targeted
-      }.compact
-    when 'EntrepriseCommContact'
-      {
-        business_sector: business_sector,
-        company_size: company_size,
-        activity_region: activity_region,
-        investment_type: investment_type,
-        business_budget: business_budget,
-        business_objectives: business_objectives,
-        company_status: company_status
+        project_scale: project_scale,
+        target_market: target_market,
+        estimated_budget: estimated_budget,
+        timeline: timeline
       }.compact
     else
       {}

@@ -17,7 +17,7 @@ class Admin::DashboardController < Admin::BaseController
       },
       ai_conversations: {
         total: AiConversation.count,
-        active: AiConversation.where(completed: false).count,
+        active: AiConversation.where(status: 'active').count,
         today: AiConversation.where('created_at >= ?', Time.zone.today).count,
         week: AiConversation.where('created_at >= ?', 1.week.ago).count
       },

@@ -24,7 +24,7 @@
           style: "flex: 1; padding: 0.75rem; border: 1px solid #e2e8f0; border-radius: 0.5rem; min-width: 250px;" %>
 
       <%= f.select :type,
-          options_for_select([['Tous les types', ''], ['Particulier', 'ParticulierContact'], ['ACP', 'AcpContact'], ['Entreprise Immo', 'EntrepriseImmoContact'], ['Entreprise Comm', 'EntrepriseCommContact']], params[:type]),
+          options_for_select([['Tous les types', ''], ['Particulier', 'ParticulierContact'], ['ACP', 'AcpContact'], ['Entreprise & Professionnel', 'EntrepriseImmoContact']], params[:type]),
           {},
           style: "padding: 0.75rem; border: 1px solid #e2e8f0; border-radius: 0.5rem;" %>
 
@@ -107,8 +107,9 @@
               <td style="padding: 1rem;">
                 <%= link_to "Voir", admin_contact_path(contact), style: "color: #667eea; text-decoration: none; font-weight: 600; margin-right: 1rem;" %>
                 <% unless contact.read? %>
-                  <%= button_to "Marquer lu", mark_read_admin_contact_path(contact), method: :post, style: "display: inline; background: none; border: none; color: #48bb78; font-weight: 600; cursor: pointer; padding: 0;" %>
+                  <%= button_to "Marquer lu", mark_read_admin_contact_path(contact), method: :post, style: "display: inline; background: none; border: none; color: #48bb78; font-weight: 600; cursor: pointer; padding: 0; margin-right: 1rem;" %>
                 <% end %>
+                <%= button_to "Supprimer", admin_contact_path(contact), method: :delete, data: { turbo_confirm: "Supprimer ce contact définitivement ?" }, style: "display: inline; background: none; border: none; color: #f56565; font-weight: 600; cursor: pointer; padding: 0;" %>
               </td>
             </tr>
           <% end %>

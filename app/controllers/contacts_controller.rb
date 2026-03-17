@@ -27,12 +27,6 @@ class ContactsController < ApplicationController
     render :form
   end
 
-  def entreprise_comm
-    @contact = EntrepriseCommContact.new
-    @contact_type = 'entreprise_comm'
-    render :form
-  end
-
   def create
     @contact_type = params[:contact_type]
 
@@ -43,8 +37,6 @@ class ContactsController < ApplicationController
       @contact = AcpContact.new(acp_params)
     when 'entreprise_immo'
       @contact = EntrepriseImmoContact.new(entreprise_immo_params)
-    when 'entreprise_comm'
-      @contact = EntrepriseCommContact.new(entreprise_comm_params)
     else
       redirect_to new_contact_path, alert: 'Type de contact invalide'
       return
@@ -103,11 +95,4 @@ class ContactsController < ApplicationController
     )
   end
 
-  def entreprise_comm_params
-    params.require(:entreprise_comm_contact).permit(
-      :name, :email, :phone, :address, :city, :postal_code, :region,
-      :business_activity, :investment_region, :project_scale, :timeline,
-      :estimated_budget, :target_market, :company_size, :message
-    )
-  end
 end

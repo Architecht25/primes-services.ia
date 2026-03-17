@@ -290,7 +290,7 @@ class NaturalLanguageProcessor
     when 'acp'
       context[:focus] = :building_management
       context[:complexity] = :medium
-    when 'entreprise_immo', 'entreprise_comm'
+    when 'entreprise_immo'
       context[:focus] = :business_subsidies
       context[:complexity] = :advanced
     else
