@@ -43,7 +43,14 @@ class ContactsController < ApplicationController
     end
 
     if @contact.save
-      # Envoyer l'email de confirmation
+      # Notifier l'administrateur de la nouvelle demande
+      begin
+        ContactMailer.new_submission_notification(@contact).deliver_later
+      rescue => e
+        Rails.logger.error "Erreur envoi notification admin pour contact ##{@contact.id}: #{e.message}"
+      end
+
+      # Envoyer l'email de confirmation au client
       begin
         EmailService.send_contact_confirmation(@contact)
         # Intégrer avec l'IA pour suggestions personnalisées

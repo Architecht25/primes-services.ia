@@ -1,0 +1,60 @@
+================================================================
+NOUVELLE DEMANDE – Primes Services
+================================================================
+Référence : #<%= @contact.id %>
+Date       : <%= (@contact.submitted_at || Time.current).strftime("%d/%m/%Y à %H:%M") %>
+Profil     : <%= { 'ParticulierContact' => 'Particulier', 'AcpContact' => 'Copropriété (ACP)',
+                   'EntrepriseImmoContact' => 'Entreprise Immobilière',
+                   'EntrepriseCommContact' => 'Entreprise Commerciale' }[@contact.type] || @contact.type %>
+
+----------------------------------------------------------------
+COORDONNÉES
+----------------------------------------------------------------
+Nom         : <%= @contact.name %>
+Email       : <%= @contact.email %>
+<% if @contact.phone.present? %>Téléphone   : <%= @contact.phone %>
+<% end %><% if @contact.address.present? %>Adresse     : <%= @contact.address %>
+<% end %><% if @contact.city.present? || @contact.postal_code.present? %>Localité    : <%= [@contact.postal_code, @contact.city].compact.join(' ') %>
+<% end %><% if @contact.region.present? %>Région      : <%= @contact.region.capitalize %>
+<% end %>
+<% if @contact.is_a?(ParticulierContact) %>----------------------------------------------------------------
+DÉTAILS DU PROJET (PARTICULIER)
+----------------------------------------------------------------
+<% if @contact.property_type.present? %>Type de bien          : <%= @contact.property_type %>
+<% end %><% if @contact.construction_year.present? %>Année de construction  : <%= @contact.construction_year %>
+<% end %><% if @contact.surface_area.present? %>Surface               : <%= @contact.surface_area %> m²
+<% end %><% if @contact.work_type.present? %>Type de travaux       : <%= @contact.work_type %>
+<% end %><% if @contact.current_heating.present? %>Chauffage actuel      : <%= @contact.current_heating %>
+<% end %><% if @contact.estimated_budget.present? %>Budget estimé         : <%= @contact.estimated_budget %> €
+<% end %><% if @contact.timeline.present? %>Délai souhaité        : <%= @contact.timeline %>
+<% end %><% if @contact.income_range.present? %>Tranche de revenus    : <%= @contact.income_range %>
+<% end %><% if @contact.priority.present? %>Priorité              : <%= @contact.priority %>
+<% end %>
+<% end %><% if @contact.is_a?(AcpContact) %>----------------------------------------------------------------
+DÉTAILS DE LA COPROPRIÉTÉ (ACP)
+----------------------------------------------------------------
+<% if @contact.number_of_units.present? %>Nombre d'unités       : <%= @contact.number_of_units %>
+<% end %><% if @contact.building_type.present? %>Type d'immeuble       : <%= @contact.building_type %>
+<% end %><% if @contact.building_work_type.present? %>Travaux prévus        : <%= @contact.building_work_type %>
+<% end %><% if @contact.voted_budget.present? %>Budget voté           : <%= @contact.voted_budget %> €
+<% end %><% if @contact.work_urgency.present? %>Urgence               : <%= @contact.work_urgency %>
+<% end %><% if @contact.syndic_contact.present? %>Contact syndic        : <%= @contact.syndic_contact %>
+<% end %>
+<% end %><% if @contact.is_a?(EntrepriseImmoContact) %>----------------------------------------------------------------
+DÉTAILS DU PROJET IMMOBILIER
+----------------------------------------------------------------
+<% if @contact.business_activity.present? %>Activité              : <%= @contact.business_activity %>
+<% end %><% if @contact.investment_region.present? %>Région d'invest.      : <%= @contact.investment_region %>
+<% end %><% if @contact.project_scale.present? %>Échelle du projet     : <%= @contact.project_scale %>
+<% end %><% if @contact.timeline.present? %>Calendrier            : <%= @contact.timeline %>
+<% end %><% if @contact.estimated_budget.present? %>Budget estimé         : <%= @contact.estimated_budget %> €
+<% end %><% if @contact.target_market.present? %>Marché cible          : <%= @contact.target_market %>
+<% end %>
+<% end %><% if @contact.message.present? %>----------------------------------------------------------------
+MESSAGE
+----------------------------------------------------------------
+<%= @contact.message %>
+
+<% end %>================================================================
+Primes Services · Notification automatique
+================================================================

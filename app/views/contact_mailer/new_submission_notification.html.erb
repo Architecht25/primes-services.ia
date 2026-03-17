@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <style>
+    body { font-family: Arial, sans-serif; font-size: 14px; color: #333; background: #f5f5f5; margin: 0; padding: 0; }
+    .wrapper { max-width: 680px; margin: 30px auto; background: #fff; border-radius: 6px; overflow: hidden; box-shadow: 0 2px 8px rgba(0,0,0,.1); }
+    .header { background: #1a3c5e; color: #fff; padding: 24px 30px; }
+    .header h1 { margin: 0; font-size: 20px; }
+    .header p { margin: 6px 0 0; opacity: .8; font-size: 13px; }
+    .body { padding: 30px; }
+    .section { margin-bottom: 28px; }
+    .section h2 { font-size: 15px; color: #1a3c5e; border-bottom: 2px solid #e0e8f0; padding-bottom: 6px; margin: 0 0 14px; text-transform: uppercase; letter-spacing: .5px; }
+    table { width: 100%; border-collapse: collapse; }
+    td { padding: 8px 6px; vertical-align: top; font-size: 13px; border-bottom: 1px solid #f0f0f0; }
+    td:first-child { font-weight: bold; color: #555; width: 38%; }
+    .badge { display: inline-block; padding: 3px 10px; border-radius: 12px; font-size: 12px; font-weight: bold; }
+    .badge-particulier { background: #d4edda; color: #155724; }
+    .badge-acp { background: #d1ecf1; color: #0c5460; }
+    .badge-entreprise { background: #fff3cd; color: #856404; }
+    .message-box { background: #f8f9fa; border-left: 4px solid #1a3c5e; padding: 12px 16px; border-radius: 0 4px 4px 0; font-size: 13px; line-height: 1.6; white-space: pre-line; }
+    .footer { background: #f5f5f5; padding: 16px 30px; font-size: 12px; color: #999; text-align: center; }
+    .action-link { display: inline-block; margin-top: 16px; padding: 10px 22px; background: #1a3c5e; color: #fff; text-decoration: none; border-radius: 4px; font-size: 13px; }
+  </style>
+</head>
+<body>
+  <div class="wrapper">
+    <div class="header">
+      <h1>Nouvelle demande reçue</h1>
+      <p>Référence #<%= @contact.id %> · <%= @contact.submitted_at&.strftime("%d/%m/%Y à %H:%M") || Time.current.strftime("%d/%m/%Y à %H:%M") %></p>
+    </div>
+
+    <div class="body">
+
+      <%# ── Type de demande ────────────────────── %>
+      <div class="section">
+        <h2>Type de profil</h2>
+        <% badge_class = case @contact.type
+             when 'ParticulierContact'    then 'badge-particulier'
+             when 'AcpContact'            then 'badge-acp'
+             else 'badge-entreprise'
+           end
+        %>
+        <% label = { 'ParticulierContact' => 'Particulier', 'AcpContact' => 'Copropriété (ACP)',
+                     'EntrepriseImmoContact' => 'Entreprise Immobilière', 'EntrepriseCommContact' => 'Entreprise Commerciale'
+                   }[@contact.type] || @contact.type %>
+        <span class="badge <%= badge_class %>"><%= label %></span>
+      </div>
+
+      <%# ── Coordonnées ────────────────────────── %>
+      <div class="section">
+        <h2>Coordonnées</h2>
+        <table>
+          <tr><td>Nom</td><td><%= @contact.name %></td></tr>
+          <tr><td>Email</td><td><a href="mailto:<%= @contact.email %>"><%= @contact.email %></a></td></tr>
+          <% if @contact.phone.present? %>
+          <tr><td>Téléphone</td><td><%= @contact.phone %></td></tr>
+          <% end %>
+          <% if @contact.address.present? %>
+          <tr><td>Adresse</td><td><%= @contact.address %></td></tr>
+          <% end %>
+          <% if @contact.city.present? || @contact.postal_code.present? %>
+          <tr><td>Localité</td><td><%= [@contact.postal_code, @contact.city].compact.join(' ') %></td></tr>
+          <% end %>
+          <% if @contact.region.present? %>
+          <tr><td>Région</td><td><%= @contact.region.capitalize %></td></tr>
+          <% end %>
+        </table>
+      </div>
+
+      <%# ── Détails spécifiques Particulier ───── %>
+      <% if @contact.is_a?(ParticulierContact) %>
+      <div class="section">
+        <h2>Détails du projet</h2>
+        <table>
+          <% if @contact.property_type.present? %>
+          <tr><td>Type de bien</td><td><%= @contact.property_type.humanize %></td></tr>
+          <% end %>
+          <% if @contact.construction_year.present? %>
+          <tr><td>Année de construction</td><td><%= @contact.construction_year %></td></tr>
+          <% end %>
+          <% if @contact.surface_area.present? %>
+          <tr><td>Surface</td><td><%= @contact.surface_area %> m²</td></tr>
+          <% end %>
+          <% if @contact.work_type.present? %>
+          <tr><td>Type de travaux</td><td><%= @contact.work_type.humanize %></td></tr>
+          <% end %>
+          <% if @contact.current_heating.present? %>
+          <tr><td>Chauffage actuel</td><td><%= @contact.current_heating.humanize %></td></tr>
+          <% end %>
+          <% if @contact.estimated_budget.present? %>
+          <tr><td>Budget estimé</td><td><%= number_to_currency(@contact.estimated_budget, unit: '€', separator: ',', delimiter: ' ', format: '%n %u') %></td></tr>
+          <% end %>
+          <% if @contact.timeline.present? %>
+          <tr><td>Délai souhaité</td><td><%= @contact.timeline.humanize %></td></tr>
+          <% end %>
+          <% if @contact.income_range.present? %>
+          <tr><td>Tranche de revenus</td><td><%= @contact.income_range.humanize %></td></tr>
+          <% end %>
+          <% if @contact.priority.present? %>
+          <tr><td>Priorité</td><td><%= @contact.priority.humanize %></td></tr>
+          <% end %>
+        </table>
+      </div>
+      <% end %>
+
+      <%# ── Détails spécifiques ACP ────────────── %>
+      <% if @contact.is_a?(AcpContact) %>
+      <div class="section">
+        <h2>Détails de la copropriété</h2>
+        <table>
+          <% if @contact.number_of_units.present? %>
+          <tr><td>Nombre d'unités</td><td><%= @contact.number_of_units %></td></tr>
+          <% end %>
+          <% if @contact.building_type.present? %>
+          <tr><td>Type d'immeuble</td><td><%= @contact.building_type.humanize %></td></tr>
+          <% end %>
+          <% if @contact.building_work_type.present? %>
+          <tr><td>Travaux prévus</td><td><%= @contact.building_work_type.humanize %></td></tr>
+          <% end %>
+          <% if @contact.voted_budget.present? %>
+          <tr><td>Budget voté</td><td><%= number_to_currency(@contact.voted_budget, unit: '€', separator: ',', delimiter: ' ', format: '%n %u') %></td></tr>
+          <% end %>
+          <% if @contact.work_urgency.present? %>
+          <tr><td>Urgence</td><td><%= @contact.work_urgency.humanize %></td></tr>
+          <% end %>
+          <% if @contact.syndic_contact.present? %>
+          <tr><td>Contact syndic</td><td><%= @contact.syndic_contact %></td></tr>
+          <% end %>
+        </table>
+      </div>
+      <% end %>
+
+      <%# ── Détails spécifiques Entreprise Immo ── %>
+      <% if @contact.is_a?(EntrepriseImmoContact) %>
+      <div class="section">
+        <h2>Détails du projet immobilier</h2>
+        <table>
+          <% if @contact.business_activity.present? %>
+          <tr><td>Activité</td><td><%= @contact.business_activity.humanize %></td></tr>
+          <% end %>
+          <% if @contact.investment_region.present? %>
+          <tr><td>Région d'investissement</td><td><%= @contact.investment_region.humanize %></td></tr>
+          <% end %>
+          <% if @contact.project_scale.present? %>
+          <tr><td>Échelle du projet</td><td><%= @contact.project_scale.humanize %></td></tr>
+          <% end %>
+          <% if @contact.timeline.present? %>
+          <tr><td>Calendrier</td><td><%= @contact.timeline.humanize %></td></tr>
+          <% end %>
+          <% if @contact.estimated_budget.present? %>
+          <tr><td>Budget estimé</td><td><%= number_to_currency(@contact.estimated_budget, unit: '€', separator: ',', delimiter: ' ', format: '%n %u') %></td></tr>
+          <% end %>
+          <% if @contact.target_market.present? %>
+          <tr><td>Marché cible</td><td><%= @contact.target_market.humanize %></td></tr>
+          <% end %>
+        </table>
+      </div>
+      <% end %>
+
+      <%# ── Message libre ─────────────────────── %>
+      <% if @contact.message.present? %>
+      <div class="section">
+        <h2>Message</h2>
+        <div class="message-box"><%= @contact.message %></div>
+      </div>
+      <% end %>
+
+    </div>
+
+    <div class="footer">
+      Primes Services · robin@primes-services.be · Notification automatique
+    </div>
+  </div>
+</body>
+</html>
