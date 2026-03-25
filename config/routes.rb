@@ -5,6 +5,7 @@ Rails.application.routes.draw do
       get :particulier
       get :acp
       get :entreprise_immo
+      get :entreprise_comm
     end
   end
 

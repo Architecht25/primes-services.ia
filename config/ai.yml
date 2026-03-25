@@ -71,7 +71,7 @@ production:
 
   integrations:
     renovate_base_url: <%= ENV.fetch("RENOVATE_BASE_URL") %>
-    team_email: <%= ENV.fetch("TEAM_EMAIL") %>
+    team_email: <%= ENV.fetch("TEAM_EMAIL") { "robin@primes-services.be" } %>
 
   debug:
     enabled: false

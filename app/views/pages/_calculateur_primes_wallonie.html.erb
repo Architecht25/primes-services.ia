@@ -1,9 +1,9 @@
 <div class="bg-gradient-to-br from-primary-50 to-primary-100 rounded-xl shadow-lg p-6 lg:p-8 border border-primary-200 hover:shadow-xl transition-shadow">
-  <div class="flex items-start space-x-4">
-    <div class="flex-shrink-0 w-16 h-16 bg-primary-600 rounded-full flex items-center justify-center text-3xl">
+  <div class="flex flex-col sm:flex-row items-start gap-4">
+    <div class="flex-shrink-0 w-14 h-14 sm:w-16 sm:h-16 bg-primary-600 rounded-full flex items-center justify-center text-2xl sm:text-3xl mx-auto sm:mx-0">
       🧮
     </div>
-    <div class="flex-1">
+    <div class="flex-1 w-full">
       <h3 class="text-2xl font-bold text-gray-900 mb-3">
         Calculateur de Primes Wallonie
       </h3>
@@ -25,30 +25,30 @@
             </p>
             <div class="bg-white rounded-lg px-4 py-3 border border-red-200 text-center">
               <p class="text-xs text-red-600 font-semibold uppercase tracking-wide mb-2">Temps restant pour bénéficier des primes</p>
-              <div id="countdown-wallonie" class="flex justify-center gap-4 text-red-800">
-                <div class="text-center">
-                  <span id="cd-days" class="text-3xl font-bold block">--</span>
+              <div id="countdown-wallonie" class="flex flex-wrap justify-center gap-2 sm:gap-4 text-red-800">
+                <div class="text-center min-w-[2.5rem]">
+                  <span id="cd-days" class="text-2xl sm:text-3xl font-bold block">--</span>
                   <span class="text-xs font-medium">jours</span>
                 </div>
-                <div class="text-center">
-                  <span class="text-3xl font-bold">:</span>
+                <div class="text-center self-start pt-1">
+                  <span class="text-2xl sm:text-3xl font-bold">:</span>
                 </div>
-                <div class="text-center">
-                  <span id="cd-hours" class="text-3xl font-bold block">--</span>
+                <div class="text-center min-w-[2.5rem]">
+                  <span id="cd-hours" class="text-2xl sm:text-3xl font-bold block">--</span>
                   <span class="text-xs font-medium">heures</span>
                 </div>
-                <div class="text-center">
-                  <span class="text-3xl font-bold">:</span>
+                <div class="text-center self-start pt-1">
+                  <span class="text-2xl sm:text-3xl font-bold">:</span>
                 </div>
-                <div class="text-center">
-                  <span id="cd-minutes" class="text-3xl font-bold block">--</span>
+                <div class="text-center min-w-[2.5rem]">
+                  <span id="cd-minutes" class="text-2xl sm:text-3xl font-bold block">--</span>
                   <span class="text-xs font-medium">minutes</span>
                 </div>
-                <div class="text-center">
-                  <span class="text-3xl font-bold">:</span>
+                <div class="text-center self-start pt-1">
+                  <span class="text-2xl sm:text-3xl font-bold">:</span>
                 </div>
-                <div class="text-center">
-                  <span id="cd-seconds" class="text-3xl font-bold block">--</span>
+                <div class="text-center min-w-[2.5rem]">
+                  <span id="cd-seconds" class="text-2xl sm:text-3xl font-bold block">--</span>
                   <span class="text-xs font-medium">secondes</span>
                 </div>
               </div>
