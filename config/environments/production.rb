@@ -52,27 +52,26 @@ Rails.application.configure do
   # Replace the default in-process and non-durable queuing backend for Active Job.
   config.active_job.queue_adapter = :async
 
-  # Raise delivery errors so failed sends appear in logs/monitoring.
+  # Email delivery via Resend (même config que ren0vate)
   config.action_mailer.raise_delivery_errors = true
+  config.action_mailer.perform_deliveries = true
+  config.action_mailer.delivery_method = :smtp
 
   # Set host to be used by links generated in mailer templates.
-  config.action_mailer.default_url_options = { host: "primes-services.be" }
+  config.action_mailer.default_url_options = {
+    host: ENV.fetch('APP_HOST', 'primes-services.be'),
+    protocol: 'https'
+  }
 
-  # Office 365 SMTP via STARTTLS + App Password (MFA requis côté Microsoft 365).
-  # SMTP_USERNAME : robin@primes-services.be
-  # SMTP_PASSWORD : App Password généré sur https://mysignins.microsoft.com/security-info
-  # Prérequis côté admin Exchange : SMTP AUTH activé pour cette boîte (Set-CASMailbox).
-  config.action_mailer.delivery_method = :smtp
+  # Configuration SMTP via Resend (domaine primes-services.be vérifié sur Resend)
   config.action_mailer.smtp_settings = {
-    address:              ENV.fetch("SMTP_HOST", "smtp.office365.com"),
-    port:                 ENV.fetch("SMTP_PORT", 587).to_i,
-    domain:               "primes-services.be",
-    user_name:            ENV["SMTP_USERNAME"],
-    password:             ENV["SMTP_PASSWORD"],
+    address:              ENV.fetch('SMTP_ADDRESS', 'smtp.resend.com'),
+    port:                 ENV.fetch('SMTP_PORT', 587).to_i,
+    domain:               ENV.fetch('SMTP_DOMAIN', 'primes-services.be'),
+    user_name:            ENV.fetch('SMTP_USERNAME', 'resend'),
+    password:             ENV['SMTP_PASSWORD'],
     authentication:       :plain,
-    enable_starttls_auto: true,
-    open_timeout:         10,
-    read_timeout:         10
+    enable_starttls_auto: true
   }
 
   # Enable locale fallbacks for I18n (makes lookups for any locale fall back to
