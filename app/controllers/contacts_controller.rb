@@ -51,25 +51,11 @@ class ContactsController < ApplicationController
     end
 
     if @contact.save
-      # Notifier l'administrateur via nodemailer (Office 365 compatible Security Defaults)
+      # Notifier l'administrateur via Action Mailer / Resend SMTP
       begin
-        NodeMailerService.send_mail(
-          to:      ContactMailer::ADMIN_EMAIL,
-          subject: "[Nouvelle demande] #{@contact.type} – #{@contact.name} (##{@contact.id})",
-          html:    render_to_string("contact_mailer/new_submission_notification", layout: "mailer", formats: [:html])
-        )
+        ContactMailer.new_submission_notification(@contact).deliver_later
       rescue => e
         Rails.logger.error "Erreur envoi notification admin pour contact ##{@contact.id}: #{e.message}"
-      end
-
-      # Envoyer l'email de confirmation au client
-      begin
-        EmailService.send_contact_confirmation(@contact)
-        # Intégrer avec l'IA pour suggestions personnalisées
-        ai_suggestions = AiChatbotService.new.generate_personalized_suggestions(@contact)
-        @contact.update(ai_suggestions: ai_suggestions)
-      rescue => e
-        Rails.logger.error "Erreur lors de l'envoi d'email ou génération IA: #{e.message}"
       end
 
       redirect_to contact_path(@contact), notice: 'Votre demande a été envoyée avec succès!'
