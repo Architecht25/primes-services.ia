@@ -164,7 +164,7 @@
   </div>
 </div>
 
-<script>
+<script nonce="<%= content_security_policy_nonce %>">
 // Intégration avec le chatbot existant
 function toggleChatbot() {
   const chatWidget = document.querySelector('[data-ai-chatbot-target="widget"]');

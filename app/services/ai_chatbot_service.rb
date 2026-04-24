@@ -1,14 +1,17 @@
 # Service principal pour le chatbot IA de primes-services.ia
-# Gère l'intégration OpenAI et la logique métier spécialisée en subsides belges
+# Gère l'intégration Anthropic (Claude) et la logique métier spécialisée en subsides belges
 class AiChatbotService
   include ActiveSupport::Benchmarkable
+
+  ANTHROPIC_API_URL = 'https://api.anthropic.com/v1/messages'
+  ANTHROPIC_VERSION = '2023-06-01'
 
   attr_reader :conversation, :config
 
   def initialize(session_id: nil, user_type: nil, user_region: nil)
     @config = Rails.application.config.ai
     @conversation = find_or_create_conversation(session_id, user_type, user_region)
-    @openai_client = build_openai_client
+    @api_key = @config.dig(:anthropic, :api_key)
     @logger = Rails.logger
   end
 
@@ -96,11 +99,14 @@ class AiChatbotService
     )
   end
 
-  def build_openai_client
-    OpenAI::Client.new(
-      access_token: @config.dig(:openai, :api_key),
-      log_errors: @config.dig(:debug, :enabled)
-    )
+  def build_anthropic_client_config
+    {
+      headers: {
+        'x-api-key'         => @api_key,
+        'anthropic-version' => ANTHROPIC_VERSION,
+        'content-type'      => 'application/json'
+      }
+    }
   end
 
   def analyze_user_intent(message)
@@ -142,7 +148,7 @@ class AiChatbotService
       TON EXPERTISE COUVRE LES 3 RÉGIONS BELGES:
       ✓ Wallonie (Primes Habitation, Prêts SWCS 0%, Monuments et Sites, Primes Communales, Audit Énergétique)
       ✓ Flandre (Renovatiepremie, Mijn VerbouwLening 0-1.5%, Erfgoed, Communale premies, PEB)
-      ✓ Bruxelles-Capitale (Renolution, Crédit EcoRéno 2.5-3.5%, Monuments et Sites, Petit Patrimoine, Primes Communales)
+      ✓ Bruxelles-Capitale (⚠️ Primes Renolution SUPPRIMÉES fin 2024 — Crédit EcoRéno 2.5-3.5%, Monuments et Sites, Petit Patrimoine, Primes Communales)
 
       INFORMATION RÉGIONALE DE RÉFÉRENCE (#{regional_info[:name]}):
 
@@ -209,6 +215,14 @@ class AiChatbotService
       - Mentionne toujours les montants estimés quand possible
       - Identifie les primes CUMULABLES pour maximiser les aides
       - Termine avec des boutons d'action pertinents
+
+      ⚠️ ALERTE BRUXELLES - INFORMATION CRITIQUE 2025/2026:
+      Les primes Renolution (primes régionales bruxelloises à la rénovation énergétique) ont été SUPPRIMÉES.
+      Les demandes pour factures 2024 sont clôturées. Aucune nouvelle prime régionale n'a été instaurée.
+      Raison : le nouveau gouvernement bruxellois (coalition MR – Les Engagés, post-élections juin 2024) n'a pas reconduit le programme dans son plan d'austérité budgétaire.
+      Source officielle : renolution.brussels — "A ce jour, il n'y a pas de décision gouvernementale concernant d'éventuelles nouvelles formes de soutien financier à la rénovation."
+      À Bruxelles, les aides encore disponibles sont : Crédit EcoRéno (Fonds du Logement), primes Monuments et Sites (urban.brussels) et primes communales des 19 communes.
+      NE JAMAIS mentionner les primes Renolution comme disponibles. Annoncer clairement leur suppression et orienter vers les alternatives.
 
       EXPERTISE: Connaissance approfondie des primes régionales, communales, spécifiques (monuments, patrimoine, audit/PEB) et prêts à taux 0% dans TOUTE la Belgique (Wallonie, Flandre, Bruxelles).
     PROMPT
@@ -316,22 +330,21 @@ class AiChatbotService
         name: 'Bruxelles-Capitale',
         authority: 'Région de Bruxelles-Capitale',
         language: 'fr/nl',
-        specific_programs: ['Renolution', 'Prime Énergie', 'Prime Rénovation'],
+        specific_programs: ['⚠️ Primes Renolution SUPPRIMÉES (fin 2024)', 'Crédit EcoRéno (Fonds du Logement)', 'Primes Monuments et Sites', 'Primes Communales (19 communes)'],
         specific_subsidies: [
-          'Isolation de toiture : jusqu\'à 50€/m² (75€/m² revenus modestes)',
-          'Isolation des murs : jusqu\'à 100€/m² selon technique',
-          'Pompe à chaleur : jusqu\'à 4 500€ (primes majorées possibles)',
-          'Chaudière condensation : 2 000€ à 3 500€',
-          'Panneaux photovoltaïques : 350€ à 500€/kWc',
-          'Ventilation double flux : jusqu\'à 3 500€',
-          'Châssis performants : jusqu\'à 120€/m²'
+          '⚠️ IMPORTANT : Les primes régionales Renolution ont été supprimées fin 2024 par le gouvernement bruxellois (coalition MR – Les Engagés). Aucun nouveau dispositif régional n\'a été annoncé.',
+          'Source : renolution.brussels — dépôt des demandes 2024 clôturé, aucune décision gouvernementale pour un nouveau soutien financier.',
+          'Ce qui RESTE disponible à Bruxelles : Crédit EcoRéno, primes Monuments et Sites, primes communales',
+          'Crédit EcoRéno (Fonds du Logement) : prêt à taux réduit 2.5-3.5% — TOUJOURS ACTIF',
+          'Primes Monuments et Sites : jusqu\'à 90% pour biens classés (urban.brussels) — TOUJOURS ACTIF',
+          'Primes communales : 400€ à 6 000€ selon commune (19 communes) — VÉRIFIER COMMUNE PAR COMMUNE'
         ],
         special_primes: [
-          'Prime Monuments et Sites : jusqu\'à 90% pour biens classés (urban.brussels)',
-          'Primes Communales : 400€ à 6 000€ (19 communes bruxelloises)',
-          'Prime Petit Patrimoine : jusqu\'à 50% (max 5 000€) pour éléments remarquables',
+          'Prime Monuments et Sites : jusqu\'à 90% pour biens classés — urban.brussels — TOUJOURS ACTIVE',
+          'Prime Petit Patrimoine : jusqu\'à 50% (max 5 000€) pour éléments remarquables — TOUJOURS ACTIVE',
+          'Primes Communales : 400€ à 6 000€ selon commune (19 communes bruxelloises) — À VÉRIFIER PAR COMMUNE',
           'Prime embellissement façade : jusqu\'à 80% selon commune',
-          'Cumul possible : primes régionales + communales + patrimoine'
+          '⚠️ Les primes régionales Renolution (isolation, chauffage, etc.) ont été supprimées fin 2024. Seules les aides ci-dessus restent disponibles.'
         ],
         loan_programs: [
           'Crédit EcoRéno (Fonds du Logement Bruxelles) - 2 formules au choix:',
@@ -339,7 +352,7 @@ class AiChatbotService
           '  2. CRÉDIT CONSOMMATION : 1 500€ à 25 000€, max 10 ans, AUCUN FRAIS, pas d\'hypothèque',
           '  • Taux 2026 : 2,5% (revenus bas: isolé <45,6k€, ménage <60,6k€) ou 3,5% (revenus moyens: isolé 45,6-73,9k€, ménage 60,6-94k€)',
           '  • Mensualité minimum : 25€',
-          '  • Cumulable avec primes Renolution (déduction automatique)',
+          '  • Les primes Renolution ayant été supprimées, le Crédit EcoRéno est désormais le principal soutien financier régional disponible à Bruxelles',
           'Conditions : Résider à Bruxelles, bien dans les 19 communes, remboursement avant 70 ans',
           'Contact : infopret@fonds.brussels - Simulateur: https://websimu.wffl.be/ecoreno/lang/fr'
         ],
@@ -347,13 +360,13 @@ class AiChatbotService
         official_urls: {
           main: 'https://www.bruxellesenvironnement.be/',
           primes: 'https://www.bruxellesenvironnement.be/particuliers/mes-aides-financieres-et-primes',
-          renolution: 'https://www.renolution.brussels/',
+          renolution_info: 'https://renolution.brussels/fr/les-primes-renolution', # PAGE ARCHIVÉE — primes supprimées fin 2024
           isolation: 'https://www.bruxellesenvironnement.be/particuliers/mes-aides-financieres-et-primes/prime-energie/isolation',
           chauffage: 'https://www.bruxellesenvironnement.be/particuliers/mes-aides-financieres-et-primes/prime-energie/chauffage',
           monuments: 'https://urban.brussels/fr/nos-themes/patrimoine-et-monuments',
           primes_communales: 'https://1819.brussels/infotheque/primes-aides-subventions/renovation/primes-communales-bruxelles'
         },
-        key_info: 'Bruxelles offre les primes les plus généreuses de Belgique, surtout pour les revenus modestes. Les primes communales peuvent significativement augmenter le montant total. Cumul possible entre plusieurs dispositifs.'
+        key_info: '⚠️ BRUXELLES 2025/2026 : Les primes régionales Renolution ont été SUPPRIMÉES par le gouvernement bruxellois (coalition MR – Les Engagés) dans son plan d\'austérité post-élections juin 2024. Source : renolution.brussels. Les aides encore disponibles sont le Crédit EcoRéno (Fonds du Logement, taux 2.5-3.5%), les primes Monuments et Sites (urban.brussels) et les primes communales variables selon les 19 communes. Annoncer clairement cette situation aux utilisateurs.'
       }
     else
       {
@@ -401,25 +414,30 @@ class AiChatbotService
 
   def generate_ai_response(user_message, context)
     messages = [
-      { role: 'system', content: context[:system_prompt] },
       *context[:conversation_history],
       { role: 'user', content: user_message }
     ]
 
-    response = @openai_client.chat(
-      parameters: {
-        model: @config.dig(:openai, :model),
-        messages: messages,
-        max_tokens: @config.dig(:openai, :max_tokens),
-        temperature: @config.dig(:openai, :temperature),
-        stream: false
-      }
+    response = HTTParty.post(
+      ANTHROPIC_API_URL,
+      headers: {
+        'x-api-key'         => @api_key,
+        'anthropic-version' => ANTHROPIC_VERSION,
+        'content-type'      => 'application/json'
+      },
+      body: {
+        model:      @config.dig(:anthropic, :model),
+        max_tokens: @config.dig(:anthropic, :max_tokens),
+        system:     context[:system_prompt],
+        messages:   messages
+      }.to_json,
+      timeout: 60
     )
 
-    content = response.dig('choices', 0, 'message', 'content')
+    content = response.dig('content', 0, 'text')
     content.presence || "Je suis désolé, je n'ai pas pu générer une réponse. Veuillez réessayer."
   rescue => e
-    log_error "OpenAI API Error", e
+    log_error "Anthropic API Error", e
     "Je suis désolé, je rencontre une difficulté technique. Pouvez-vous reformuler votre question ?"
   end
 
@@ -434,7 +452,7 @@ class AiChatbotService
         intent: intent_analysis,
         response_type: determine_response_type(ai_content),
         timestamp: Time.current.iso8601,
-        model_used: @config.dig(:openai, :model)
+        model_used: @config.dig(:anthropic, :model)
       }
     }
   end

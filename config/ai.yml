@@ -2,11 +2,11 @@
 # =================================================
 
 development:
-  openai:
-    api_key: <%= ENV.fetch("OPENAI_API_KEY") { "your_openai_api_key_here" } %>
-    model: <%= ENV.fetch("OPENAI_MODEL") { "gpt-4o-mini" } %>
-    max_tokens: <%= ENV.fetch("OPENAI_MAX_TOKENS") { 2000 } %>
-    temperature: <%= ENV.fetch("OPENAI_TEMPERATURE") { 0.3 } %>
+  anthropic:
+    api_key: <%= ENV.fetch("ANTHROPIC_API_KEY") { "your_anthropic_api_key_here" } %>
+    model: <%= ENV.fetch("ANTHROPIC_MODEL") { "claude-sonnet-4-5-20250929" } %>
+    max_tokens: <%= ENV.fetch("ANTHROPIC_MAX_TOKENS") { 2000 } %>
+    temperature: <%= ENV.fetch("ANTHROPIC_TEMPERATURE") { 0.3 } %>
 
   assistant:
     name: <%= ENV.fetch("AI_ASSISTANT_NAME") { "Assistant Primes Services" } %>
@@ -30,9 +30,9 @@ development:
     duration: <%= ENV.fetch("AI_CACHE_DURATION") { 3600 } %>
 
 test:
-  openai:
+  anthropic:
     api_key: "test_api_key"
-    model: "gpt-3.5-turbo"
+    model: "claude-haiku-4-5-20251001"
     max_tokens: 1000
     temperature: 0.1
 
@@ -54,11 +54,11 @@ test:
     duration: 300
 
 production:
-  openai:
-    api_key: <%= ENV.fetch("OPENAI_API_KEY") { nil } %>
-    model: <%= ENV.fetch("OPENAI_MODEL") { "gpt-4o-mini" } %>
-    max_tokens: <%= ENV.fetch("OPENAI_MAX_TOKENS") { 2000 } %>
-    temperature: <%= ENV.fetch("OPENAI_TEMPERATURE") { 0.3 } %>
+  anthropic:
+    api_key: <%= ENV.fetch("ANTHROPIC_API_KEY") { nil } %>
+    model: <%= ENV.fetch("ANTHROPIC_MODEL") { "claude-sonnet-4-5-20250929" } %>
+    max_tokens: <%= ENV.fetch("ANTHROPIC_MAX_TOKENS") { 2000 } %>
+    temperature: <%= ENV.fetch("ANTHROPIC_TEMPERATURE") { 0.3 } %>
 
   assistant:
     name: <%= ENV.fetch("AI_ASSISTANT_NAME") { "Assistant Primes Services" } %>

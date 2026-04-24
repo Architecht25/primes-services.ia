@@ -51,8 +51,7 @@ gem "thruster", require: false
 # gem "image_processing", "~> 1.2"
 
 # AI and external APIs for chatbot functionality
-gem "ruby-openai"      # OpenAI API integration for AI chatbot
-gem "httparty"         # HTTP requests for external APIs
+gem "httparty"         # HTTP requests for external APIs (Anthropic/Claude)
 gem "dotenv-rails"     # Environment variables management
 
 group :development, :test do

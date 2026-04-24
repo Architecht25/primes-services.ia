@@ -229,7 +229,7 @@
 </section>
 
 <!-- Script de tracking (optionnel) -->
-<script>
+<script nonce="<%= content_security_policy_nonce %>">
 document.addEventListener('DOMContentLoaded', function() {
   // Tracker les clics vers Ren0vate
   const renovateLinks = document.querySelectorAll('a[href*="renovate.be"]');

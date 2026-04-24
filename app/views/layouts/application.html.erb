@@ -108,7 +108,7 @@
     <% end %>
 
     <!-- Script pour auto-masquer les flash messages -->
-    <script>
+    <script nonce="<%= content_security_policy_nonce %>">
       document.addEventListener('DOMContentLoaded', function() {
         const flashMessages = document.querySelectorAll('[id^="flash-"]');
         flashMessages.forEach(message => {

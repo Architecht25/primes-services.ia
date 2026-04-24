@@ -271,7 +271,7 @@
 </section>
 
 <!-- Script -->
-<script>
+<script nonce="<%= content_security_policy_nonce %>">
 document.addEventListener('DOMContentLoaded', function() {
   const form = document.getElementById('pret-form');
   const results = document.getElementById('pret-results');
