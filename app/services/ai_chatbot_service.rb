@@ -413,10 +413,17 @@ class AiChatbotService
   end
 
   def generate_ai_response(user_message, context)
-    messages = [
-      *context[:conversation_history],
-      { role: 'user', content: user_message }
-    ]
+    # Anthropic n'accepte que role + content (pas timestamp ni autres champs)
+    # L'historique contient déjà le message utilisateur courant — ne pas le dupliquer
+    api_messages = context[:conversation_history].map do |m|
+      { role: m[:role] || m['role'], content: m[:content] || m['content'] }
+    end
+
+    # Ajouter le message utilisateur seulement s'il n'est pas déjà en dernier
+    last = api_messages.last
+    unless last && last[:role] == 'user' && last[:content]&.start_with?(user_message.truncate(180))
+      api_messages << { role: 'user', content: user_message }
+    end
 
     response = HTTParty.post(
       ANTHROPIC_API_URL,
@@ -427,9 +434,9 @@ class AiChatbotService
       },
       body: {
         model:      @config.dig(:anthropic, :model),
-        max_tokens: @config.dig(:anthropic, :max_tokens),
+        max_tokens: @config.dig(:anthropic, :max_tokens).to_i,
         system:     context[:system_prompt],
-        messages:   messages
+        messages:   api_messages
       }.to_json,
       timeout: 60
     )
