@@ -1,5 +1,5 @@
 class Admin::SessionsController < ApplicationController
-  layout 'admin'
+  layout false  # sessions/new.html.erb is a standalone HTML page
 
   def new
     redirect_to admin_root_path if admin_authenticated?
