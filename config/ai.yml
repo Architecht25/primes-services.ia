@@ -18,7 +18,7 @@ development:
     supported: <%= ENV.fetch("SUPPORTED_REGIONS") { "wallonie,flandre,bruxelles" }.split(",") %>
 
   integrations:
-    renovate_base_url: <%= ENV.fetch("RENOVATE_BASE_URL") { "https://ren0vate-630b5136c442.herokuapp.com/" } %>
+    renovate_base_url: <%= ENV.fetch("RENOVATE_BASE_URL") { "https://www.ren0vate.be/" } %>
     team_email: <%= ENV.fetch("TEAM_EMAIL") { "equipe@primes-services.be" } %>
 
   debug:
@@ -70,7 +70,7 @@ production:
     supported: <%= ENV.fetch("SUPPORTED_REGIONS") { "wallonie,flandre,bruxelles" }.split(",") %>
 
   integrations:
-    renovate_base_url: <%= ENV.fetch("RENOVATE_BASE_URL") { "https://ren0vate-630b5136c442.herokuapp.com/" } %>
+    renovate_base_url: <%= ENV.fetch("RENOVATE_BASE_URL") { "https://www.ren0vate.be/" } %>
     team_email: <%= ENV.fetch("TEAM_EMAIL") { "robin@primes-services.be" } %>
 
   debug:

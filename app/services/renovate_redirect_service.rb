@@ -1,8 +1,8 @@
 class RenovateRedirectService
   # Service pour gérer les redirections intelligentes vers Ren0vate
 
-  RENOVATE_BASE_URL = 'https://ren0vate-630b5136c442.herokuapp.com'
-  # RENOVATE_BASE_URL = 'https://ren0vate.be' # Alternative URL
+  RENOVATE_BASE_URL = ENV.fetch('RENOVATE_BASE_URL', 'https://www.ren0vate.be')
+  # Previously: 'https://ren0vate-630b5136c442.herokuapp.com'
 
   # Mapping des profils vers les pages Ren0vate appropriées
   PROFILE_MAPPINGS = {
