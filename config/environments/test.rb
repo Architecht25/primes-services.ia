@@ -50,4 +50,7 @@ Rails.application.configure do
 
   # Raise error when a before_action's only/except options reference missing actions.
   config.action_controller.raise_on_missing_callback_actions = true
+
+  # Disable Rack::Attack in tests (test requests have no User-Agent and would be blocked)
+  config.middleware.delete Rack::Attack
 end

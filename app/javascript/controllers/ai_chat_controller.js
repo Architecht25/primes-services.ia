@@ -118,6 +118,7 @@ export default class extends Controller {
       // Envoyer à l'API
       const response = await this.sendToAPI(message)
 
+      if (this._disconnected) return
       if (response.success) {
         // Afficher la réponse de l'IA
         this.addMessage('assistant', response.message, {
@@ -336,8 +337,10 @@ export default class extends Controller {
         }
       })
 
+      if (this._disconnected) return
       if (response.ok) {
         const data = await response.json()
+        if (this._disconnected) return
         this.updateSuggestions(data.suggestions || [])
       }
     } catch (error) {
@@ -447,5 +450,6 @@ export default class extends Controller {
 
   disconnect() {
     console.log("🤖 AI Chat controller disconnected")
+    this._disconnected = true
   }
 }
