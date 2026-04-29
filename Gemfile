@@ -56,6 +56,11 @@ gem "dotenv-rails"     # Environment variables management
 
 # Security
 gem "rack-attack"      # Request throttling and blocking
+gem "sentry-ruby"      # Error monitoring
+gem "sentry-rails"     # Rails integration for Sentry
+
+# Storage
+gem "aws-sdk-s3", require: false  # Active Storage with Amazon S3
 
 group :development, :test do
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem

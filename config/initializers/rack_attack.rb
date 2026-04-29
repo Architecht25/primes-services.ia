@@ -9,9 +9,16 @@ class Rack::Attack
     req.ip if req.post? && req.path == '/ai/send_message'
   end
 
-  # Throttle admin login attempts: max 10 per 5 minutes per IP
-  throttle('admin/login', limit: 10, period: 5.minutes) do |req|
-    req.ip if req.path.start_with?('/admin')
+  # Throttle admin login attempts: max 5 per 5 minutes per IP
+  throttle('admin/login', limit: 5, period: 5.minutes) do |req|
+    req.ip if req.post? && req.path == '/admin/login'
+  end
+
+  # Block completely after 15 failed attempts in 1 hour (IP-level lockout)
+  blocklist('admin/login/block') do |req|
+    Rack::Attack::Allow2Ban.filter(req.ip, maxretry: 15, findtime: 1.hour, bantime: 1.hour) do
+      req.post? && req.path == '/admin/login'
+    end
   end
 
   # Block requests with suspicious user agents (empty or known scanner patterns)

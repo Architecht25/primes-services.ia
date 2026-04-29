@@ -74,8 +74,8 @@ class PwaCacheService
           # Tenter de soumettre les données
           contact = ContactSubmission.create!(submission[:data])
 
-          # Envoyer l'email si réussi
-          EmailService.send_contact_notification(contact) if contact.persisted?
+          # Envoyer l'email de confirmation via ContactMailer
+          ContactMailer.contact_confirmation(contact).deliver_later if contact.persisted?
 
           # Marquer comme synchronisé
           submission[:synced] = true

@@ -99,6 +99,12 @@
       <%= link_to root_path, class: "nav-item" do %>
         🏠 Retour au site
       <% end %>
+
+      <%= button_to admin_logout_path, method: :delete,
+          class: "nav-item",
+          style: "background: none; border: none; width: 100%; text-align: left; cursor: pointer; color: rgba(255,255,255,0.8);" do %>
+        🚪 Déconnexion
+      <% end %>
     </nav>
 
     <div style="position: absolute; bottom: 1rem; left: 1.5rem; font-size: 0.75rem; opacity: 0.7;">

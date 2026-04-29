@@ -10,10 +10,18 @@ Rails.application.configure do
     policy.font_src    :self, :https, :data
     policy.img_src     :self, :https, :data
     policy.object_src  :none
-    # Allow inline scripts/styles required by Importmap + Tailwind; nonce-based enforcement preferred
-    policy.script_src  :self, :https, :unsafe_inline
-    policy.style_src   :self, :https, :unsafe_inline
+    # Nonce-based enforcement: Rails injects the nonce automatically via
+    # content_security_policy_nonce_directives below — do NOT list :nonce here.
+    policy.script_src  :self, :https
+    # Tailwind is compiled to a static file — no inline styles needed
+    policy.style_src   :self, :https
     policy.connect_src :self, :https
     policy.frame_ancestors :none
   end
+
+  # Generate a per-request nonce tied to the session
+  config.content_security_policy_nonce_generator = ->(request) {
+    request.session.id.to_s.presence || SecureRandom.base64(16)
+  }
+  config.content_security_policy_nonce_directives = %w[script-src]
 end

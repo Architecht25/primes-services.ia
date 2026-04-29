@@ -39,6 +39,11 @@ Rails.application.routes.draw do
   namespace :admin do
     root to: 'dashboard#index'
 
+    # Authentification
+    get  'login',  to: 'sessions#new',     as: :login
+    post 'login',  to: 'sessions#create'
+    delete 'logout', to: 'sessions#destroy', as: :logout
+
     # Dashboard et analytics
     get 'dashboard', to: 'dashboard#index'
 

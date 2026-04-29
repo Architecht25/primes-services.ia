@@ -1,5 +1,5 @@
 # Concern pour l'authentification admin
-# Utilise HTTP Basic Auth avec credentials stockés dans ENV
+# Utilise un formulaire de login avec session (remplace HTTP Basic Auth)
 module AdminAuthentication
   extend ActiveSupport::Concern
 
@@ -12,19 +12,7 @@ module AdminAuthentication
   def authenticate_admin!
     return true if admin_authenticated?
 
-    authenticate_or_request_with_http_basic('Administration Primes Services') do |username, password|
-      admin_username = ENV['ADMIN_USERNAME'].presence
-      admin_password = ENV['ADMIN_PASSWORD'].presence
-
-      if admin_username.nil? || admin_password.nil?
-        Rails.logger.error "[Security] ADMIN_USERNAME or ADMIN_PASSWORD env vars not set!"
-        next false
-      end
-
-      # Timing-safe comparison to prevent timing attacks
-      ActiveSupport::SecurityUtils.secure_compare(username, admin_username) &
-        ActiveSupport::SecurityUtils.secure_compare(password, admin_password)
-    end
+    redirect_to admin_login_path, alert: "Accès réservé à l'administration."
   end
 
   def admin_authenticated?
