@@ -13,8 +13,10 @@ Rails.application.configure do
     # Nonce-based enforcement: Rails injects the nonce automatically via
     # content_security_policy_nonce_directives below — do NOT list :nonce here.
     policy.script_src  :self, :https
-    # Tailwind is compiled to a static file — no inline styles needed
-    policy.style_src   :self, :https
+    # Tailwind is compiled to a static file, but many views + Turbo use inline
+    # style attributes/elements — unsafe-inline is needed here. The critical
+    # protection is the nonce on script-src below.
+    policy.style_src   :self, :https, :unsafe_inline
     policy.connect_src :self, :https
     policy.frame_ancestors :none
   end
