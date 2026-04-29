@@ -51,6 +51,7 @@ Rails.application.configure do
 
   # Durable job queue backed by the database (solid_queue gem).
   config.active_job.queue_adapter = :solid_queue
+  # Single primary DB — no separate queue database
 
   # Email delivery via Resend (même config que ren0vate)
   config.action_mailer.raise_delivery_errors = true
