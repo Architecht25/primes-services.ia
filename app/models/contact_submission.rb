@@ -5,7 +5,8 @@ class ContactSubmission < ApplicationRecord
   # Validations communes
   validates :name, presence: true, length: { minimum: 2, maximum: 100 }
   validates :email, presence: true, format: { with: URI::MailTo::EMAIL_REGEXP }
-  validates :phone, format: { with: /\A[\+]?[0-9\s\-\(\)]{10,20}\z/ }, allow_blank: true
+  validates :phone, format: { with: /\A[\+]?[0-9\s\-\(\)]{7,15}\z/ }, allow_blank: true
+  validates :message, length: { maximum: 2000 }, allow_blank: true
   validates :region, presence: true, inclusion: { in: %w[wallonie flandre bruxelles] }
   validates :status, inclusion: {
     in: %w[pending processed completed archived],

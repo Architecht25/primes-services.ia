@@ -46,11 +46,11 @@ Rails.application.configure do
   # Don't log any deprecations.
   config.active_support.report_deprecations = false
 
-  # Replace the default in-process memory cache store with a durable alternative.
-  config.cache_store = :memory_store
+  # Durable cache store backed by the database (solid_cache gem).
+  config.cache_store = :solid_cache_store
 
-  # Replace the default in-process and non-durable queuing backend for Active Job.
-  config.active_job.queue_adapter = :async
+  # Durable job queue backed by the database (solid_queue gem).
+  config.active_job.queue_adapter = :solid_queue
 
   # Email delivery via Resend (même config que ren0vate)
   config.action_mailer.raise_delivery_errors = true

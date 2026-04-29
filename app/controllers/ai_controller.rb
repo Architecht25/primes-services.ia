@@ -21,6 +21,14 @@ class AiController < ApplicationController
       return
     end
 
+    if message.length > 1000
+      render json: {
+        success: false,
+        error: "Message trop long (maximum 1000 caractères)."
+      }, status: 422
+      return
+    end
+
     begin
       result = @ai_service.process_message(message, metadata: user_metadata)
 

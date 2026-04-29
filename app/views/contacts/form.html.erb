@@ -145,6 +145,12 @@
         <%= form.submit "Envoyer ma demande de contact",
             class: "bg-primary-600 hover:bg-primary-700 text-white font-semibold py-3 px-8 rounded-lg transition-colors duration-200 inline-flex items-center" %>
       </div>
+
+      <%# Honeypot anti-spam: hidden field, must remain empty %>
+      <div aria-hidden="true" style="position:absolute;left:-9999px;visibility:hidden;">
+        <%= label_tag :website, "Website (leave blank)" %>
+        <%= text_field_tag :website, nil, autocomplete: "off", tabindex: -1 %>
+      </div>
     <% end %>
   </div>
 

@@ -13,10 +13,17 @@ module AdminAuthentication
     return true if admin_authenticated?
 
     authenticate_or_request_with_http_basic('Administration Primes Services') do |username, password|
-      admin_username = ENV['ADMIN_USERNAME'] || 'admin'
-      admin_password = ENV['ADMIN_PASSWORD'] || 'changeme123'
+      admin_username = ENV['ADMIN_USERNAME'].presence
+      admin_password = ENV['ADMIN_PASSWORD'].presence
 
-      username == admin_username && password == admin_password
+      if admin_username.nil? || admin_password.nil?
+        Rails.logger.error "[Security] ADMIN_USERNAME or ADMIN_PASSWORD env vars not set!"
+        next false
+      end
+
+      # Timing-safe comparison to prevent timing attacks
+      ActiveSupport::SecurityUtils.secure_compare(username, admin_username) &
+        ActiveSupport::SecurityUtils.secure_compare(password, admin_password)
     end
   end
 

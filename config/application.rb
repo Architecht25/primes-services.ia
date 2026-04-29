@@ -26,5 +26,8 @@ module PrimesServicesIa
 
     # Configuration IA Chatbot
     config.ai = config_for(:ai)
+
+    # Security middleware
+    config.middleware.use Rack::Attack
   end
 end

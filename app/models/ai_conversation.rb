@@ -69,6 +69,11 @@ class AiConversation < ApplicationRecord
     update(status: 'archived')
   end
 
+  def reset!
+    @messages_array = nil
+    update(messages: '[]', status: 'active')
+  end
+
   def user_profile
     {
       type: user_type,

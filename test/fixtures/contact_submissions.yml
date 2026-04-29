@@ -1,25 +1,22 @@
 # Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
-one:
-  type: 
-  name: MyString
-  email: MyString
-  phone: MyString
-  region: MyString
-  message: MyText
-  status: MyString
-  metadata: 
-  submitted_at: 2025-10-05 18:28:32
-  processed_at: 2025-10-05 18:28:32
+particulier_pending:
+  type: ParticulierContact
+  name: Jean Dupont
+  email: jean.dupont@example.com
+  phone: "0475123456"
+  region: wallonie
+  message: Je souhaite isoler ma toiture.
+  status: pending
+  submitted_at: 2026-01-15 10:00:00
 
-two:
-  type: 
-  name: MyString
-  email: MyString
-  phone: MyString
-  region: MyString
-  message: MyText
-  status: MyString
-  metadata: 
-  submitted_at: 2025-10-05 18:28:32
-  processed_at: 2025-10-05 18:28:32
+acp_processed:
+  type: AcpContact
+  name: Syndic Martin
+  email: syndic.martin@example.com
+  phone: "024567890"
+  region: bruxelles
+  message: Rénovation de la façade.
+  status: processed
+  submitted_at: 2026-01-10 09:00:00
+  processed_at: 2026-01-12 14:00:00

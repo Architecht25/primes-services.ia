@@ -4,7 +4,7 @@
 development:
   anthropic:
     api_key: <%= ENV.fetch("ANTHROPIC_API_KEY") { "your_anthropic_api_key_here" } %>
-    model: <%= ENV.fetch("ANTHROPIC_MODEL") { "claude-sonnet-4-5-20250929" } %>
+    model: <%= ENV.fetch("ANTHROPIC_MODEL") { "claude-sonnet-4-6" } %>
     max_tokens: <%= ENV.fetch("ANTHROPIC_MAX_TOKENS") { 2000 } %>
     temperature: <%= ENV.fetch("ANTHROPIC_TEMPERATURE") { 0.3 } %>
 
@@ -56,7 +56,7 @@ test:
 production:
   anthropic:
     api_key: <%= ENV.fetch("ANTHROPIC_API_KEY") { nil } %>
-    model: <%= ENV.fetch("ANTHROPIC_MODEL") { "claude-sonnet-4-5-20250929" } %>
+    model: <%= ENV.fetch("ANTHROPIC_MODEL") { "claude-sonnet-4-6" } %>
     max_tokens: <%= ENV.fetch("ANTHROPIC_MAX_TOKENS") { 2000 } %>
     temperature: <%= ENV.fetch("ANTHROPIC_TEMPERATURE") { 0.3 } %>
 

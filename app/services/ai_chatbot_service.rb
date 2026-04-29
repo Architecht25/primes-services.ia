@@ -67,7 +67,7 @@ class AiChatbotService
 
   # Réinitialise la conversation
   def reset_conversation!
-    @conversation.update(messages: '[]', status: 'active')
+    @conversation.reset!
   end
 
   # Marque la conversation comme terminée
