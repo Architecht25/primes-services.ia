@@ -1,0 +1,52 @@
+<% content_for :title, "Leads Chat IA - Admin" %>
+
+<div class="max-w-5xl mx-auto py-8 px-4">
+  <div class="flex items-center justify-between mb-6">
+    <div>
+      <h1 class="text-2xl font-bold text-gray-900">Leads Chat IA</h1>
+      <p class="text-sm text-gray-500 mt-1"><%= @leads.size %> lead<%= @leads.size > 1 ? 's' : '' %> capturé<%= @leads.size > 1 ? 's' : '' %></p>
+    </div>
+    <%= link_to "← Analytics", admin_root_path, class: "text-sm text-primary-600 hover:underline" %>
+  </div>
+
+  <% if @leads.empty? %>
+    <div class="bg-gray-50 border border-gray-200 rounded-xl p-8 text-center text-gray-500">
+      Aucun lead capturé pour l'instant.
+    </div>
+  <% else %>
+    <div class="bg-white rounded-xl shadow overflow-hidden">
+      <table class="min-w-full divide-y divide-gray-200 text-sm">
+        <thead class="bg-gray-50">
+          <tr>
+            <th class="px-4 py-3 text-left font-semibold text-gray-600">#</th>
+            <th class="px-4 py-3 text-left font-semibold text-gray-600">Prénom</th>
+            <th class="px-4 py-3 text-left font-semibold text-gray-600">Email</th>
+            <th class="px-4 py-3 text-left font-semibold text-gray-600">Région</th>
+            <th class="px-4 py-3 text-left font-semibold text-gray-600">Messages</th>
+            <th class="px-4 py-3 text-left font-semibold text-gray-600">IP</th>
+            <th class="px-4 py-3 text-left font-semibold text-gray-600">Capturé le</th>
+          </tr>
+        </thead>
+        <tbody class="divide-y divide-gray-100">
+          <% @leads.each do |lead| %>
+            <tr class="hover:bg-gray-50">
+              <td class="px-4 py-3 text-gray-400"><%= lead[:id] %></td>
+              <td class="px-4 py-3 text-gray-700"><%= lead[:name].presence || <em class="text-gray-400">—</em> %></td>
+              <td class="px-4 py-3">
+                <a href="mailto:<%= lead[:email] %>" class="text-primary-600 hover:underline font-medium">
+                  <%= lead[:email] %>
+                </a>
+              </td>
+              <td class="px-4 py-3 text-gray-600 capitalize"><%= lead[:user_region] || '—' %></td>
+              <td class="px-4 py-3 text-gray-600"><%= lead[:message_count] %></td>
+              <td class="px-4 py-3 text-gray-400 font-mono text-xs"><%= lead[:ip] || '—' %></td>
+              <td class="px-4 py-3 text-gray-500">
+                <%= lead[:captured_at] ? Time.parse(lead[:captured_at]).strftime('%d/%m/%Y %H:%M') : '—' %>
+              </td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+  <% end %>
+</div>

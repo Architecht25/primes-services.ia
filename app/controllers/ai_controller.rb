@@ -104,6 +104,31 @@ class AiController < ApplicationController
     end
   end
 
+  # POST /ai/capture_lead - Capturer les coordonnées d'un visiteur
+  def capture_lead
+    name  = params[:name]&.strip
+    email = params[:email]&.strip&.downcase
+
+    if email.blank? || email !~ /\A[^@\s]+@[^@\s]+\.[^@\s]+\z/
+      render json: { success: false, error: "Adresse email invalide" }, status: 422
+      return
+    end
+
+    conversation = @ai_service.conversation
+    metadata = (conversation.metadata || {}).merge(
+      "lead_name"       => name.presence,
+      "lead_email"      => email,
+      "lead_captured_at" => Time.current.iso8601,
+      "lead_ip"         => request.remote_ip
+    )
+    conversation.update!(metadata: metadata)
+
+    render json: { success: true, message: "Merci ! Nous vous recontacterons bientôt." }
+  rescue => e
+    Rails.logger.error "[AiController#capture_lead] #{e.message}"
+    render json: { success: false, error: "Erreur technique. Veuillez réessayer." }, status: 500
+  end
+
   # GET /ai/suggestions - Suggestions contextuelles
   def suggestions
     user_profile = {

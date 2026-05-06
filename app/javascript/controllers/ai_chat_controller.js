@@ -39,6 +39,9 @@ export default class extends Controller {
     this.isTyping = false
     this.messageQueue = []
     this.conversationActive = true
+    this.userMessageCount = 0
+    this.leadCaptured = false
+    this.leadCardShown = false
 
     // Configuration de l'API
     this.apiBaseUrl = this.apiUrlValue || '/ai'
@@ -107,6 +110,7 @@ export default class extends Controller {
     try {
       // Afficher le message utilisateur immédiatement
       this.addMessage('user', message)
+      this.userMessageCount++
 
       // Vider l'input et désactiver l'envoi
       this.clearInput()
@@ -128,6 +132,12 @@ export default class extends Controller {
 
         // Mettre à jour les suggestions
         this.updateSuggestions(response.actions || [])
+
+        // Proposer la carte de contact après 4 messages utilisateur
+        if (this.userMessageCount >= 4 && !this.leadCaptured && !this.leadCardShown) {
+          this.leadCardShown = true
+          setTimeout(() => this.showLeadCaptureCard(), 800)
+        }
 
       } else {
         this.addMessage('system', `Erreur: ${response.error}`)
@@ -446,6 +456,97 @@ export default class extends Controller {
       this.addMessage('system', 'Conversation terminée. Merci pour votre visite !')
     })
     .catch(error => console.error('Complete error:', error))
+  }
+
+  showLeadCaptureCard() {
+    if (this._disconnected) return
+
+    const cardDiv = document.createElement('div')
+    cardDiv.className = 'message lead-capture-card opacity-0 translate-y-2 transition-all duration-300 mb-4'
+    cardDiv.innerHTML = `
+      <div class="flex justify-start">
+        <div class="bg-amber-50 border border-amber-200 rounded-xl px-4 py-4 max-w-sm shadow-md w-full">
+          <div class="flex items-start justify-between mb-2">
+            <p class="text-sm font-semibold text-amber-800">📩 Recevez un récapitulatif personnalisé</p>
+            <button class="lead-card-dismiss text-amber-400 hover:text-amber-600 ml-2 text-xs" title="Fermer">✕</button>
+          </div>
+          <p class="text-xs text-amber-700 mb-3">Laissez votre email et nous vous envoyons un résumé des primes et prêts disponibles pour votre projet.</p>
+          <form class="lead-capture-form space-y-2">
+            <input
+              type="text"
+              name="name"
+              placeholder="Votre prénom (optionnel)"
+              class="w-full px-3 py-2 text-sm border border-amber-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-amber-400 bg-white"
+            />
+            <input
+              type="email"
+              name="email"
+              placeholder="Votre adresse email *"
+              required
+              class="w-full px-3 py-2 text-sm border border-amber-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-amber-400 bg-white"
+            />
+            <div class="flex gap-2">
+              <button type="submit" class="flex-1 bg-amber-500 hover:bg-amber-600 text-white text-sm px-3 py-2 rounded-lg font-semibold transition-colors">
+                Envoyer
+              </button>
+              <button type="button" class="lead-card-dismiss text-amber-600 hover:text-amber-800 text-sm px-3 py-2 rounded-lg border border-amber-200 hover:bg-amber-100 transition-colors">
+                Non merci
+              </button>
+            </div>
+          </form>
+          <p class="text-xs text-amber-500 mt-2">Pas de spam. Vos données restent confidentielles.</p>
+        </div>
+      </div>
+    `
+
+    this.messagesTarget.appendChild(cardDiv)
+    requestAnimationFrame(() => cardDiv.classList.add('opacity-100', 'translate-y-0'))
+    this.scrollToBottom()
+
+    // Fermer la carte
+    cardDiv.querySelectorAll('.lead-card-dismiss').forEach(btn => {
+      btn.addEventListener('click', () => cardDiv.remove())
+    })
+
+    // Soumettre le formulaire
+    cardDiv.querySelector('.lead-capture-form').addEventListener('submit', async (e) => {
+      e.preventDefault()
+      const form = e.target
+      const name = form.querySelector('[name="name"]').value.trim()
+      const email = form.querySelector('[name="email"]').value.trim()
+      await this.submitLead(name, email, cardDiv)
+    })
+  }
+
+  async submitLead(name, email, cardDiv) {
+    const csrfToken = document.querySelector('meta[name="csrf-token"]')?.content
+    try {
+      const response = await fetch(`${this.apiBaseUrl}/capture_lead`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'X-CSRF-Token': csrfToken,
+          'Accept': 'application/json'
+        },
+        body: JSON.stringify({ name, email })
+      })
+      const data = await response.json()
+      if (data.success) {
+        this.leadCaptured = true
+        cardDiv.innerHTML = `
+          <div class="flex justify-start">
+            <div class="bg-green-50 border border-green-200 rounded-xl px-4 py-3 max-w-sm shadow-sm">
+              <p class="text-sm text-green-800 font-semibold">✅ Merci ${this.escapeHtml(name || '')} !</p>
+              <p class="text-xs text-green-700 mt-1">Nous vous enverrons un récapitulatif à <strong>${this.escapeHtml(email)}</strong>.</p>
+            </div>
+          </div>
+        `
+      } else {
+        cardDiv.querySelector('[name="email"]')?.classList.add('border-red-400')
+      }
+    } catch (err) {
+      console.error('Lead capture error:', err)
+    }
   }
 
   disconnect() {

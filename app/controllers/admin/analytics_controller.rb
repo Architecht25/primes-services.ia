@@ -30,6 +30,25 @@ class Admin::AnalyticsController < Admin::BaseController
     @region_stats = AnalyticsService.region_stats
   end
 
+  def ai_leads
+    @leads = AiConversation
+      .where("metadata->>'lead_email' IS NOT NULL")
+      .order(created_at: :desc)
+      .map do |conv|
+        {
+          id: conv.id,
+          email: conv.metadata['lead_email'],
+          name: conv.metadata['lead_name'],
+          captured_at: conv.metadata['lead_captured_at'],
+          ip: conv.metadata['lead_ip'],
+          message_count: conv.message_count,
+          user_region: conv.user_region,
+          user_type: conv.user_type,
+          conversation_created_at: conv.created_at
+        }
+      end
+  end
+
   private
 
   def prepare_chart_data(analytics)

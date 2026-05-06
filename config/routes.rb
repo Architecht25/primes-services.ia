@@ -33,6 +33,7 @@ Rails.application.routes.draw do
     get :stats                         # Statistiques de conversation
     post :complete                     # Marquer conversation terminée
     get :suggestions                   # Suggestions contextuelles
+    post :capture_lead                 # Capturer les coordonnées d'un visiteur
   end
 
   # Routes Administration
@@ -63,6 +64,7 @@ Rails.application.routes.draw do
     get 'analytics/pages', to: 'analytics#pages'
     get 'analytics/referrers', to: 'analytics#referrers'
     get 'analytics/regions', to: 'analytics#regions'
+    get 'analytics/ai_leads', to: 'analytics#ai_leads'
 
     # Sécurité
     get 'security', to: 'security#index'
