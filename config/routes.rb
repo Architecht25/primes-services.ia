@@ -59,18 +59,18 @@ Rails.application.routes.draw do
     end
 
     # Analytics
-    get 'analytics', to: 'analytics#index'
-    get 'analytics/real_time', to: 'analytics#real_time'
-    get 'analytics/pages', to: 'analytics#pages'
-    get 'analytics/referrers', to: 'analytics#referrers'
-    get 'analytics/regions', to: 'analytics#regions'
-    get 'analytics/ai_leads', to: 'analytics#ai_leads'
+    get 'analytics',           to: 'analytics#index',     as: :analytics
+    get 'analytics/real_time', to: 'analytics#real_time', as: :analytics_real_time
+    get 'analytics/pages',     to: 'analytics#pages',     as: :analytics_pages
+    get 'analytics/referrers', to: 'analytics#referrers', as: :analytics_referrers
+    get 'analytics/regions',   to: 'analytics#regions',   as: :analytics_regions
+    get 'analytics/ai_leads',  to: 'analytics#ai_leads',  as: :analytics_ai_leads
 
     # Sécurité
-    get 'security', to: 'security#index'
-    get 'security/logs', to: 'security#logs'
-    get 'security/scan', to: 'security#scan'
-    get 'security/health', to: 'security#health'
+    get 'security',        to: 'security#index',  as: :security
+    get 'security/logs',   to: 'security#logs',   as: :security_logs
+    get 'security/scan',   to: 'security#scan',   as: :security_scan
+    get 'security/health', to: 'security#health', as: :security_health
   end
 
   # Routes PWA

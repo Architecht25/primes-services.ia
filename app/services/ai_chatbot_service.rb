@@ -225,6 +225,22 @@ class AiChatbotService
       NE JAMAIS mentionner les primes Renolution comme disponibles. Annoncer clairement leur suppression et orienter vers les alternatives.
 
       EXPERTISE: Connaissance approfondie des primes régionales, communales, spécifiques (monuments, patrimoine, audit/PEB) et prêts à taux 0% dans TOUTE la Belgique (Wallonie, Flandre, Bruxelles).
+
+      CLASSIFICATION OBLIGATOIRE - DÉBUT DE CHAQUE RÉPONSE:
+      Commence CHAQUE réponse par cette balise de métadonnées (elle sera invisible pour l'utilisateur) :
+      <!--INTENT:{"c":"CATEGORIE","r":"REGION"}-->
+
+      Où "c" est la catégorie principale parmi ces valeurs exactes :
+      isolation | chauffage | renovation_generale | energie_renouvelable | prets | monuments | communale | audit | aide_financiere | procedure | information_generale
+
+      Et "r" est la région détectée dans le message parmi : wallonie | flandre | bruxelles | null (si non précisée)
+
+      Exemples corrects :
+      <!--INTENT:{"c":"prets","r":"flandre"}-->
+      <!--INTENT:{"c":"isolation","r":"wallonie"}-->
+      <!--INTENT:{"c":"information_generale","r":null}-->
+
+      Ensuite, ta réponse normale. Ne mentionne jamais cette balise dans le texte visible.
     PROMPT
   end
 
@@ -441,23 +457,49 @@ class AiChatbotService
       timeout: 60
     )
 
-    content = response.dig('content', 0, 'text')
-    content.presence || "Je suis désolé, je n'ai pas pu générer une réponse. Veuillez réessayer."
+    raw = response.dig('content', 0, 'text')
+    raw.presence || "Je suis désolé, je n'ai pas pu générer une réponse. Veuillez réessayer."
   rescue => e
     log_error "Anthropic API Error", e
     "Je suis désolé, je rencontre une difficulté technique. Pouvez-vous reformuler votre question ?"
   end
 
+  # Parse the <!--INTENT:{...}--> tag Claude prepends to each response.
+  # Returns { content: String, claude_intent: Hash }.
+  def parse_claude_intent(raw_content)
+    match = raw_content.match(/\A\s*<!--INTENT:(.*?)-->\s*/m)
+    return { content: raw_content.strip, claude_intent: {} } unless match
+
+    claude_intent = JSON.parse(match[1].strip)
+    clean_content = raw_content[match.end(0)..].strip
+    { content: clean_content, claude_intent: claude_intent }
+  rescue JSON::ParserError
+    { content: raw_content.strip, claude_intent: {} }
+  end
+
   def enhance_response(ai_content, intent_analysis)
-    # Enrichir la réponse avec des actions suggérées
-    actions = build_suggested_actions(intent_analysis)
+    parsed        = parse_claude_intent(ai_content)
+    clean_content = parsed[:content]
+    claude_intent = parsed[:claude_intent]
+
+    # Merge Claude's self-classified intent over the regex-based one (fallback)
+    effective_intent = intent_analysis.dup
+    if claude_intent['c'].present?
+      effective_intent[:category] = claude_intent['c']
+    end
+    if claude_intent['r'].present? && @conversation.user_region.blank?
+      @conversation.update(user_region: claude_intent['r'])
+    end
+
+    actions = build_suggested_actions(effective_intent)
 
     {
-      content: ai_content,
+      content: clean_content,
       actions: actions,
       metadata: {
-        intent: intent_analysis,
-        response_type: determine_response_type(ai_content),
+        intent: effective_intent,
+        claude_intent: claude_intent,
+        response_type: determine_response_type(clean_content),
         timestamp: Time.current.iso8601,
         model_used: @config.dig(:anthropic, :model)
       }

@@ -39,7 +39,7 @@
     <div class="stat-card">
       <p style="color: #718096; font-size: 0.875rem; margin: 0;">Taux de rebond</p>
       <p style="font-size: 2rem; font-weight: bold; color: #2d3748; margin: 0.5rem 0 0 0;">
-        --%
+        <%= @analytics[:bounce_rate] ? "#{@analytics[:bounce_rate]}%" : "—" %>
       </p>
     </div>
   </div>

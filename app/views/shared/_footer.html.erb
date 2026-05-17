@@ -6,13 +6,7 @@
       <!-- Logo et description -->
       <div class="md:col-span-2">
         <div class="flex items-center space-x-3 mb-4">
-          <div class="w-10 h-10 bg-gradient-to-br from-primary-600 to-secondary-500 rounded-lg flex items-center justify-center">
-            <span class="text-white font-bold text-sm">PS</span>
-          </div>
-          <div>
-            <h3 class="text-xl font-bold">Primes Services</h3>
-            <p class="text-primary-200 text-sm">Assistant IA spécialisé</p>
-          </div>
+          <img src="/logo.jpg" class="h-10 w-auto brightness-0 invert" alt="Primes Services">
         </div>
 
         <p class="text-primary-100 mb-6 max-w-md">
@@ -56,7 +50,7 @@
             <% end %>
           </li>
           <li>
-            <a href="https://ren0vate-630b5136c442.herokuapp.com" target="_blank" class="text-primary-100 hover:text-amber-300 transition-colors">
+            <a href="<%= ENV.fetch('RENOVATE_BASE_URL', 'https://www.ren0vate.be') %>" target="_blank" rel="noopener" class="text-primary-100 hover:text-amber-300 transition-colors">
               🔗 Ren0vate
             </a>
           </li>

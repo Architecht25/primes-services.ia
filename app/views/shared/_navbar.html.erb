@@ -5,14 +5,8 @@
 
       <!-- Logo et nom -->
       <div class="flex items-center">
-        <%= link_to root_path, class: "flex items-center space-x-3" do %>
-          <div class="w-10 h-10 bg-gradient-to-br from-primary-600 to-secondary-500 rounded-lg flex items-center justify-center">
-            <span class="text-white font-bold text-sm">PS</span>
-          </div>
-          <div class="hidden sm:block">
-            <h1 class="text-xl font-bold text-gray-900">Primes Services</h1>
-            <p class="text-xs text-gray-600">Assistant IA spécialisé</p>
-          </div>
+        <%= link_to root_path, class: "flex items-center space-x-3", aria: { label: "Primes Services - Accueil" } do %>
+          <img src="/logo.jpg" class="h-10 w-auto" alt="Primes Services">
         <% end %>
       </div>
 
@@ -89,9 +83,12 @@
         <button
           data-controller="mobile-menu"
           data-action="click->mobile-menu#toggle"
-          class="text-gray-700 hover:text-primary-600 focus:outline-none"
+          class="text-gray-700 hover:text-primary-600 focus:outline-none focus:ring-2 focus:ring-primary-500 rounded"
+          aria-label="Ouvrir le menu de navigation"
+          aria-expanded="false"
+          data-mobile-menu-target="toggle"
         >
-          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
           </svg>
         </button>
@@ -132,18 +129,18 @@
         <!-- Sous-menu Formulaires mobile -->
         <div class="pl-4 space-y-1">
           <p class="px-3 py-2 text-sm font-semibold text-gray-500">📋 Formulaires</p>
-          <a href="#" class="block px-3 py-2 text-sm text-gray-700 hover:text-primary-600 hover:bg-primary-50 rounded-md">
+          <%= link_to particulier_contacts_path, class: "block px-3 py-2 text-sm text-gray-700 hover:text-primary-600 hover:bg-primary-50 rounded-md" do %>
             🏠 Particuliers
-          </a>
-          <a href="#" class="block px-3 py-2 text-sm text-gray-700 hover:text-primary-600 hover:bg-primary-50 rounded-md">
+          <% end %>
+          <%= link_to acp_contacts_path, class: "block px-3 py-2 text-sm text-gray-700 hover:text-primary-600 hover:bg-primary-50 rounded-md" do %>
             🏢 Copropriétés (ACP)
-          </a>
-          <a href="#" class="block px-3 py-2 text-sm text-gray-700 hover:text-primary-600 hover:bg-primary-50 rounded-md">
+          <% end %>
+          <%= link_to entreprise_immo_contacts_path, class: "block px-3 py-2 text-sm text-gray-700 hover:text-primary-600 hover:bg-primary-50 rounded-md" do %>
             🏗️ Entreprises & Professionnels
-          </a>
-          <a href="#" class="block px-3 py-2 text-sm text-gray-700 hover:text-primary-600 hover:bg-primary-50 rounded-md">
-            🏭 Entreprises Comm
-          </a>
+          <% end %>
+          <%= link_to new_contact_path, class: "block px-3 py-2 text-sm text-gray-700 hover:text-primary-600 hover:bg-primary-50 rounded-md" do %>
+            📋 Tous les formulaires
+          <% end %>
         </div>
 
         <!-- CTA Mobile -->

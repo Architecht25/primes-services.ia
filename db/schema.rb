@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2026_04_29_000000) do
+ActiveRecord::Schema[8.0].define(version: 2026_05_16_193134) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -144,6 +144,26 @@ ActiveRecord::Schema[8.0].define(version: 2026_04_29_000000) do
     t.index ["created_at"], name: "index_primes_on_created_at"
     t.index ["position"], name: "index_primes_on_position", unique: true
     t.index ["value"], name: "index_primes_on_value", unique: true
+  end
+
+  create_table "renovate_clicks", force: :cascade do |t|
+    t.string "profile", default: "general", null: false
+    t.string "region"
+    t.string "source_page"
+    t.string "element"
+    t.string "session_id"
+    t.string "ip_address"
+    t.string "user_agent"
+    t.string "referrer"
+    t.string "redirect_url"
+    t.string "event_type", default: "click", null: false
+    t.jsonb "metadata", default: {}, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["created_at"], name: "index_renovate_clicks_on_created_at"
+    t.index ["event_type"], name: "index_renovate_clicks_on_event_type"
+    t.index ["profile"], name: "index_renovate_clicks_on_profile"
+    t.index ["region"], name: "index_renovate_clicks_on_region"
   end
 
   create_table "security_logs", force: :cascade do |t|

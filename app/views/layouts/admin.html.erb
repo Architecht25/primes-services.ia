@@ -7,7 +7,7 @@
   <%= csrf_meta_tags %>
   <%= csp_meta_tag %>
 
-  <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
+  <%= stylesheet_link_tag "tailwind", "data-turbo-track": "reload" %>
   <%= javascript_importmap_tags %>
 
   <style>
@@ -88,6 +88,10 @@
 
       <%= link_to admin_analytics_path, class: "nav-item #{current_page?(admin_analytics_path) ? 'active' : ''}" do %>
         📈 Analytics
+      <% end %>
+
+      <%= link_to admin_analytics_ai_leads_path, class: "nav-item #{current_page?(admin_analytics_ai_leads_path) ? 'active' : ''}" do %>
+        📨 Leads IA
       <% end %>
 
       <%= link_to admin_security_path, class: "nav-item #{current_page?(admin_security_path) ? 'active' : ''}" do %>
