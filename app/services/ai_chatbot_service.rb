@@ -446,12 +446,13 @@ class AiChatbotService
       headers: {
         'x-api-key'         => @api_key,
         'anthropic-version' => ANTHROPIC_VERSION,
+        'anthropic-beta'    => 'prompt-caching-2024-07-31',
         'content-type'      => 'application/json'
       },
       body: {
         model:      @config.dig(:anthropic, :model),
         max_tokens: @config.dig(:anthropic, :max_tokens).to_i,
-        system:     context[:system_prompt],
+        system:     [{ type: 'text', text: context[:system_prompt], cache_control: { type: 'ephemeral' } }],
         messages:   api_messages
       }.to_json,
       timeout: 60
