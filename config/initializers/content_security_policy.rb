@@ -19,6 +19,9 @@ Rails.application.configure do
     policy.style_src   :self, :https, :unsafe_inline
     policy.connect_src :self, :https
     policy.frame_ancestors :none
+    # Le widget anti-bot Cloudflare Turnstile (formulaire de contact) s'affiche
+    # dans une iframe cross-origin ; le script est déjà couvert par script-src :https.
+    policy.frame_src :self, "https://challenges.cloudflare.com"
   end
 
   # Generate a per-request nonce tied to the session

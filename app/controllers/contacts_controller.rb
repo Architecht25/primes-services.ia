@@ -27,6 +27,14 @@ class ContactsController < ApplicationController
       return
     end
 
+    unless TurnstileVerificationService.verify(params["cf-turnstile-response"], remote_ip: request.remote_ip)
+      Rails.logger.warn "[Security] Turnstile verification failed from IP #{request.remote_ip}"
+      @contact = ContactSubmission.new(contact_params)
+      @contact.errors.add(:base, "Merci de confirmer que vous n'êtes pas un robot.")
+      render :new, status: :unprocessable_entity
+      return
+    end
+
     @contact = ContactSubmission.new(contact_params)
 
     if @contact.save
