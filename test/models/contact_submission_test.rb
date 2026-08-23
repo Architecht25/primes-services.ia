@@ -3,7 +3,15 @@ require "test_helper"
 class ContactSubmissionTest < ActiveSupport::TestCase
   # --- Validations ---
 
-  test "valid particulier contact" do
+  test "valid contact submission (formulaire unique)" do
+    contact = ContactSubmission.new(
+      name: "Jean Dupont", email: "jean@example.com",
+      region: "wallonie", status: "pending"
+    )
+    assert contact.valid?
+  end
+
+  test "legacy STI subtypes remain valid (compatibilité données historiques)" do
     contact = ParticulierContact.new(
       name: "Jean Dupont", email: "jean@example.com",
       region: "wallonie", status: "pending"

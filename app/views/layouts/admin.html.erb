@@ -9,123 +9,60 @@
 
   <%= stylesheet_link_tag "tailwind", "data-turbo-track": "reload" %>
   <%= javascript_importmap_tags %>
-
-  <style>
-    .admin-sidebar {
-      position: fixed;
-      top: 0;
-      left: 0;
-      height: 100vh;
-      width: 250px;
-      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-      color: white;
-      padding: 2rem 0;
-      overflow-y: auto;
-    }
-
-    .admin-content {
-      margin-left: 250px;
-      padding: 2rem;
-      min-height: 100vh;
-      background: #f7fafc;
-    }
-
-    .stat-card {
-      background: white;
-      border-radius: 0.5rem;
-      padding: 1.5rem;
-      box-shadow: 0 1px 3px rgba(0,0,0,0.1);
-    }
-
-    .nav-item {
-      padding: 0.75rem 1.5rem;
-      color: rgba(255,255,255,0.9);
-      text-decoration: none;
-      display: block;
-      transition: all 0.3s;
-    }
-
-    .nav-item:hover, .nav-item.active {
-      background: rgba(255,255,255,0.1);
-      color: white;
-      border-left: 3px solid white;
-    }
-
-    .badge {
-      display: inline-block;
-      padding: 0.25rem 0.5rem;
-      border-radius: 0.25rem;
-      font-size: 0.75rem;
-      font-weight: 600;
-    }
-
-    .badge-success { background: #48bb78; color: white; }
-    .badge-warning { background: #ed8936; color: white; }
-    .badge-danger { background: #f56565; color: white; }
-    .badge-info { background: #4299e1; color: white; }
-  </style>
 </head>
-<body>
+<body class="bg-gray-50">
   <!-- Sidebar -->
-  <div class="admin-sidebar">
-    <div style="padding: 0 1.5rem; margin-bottom: 2rem;">
-      <h1 style="font-size: 1.25rem; font-weight: bold; margin: 0;">
-        🛡️ Admin Panel
-      </h1>
-      <p style="font-size: 0.875rem; opacity: 0.8; margin-top: 0.25rem;">
-        Primes Services
-      </p>
+  <div class="fixed top-0 left-0 h-screen w-64 bg-gradient-to-b from-primary-900 to-primary-700 text-white overflow-y-auto flex flex-col">
+    <div class="px-6 pt-8 pb-6">
+      <%= link_to root_path, class: "flex items-center space-x-3" do %>
+        <img src="/logo.jpg" class="h-10 w-auto brightness-0 invert" alt="Primes Services">
+      <% end %>
+      <p class="text-xs text-primary-200 mt-3 tracking-wide uppercase">Administration</p>
     </div>
 
-    <nav>
-      <%= link_to admin_dashboard_path, class: "nav-item #{current_page?(admin_dashboard_path) ? 'active' : ''}" do %>
+    <nav class="flex-1">
+      <%= link_to admin_dashboard_path,
+          class: "block px-6 py-3 text-primary-100 hover:text-white hover:bg-white/10 transition-colors #{'bg-white/10 text-white border-l-4 border-amber-400' if current_page?(admin_dashboard_path)}" do %>
         📊 Dashboard
       <% end %>
 
-      <%= link_to admin_contacts_path, class: "nav-item #{current_page?(admin_contacts_path) ? 'active' : ''}" do %>
+      <%= link_to admin_contacts_path,
+          class: "block px-6 py-3 text-primary-100 hover:text-white hover:bg-white/10 transition-colors #{'bg-white/10 text-white border-l-4 border-amber-400' if current_page?(admin_contacts_path)}" do %>
         📧 Contacts
       <% end %>
 
-      <%= link_to admin_analytics_path, class: "nav-item #{current_page?(admin_analytics_path) ? 'active' : ''}" do %>
-        📈 Analytics
-      <% end %>
-
-      <%= link_to admin_analytics_ai_leads_path, class: "nav-item #{current_page?(admin_analytics_ai_leads_path) ? 'active' : ''}" do %>
-        📨 Leads IA
-      <% end %>
-
-      <%= link_to admin_security_path, class: "nav-item #{current_page?(admin_security_path) ? 'active' : ''}" do %>
+      <%= link_to admin_security_path,
+          class: "block px-6 py-3 text-primary-100 hover:text-white hover:bg-white/10 transition-colors #{'bg-white/10 text-white border-l-4 border-amber-400' if current_page?(admin_security_path)}" do %>
         🔒 Sécurité
       <% end %>
 
-      <hr style="margin: 1rem 0; border-color: rgba(255,255,255,0.2);">
+      <hr class="my-4 border-white/20 mx-6">
 
-      <%= link_to root_path, class: "nav-item" do %>
+      <%= link_to root_path, class: "block px-6 py-3 text-primary-100 hover:text-white hover:bg-white/10 transition-colors" do %>
         🏠 Retour au site
       <% end %>
 
       <%= button_to admin_logout_path, method: :delete,
-          class: "nav-item",
-          style: "background: none; border: none; width: 100%; text-align: left; cursor: pointer; color: rgba(255,255,255,0.8);" do %>
+          class: "block w-full text-left px-6 py-3 text-primary-100 hover:text-white hover:bg-white/10 transition-colors bg-transparent border-0 cursor-pointer" do %>
         🚪 Déconnexion
       <% end %>
     </nav>
 
-    <div style="position: absolute; bottom: 1rem; left: 1.5rem; font-size: 0.75rem; opacity: 0.7;">
-      <%= Rails.env %> | <%= RUBY_VERSION %>
+    <div class="px-6 py-4 text-xs text-primary-300">
+      <%= Rails.env %> · Ruby <%= RUBY_VERSION %>
     </div>
   </div>
 
   <!-- Main Content -->
-  <div class="admin-content">
+  <div class="ml-64 p-8 min-h-screen">
     <% if flash[:notice] %>
-      <div style="background: #48bb78; color: white; padding: 1rem; border-radius: 0.5rem; margin-bottom: 1rem;">
+      <div class="bg-secondary-600 text-white px-4 py-3 rounded-lg mb-4 shadow">
         <%= flash[:notice] %>
       </div>
     <% end %>
 
     <% if flash[:alert] %>
-      <div style="background: #f56565; color: white; padding: 1rem; border-radius: 0.5rem; margin-bottom: 1rem;">
+      <div class="bg-red-600 text-white px-4 py-3 rounded-lg mb-4 shadow">
         <%= flash[:alert] %>
       </div>
     <% end %>

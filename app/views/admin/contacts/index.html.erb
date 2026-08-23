@@ -1,123 +1,105 @@
 <div>
-  <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem;">
+  <div class="flex justify-between items-center mb-8">
     <div>
-      <h1 style="font-size: 2rem; font-weight: bold; color: #2d3748; margin: 0;">
-        📧 Liste des Contacts
-      </h1>
-      <p style="color: #718096; margin-top: 0.5rem;">
-        <%= @contacts_total || @contacts.count %> contacts au total
-      </p>
+      <h1 class="text-3xl font-bold text-gray-900">📧 Liste des Contacts</h1>
+      <p class="text-gray-500 mt-2"><%= @contacts_total || @contacts.count %> contacts au total</p>
     </div>
-    <div style="display: flex; gap: 1rem;">
-      <%= link_to export_admin_contacts_path(format: :csv), style: "background: #48bb78; color: white; padding: 0.75rem 1.5rem; border-radius: 0.5rem; text-decoration: none; font-weight: 600;" do %>
+    <div class="flex gap-4">
+      <%= link_to export_admin_contacts_path(format: :csv), class: "bg-secondary-600 hover:bg-secondary-700 text-white font-semibold px-6 py-3 rounded-lg transition-colors" do %>
         📥 Exporter CSV
       <% end %>
     </div>
   </div>
 
   <!-- Filtres et recherche -->
-  <div class="stat-card" style="margin-bottom: 1.5rem;">
-    <%= form_with url: admin_contacts_path, method: :get, local: true, style: "display: flex; gap: 1rem; flex-wrap: wrap;" do |f| %>
+  <div class="bg-white rounded-lg shadow-lg p-6 mb-6">
+    <%= form_with url: admin_contacts_path, method: :get, local: true, class: "flex gap-4 flex-wrap" do |f| %>
       <%= f.text_field :search,
           placeholder: "Rechercher par nom, email, téléphone...",
           value: params[:search],
-          style: "flex: 1; padding: 0.75rem; border: 1px solid #e2e8f0; border-radius: 0.5rem; min-width: 250px;" %>
+          class: "flex-1 min-w-[250px] px-3 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-primary-500" %>
 
-      <%= f.select :type,
-          options_for_select([['Tous les types', ''], ['Particulier', 'ParticulierContact'], ['ACP', 'AcpContact'], ['Entreprise & Professionnel', 'EntrepriseImmoContact']], params[:type]),
-          {},
-          style: "padding: 0.75rem; border: 1px solid #e2e8f0; border-radius: 0.5rem;" %>
+      <%= f.submit "Filtrer", class: "bg-primary-600 hover:bg-primary-700 text-white font-semibold px-6 py-2.5 rounded-lg transition-colors cursor-pointer" %>
 
-      <%= f.submit "Filtrer", style: "background: #667eea; color: white; padding: 0.75rem 1.5rem; border-radius: 0.5rem; border: none; font-weight: 600; cursor: pointer;" %>
-
-      <% if params[:search].present? || params[:type].present? %>
-        <%= link_to "Réinitialiser", admin_contacts_path, style: "padding: 0.75rem 1.5rem; border: 1px solid #e2e8f0; border-radius: 0.5rem; text-decoration: none; color: #718096;" %>
+      <% if params[:search].present? %>
+        <%= link_to "Réinitialiser", admin_contacts_path, class: "px-6 py-2.5 border border-gray-300 rounded-lg text-gray-500 hover:bg-gray-50 transition-colors" %>
       <% end %>
     <% end %>
   </div>
 
   <!-- Stats rapides -->
-  <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 1rem; margin-bottom: 1.5rem;">
+  <div class="grid gap-4 mb-6" style="grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));">
     <% @stats[:by_type].each do |type, count| %>
-      <div class="stat-card" style="padding: 1rem;">
-        <p style="color: #718096; font-size: 0.75rem; margin: 0;"><%= type || 'Non spécifié' %></p>
-        <p style="font-size: 1.5rem; font-weight: bold; color: #2d3748; margin: 0.25rem 0 0 0;"><%= count %></p>
+      <div class="bg-white rounded-lg shadow-lg p-4">
+        <p class="text-gray-500 text-xs"><%= type || 'Non spécifié' %></p>
+        <p class="text-2xl font-bold text-gray-900 mt-1"><%= count %></p>
       </div>
     <% end %>
-    <div class="stat-card" style="padding: 1rem; background: #fef5e7;">
-      <p style="color: #d68910; font-size: 0.75rem; margin: 0;">Dernières 24h</p>
-      <p style="font-size: 1.5rem; font-weight: bold; color: #d68910; margin: 0.25rem 0 0 0;"><%= @stats[:recent] %></p>
+    <div class="bg-amber-50 rounded-lg shadow-lg p-4">
+      <p class="text-amber-700 text-xs">Dernières 24h</p>
+      <p class="text-2xl font-bold text-amber-700 mt-1"><%= @stats[:recent] %></p>
     </div>
   </div>
 
   <!-- Table des contacts -->
-  <div class="stat-card" style="overflow-x: auto;">
-    <table style="width: 100%; border-collapse: collapse;">
+  <div class="bg-white rounded-lg shadow-lg overflow-x-auto">
+    <table class="w-full border-collapse">
       <thead>
-        <tr style="border-bottom: 2px solid #e2e8f0;">
-          <th style="padding: 1rem; text-align: left; color: #718096; font-size: 0.875rem;">Date</th>
-          <th style="padding: 1rem; text-align: left; color: #718096; font-size: 0.875rem;">Nom</th>
-          <th style="padding: 1rem; text-align: left; color: #718096; font-size: 0.875rem;">Email</th>
-          <th style="padding: 1rem; text-align: left; color: #718096; font-size: 0.875rem;">Téléphone</th>
-          <th style="padding: 1rem; text-align: left; color: #718096; font-size: 0.875rem;">Type</th>
-          <th style="padding: 1rem; text-align: left; color: #718096; font-size: 0.875rem;">Région</th>
-          <th style="padding: 1rem; text-align: left; color: #718096; font-size: 0.875rem;">Statut</th>
-          <th style="padding: 1rem; text-align: left; color: #718096; font-size: 0.875rem;">Actions</th>
+        <tr class="border-b-2 border-gray-200">
+          <th class="p-4 text-left text-gray-500 text-sm">Date</th>
+          <th class="p-4 text-left text-gray-500 text-sm">Nom</th>
+          <th class="p-4 text-left text-gray-500 text-sm">Email</th>
+          <th class="p-4 text-left text-gray-500 text-sm">Téléphone</th>
+          <th class="p-4 text-left text-gray-500 text-sm">Type</th>
+          <th class="p-4 text-left text-gray-500 text-sm">Région</th>
+          <th class="p-4 text-left text-gray-500 text-sm">Statut</th>
+          <th class="p-4 text-left text-gray-500 text-sm">Actions</th>
         </tr>
       </thead>
       <tbody>
         <% if @contacts.any? %>
           <% @contacts.each do |contact| %>
-            <tr style="border-bottom: 1px solid #e2e8f0;">
-              <td style="padding: 1rem;">
+            <tr class="border-b border-gray-200">
+              <td class="p-4 whitespace-nowrap">
                 <%= contact.created_at.strftime('%d/%m/%Y %H:%M') %>
                 <% unless contact.read? %>
-                  <span class="badge badge-warning" style="margin-left: 0.5rem;">Nouveau</span>
+                  <span class="inline-block ml-2 px-2.5 py-1 rounded-full text-xs font-semibold text-white bg-amber-500">Nouveau</span>
                 <% end %>
               </td>
-              <td style="padding: 1rem; font-weight: 600;">
-                <%= contact.name %>
+              <td class="p-4 font-semibold text-gray-900"><%= contact.name %></td>
+              <td class="p-4 text-gray-500"><%= contact.email %></td>
+              <td class="p-4 text-gray-500"><%= contact.phone || '-' %></td>
+              <td class="p-4">
+                <span class="inline-block px-2.5 py-1 rounded-full text-xs font-semibold text-white bg-primary-600"><%= contact.type %></span>
               </td>
-              <td style="padding: 1rem; color: #718096;">
-                <%= contact.email %>
+              <td class="p-4"><%= contact.region&.titleize || '-' %></td>
+              <td class="p-4">
+                <% badge_class = case contact.status
+                     when 'pending' then 'bg-amber-500'
+                     when 'processed' then 'bg-primary-600'
+                     when 'completed' then 'bg-secondary-600'
+                     else 'bg-gray-400'
+                   end %>
+                <% label = case contact.status
+                     when 'pending' then 'En attente'
+                     when 'processed' then 'Traité'
+                     when 'completed' then 'Terminé'
+                     else '-'
+                   end %>
+                <span class="inline-block px-2.5 py-1 rounded-full text-xs font-semibold text-white <%= badge_class %>"><%= label %></span>
               </td>
-              <td style="padding: 1rem; color: #718096;">
-                <%= contact.phone || '-' %>
-              </td>
-              <td style="padding: 1rem;">
-                <span class="badge badge-info">
-                  <%= contact.submission_type || contact.type %>
-                </span>
-              </td>
-              <td style="padding: 1rem;">
-                <%= contact.region&.titleize || '-' %>
-              </td>
-              <td style="padding: 1rem;">
-                <% case contact.status %>
-                <% when 'pending' %>
-                  <span class="badge badge-warning">En attente</span>
-                <% when 'processed' %>
-                  <span class="badge badge-info">Traité</span>
-                <% when 'completed' %>
-                  <span class="badge badge-success">Terminé</span>
-                <% else %>
-                  <span class="badge" style="background: #718096;">-</span>
-                <% end %>
-              </td>
-              <td style="padding: 1rem;">
-                <%= link_to "Voir", admin_contact_path(contact), style: "color: #667eea; text-decoration: none; font-weight: 600; margin-right: 1rem;" %>
+              <td class="p-4 whitespace-nowrap">
+                <%= link_to "Voir", admin_contact_path(contact), class: "text-primary-600 hover:underline font-semibold mr-4" %>
                 <% unless contact.read? %>
-                  <%= button_to "Marquer lu", mark_read_admin_contact_path(contact), method: :post, style: "display: inline; background: none; border: none; color: #48bb78; font-weight: 600; cursor: pointer; padding: 0; margin-right: 1rem;" %>
+                  <%= button_to "Marquer lu", mark_read_admin_contact_path(contact), method: :post, class: "inline bg-transparent border-0 text-secondary-600 font-semibold cursor-pointer p-0 mr-4" %>
                 <% end %>
-                <%= button_to "Supprimer", admin_contact_path(contact), method: :delete, data: { turbo_confirm: "Supprimer ce contact définitivement ?" }, style: "display: inline; background: none; border: none; color: #f56565; font-weight: 600; cursor: pointer; padding: 0;" %>
+                <%= button_to "Supprimer", admin_contact_path(contact), method: :delete, data: { turbo_confirm: "Supprimer ce contact définitivement ?" }, class: "inline bg-transparent border-0 text-red-600 font-semibold cursor-pointer p-0" %>
               </td>
             </tr>
           <% end %>
         <% else %>
           <tr>
-            <td colspan="8" style="padding: 3rem; text-align: center; color: #718096;">
-              Aucun contact trouvé
-            </td>
+            <td colspan="8" class="p-12 text-center text-gray-500">Aucun contact trouvé</td>
           </tr>
         <% end %>
       </tbody>

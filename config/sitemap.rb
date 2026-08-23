@@ -11,14 +11,8 @@ SitemapGenerator::Sitemap.create do
   # Pages principales - Haute priorité
   add about_path, priority: 0.8, changefreq: 'monthly'
 
-  # Interface IA - Très importante pour l'engagement
-  add ai_chat_path, priority: 0.9, changefreq: 'weekly'
-
-  # Pages de contact par type - Important pour la conversion
-  add contacts_path, priority: 0.9, changefreq: 'monthly'
-  add particulier_contacts_path, priority: 0.85, changefreq: 'monthly'
-  add acp_contacts_path, priority: 0.85, changefreq: 'monthly'
-  add entreprise_immo_contacts_path, priority: 0.85, changefreq: 'monthly'
+  # Formulaire de contact - Important pour la conversion
+  add new_contact_path, priority: 0.9, changefreq: 'monthly'
 
   # Pages régionales SEO - NOUVEAU pour référencement local
   ['wallonie', 'flandre', 'bruxelles'].each do |region|

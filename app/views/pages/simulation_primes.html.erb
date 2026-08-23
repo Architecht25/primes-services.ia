@@ -146,19 +146,19 @@
       <%= render partial: 'pages/primes_communales_bruxelles' %>
     </div>
 
-    <!-- CTA vers assistant IA -->
+    <!-- CTA vers demande d'analyse -->
     <div class="mt-12 text-center">
       <div class="bg-gradient-to-r from-accent-50 to-secondary-50 rounded-xl p-8 border border-accent-200">
         <h3 class="text-2xl font-bold text-primary-700 mb-3">
           💬 Besoin d'aide pour votre projet ?
         </h3>
         <p class="text-gray-700 mb-6">
-          Notre assistant IA peut vous aider à identifier toutes les primes auxquelles vous avez droit et vous accompagner dans vos démarches.
+          Demandez une analyse de situation : nous identifions toutes les primes auxquelles vous avez droit et vous accompagnons dans vos démarches.
         </p>
         <div class="flex flex-col sm:flex-row gap-4 justify-center">
-          <%= link_to ai_chat_path,
+          <%= link_to new_contact_path,
               class: "inline-flex items-center justify-center px-8 py-4 bg-secondary-500 text-white font-bold text-lg rounded-lg hover:bg-secondary-600 transition-colors shadow-lg" do %>
-            💬 Discuter avec l'assistant IA
+            📋 Demander une analyse
           <% end %>
           <%= link_to simulation_prets_path(@region),
               class: "inline-flex items-center justify-center px-8 py-4 bg-white text-primary-700 font-bold text-lg rounded-lg hover:bg-pearl-50 transition-colors border-2 border-primary-400" do %>

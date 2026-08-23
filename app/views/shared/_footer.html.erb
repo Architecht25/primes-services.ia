@@ -10,7 +10,7 @@
         </div>
 
         <p class="text-primary-100 mb-6 max-w-md">
-          Experts en subsides belges depuis 15 ans. Notre IA révolutionne l'accompagnement
+          Experts en subsides belges depuis 15 ans. Nous vous accompagnons personnellement
           pour vos primes et subsides en Flandre, à Bruxelles et en Wallonie.
         </p>
 
@@ -45,14 +45,9 @@
             <% end %>
           </li>
           <li>
-            <%= link_to ai_chat_path, class: "text-primary-100 hover:text-amber-300 transition-colors" do %>
-              🤖 Chat IA
-            <% end %>
-          </li>
-          <li>
-            <a href="<%= ENV.fetch('RENOVATE_BASE_URL', 'https://www.ren0vate.be') %>" target="_blank" rel="noopener" class="text-primary-100 hover:text-amber-300 transition-colors">
+            <%= link_to renovate_path, class: "text-primary-100 hover:text-amber-300 transition-colors" do %>
               🔗 Ren0vate
-            </a>
+            <% end %>
           </li>
           <li>
             <%= link_to about_path, class: "text-primary-100 hover:text-amber-300 transition-colors" do %>
@@ -97,7 +92,7 @@
         </div>
 
         <div class="flex items-center space-x-6 mt-4 md:mt-0 text-sm text-primary-200">
-          <span>Propulsé par Rails 8.0 + IA</span>
+          <span>Propulsé par Rails 8.0</span>
           <span>•</span>
           <span>PWA Ready</span>
           <span>•</span>
@@ -108,7 +103,7 @@
       <!-- Disclaimer légal -->
       <div class="mt-4 text-xs text-primary-300 text-center">
         <p>
-          Les informations fournies par notre assistant IA sont basées sur les réglementations en vigueur
+          Les informations fournies sur ce site sont basées sur les réglementations en vigueur
           mais ne constituent pas un conseil juridique. Consultez toujours les organismes officiels pour
           une validation définitive de votre éligibilité.
         </p>

@@ -1,13 +1,6 @@
 Rails.application.routes.draw do
-  # Routes formulaires de contact
-  resources :contacts, only: [:index, :new, :create, :show] do
-    collection do
-      get :particulier
-      get :acp
-      get :entreprise_immo
-      get :entreprise_comm
-    end
-  end
+  # Formulaire de contact unique
+  resources :contacts, only: [:new, :create, :show]
 
   # Pages principales
   get "pages/about", as: :about
@@ -23,18 +16,6 @@ Rails.application.routes.draw do
   get "simulation/:region", to: "pages#simulation_region", as: :simulation_region
   get "simulation/:region/primes", to: "pages#simulation_primes", as: :simulation_primes
   get "simulation/:region/prets", to: "pages#simulation_prets", as: :simulation_prets
-
-  # Routes IA Chatbot
-  namespace :ai do
-    get :chat                          # Interface de chat principal
-    post :send_message                 # Endpoint pour envoyer un message
-    get :history                       # Historique de conversation
-    post :reset                        # Réinitialiser conversation
-    get :stats                         # Statistiques de conversation
-    post :complete                     # Marquer conversation terminée
-    get :suggestions                   # Suggestions contextuelles
-    post :capture_lead                 # Capturer les coordonnées d'un visiteur
-  end
 
   # Routes Administration
   namespace :admin do
@@ -58,14 +39,6 @@ Rails.application.routes.draw do
       end
     end
 
-    # Analytics
-    get 'analytics',           to: 'analytics#index',     as: :analytics
-    get 'analytics/real_time', to: 'analytics#real_time', as: :analytics_real_time
-    get 'analytics/pages',     to: 'analytics#pages',     as: :analytics_pages
-    get 'analytics/referrers', to: 'analytics#referrers', as: :analytics_referrers
-    get 'analytics/regions',   to: 'analytics#regions',   as: :analytics_regions
-    get 'analytics/ai_leads',  to: 'analytics#ai_leads',  as: :analytics_ai_leads
-
     # Sécurité
     get 'security',        to: 'security#index',  as: :security
     get 'security/logs',   to: 'security#logs',   as: :security_logs
@@ -81,13 +54,6 @@ Rails.application.routes.draw do
     get :install_prompt                          # Prompt d'installation
     post :subscribe_notifications                # Abonnement notifications
     post :send_notification                      # Envoi notification test
-  end
-
-  # Routes de redirection vers Ren0vate
-  namespace :redirections do
-    get :to_renovate                            # Redirection principale
-    post :track_click                           # Tracking des clics
-    post :success_callback                      # Callback succès Ren0vate
   end
 
   # API endpoints pour fonctionnalités avancées

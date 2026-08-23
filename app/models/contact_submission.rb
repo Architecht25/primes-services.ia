@@ -75,66 +75,21 @@ class ContactSubmission < ApplicationRecord
     }
   end
 
-  # Méthode pour obtenir les champs spécialisés selon le type
-  def specialized_fields
-    case type
-    when 'ParticulierContact'
-      {
-        property_type: property_type,
-        construction_year: construction_year,
-        surface_area: surface_area,
-        work_type: work_type,
-        current_heating: current_heating,
-        priority: priority,
-        income_range: income_range,
-        estimated_budget: estimated_budget,
-        realization_deadline: realization_deadline
-      }.compact
-    when 'AcpContact'
-      {
-        number_of_units: number_of_units,
-        building_type: building_type,
-        building_work_type: building_work_type,
-        voted_budget: voted_budget,
-        syndic_contact: syndic_contact,
-        work_urgency: work_urgency
-      }.compact
-    when 'EntrepriseImmoContact'
-      {
-        business_activity: business_activity,
-        investment_region: investment_region,
-        project_scale: project_scale,
-        target_market: target_market,
-        estimated_budget: estimated_budget,
-        timeline: timeline
-      }.compact
-    else
-      {}
-    end
-  end
-
-  # Méthode pour générer un résumé adapté selon le type
+  # Résumé complet de la demande (message libre, plus de champs spécialisés par profil)
   def detailed_summary
-    base_summary = {
+    {
       id: id,
-      type: type,
       contact: contact_summary,
-      specialized_data: specialized_fields,
+      message: message,
       metadata: metadata || {},
       created_at: created_at,
       updated_at: updated_at
     }
-
-    base_summary
   end
 
   # Méthode de classe pour les statistiques
   def self.stats_by_region
     group(:region).count
-  end
-
-  def self.stats_by_type
-    group(:type).count
   end
 
   def self.stats_by_status

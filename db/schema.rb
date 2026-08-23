@@ -10,27 +10,9 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2026_05_16_193134) do
+ActiveRecord::Schema[8.0].define(version: 2026_08_23_121258) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
-
-  create_table "ai_conversations", force: :cascade do |t|
-    t.string "session_id", null: false
-    t.string "user_type"
-    t.string "user_region"
-    t.text "messages"
-    t.string "status", default: "active"
-    t.json "metadata"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["created_at"], name: "index_ai_conversations_on_created_at"
-    t.index ["session_id", "status"], name: "index_ai_conversations_on_session_id_and_status"
-    t.index ["session_id"], name: "index_ai_conversations_on_session_id"
-    t.index ["status"], name: "index_ai_conversations_on_status"
-    t.index ["user_region"], name: "index_ai_conversations_on_user_region"
-    t.index ["user_type", "user_region"], name: "index_ai_conversations_on_user_type_and_user_region"
-    t.index ["user_type"], name: "index_ai_conversations_on_user_type"
-  end
 
   create_table "ai_insights", force: :cascade do |t|
     t.string "insight_type", null: false

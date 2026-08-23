@@ -35,7 +35,7 @@
           <div>
             <h4 class="font-bold text-blue-800 mb-1">En attendant, que faire ?</h4>
             <ul class="space-y-1 text-sm text-blue-900">
-              <li>• Consultez notre assistant IA pour toute question sur la situation actuelle</li>
+              <li>• Demandez une analyse de situation pour toute question sur la situation actuelle</li>
               <li>• Renseignez-vous auprès de <strong>Bruxelles Environnement</strong> pour les dernières mises à jour</li>
               <li>• Explorez les <strong>primes disponibles en Wallonie et en Flandre</strong> si vous y avez des biens</li>
             </ul>
@@ -51,9 +51,9 @@
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path>
           </svg>
         <% end %>
-        <%= link_to ai_chat_path,
+        <%= link_to new_contact_path,
             class: "inline-flex items-center px-5 py-3 bg-white text-red-600 font-semibold rounded-lg hover:bg-red-50 transition-colors border border-red-300" do %>
-          💬 Poser une question à l'IA
+          📋 Demander une analyse
         <% end %>
       </div>
     </div>
