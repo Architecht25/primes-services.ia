@@ -1,3 +1,9 @@
+<% if ENV["TURNSTILE_SITE_KEY"].present? %>
+  <% content_for :head do %>
+    <script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
+  <% end %>
+<% end %>
+
 <div class="max-w-2xl mx-auto px-4 py-12">
   <div class="text-center mb-8">
     <h1 class="text-3xl font-bold text-gray-900 mb-4">Demander une analyse de situation</h1>
@@ -84,6 +90,12 @@
           </div>
         </div>
       </div>
+
+      <% if ENV["TURNSTILE_SITE_KEY"].present? %>
+        <div class="mb-6 flex justify-center">
+          <div class="cf-turnstile" data-sitekey="<%= ENV['TURNSTILE_SITE_KEY'] %>"></div>
+        </div>
+      <% end %>
 
       <div class="text-center">
         <%= form.submit "Demander une analyse de situation",

@@ -1,5 +1,5 @@
 # Configuration du sitemap XML pour le SEO
-SitemapGenerator::Sitemap.default_host = "https://primes-services-ia-cc4318abe295.herokuapp.com"
+SitemapGenerator::Sitemap.default_host = ENV.fetch('APP_HOST_URL', 'https://www.primes-services.be')
 SitemapGenerator::Sitemap.public_path = 'tmp/'
 SitemapGenerator::Sitemap.sitemaps_path = 'sitemaps/'
 SitemapGenerator::Sitemap.compress = true

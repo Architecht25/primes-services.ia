@@ -38,8 +38,8 @@ Disallow: /admin/
 Disallow: /api/
 
 # Référence au sitemap XML - CRUCIAL pour SEO
-Sitemap: https://primes-services-ia-cc4318abe295.herokuapp.com/sitemap.xml.gz
-Sitemap: https://primes-services-ia-cc4318abe295.herokuapp.com/sitemap.xml
+Sitemap: https://www.primes-services.be/sitemap.xml.gz
+Sitemap: https://www.primes-services.be/sitemap.xml
 
 # Politique d'exploration (évite surcharge serveur)
 Crawl-delay: 1
