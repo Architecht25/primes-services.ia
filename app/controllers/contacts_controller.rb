@@ -2,14 +2,27 @@ class ContactsController < ApplicationController
   before_action :set_contact, only: [:show]
   before_action :authorize_contact_view!, only: [:show]
 
+  # Un humain met toujours au moins quelques secondes à remplir le formulaire ;
+  # les bots (y compris ceux pilotés par IA) le soumettent quasi instantanément.
+  MIN_SUBMISSION_DELAY = 3.seconds
+
   def new
     @contact = ContactSubmission.new
+    # Horodatage serveur, non modifiable par le client, pour détecter les
+    # soumissions trop rapides pour être humaines.
+    session[:contact_form_rendered_at] = Time.current.to_i
   end
 
   def create
     # Honeypot: bots fill hidden fields, humans leave them blank
     if params[:website].present?
       Rails.logger.warn "[Security] Honeypot triggered from IP #{request.remote_ip}"
+      redirect_to new_contact_path, notice: 'Votre demande a été envoyée avec succès!'
+      return
+    end
+
+    if submitted_too_fast?
+      Rails.logger.warn "[Security] Contact form submitted too fast from IP #{request.remote_ip}"
       redirect_to new_contact_path, notice: 'Votre demande a été envoyée avec succès!'
       return
     end
@@ -37,6 +50,13 @@ class ContactsController < ApplicationController
   end
 
   private
+
+  def submitted_too_fast?
+    rendered_at = session[:contact_form_rendered_at]
+    return false if rendered_at.blank? # pas de faux positif si la session a expiré
+
+    (Time.current.to_i - rendered_at) < MIN_SUBMISSION_DELAY
+  end
 
   def set_contact
     @contact = ContactSubmission.find(params[:id])

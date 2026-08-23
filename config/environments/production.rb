@@ -59,8 +59,13 @@ Rails.application.configure do
   config.action_mailer.delivery_method = :smtp
 
   # Set host to be used by links generated in mailer templates.
+  # NB: the bare apex (primes-services.be) currently redirects to the raw
+  # Heroku hostname at the DNS/registrar level — only "www" resolves to the
+  # app directly. Using the apex here would put a broken-looking redirect
+  # hop in every mailer link, so default to "www" until the apex redirect
+  # is fixed to point at https://www.primes-services.be instead.
   config.action_mailer.default_url_options = {
-    host: ENV.fetch('APP_HOST', 'primes-services.be'),
+    host: ENV.fetch('APP_HOST', 'www.primes-services.be'),
     protocol: 'https'
   }
 
@@ -86,11 +91,15 @@ Rails.application.configure do
   config.active_record.attributes_for_inspect = [ :id ]
 
   # Enable DNS rebinding protection and other `Host` header attacks.
-  # config.hosts = [
-  #   "example.com",     # Allow requests from example.com
-  #   /.*\.example\.com/ # Allow requests from subdomains like `www.example.com`
-  # ]
-  #
+  # Only "www" is bound as a custom domain on Heroku today (the bare apex
+  # redirects elsewhere at the DNS level) — keep the raw Heroku hostname
+  # allowed too since it's still directly reachable and used by Heroku's
+  # own tooling/health checks.
+  config.hosts = [
+    "www.primes-services.be",
+    "primes-services-ia-cc4318abe295.herokuapp.com"
+  ]
+
   # Skip DNS rebinding protection for the default health check endpoint.
-  # config.host_authorization = { exclude: ->(request) { request.path == "/up" } }
+  config.host_authorization = { exclude: ->(request) { request.path == "/up" } }
 end

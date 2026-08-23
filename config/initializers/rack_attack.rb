@@ -4,11 +4,6 @@ class Rack::Attack
     req.ip if req.post? && req.path == '/contacts'
   end
 
-  # Throttle AI chatbot messages: max 20 per minute per IP
-  throttle('ai/send_message', limit: 20, period: 1.minute) do |req|
-    req.ip if req.post? && req.path == '/ai/send_message'
-  end
-
   # Throttle admin login attempts: max 5 per 5 minutes per IP
   throttle('admin/login', limit: 5, period: 5.minutes) do |req|
     req.ip if req.post? && req.path == '/admin/login'
