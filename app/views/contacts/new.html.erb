@@ -1,93 +1,101 @@
-<div class="max-w-4xl mx-auto px-4 py-8">
+<div class="max-w-2xl mx-auto px-4 py-12">
   <div class="text-center mb-8">
-    <h1 class="text-3xl font-bold text-gray-900 mb-4">
-      Contactez-nous
-    </h1>
-    <p class="text-lg text-gray-600 max-w-2xl mx-auto">
-      Sélectionnez votre profil pour nous contacter. Notre équipe vous accompagnera dans votre projet et répondra à toutes vos questions.
+    <h1 class="text-3xl font-bold text-gray-900 mb-4">Demander une analyse de situation</h1>
+    <p class="text-lg text-gray-600">
+      Décrivez votre projet, nous analysons votre situation et vous recontactons rapidement
+      pour convenir d'un rendez-vous.
     </p>
   </div>
 
-  <div class="grid md:grid-cols-2 gap-6">
-    <!-- Particuliers -->
-    <div class="bg-white rounded-lg shadow-lg p-6 border-2 border-transparent hover:border-primary-500 transition-all duration-300">
-      <%= link_to particulier_contacts_path, class: "block" do %>
-        <div class="text-center">
-          <div class="w-16 h-16 bg-primary-100 rounded-full flex items-center justify-center mx-auto mb-4">
-            <svg class="w-8 h-8 text-primary-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"></path>
-            </svg>
-          </div>
-          <h3 class="text-xl font-semibold text-gray-900 mb-2">Particuliers</h3>
-          <p class="text-gray-600 mb-4">
-            Propriétaires de maisons, appartements, et résidences privées
-          </p>
-          <ul class="text-sm text-gray-500 space-y-1">
-            <li>• Primes rénovation énergétique</li>
-            <li>• Isolation et chauffage</li>
-            <li>• Panneaux solaires</li>
-            <li>• Rénovation façade</li>
+  <div class="bg-white rounded-lg shadow-lg p-8">
+    <%= form_with model: @contact, url: contacts_path, local: true,
+        data: { controller: "form-validation", action: "submit->form-validation#handleSubmit" } do |form| %>
+
+      <% if @contact.errors.any? %>
+        <div class="bg-red-50 border border-red-200 rounded-lg p-4 mb-6">
+          <h3 class="text-red-800 font-semibold mb-2">Erreurs dans le formulaire :</h3>
+          <ul class="text-red-700 list-disc list-inside">
+            <% @contact.errors.full_messages.each do |message| %>
+              <li><%= message %></li>
+            <% end %>
           </ul>
         </div>
       <% end %>
-    </div>
 
-    <!-- ACP - Associations de Copropriétaires -->
-    <div class="bg-white rounded-lg shadow-lg p-6 border-2 border-transparent hover:border-secondary-500 transition-all duration-300">
-      <%= link_to acp_contacts_path, class: "block" do %>
-        <div class="text-center">
-          <div class="w-16 h-16 bg-secondary-100 rounded-full flex items-center justify-center mx-auto mb-4">
-            <svg class="w-8 h-8 text-secondary-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"></path>
-            </svg>
-          </div>
-          <h3 class="text-xl font-semibold text-gray-900 mb-2">Copropriétés (ACP)</h3>
-          <p class="text-gray-600 mb-4">
-            Associations de copropriétaires et syndics professionnels
-          </p>
-          <ul class="text-sm text-gray-500 space-y-1">
-            <li>• Primes façade collective</li>
-            <li>• Chauffage commun</li>
-            <li>• Rénovation toiture</li>
-            <li>• Ascenseurs et parties communes</li>
-          </ul>
+      <div class="grid md:grid-cols-2 gap-6 mb-6">
+        <div>
+          <%= form.label :name, "Nom complet *", class: "block text-sm font-medium text-gray-700 mb-2" %>
+          <%= form.text_field :name,
+              class: "w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-primary-500",
+              required: true,
+              data: { validate: "required minlength", minlength: 2, error_required: "Votre nom est obligatoire." } %>
         </div>
-      <% end %>
-    </div>
 
-    <!-- Entreprises & Professionnels -->
-    <div class="bg-white rounded-lg shadow-lg p-6 border-2 border-transparent hover:border-accent-500 transition-all duration-300">
-      <%= link_to entreprise_immo_contacts_path, class: "block" do %>
-        <div class="text-center">
-          <div class="w-16 h-16 bg-accent-100 rounded-full flex items-center justify-center mx-auto mb-4">
-            <svg class="w-8 h-8 text-accent-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 14v3m4-3v3m4-3v3M3 21h18M3 10h18M3 7l9-4 9 4M4 10h16v11H4V10z"></path>
-            </svg>
-          </div>
-          <h3 class="text-xl font-semibold text-gray-900 mb-2">Entreprises &amp; Professionnels</h3>
-          <p class="text-gray-600 mb-4">
-            Promoteurs, constructeurs, indépendants et professionnels du secteur
-          </p>
-          <ul class="text-sm text-gray-500 space-y-1">
-            <li>• Aides aux professionnels</li>
-            <li>• Rénovation et construction</li>
-            <li>• Construction durable</li>
-            <li>• Investissements professionnels</li>
-          </ul>
+        <div>
+          <%= form.label :email, "Email *", class: "block text-sm font-medium text-gray-700 mb-2" %>
+          <%= form.email_field :email,
+              class: "w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-primary-500",
+              required: true,
+              data: { validate: "required email", error_required: "Votre email est obligatoire." } %>
         </div>
-      <% end %>
-    </div>
 
-  </div>
+        <div>
+          <%= form.label :phone, "Téléphone", class: "block text-sm font-medium text-gray-700 mb-2" %>
+          <%= form.text_field :phone,
+              class: "w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-primary-500",
+              type: "tel",
+              data: { validate: "phone" } %>
+        </div>
 
-  <div class="mt-8 text-center">
-    <div class="bg-primary-50 rounded-lg p-6">
-      <h3 class="text-lg font-semibold text-primary-900 mb-2">
-        💬 Accompagnement personnalisé
-      </h3>
-      <p class="text-primary-700">
-        Notre équipe analysera votre demande et vous contactera rapidement pour vous accompagner dans votre projet. Chaque formulaire nous permet de mieux comprendre vos besoins spécifiques.
-      </p>
-    </div>
+        <div>
+          <%= form.label :region, "Région *", class: "block text-sm font-medium text-gray-700 mb-2" %>
+          <%= form.select :region,
+              options_for_select([
+                ['Wallonie', 'wallonie'],
+                ['Flandre', 'flandre'],
+                ['Bruxelles-Capitale', 'bruxelles']
+              ], @contact.region),
+              { prompt: 'Sélectionnez votre région' },
+              { class: "w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-primary-500",
+                required: true,
+                data: { validate: "required", error_required: "Veuillez sélectionner votre région." } } %>
+        </div>
+      </div>
+
+      <div class="mb-6">
+        <%= form.label :message, "Votre situation / vos questions", class: "block text-sm font-medium text-gray-700 mb-2" %>
+        <%= form.text_area :message, rows: 5,
+            placeholder: "Décrivez votre projet, le type de logement, les travaux envisagés, vos questions...",
+            class: "w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-primary-500",
+            data: { validate: "maxlength", maxlength: 2000 } %>
+      </div>
+
+      <div class="bg-primary-50 border border-primary-200 rounded-lg p-4 mb-6">
+        <div class="flex items-start">
+          <svg class="w-5 h-5 text-primary-600 mt-0.5 mr-3 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path>
+          </svg>
+          <div>
+            <h4 class="text-primary-900 font-semibold mb-1">Et ensuite ?</h4>
+            <p class="text-primary-800 text-sm">
+              Vous recevrez une confirmation par email. Robin analyse personnellement votre demande
+              et vous recontacte rapidement pour fixer un rendez-vous.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <div class="text-center">
+        <%= form.submit "Demander une analyse de situation",
+            class: "bg-primary-600 hover:bg-primary-700 text-white font-semibold py-3 px-8 rounded-lg transition-colors duration-200 inline-flex items-center",
+            data: { "form-validation-target": "submit" } %>
+      </div>
+
+      <%# Honeypot anti-spam: hidden field, must remain empty %>
+      <div aria-hidden="true" style="position:absolute;left:-9999px;visibility:hidden;">
+        <%= label_tag :website, "Website (leave blank)" %>
+        <%= text_field_tag :website, nil, autocomplete: "off", tabindex: -1 %>
+      </div>
+    <% end %>
   </div>
 </div>

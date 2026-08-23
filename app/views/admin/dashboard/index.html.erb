@@ -1,235 +1,133 @@
 <div>
-  <div style="margin-bottom: 2rem; display: flex; justify-content: space-between; align-items: center;">
+  <div class="flex justify-between items-center mb-8 flex-wrap gap-4">
     <div>
-      <h1 style="font-size: 2rem; font-weight: bold; color: #2d3748;">📊 Tableau de Bord</h1>
-      <p style="color: #718096; margin-top: 0.25rem;">
-        <%= Time.current.strftime('%A %d %B %Y, %H:%M') %>
-      </p>
+      <h1 class="text-3xl font-bold text-gray-900">📊 Tableau de Bord</h1>
+      <p class="text-gray-500 mt-1"><%= Time.current.strftime('%A %d %B %Y, %H:%M') %></p>
     </div>
-    <div style="display: flex; gap: 0.75rem;">
-      <%= link_to admin_analytics_ai_leads_path, style: "background: #667eea; color: white; padding: 0.5rem 1rem; border-radius: 0.5rem; text-decoration: none; font-size: 0.875rem; font-weight: 600;" do %>
-        📨 Leads IA (<%= @stats.dig(:ai_leads, :total) || 0 %>)
-      <% end %>
-      <%= link_to export_admin_contacts_path(format: :csv), style: "background: #48bb78; color: white; padding: 0.5rem 1rem; border-radius: 0.5rem; text-decoration: none; font-size: 0.875rem; font-weight: 600;" do %>
+    <div class="flex gap-3">
+      <%= link_to export_admin_contacts_path(format: :csv), class: "bg-secondary-600 hover:bg-secondary-700 text-white text-sm font-semibold px-4 py-2 rounded-lg transition-colors" do %>
         📥 Export CSV
       <% end %>
     </div>
   </div>
 
   <!-- KPIs principaux -->
-  <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 1.5rem; margin-bottom: 2rem;">
-
-    <!-- Leads IA capturés — KPI #1 -->
-    <div class="stat-card" style="border-top: 4px solid #667eea;">
-      <div style="display: flex; justify-content: space-between; align-items: start;">
-        <div>
-          <p style="color: #718096; font-size: 0.8rem; margin: 0; text-transform: uppercase; letter-spacing: 0.05em;">Leads IA capturés</p>
-          <p style="font-size: 2.25rem; font-weight: bold; color: #2d3748; margin: 0.5rem 0 0 0;">
-            <%= @stats.dig(:ai_leads, :total) || 0 %>
-          </p>
-        </div>
-        <div style="background: #667eea; color: white; padding: 0.75rem; border-radius: 0.5rem; font-size: 1.25rem;">📨</div>
-      </div>
-      <div style="margin-top: 1rem; padding-top: 1rem; border-top: 1px solid #e2e8f0; display: flex; justify-content: space-between;">
-        <span>
-          <span style="color: #48bb78; font-weight: 600;">+<%= @stats.dig(:ai_leads, :today) || 0 %></span>
-          <span style="color: #718096; font-size: 0.8rem;"> aujourd'hui</span>
-        </span>
-        <span>
-          <span style="font-weight: 600; color: #667eea;"><%= @stats.dig(:ai_leads, :conversion_rate) || 0 %>%</span>
-          <span style="color: #718096; font-size: 0.8rem;"> conv.</span>
-        </span>
-      </div>
-    </div>
-
-    <!-- Conversations IA -->
-    <div class="stat-card" style="border-top: 4px solid #48bb78;">
-      <div style="display: flex; justify-content: space-between; align-items: start;">
-        <div>
-          <p style="color: #718096; font-size: 0.8rem; margin: 0; text-transform: uppercase; letter-spacing: 0.05em;">Conversations IA</p>
-          <p style="font-size: 2.25rem; font-weight: bold; color: #2d3748; margin: 0.5rem 0 0 0;">
-            <%= @stats.dig(:ai_conversations, :total) || 0 %>
-          </p>
-        </div>
-        <div style="background: #48bb78; color: white; padding: 0.75rem; border-radius: 0.5rem; font-size: 1.25rem;">🤖</div>
-      </div>
-      <div style="margin-top: 1rem; padding-top: 1rem; border-top: 1px solid #e2e8f0; display: flex; justify-content: space-between;">
-        <span>
-          <span style="color: #48bb78; font-weight: 600;">+<%= @stats.dig(:ai_conversations, :today) || 0 %></span>
-          <span style="color: #718096; font-size: 0.8rem;"> aujourd'hui</span>
-        </span>
-        <span>
-          <span style="font-weight: 600;"><%= @stats.dig(:ai_conversations, :active) || 0 %></span>
-          <span style="color: #718096; font-size: 0.8rem;"> actives</span>
-        </span>
-      </div>
-    </div>
+  <div class="grid gap-6 mb-8" style="grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));">
 
     <!-- Contacts formulaires -->
-    <div class="stat-card" style="border-top: 4px solid #ed8936;">
-      <div style="display: flex; justify-content: space-between; align-items: start;">
+    <div class="bg-white rounded-lg shadow-lg p-6 border-t-4 border-amber-500">
+      <div class="flex justify-between items-start">
         <div>
-          <p style="color: #718096; font-size: 0.8rem; margin: 0; text-transform: uppercase; letter-spacing: 0.05em;">Contacts formulaires</p>
-          <p style="font-size: 2.25rem; font-weight: bold; color: #2d3748; margin: 0.5rem 0 0 0;">
-            <%= @stats.dig(:contacts, :total) || 0 %>
-          </p>
+          <p class="text-gray-500 text-xs uppercase tracking-wide">Contacts formulaires</p>
+          <p class="text-3xl font-bold text-gray-900 mt-2"><%= @stats.dig(:contacts, :total) || 0 %></p>
         </div>
-        <div style="background: #ed8936; color: white; padding: 0.75rem; border-radius: 0.5rem; font-size: 1.25rem;">📧</div>
+        <div class="bg-amber-500 text-white p-3 rounded-lg text-xl">📧</div>
       </div>
-      <div style="margin-top: 1rem; padding-top: 1rem; border-top: 1px solid #e2e8f0; display: flex; justify-content: space-between;">
-        <span>
-          <span style="color: #48bb78; font-weight: 600;">+<%= @stats.dig(:contacts, :today) || 0 %></span>
-          <span style="color: #718096; font-size: 0.8rem;"> aujourd'hui</span>
-        </span>
+      <div class="mt-4 pt-4 border-t border-gray-200 flex justify-between items-center">
+        <span><span class="text-secondary-600 font-semibold">+<%= @stats.dig(:contacts, :today) || 0 %></span> <span class="text-gray-500 text-xs">aujourd'hui</span></span>
         <% unread = @stats.dig(:contacts, :unread) || 0 %>
         <% if unread > 0 %>
-          <span class="badge badge-warning"><%= unread %> non lus</span>
+          <span class="inline-block px-2.5 py-1 rounded-full text-xs font-semibold text-white bg-amber-500"><%= unread %> non lus</span>
         <% end %>
+      </div>
+    </div>
+
+    <!-- Ren0vate -->
+    <div class="bg-white rounded-lg shadow-lg p-6 border-t-4 border-secondary-500">
+      <div class="flex justify-between items-start">
+        <div>
+          <p class="text-gray-500 text-xs uppercase tracking-wide">Clics Ren0vate</p>
+          <p class="text-3xl font-bold text-gray-900 mt-2"><%= @stats.dig(:renovate, :total_clicks) || 0 %></p>
+        </div>
+        <div class="bg-secondary-600 text-white p-3 rounded-lg text-xl">🏠</div>
+      </div>
+      <div class="mt-4 pt-4 border-t border-gray-200 flex justify-between">
+        <span><span class="text-secondary-600 font-semibold">+<%= @stats.dig(:renovate, :today) || 0 %></span> <span class="text-gray-500 text-xs">aujourd'hui</span></span>
+        <span><span class="font-semibold text-gray-700"><%= @stats.dig(:renovate, :week) || 0 %></span> <span class="text-gray-500 text-xs">cette semaine</span></span>
       </div>
     </div>
 
     <!-- État système -->
-    <div class="stat-card" style="border-top: 4px solid #4299e1;">
-      <div style="display: flex; justify-content: space-between; align-items: start;">
+    <div class="bg-white rounded-lg shadow-lg p-6 border-t-4 border-primary-400">
+      <div class="flex justify-between items-start">
         <div>
-          <p style="color: #718096; font-size: 0.8rem; margin: 0; text-transform: uppercase; letter-spacing: 0.05em;">État système</p>
-          <p style="font-size: 2.25rem; font-weight: bold; margin: 0.5rem 0 0 0;">
+          <p class="text-gray-500 text-xs uppercase tracking-wide">État système</p>
+          <p class="text-3xl font-bold mt-2">
             <% if @stats.dig(:security, :status) == 'healthy' %>
-              <span style="color: #48bb78;">✓ OK</span>
+              <span class="text-secondary-600">✓ OK</span>
             <% else %>
-              <span style="color: #f56565;">⚠ Alerte</span>
+              <span class="text-red-600">⚠ Alerte</span>
             <% end %>
           </p>
         </div>
-        <div style="background: #4299e1; color: white; padding: 0.75rem; border-radius: 0.5rem; font-size: 1.25rem;">🛡️</div>
+        <div class="bg-primary-500 text-white p-3 rounded-lg text-xl">🛡️</div>
       </div>
-      <div style="margin-top: 1rem; padding-top: 1rem; border-top: 1px solid #e2e8f0;">
-        <span style="color: #718096; font-size: 0.8rem;">DB : </span>
-        <span class="badge <%= @stats.dig(:security, :database, :status) == 'ok' ? 'badge-success' : 'badge-danger' %>">
+      <div class="mt-4 pt-4 border-t border-gray-200 text-sm">
+        <span class="text-gray-500">DB :</span>
+        <span class="inline-block px-2.5 py-1 rounded-full text-xs font-semibold text-white <%= @stats.dig(:security, :database, :status) == 'ok' ? 'bg-secondary-600' : 'bg-red-600' %>">
           <%= @stats.dig(:security, :database, :status) || '?' %>
         </span>
-        <span style="color: #718096; font-size: 0.8rem; margin-left: 0.5rem;">Env : </span>
-        <span class="badge badge-info"><%= @stats.dig(:system, :environment) %></span>
+        <span class="text-gray-500 ml-2">Env :</span>
+        <span class="inline-block px-2.5 py-1 rounded-full text-xs font-semibold text-white bg-primary-600"><%= @stats.dig(:system, :environment) %></span>
       </div>
     </div>
   </div>
 
-  <!-- Funnel de conversion (30 derniers jours) -->
-  <div class="stat-card" style="margin-bottom: 2rem;">
-    <h2 style="font-size: 1.25rem; font-weight: bold; color: #2d3748; margin: 0 0 1.5rem 0;">
-      🎯 Funnel de conversion — 30 derniers jours
-    </h2>
-    <% funnel = @stats[:funnel] || {} %>
-    <% steps = [
-      { label: 'Visiteurs uniques',    count: funnel[:visitors]          || 0, color: '#4299e1', icon: '👥' },
-      { label: 'Sessions chat IA',     count: funnel[:chat_sessions]     || 0, color: '#667eea', icon: '🤖' },
-      { label: 'Leads IA capturés',    count: funnel[:leads_captured]    || 0, color: '#48bb78', icon: '📨' },
-      { label: 'Contacts formulaires', count: funnel[:contact_forms]     || 0, color: '#ed8936', icon: '📋' },
-      { label: 'Clics Ren0vate',       count: funnel[:renovate_clicks]   || 0, color: '#9f7aea', icon: '🏠' },
-    ] %>
-    <div style="display: grid; grid-template-columns: repeat(5, 1fr); gap: 0; position: relative;">
-      <% steps.each_with_index do |step, i| %>
-        <div style="text-align: center; padding: 1.5rem 1rem; background: <%= i.even? ? '#f7fafc' : '#fff' %>; border-radius: <%= i == 0 ? '0.5rem 0 0 0.5rem' : (i == steps.length - 1 ? '0 0.5rem 0.5rem 0' : '0') %>;">
-          <div style="font-size: 2rem; margin-bottom: 0.5rem;"><%= step[:icon] %></div>
-          <div style="font-size: 1.75rem; font-weight: bold; color: <%= step[:color] %>;"><%= step[:count] %></div>
-          <div style="font-size: 0.8rem; color: #718096; margin-top: 0.25rem;"><%= step[:label] %></div>
-          <% if i > 0 && steps[i-1][:count] > 0 %>
-            <div style="font-size: 0.75rem; color: #a0aec0; margin-top: 0.5rem;">
-              (<%= (step[:count].to_f / steps[i-1][:count] * 100).round %>%)
-            </div>
-          <% end %>
-        </div>
-        <% if i < steps.length - 1 %>
-          <div style="position: absolute; top: 50%; left: <%= "calc(#{(i + 1) * 20}% - 0.75rem)" %>; transform: translateY(-50%); color: #cbd5e0; font-size: 1.25rem; z-index: 1;">→</div>
-        <% end %>
-      <% end %>
-    </div>
-  </div>
-
-  <!-- Ligne du bas : contacts par type + leads IA par région + activité récente + Ren0vate -->
-  <div style="display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 1.5rem; margin-bottom: 2rem;">
+  <!-- Ligne du bas : contacts par type + Ren0vate + activité récente -->
+  <div class="grid gap-6 mb-8" style="grid-template-columns: 2fr 1fr 1fr;">
 
     <!-- Contacts par type -->
-    <div class="stat-card">
-      <h2 style="font-size: 1.1rem; font-weight: bold; color: #2d3748; margin: 0 0 1.25rem 0;">
-        📊 Contacts par type
-      </h2>
+    <div class="bg-white rounded-lg shadow-lg p-6">
+      <h2 class="text-lg font-bold text-gray-900 mb-5">📊 Contacts par type</h2>
       <% total_contacts = @stats.dig(:contacts, :total).to_f %>
       <% if @stats.dig(:contacts, :by_type).present? %>
-        <div style="display: flex; flex-direction: column; gap: 0.875rem;">
+        <div class="flex flex-col gap-3.5">
           <% @stats.dig(:contacts, :by_type).each do |type, count| %>
             <div>
-              <div style="display: flex; justify-content: space-between; margin-bottom: 0.375rem;">
-                <span style="font-size: 0.875rem; font-weight: 500; color: #4a5568;"><%= type&.gsub('Contact', '') || 'Non spécifié' %></span>
-                <span style="font-size: 0.875rem; color: #718096;"><%= count %></span>
+              <div class="flex justify-between mb-1.5">
+                <span class="text-sm font-medium text-gray-700"><%= type&.gsub('Contact', '') || 'Non spécifié' %></span>
+                <span class="text-sm text-gray-500"><%= count %></span>
               </div>
-              <div style="background: #e2e8f0; height: 6px; border-radius: 3px; overflow: hidden;">
+              <div class="bg-gray-200 h-1.5 rounded-full overflow-hidden">
                 <% pct = total_contacts > 0 ? (count.to_f / total_contacts * 100) : 0 %>
-                <div style="background: #667eea; height: 100%; width: <%= pct %>%; border-radius: 3px;"></div>
+                <div class="bg-primary-600 h-full rounded-full" style="width: <%= pct %>%;"></div>
               </div>
             </div>
           <% end %>
         </div>
       <% else %>
-        <p style="color: #a0aec0; text-align: center; padding: 1.5rem 0; font-size: 0.875rem;">Aucune donnée</p>
+        <p class="text-gray-400 text-center py-6 text-sm">Aucune donnée</p>
       <% end %>
     </div>
 
-    <!-- Leads IA par région -->
-    <div class="stat-card">
-      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.25rem;">
-        <h2 style="font-size: 1.1rem; font-weight: bold; color: #2d3748; margin: 0;">📨 Leads par région</h2>
-        <%= link_to "Voir tous →", admin_analytics_ai_leads_path, style: "font-size: 0.75rem; color: #667eea; text-decoration: none;" %>
-      </div>
-      <% leads_by_region = @stats.dig(:ai_leads, :by_region) || {} %>
-      <% if leads_by_region.any? %>
-        <div style="display: flex; flex-direction: column; gap: 0.75rem;">
-          <% leads_by_region.sort_by { |_, v| -v }.each do |region, count| %>
-            <div style="display: flex; justify-content: space-between; align-items: center;">
-              <span style="font-size: 0.875rem; color: #4a5568; text-transform: capitalize;"><%= region || 'Non définie' %></span>
-              <span class="badge badge-info"><%= count %></span>
-            </div>
-          <% end %>
-        </div>
-        <div style="margin-top: 1.25rem; padding-top: 1rem; border-top: 1px solid #e2e8f0;">
-          <p style="color: #718096; font-size: 0.8rem; margin: 0;">
-            Taux cette semaine :
-            <strong style="color: #667eea;"><%= @stats.dig(:ai_leads, :week_conversion_rate) || 0 %>%</strong>
-          </p>
-        </div>
-      <% else %>
-        <p style="color: #a0aec0; text-align: center; padding: 1.5rem 0; font-size: 0.875rem;">Aucun lead pour l'instant</p>
-      <% end %>
-    </div>
-
-    <!-- Ren0vate clics -->
-    <div class="stat-card">
-      <h2 style="font-size: 1.1rem; font-weight: bold; color: #2d3748; margin: 0 0 1.25rem 0;">🏠 Ren0vate</h2>
+    <!-- Ren0vate détail -->
+    <div class="bg-white rounded-lg shadow-lg p-6">
+      <h2 class="text-lg font-bold text-gray-900 mb-5">🏠 Ren0vate</h2>
       <% reno = @stats[:renovate] || {} %>
-      <div style="display: flex; flex-direction: column; gap: 0.75rem;">
-        <div style="display: flex; justify-content: space-between; padding: 0.5rem 0; border-bottom: 1px solid #e2e8f0;">
-          <span style="font-size: 0.8rem; color: #718096;">Clics (total)</span>
-          <span style="font-weight: 700; color: #9f7aea;"><%= reno[:total_clicks] || 0 %></span>
+      <div class="flex flex-col gap-3">
+        <div class="flex justify-between py-2 border-b border-gray-200">
+          <span class="text-xs text-gray-500">Clics (total)</span>
+          <span class="font-bold text-secondary-600"><%= reno[:total_clicks] || 0 %></span>
         </div>
-        <div style="display: flex; justify-content: space-between; padding: 0.5rem 0; border-bottom: 1px solid #e2e8f0;">
-          <span style="font-size: 0.8rem; color: #718096;">Redirects</span>
-          <span style="font-weight: 700; color: #9f7aea;"><%= reno[:total_redirects] || 0 %></span>
+        <div class="flex justify-between py-2 border-b border-gray-200">
+          <span class="text-xs text-gray-500">Redirects</span>
+          <span class="font-bold text-secondary-600"><%= reno[:total_redirects] || 0 %></span>
         </div>
-        <div style="display: flex; justify-content: space-between; padding: 0.5rem 0; border-bottom: 1px solid #e2e8f0;">
-          <span style="font-size: 0.8rem; color: #718096;">Cette semaine</span>
-          <span style="font-weight: 700; color: #9f7aea;"><%= reno[:week] || 0 %></span>
+        <div class="flex justify-between py-2 border-b border-gray-200">
+          <span class="text-xs text-gray-500">Cette semaine</span>
+          <span class="font-bold text-secondary-600"><%= reno[:week] || 0 %></span>
         </div>
-        <div style="display: flex; justify-content: space-between; padding: 0.5rem 0;">
-          <span style="font-size: 0.8rem; color: #718096;">Aujourd'hui</span>
-          <span style="font-weight: 700; color: #9f7aea;"><%= reno[:today] || 0 %></span>
+        <div class="flex justify-between py-2">
+          <span class="text-xs text-gray-500">Aujourd'hui</span>
+          <span class="font-bold text-secondary-600"><%= reno[:today] || 0 %></span>
         </div>
         <% if (reno[:by_profile] || {}).any? %>
-          <div style="margin-top: 0.5rem; padding-top: 0.75rem; border-top: 1px solid #e2e8f0;">
-            <p style="font-size: 0.7rem; color: #a0aec0; text-transform: uppercase; letter-spacing: 0.05em; margin: 0 0 0.5rem 0;">Par profil (7j)</p>
+          <div class="mt-2 pt-3 border-t border-gray-200">
+            <p class="text-xs text-gray-400 uppercase tracking-wide mb-2">Par profil (7j)</p>
             <% reno[:by_profile].sort_by { |_, v| -v }.first(3).each do |profile, count| %>
-              <div style="display: flex; justify-content: space-between; margin-bottom: 0.25rem;">
-                <span style="font-size: 0.8rem; color: #4a5568; text-transform: capitalize;"><%= profile %></span>
-                <span class="badge badge-info"><%= count %></span>
+              <div class="flex justify-between mb-1">
+                <span class="text-sm text-gray-700 capitalize"><%= profile %></span>
+                <span class="inline-block px-2.5 py-1 rounded-full text-xs font-semibold text-white bg-primary-600"><%= count %></span>
               </div>
             <% end %>
           </div>
@@ -238,21 +136,17 @@
     </div>
 
     <!-- Activité récente -->
-    <div class="stat-card">
-      <h2 style="font-size: 1.1rem; font-weight: bold; color: #2d3748; margin: 0 0 1.25rem 0;">⏱️ Activité</h2>
+    <div class="bg-white rounded-lg shadow-lg p-6">
+      <h2 class="text-lg font-bold text-gray-900 mb-5">⏱️ Activité</h2>
       <% [
-        { label: 'Aujourd\'hui', contacts: @stats.dig(:contacts, :today), convs: @stats.dig(:ai_conversations, :today), leads: @stats.dig(:ai_leads, :today) },
-        { label: 'Cette semaine', contacts: @stats.dig(:contacts, :week), convs: @stats.dig(:ai_conversations, :week), leads: @stats.dig(:ai_leads, :week) },
-        { label: 'Ce mois', contacts: @stats.dig(:contacts, :month), convs: nil, leads: nil }
+        { label: 'Aujourd\'hui', contacts: @stats.dig(:contacts, :today) },
+        { label: 'Cette semaine', contacts: @stats.dig(:contacts, :week) },
+        { label: 'Ce mois', contacts: @stats.dig(:contacts, :month) }
       ].each do |row| %>
-        <div style="padding: 0.75rem 0; border-bottom: 1px solid #e2e8f0;">
-          <p style="color: #718096; font-size: 0.75rem; margin: 0 0 0.375rem 0; text-transform: uppercase; letter-spacing: 0.05em;"><%= row[:label] %></p>
-          <div style="display: flex; gap: 0.75rem; flex-wrap: wrap;">
-            <span style="font-size: 0.8rem;"><span style="font-weight: 700; color: #ed8936;"><%= row[:contacts] || 0 %></span> <span style="color: #a0aec0;">contacts</span></span>
-            <span style="font-size: 0.8rem;"><span style="font-weight: 700; color: #48bb78;"><%= row[:convs] || '—' %></span> <span style="color: #a0aec0;">chats</span></span>
-            <% if row[:leads] %>
-              <span style="font-size: 0.8rem;"><span style="font-weight: 700; color: #667eea;"><%= row[:leads] %></span> <span style="color: #a0aec0;">leads</span></span>
-            <% end %>
+        <div class="py-3 border-b border-gray-200">
+          <p class="text-gray-500 text-xs uppercase tracking-wide mb-1.5"><%= row[:label] %></p>
+          <div class="flex gap-3 flex-wrap text-sm">
+            <span><span class="font-bold text-amber-600"><%= row[:contacts] || 0 %></span> <span class="text-gray-400">contacts</span></span>
           </div>
         </div>
       <% end %>
@@ -260,22 +154,16 @@
   </div>
 
   <!-- Actions rapides -->
-  <div class="stat-card">
-    <h2 style="font-size: 1.1rem; font-weight: bold; color: #2d3748; margin: 0 0 1rem 0;">⚡ Actions rapides</h2>
-    <div style="display: flex; gap: 0.75rem; flex-wrap: wrap;">
-      <%= link_to admin_contacts_path, style: "background: #667eea; color: white; padding: 0.625rem 1.25rem; border-radius: 0.5rem; text-decoration: none; font-size: 0.875rem; font-weight: 600;" do %>
+  <div class="bg-white rounded-lg shadow-lg p-6">
+    <h2 class="text-lg font-bold text-gray-900 mb-4">⚡ Actions rapides</h2>
+    <div class="flex gap-3 flex-wrap">
+      <%= link_to admin_contacts_path, class: "bg-primary-600 hover:bg-primary-700 text-white text-sm font-semibold px-5 py-2.5 rounded-lg transition-colors" do %>
         📧 Contacts (<%= @stats.dig(:contacts, :unread) || 0 %> non lus)
       <% end %>
-      <%= link_to admin_analytics_ai_leads_path, style: "background: #48bb78; color: white; padding: 0.625rem 1.25rem; border-radius: 0.5rem; text-decoration: none; font-size: 0.875rem; font-weight: 600;" do %>
-        📨 Leads IA
-      <% end %>
-      <%= link_to admin_analytics_path, style: "background: #4299e1; color: white; padding: 0.625rem 1.25rem; border-radius: 0.5rem; text-decoration: none; font-size: 0.875rem; font-weight: 600;" do %>
-        📈 Analytics
-      <% end %>
-      <%= link_to admin_security_path, style: "background: #ed8936; color: white; padding: 0.625rem 1.25rem; border-radius: 0.5rem; text-decoration: none; font-size: 0.875rem; font-weight: 600;" do %>
+      <%= link_to admin_security_path, class: "bg-amber-500 hover:bg-amber-600 text-white text-sm font-semibold px-5 py-2.5 rounded-lg transition-colors" do %>
         🔒 Sécurité
       <% end %>
-      <%= link_to export_admin_contacts_path(format: :csv), style: "background: #718096; color: white; padding: 0.625rem 1.25rem; border-radius: 0.5rem; text-decoration: none; font-size: 0.875rem; font-weight: 600;" do %>
+      <%= link_to export_admin_contacts_path(format: :csv), class: "bg-gray-600 hover:bg-gray-700 text-white text-sm font-semibold px-5 py-2.5 rounded-lg transition-colors" do %>
         📥 Export CSV
       <% end %>
     </div>

@@ -24,9 +24,6 @@ module PrimesServicesIa
     # config.time_zone = "Central Time (US & Canada)"
     # config.eager_load_paths << Rails.root.join("extras")
 
-    # Configuration IA Chatbot
-    config.ai = config_for(:ai)
-
     # Security middleware
     config.middleware.use Rack::Attack
   end

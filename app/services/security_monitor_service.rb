@@ -74,7 +74,7 @@ class SecurityMonitorService
       # Tentatives de login répétées (si vous loggez ça)
       if defined?(SecurityLog)
         failed_attempts = SecurityLog.where(
-          event_type: 'failed_login',
+          event_type: 'admin_login_failure',
           created_at: 1.hour.ago..Time.current
         ).group(:ip_address).count
 
@@ -103,7 +103,7 @@ class SecurityMonitorService
         priority: 'high',
         title: 'Activer HTTPS',
         description: 'Le site devrait forcer HTTPS en production'
-      } unless Rails.env.production? && ENV['FORCE_SSL'] == 'true'
+      } unless Rails.env.production? && Rails.application.config.force_ssl
 
       # Vérifier les variables d'env sensibles
       recommendations << {
@@ -208,9 +208,9 @@ class SecurityMonitorService
 
     def check_ssl_status
       {
-        valid: Rails.env.production? ? (ENV['FORCE_SSL'] == 'true') : true,
+        valid: Rails.env.production? ? Rails.application.config.force_ssl : true,
         environment: Rails.env,
-        force_ssl: ENV['FORCE_SSL']
+        force_ssl: Rails.application.config.force_ssl
       }
     end
 
@@ -245,8 +245,12 @@ class SecurityMonitorService
     end
 
     def recent_failed_logins
-      # Retourner les tentatives échouées récentes si vous loggez ça
-      []
+      return [] unless defined?(SecurityLog)
+
+      SecurityLog.where(event_type: 'admin_login_failure')
+                 .where('created_at >= ?', 24.hours.ago)
+                 .order(created_at: :desc)
+                 .limit(20)
     end
   end
 end

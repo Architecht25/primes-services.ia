@@ -2,10 +2,10 @@
 <html lang="fr-BE">
   <head>
     <title><%= content_for(:title) || "Primes Services IA - Expert en subsides belges" %></title>
-    <meta name="description" content="<%= content_for(:description) || 'Assistant IA spécialisé en primes et subsides belges. 324 subsides référencés, calculs instantanés, accompagnement expert. Wallonie, Flandre, Bruxelles.' %>">
+    <meta name="description" content="<%= content_for(:description) || 'Experts en primes et subsides belges depuis 15 ans. Analyse personnalisée de votre situation, accompagnement complet. Wallonie, Flandre, Bruxelles.' %>">
 
     <%# SEO Meta tags %>
-    <meta name="keywords" content="<%= content_for(:keywords) || 'primes belges, subsides, wallonie, flandre, bruxelles, IA assistant, primes énergétiques, primes rénovation, aide publique' %>">
+    <meta name="keywords" content="<%= content_for(:keywords) || 'primes belges, subsides, wallonie, flandre, bruxelles, primes énergétiques, primes rénovation, aide publique' %>">
     <meta name="author" content="Primes Services">
     <meta name="robots" content="<%= content_for(:robots) || 'index, follow' %>">
     <link rel="canonical" href="<%= content_for(:canonical) || request.original_url %>">
@@ -37,7 +37,7 @@
 
     <%# SEO et Open Graph %>
     <meta property="og:title" content="<%= content_for(:title) || 'Primes Services IA - Expert en subsides belges' %>">
-    <meta property="og:description" content="<%= content_for(:description) || 'Assistant IA spécialisé en primes et subsides belges. 324 subsides référencés.' %>">
+    <meta property="og:description" content="<%= content_for(:description) || 'Experts en primes et subsides belges depuis 15 ans. Analyse personnalisée et accompagnement complet.' %>">
     <meta property="og:type" content="website">
     <meta property="og:url" content="<%= request.original_url %>">
     <meta property="og:image" content="<%= request.base_url %>/icon.png">
@@ -46,7 +46,7 @@
 
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="<%= content_for(:title) || 'Primes Services IA' %>">
-    <meta name="twitter:description" content="<%= content_for(:description) || 'Assistant IA spécialisé en subsides belges' %>">
+    <meta name="twitter:description" content="<%= content_for(:description) || 'Experts en primes et subsides belges depuis 15 ans' %>">
     <meta name="twitter:image" content="<%= request.base_url %>/icon.png">
 
     <%# Schema.org JSON-LD pour référencement local %>
@@ -55,7 +55,7 @@
       "@context": "https://schema.org",
       "@type": "LocalBusiness",
       "name": "Primes Services IA",
-      "description": "Assistant IA spécialisé en primes et subsides belges",
+      "description": "Experts en primes et subsides belges, accompagnement personnalisé",
       "url": "<%= request.base_url %>",
       "logo": "<%= request.base_url %>/icon.png",
       "image": "<%= request.base_url %>/icon.png",
@@ -68,8 +68,8 @@
       "knowsAbout": ["Primes énergétiques", "Subsides belges", "Primes rénovation", "Aides publiques"],
       "offers": {
         "@type": "Service",
-        "name": "Accompagnement intelligent pour obtenir vos primes",
-        "description": "Assistant IA avec 324 subsides référencés pour un accompagnement expert"
+        "name": "Accompagnement personnalisé pour obtenir vos primes",
+        "description": "Analyse de situation et accompagnement expert pour vos primes et subsides"
       }
     }
     </script>

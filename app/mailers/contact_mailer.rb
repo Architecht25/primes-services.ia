@@ -5,19 +5,7 @@ class ContactMailer < ApplicationMailer
     @contact = contact
     mail(
       to: ADMIN_EMAIL,
-      subject: "[Nouvelle demande] #{contact_type_label} – #{contact.name} (##{contact.id})"
+      subject: "[Nouvelle demande] #{contact.name} (##{contact.id}) – #{contact.region&.humanize}"
     )
   end
-
-  private
-
-  def contact_type_label
-    {
-      "ParticulierContact"     => "Particulier",
-      "AcpContact"             => "Copropriété (ACP)",
-      "EntrepriseImmoContact"  => "Entreprise Immobilière",
-      "EntrepriseCommContact"  => "Entreprise Commerciale"
-    }[@contact.type] || "Contact"
-  end
-  helper_method :contact_type_label
 end

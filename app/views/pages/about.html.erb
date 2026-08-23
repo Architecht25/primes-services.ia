@@ -1,5 +1,5 @@
 <% content_for :title, "À propos - Primes Services IA" %>
-<% content_for :description, "Découvrez Primes Services, experts en subsides belges depuis 15 ans. Notre équipe et notre IA révolutionnent l'accompagnement pour vos primes." %>
+<% content_for :description, "Découvrez Primes Services, experts en subsides belges depuis 15 ans. Notre équipe vous accompagne personnellement pour vos primes." %>
 
 <!-- Hero Section À propos -->
 <section class="bg-gradient-to-r from-primary-600 to-secondary-600 text-white py-16">
@@ -325,114 +325,9 @@
       <p class="text-gray-700 mb-6">
         Besoin de conseils personnalisés pour votre projet ?
       </p>
-      <%= link_to ai_chat_path,
+      <%= link_to new_contact_path,
           class: "inline-block bg-secondary-600 text-white px-8 py-4 rounded-lg font-bold text-lg hover:bg-secondary-700 transition-colors shadow-lg" do %>
-        💬 Posez vos questions à notre IA
-      <% end %>
-    </div>
-  </div>
-</section>
-
-<!-- Notre Différence vs IA généraliste -->
-<section class="py-16 bg-gradient-to-r from-primary-900 to-primary-700 text-white">
-  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-    <div class="text-center mb-12">
-      <h2 class="text-3xl lg:text-4xl font-bold mb-4">
-        Pourquoi choisir notre IA vs IA généraliste ?
-      </h2>
-      <p class="text-xl text-white/90">
-        Comparaison directe avec ChatGPT et autres IA génériques
-      </p>
-    </div>
-
-    <div class="grid lg:grid-cols-2 gap-12">
-      <!-- Primes Services IA -->
-      <div class="bg-white/10 backdrop-blur-sm rounded-xl p-8">
-        <div class="flex items-center mb-6">
-          <div class="w-12 h-12 bg-secondary-500 rounded-full flex items-center justify-center mr-4">
-            <span class="text-white font-bold">✓</span>
-          </div>
-          <h3 class="text-2xl font-bold text-secondary-400">Assistant Primes Services</h3>
-        </div>
-
-        <ul class="space-y-3">
-          <li class="flex items-start">
-            <span class="text-secondary-400 mr-3">✅</span>
-            <span>Expertise locale vs généraliste mondial</span>
-          </li>
-          <li class="flex items-start">
-            <span class="text-secondary-400 mr-3">✅</span>
-            <span>Base de données officielle 324 subsides vs informations approximatives</span>
-          </li>
-          <li class="flex items-start">
-            <span class="text-secondary-400 mr-3">✅</span>
-            <span>Mise à jour réglementaire temps réel vs données obsolètes</span>
-          </li>
-          <li class="flex items-start">
-            <span class="text-secondary-400 mr-3">✅</span>
-            <span>Calculs précis par région belge vs estimations vagues</span>
-          </li>
-          <li class="flex items-start">
-            <span class="text-secondary-400 mr-3">✅</span>
-            <span>Accompagnement humain expert vs assistance virtuelle seule</span>
-          </li>
-          <li class="flex items-start">
-            <span class="text-secondary-400 mr-3">✅</span>
-            <span>Workflow complet jusqu'au dépôt vs information uniquement</span>
-          </li>
-          <li class="flex items-start">
-            <span class="text-secondary-400 mr-3">✅</span>
-            <span>Modèle "no cure, no pay" vs service payant sans garantie</span>
-          </li>
-        </ul>
-      </div>
-
-      <!-- IA Généraliste -->
-      <div class="bg-red-500/10 backdrop-blur-sm rounded-xl p-8 border border-red-500/20">
-        <div class="flex items-center mb-6">
-          <div class="w-12 h-12 bg-red-500 rounded-full flex items-center justify-center mr-4">
-            <span class="text-white font-bold">✗</span>
-          </div>
-          <h3 class="text-2xl font-bold text-red-400">ChatGPT / IA Généraliste</h3>
-        </div>
-
-        <ul class="space-y-3">
-          <li class="flex items-start">
-            <span class="text-red-400 mr-3">❌</span>
-            <span>Connaissance générale, pas spécialisée Belgique</span>
-          </li>
-          <li class="flex items-start">
-            <span class="text-red-400 mr-3">❌</span>
-            <span>Informations parfois obsolètes ou inexactes</span>
-          </li>
-          <li class="flex items-start">
-            <span class="text-red-400 mr-3">❌</span>
-            <span>Pas de mise à jour réglementaire en temps réel</span>
-          </li>
-          <li class="flex items-start">
-            <span class="text-red-400 mr-3">❌</span>
-            <span>Calculs approximatifs ou erronés</span>
-          </li>
-          <li class="flex items-start">
-            <span class="text-red-400 mr-3">❌</span>
-            <span>Aucun accompagnement humain personnalisé</span>
-          </li>
-          <li class="flex items-start">
-            <span class="text-red-400 mr-3">❌</span>
-            <span>Information seulement, pas d'action concrète</span>
-          </li>
-          <li class="flex items-start">
-            <span class="text-red-400 mr-3">❌</span>
-            <span>Pas de garantie de résultat</span>
-          </li>
-        </ul>
-      </div>
-    </div>
-
-    <div class="text-center mt-12">
-      <%= link_to ai_chat_path,
-          class: "bg-secondary-500 text-white px-8 py-4 rounded-lg font-bold text-lg hover:bg-secondary-600 transition-colors inline-block" do %>
-        🤖 Tester notre IA spécialisée
+        📋 Demander une analyse
       <% end %>
     </div>
   </div>
@@ -448,21 +343,22 @@
         </h2>
         <p class="text-lg text-gray-700 mb-6">
           <strong>Ren0vate</strong> est notre plateforme complète de gestion des dossiers de subsides.
-          Après avoir identifié vos primes avec notre IA, Ren0vate vous accompagne dans toutes les démarches.
+          Après une analyse personnalisée de votre situation, nous créons votre dossier dans Ren0vate
+          pour vous accompagner dans toutes les démarches.
         </p>
 
         <div class="space-y-4 mb-8">
           <div class="flex items-center space-x-3">
             <span class="w-6 h-6 bg-primary-500 rounded-full flex items-center justify-center text-white text-sm font-bold">1</span>
-            <span>Identification des primes avec notre IA</span>
+            <span>Demande d'analyse de votre situation</span>
           </div>
           <div class="flex items-center space-x-3">
             <span class="w-6 h-6 bg-primary-500 rounded-full flex items-center justify-center text-white text-sm font-bold">2</span>
-            <span>Redirection intelligente vers Ren0vate</span>
+            <span>Rendez-vous avec un expert pour étudier votre dossier</span>
           </div>
           <div class="flex items-center space-x-3">
             <span class="w-6 h-6 bg-primary-500 rounded-full flex items-center justify-center text-white text-sm font-bold">3</span>
-            <span>Accompagnement complet par nos experts</span>
+            <span>Création de votre dossier dans Ren0vate</span>
           </div>
           <div class="flex items-center space-x-3">
             <span class="w-6 h-6 bg-primary-500 rounded-full flex items-center justify-center text-white text-sm font-bold">4</span>
@@ -470,11 +366,10 @@
           </div>
         </div>
 
-        <a href="https://ren0vate-630b5136c442.herokuapp.com"
-           target="_blank"
-           class="inline-block bg-primary-600 text-white px-6 py-3 rounded-lg font-semibold hover:bg-primary-700 transition-colors">
+        <%= link_to renovate_path,
+            class: "inline-block bg-primary-600 text-white px-6 py-3 rounded-lg font-semibold hover:bg-primary-700 transition-colors" do %>
           🔗 Découvrir Ren0vate →
-        </a>
+        <% end %>
       </div>
 
       <div class="bg-gradient-to-br from-pearl to-primary-50 rounded-2xl p-8">
@@ -510,13 +405,13 @@
       Prêt à révolutionner vos primes ?
     </h2>
     <p class="text-xl text-white/90 mb-8">
-      Découvrez ce que notre IA peut faire pour vous
+      Demandez une analyse gratuite de votre situation
     </p>
 
     <div class="space-y-4 sm:space-y-0 sm:space-x-4 sm:flex sm:justify-center">
-      <%= link_to ai_chat_path,
+      <%= link_to new_contact_path,
           class: "block sm:inline-block bg-amber-400 text-primary-900 px-8 py-4 rounded-lg font-bold text-lg hover:bg-amber-300 transition-colors" do %>
-        🤖 Tester l'IA maintenant
+        📋 Demander une analyse
       <% end %>
 
       <%= link_to root_path,

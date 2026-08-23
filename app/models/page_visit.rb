@@ -1,2 +1,0 @@
-class PageVisit < ApplicationRecord
-end

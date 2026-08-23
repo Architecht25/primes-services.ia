@@ -35,4 +35,9 @@
 
 /app/assets/builds/*
 !/app/assets/builds/.keep
+
+# Ignore precompiled assets (must be regenerated at deploy time, never committed —
+# a stale committed copy silently shadows live asset compilation in development).
+/public/assets
+
 emailer/node_modules/

@@ -6,7 +6,6 @@ class Admin::ContactsController < Admin::BaseController
       .limit(100)
 
     # Filtres
-    @contacts = @contacts.where(submission_type: params[:type]) if params[:type].present?
     @contacts = @contacts.where('created_at >= ?', params[:from]) if params[:from].present?
     @contacts = @contacts.where('created_at <= ?', params[:to]) if params[:to].present?
 
@@ -14,8 +13,8 @@ class Admin::ContactsController < Admin::BaseController
     if params[:search].present?
       search_term = "%#{params[:search]}%"
       @contacts = @contacts.where(
-        'email LIKE ? OR phone LIKE ? OR first_name LIKE ? OR last_name LIKE ?',
-        search_term, search_term, search_term, search_term
+        'name LIKE ? OR email LIKE ? OR phone LIKE ?',
+        search_term, search_term, search_term
       )
     end
 
@@ -25,7 +24,7 @@ class Admin::ContactsController < Admin::BaseController
     # Stats pour les filtres
     @stats = {
       total: ContactSubmission.count,
-      by_type: ContactSubmission.group(:submission_type).count,
+      by_type: ContactSubmission.group(:type).count,
       recent: ContactSubmission.where('created_at >= ?', 24.hours.ago).count
     }
   end

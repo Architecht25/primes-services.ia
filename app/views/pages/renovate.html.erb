@@ -1,10 +1,9 @@
-<% content_for :title, "Ren0vate - Plateforme digitale de gestion de rénovation multi-biens" %>
-<% content_for :description, "Ren0vate : gestion multi-biens 3 régions, simulation prêts 0%, devis en 30s, comparateurs matériaux, suivi chantier photo. Plateforme complète de A à Z." %>
-<% content_for :keywords, "renovate belgique, gestion multi-biens, prêts taux zéro, devis instantané, suivi chantier, comparateur matériaux, rénovation digitale" %>
+<% content_for :title, "Ren0vate - Accompagnement complet de votre rénovation" %>
+<% content_for :description, "Ren0vate : notre plateforme partenaire pour gérer votre dossier de rénovation de A à Z. Demandez un rendez-vous pour une analyse personnalisée de votre situation." %>
+<% content_for :keywords, "renovate belgique, accompagnement rénovation, primes wallonie flandre bruxelles, prêts taux zéro, analyse de situation" %>
 
-<!-- Section Hero avec animation -->
+<!-- Section Hero -->
 <section class="bg-gradient-to-br from-primary-600 via-primary-700 to-secondary-600 text-white py-20 lg:py-28 relative overflow-hidden">
-  <!-- Effet de fond animé -->
   <div class="absolute inset-0 opacity-20">
     <div class="absolute top-0 left-0 w-96 h-96 bg-primary-400 rounded-full filter blur-3xl animate-pulse"></div>
     <div class="absolute bottom-0 right-0 w-96 h-96 bg-accent-400 rounded-full filter blur-3xl animate-pulse" style="animation-delay: 1s;"></div>
@@ -12,20 +11,18 @@
 
   <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
     <div class="text-center">
-      <!-- Logo Ren0vate -->
       <div class="mb-8">
         <h1 class="text-5xl lg:text-7xl font-bold mb-4">
           Ren<span class="text-amber-300">0</span>vate
         </h1>
         <p class="text-xl lg:text-2xl text-white/90">
-          Plateforme digitale de gestion de rénovation multi-biens
+          Notre plateforme partenaire pour l'accompagnement complet de votre rénovation
         </p>
         <p class="text-lg text-white/80 mt-2">
           Wallonie • Flandre • Bruxelles
         </p>
       </div>
 
-      <!-- Badges de confiance -->
       <div class="flex flex-wrap justify-center gap-4 mb-12">
         <div class="bg-white/10 backdrop-blur-sm rounded-full px-6 py-2 border border-white/20">
           <span class="text-sm font-semibold">✓ 15 ans d'expertise</span>
@@ -38,188 +35,75 @@
         </div>
       </div>
 
-      <!-- CTA Principal -->
-      <div class="space-y-4">
-        <a href="https://ren0vate-630b5136c442.herokuapp.com/"
-           target="_blank" rel="noopener"
-           class="inline-block bg-amber-400 text-primary-900 px-12 py-5 rounded-xl font-bold text-xl hover:bg-amber-300 transition-all shadow-2xl transform hover:scale-105">
-          🚀 Accéder à Ren0vate
-        </a>
-        <p class="text-white/90 text-sm">
-          Prise en charge complète de votre projet en moins de 48h
-        </p>
-      </div>
+      <p class="text-white/90 max-w-2xl mx-auto">
+        Après une analyse personnalisée de votre situation, nous créons votre dossier dans Ren0vate :
+        identification des primes, gestion de chantier, suivi jusqu'à l'obtention. Un accompagnement
+        humain, pas un simple outil en libre-service.
+      </p>
     </div>
   </div>
 </section>
 
-<!-- Fonctionnalités plateforme Ren0vate -->
+<%= render "pages/renovate_regional_summary" %>
+
+<!-- Ce que fait Ren0vate pour vous -->
 <section class="py-16 bg-white">
   <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
     <div class="text-center mb-12">
       <h2 class="text-4xl font-bold text-gray-900 mb-4">
-        Une plateforme complète pour gérer vos rénovations
+        Ce que Ren0vate gère pour vous
       </h2>
       <p class="text-xl text-gray-600">
-        De l'identification des primes à la clôture de chantier, tout est digitalisé
+        De l'identification des primes à la clôture de chantier
       </p>
     </div>
 
-    <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-      <!-- Fonctionnalité 1 -->
-      <div class="bg-gradient-to-br from-pearl to-primary-50 rounded-xl shadow-lg p-8 hover:shadow-xl transition-shadow border-2 border-primary-200">
-        <div class="w-16 h-16 bg-primary-600 rounded-full flex items-center justify-center text-4xl mb-4">
-          🏢
-        </div>
-        <h3 class="text-xl font-bold text-gray-900 mb-3">
-          Gestion multi-biens
-        </h3>
-        <p class="text-gray-700">
-          Gérez tous vos biens immobiliers depuis une seule plateforme.
-          Compatible avec les 3 régions belges : Wallonie, Flandre et Bruxelles.
-        </p>
+    <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+      <div class="bg-gradient-to-br from-pearl to-primary-50 rounded-xl shadow-lg p-6 border-2 border-primary-200">
+        <div class="w-14 h-14 bg-primary-600 rounded-full flex items-center justify-center text-3xl mb-4">🎯</div>
+        <h3 class="text-lg font-bold text-gray-900 mb-2">Identification des primes</h3>
+        <p class="text-gray-700 text-sm">Détection de toutes les primes disponibles selon votre profil et votre région.</p>
       </div>
 
-      <!-- Fonctionnalité 2 -->
-      <div class="bg-gradient-to-br from-pearl to-secondary-50 rounded-xl shadow-lg p-8 hover:shadow-xl transition-shadow border-2 border-secondary-200">
-        <div class="w-16 h-16 bg-secondary-600 rounded-full flex items-center justify-center text-4xl mb-4">
-          🎯
-        </div>
-        <h3 class="text-xl font-bold text-gray-900 mb-3">
-          Identification des primes
-        </h3>
-        <p class="text-gray-700">
-          Détection automatique de toutes les primes disponibles selon votre région,
-          vos revenus et votre type de bien. Maximisation garantie.
-        </p>
+      <div class="bg-gradient-to-br from-pearl to-secondary-50 rounded-xl shadow-lg p-6 border-2 border-secondary-200">
+        <div class="w-14 h-14 bg-secondary-600 rounded-full flex items-center justify-center text-3xl mb-4">🏗️</div>
+        <h3 class="text-lg font-bold text-gray-900 mb-2">Gestion de chantier</h3>
+        <p class="text-gray-700 text-sm">Planning, coordination des entrepreneurs, contrôle qualité et réception des travaux.</p>
       </div>
 
-      <!-- Fonctionnalité 3 -->
-      <div class="bg-gradient-to-br from-pearl to-accent-50 rounded-xl shadow-lg p-8 hover:shadow-xl transition-shadow border-2 border-accent-200">
-        <div class="w-16 h-16 bg-accent-600 rounded-full flex items-center justify-center text-4xl mb-4">
-          💰
-        </div>
-        <h3 class="text-xl font-bold text-gray-900 mb-3">
-          Simulation prêts à taux 0%
-        </h3>
-        <p class="text-gray-700">
-          Calculez instantanément votre accès aux prêts verts à taux 0%.
-          Simulation complète avec mensualités et durées adaptées.
-        </p>
+      <div class="bg-gradient-to-br from-pearl to-accent-50 rounded-xl shadow-lg p-6 border-2 border-accent-200">
+        <div class="w-14 h-14 bg-accent-600 rounded-full flex items-center justify-center text-3xl mb-4">📸</div>
+        <h3 class="text-lg font-bold text-gray-900 mb-2">Suivi en temps réel</h3>
+        <p class="text-gray-700 text-sm">État d'avancement de votre chantier accessible à tout moment.</p>
       </div>
 
-      <!-- Fonctionnalité 4 -->
-      <div class="bg-gradient-to-br from-pearl to-amber-50 rounded-xl shadow-lg p-8 hover:shadow-xl transition-shadow border-2 border-amber-200">
-        <div class="w-16 h-16 bg-amber-600 rounded-full flex items-center justify-center text-4xl mb-4">
-          ⚡
-        </div>
-        <h3 class="text-xl font-bold text-gray-900 mb-3">
-          Devis en 30 secondes
-        </h3>
-        <p class="text-gray-700">
-          Production instantanée de devis détaillés pour vos travaux.
-          Technologie IA pour des estimations précises et personnalisées.
-        </p>
-      </div>
-
-      <!-- Fonctionnalité 5 -->
-      <div class="bg-gradient-to-br from-pearl to-primary-50 rounded-xl shadow-lg p-8 hover:shadow-xl transition-shadow border-2 border-primary-200">
-        <div class="w-16 h-16 bg-primary-600 rounded-full flex items-center justify-center text-4xl mb-4">
-          📊
-        </div>
-        <h3 class="text-xl font-bold text-gray-900 mb-3">
-          Comparateurs intégrés
-        </h3>
-        <p class="text-gray-700">
-          Comparez les matériaux et les devis d'entrepreneurs en un clic.
-          Tableaux comparatifs détaillés : prix, performances, délais.
-        </p>
-      </div>
-
-      <!-- Fonctionnalité 6 -->
-      <div class="bg-gradient-to-br from-pearl to-secondary-50 rounded-xl shadow-lg p-8 hover:shadow-xl transition-shadow border-2 border-secondary-200">
-        <div class="w-16 h-16 bg-secondary-600 rounded-full flex items-center justify-center text-4xl mb-4">
-          📸
-        </div>
-        <h3 class="text-xl font-bold text-gray-900 mb-3">
-          Suivi chantier par photo
-        </h3>
-        <p class="text-gray-700">
-          État d'avancement en temps réel grâce aux photos géolocalisées.
-          Reconnaissance visuelle automatique de l'avancement des travaux.
-        </p>
-      </div>
-
-      <!-- Fonctionnalité 7 -->
-      <div class="bg-gradient-to-br from-pearl to-accent-50 rounded-xl shadow-lg p-8 hover:shadow-xl transition-shadow border-2 border-accent-200">
-        <div class="w-16 h-16 bg-accent-600 rounded-full flex items-center justify-center text-4xl mb-4">
-          🏗️
-        </div>
-        <h3 class="text-xl font-bold text-gray-900 mb-3">
-          Gestion complète de chantier
-        </h3>
-        <p class="text-gray-700">
-          De la préparation à la clôture : planning, coordination entrepreneurs,
-          contrôles qualité et réception des travaux.
-        </p>
-      </div>
-
-      <!-- Fonctionnalité 8 -->
-      <div class="bg-gradient-to-br from-pearl to-amber-50 rounded-xl shadow-lg p-8 hover:shadow-xl transition-shadow border-2 border-amber-200">
-        <div class="w-16 h-16 bg-amber-600 rounded-full flex items-center justify-center text-4xl mb-4">
-          📋
-        </div>
-        <h3 class="text-xl font-bold text-gray-900 mb-3">
-          Clôture automatisée
-        </h3>
-        <p class="text-gray-700">
-          Génération automatique des documents de clôture (DIU, PV, factures).
-          Constitution instantanée des dossiers de primes.
-        </p>
-      </div>
-
-      <!-- Fonctionnalité 9 -->
-      <div class="bg-gradient-to-br from-pearl to-primary-50 rounded-xl shadow-lg p-8 hover:shadow-xl transition-shadow border-2 border-primary-200">
-        <div class="w-16 h-16 bg-primary-600 rounded-full flex items-center justify-center text-4xl mb-4">
-          🔔
-        </div>
-        <h3 class="text-xl font-bold text-gray-900 mb-3">
-          Notifications intelligentes
-        </h3>
-        <p class="text-gray-700">
-          Alertes automatiques pour les échéances, nouvelles primes disponibles,
-          et étapes importantes de votre projet.
-        </p>
+      <div class="bg-gradient-to-br from-pearl to-amber-50 rounded-xl shadow-lg p-6 border-2 border-amber-200">
+        <div class="w-14 h-14 bg-amber-600 rounded-full flex items-center justify-center text-3xl mb-4">📋</div>
+        <h3 class="text-lg font-bold text-gray-900 mb-2">Dépôt des dossiers</h3>
+        <p class="text-gray-700 text-sm">Constitution et dépôt des dossiers de primes jusqu'à l'obtention.</p>
       </div>
     </div>
   </div>
 </section>
 
-<!-- CTA Final avec urgence -->
+<!-- CTA Final : rendez-vous -->
 <section class="py-16 bg-gradient-to-r from-primary-600 via-primary-700 to-secondary-600 text-white">
-  <div class="max-w-5xl mx-auto px-4 text-center">
+  <div class="max-w-3xl mx-auto px-4 text-center">
     <h2 class="text-4xl lg:text-5xl font-bold mb-6">
-      Prêt à démarrer votre rénovation ?
+      Parlons de votre projet
     </h2>
-    <p class="text-xl lg:text-2xl mb-8 text-white/90">
-      Audit gratuit • Devis sous 48h • 0€ d'avance sur les primes
+    <p class="text-xl text-white/90 mb-8">
+      Demandez une analyse de votre situation : nous prenons rendez-vous pour étudier votre dossier
+      et vous présenter comment Ren0vate peut vous accompagner.
     </p>
 
-    <!-- Boutons d'action -->
-    <div class="flex flex-col sm:flex-row gap-4 justify-center items-center mb-8">
+    <%= link_to new_contact_path,
+        class: "inline-block bg-amber-400 text-primary-900 px-10 py-4 rounded-xl font-bold text-lg hover:bg-amber-300 transition-all shadow-2xl" do %>
+      📋 Demander un rendez-vous
+    <% end %>
 
-      <a href="https://ren0vate.be"
-         target="_blank" rel="noopener"
-         class="inline-block bg-white/20 backdrop-blur-sm text-white px-3 py-2 rounded-xl font-bold text-lg hover:bg-white/30 transition-all border border-white/30 whitespace-nowrap">
-        🌐 Visiter le site Ren0vate
-      </a>
-    </div>
-
-    <!-- Retour vers Primes Services -->
-    <div class="mt-12 pt-8 border-t border-white/20">
-      <p class="text-white/90 mb-4">
-        Vous préférez d'abord estimer vos primes ?
-      </p>
+    <div class="mt-10 pt-8 border-t border-white/20">
+      <p class="text-white/90 mb-4">Vous préférez d'abord estimer vos primes ?</p>
       <%= link_to simulation_path,
           class: "inline-block bg-white/10 backdrop-blur-sm text-white px-8 py-3 rounded-lg font-semibold hover:bg-white/20 transition-colors border border-white/20" do %>
         ⬅️ Retour au simulateur de primes
@@ -227,28 +111,3 @@
     </div>
   </div>
 </section>
-
-<!-- Script de tracking (optionnel) -->
-<script nonce="<%= content_security_policy_nonce %>">
-document.addEventListener('DOMContentLoaded', function() {
-  // Tracker les clics vers Ren0vate
-  const renovateLinks = document.querySelectorAll('a[href*="renovate.be"]');
-
-  renovateLinks.forEach(link => {
-    link.addEventListener('click', function(e) {
-      // Tracking optionnel vers votre backend
-      fetch('/redirections/track_click', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'X-CSRF-Token': document.querySelector('[name="csrf-token"]').content
-        },
-        body: JSON.stringify({
-          element: 'renovate_link',
-          source: 'renovate_page'
-        })
-      }).catch(err => console.log('Tracking error:', err));
-    });
-  });
-});
-</script>

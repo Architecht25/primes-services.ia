@@ -1,0 +1,104 @@
+<!-- Résumé des primes et prêts disponibles dans les 3 régions belges -->
+<section class="py-16 bg-gray-50">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="text-center mb-12">
+      <h2 class="text-4xl font-bold text-gray-900 mb-4">
+        Primes et prêts disponibles dans votre région
+      </h2>
+      <p class="text-xl text-gray-600">
+        Un aperçu des dispositifs 2026 en Wallonie, Flandre et à Bruxelles
+      </p>
+    </div>
+
+    <div class="grid lg:grid-cols-3 gap-8">
+      <!-- Wallonie -->
+      <div class="bg-white rounded-xl shadow-lg p-8 border-t-4 border-primary-500">
+        <h3 class="text-2xl font-bold text-gray-900 mb-4">🏛️ Wallonie</h3>
+
+        <div class="mb-6">
+          <h4 class="font-semibold text-gray-800 mb-2">Primes</h4>
+          <ul class="text-sm text-gray-700 space-y-1.5 list-disc list-inside">
+            <li>Isolation toiture : jusqu'à 30€/m² (50€/m² revenus modestes)</li>
+            <li>Pompe à chaleur : 4 000€ à 6 000€</li>
+            <li>Prime Monuments et Sites : jusqu'à 80% pour biens classés</li>
+            <li>Primes communales : 500€ à 5 000€ (200+ communes)</li>
+          </ul>
+        </div>
+
+        <div>
+          <h4 class="font-semibold text-gray-800 mb-2">Prêts à 0% (SWCS)</h4>
+          <ul class="text-sm text-gray-700 space-y-1.5 list-disc list-inside">
+            <li>Rénopack : 1 000€ à 60 000€, audit énergétique obligatoire</li>
+            <li>Rénopack SWCS : 1 000€ à 30 000€ (toiture, électricité)</li>
+            <li>Rénoprêt : 1 000€ à 30 000€, sans audit ni prime</li>
+          </ul>
+        </div>
+
+        <%= link_to "Voir le détail Wallonie →", simulation_primes_path(region: 'wallonie'), class: "inline-block mt-6 text-primary-600 font-semibold hover:underline" %>
+      </div>
+
+      <!-- Flandre -->
+      <div class="bg-white rounded-xl shadow-lg p-8 border-t-4 border-secondary-500">
+        <h3 class="text-2xl font-bold text-gray-900 mb-4">🦁 Flandre</h3>
+
+        <div class="mb-6">
+          <h4 class="font-semibold text-gray-800 mb-2">Primes</h4>
+          <ul class="text-sm text-gray-700 space-y-1.5 list-disc list-inside">
+            <li>Dakisolatie (toiture) : jusqu'à 30€/m²</li>
+            <li>Warmtepomp (pompe à chaleur) : jusqu'à 4 500€</li>
+            <li>Prime Patrimoine (Onroerend Erfgoed) : jusqu'à 80%</li>
+            <li>Primes communales : 300€ à 4 000€ (150+ communes)</li>
+          </ul>
+        </div>
+
+        <div>
+          <h4 class="font-semibold text-gray-800 mb-2">Prêt Mijn VerbouwLening</h4>
+          <ul class="text-sm text-gray-700 space-y-1.5 list-disc list-inside">
+            <li>4 000€ à 60 000€, taux 0% à 1,5% selon revenus</li>
+            <li>Bonus 2026 : +1 à +2% de réduction selon catégorie</li>
+            <li>Durée max 30 ans</li>
+          </ul>
+        </div>
+
+        <%= link_to "Voir le détail Flandre →", simulation_primes_path(region: 'flandre'), class: "inline-block mt-6 text-secondary-600 font-semibold hover:underline" %>
+      </div>
+
+      <!-- Bruxelles -->
+      <div class="bg-white rounded-xl shadow-lg p-8 border-t-4 border-accent-500">
+        <h3 class="text-2xl font-bold text-gray-900 mb-4">🏙️ Bruxelles-Capitale</h3>
+
+        <div class="mb-6 bg-amber-50 border border-amber-200 rounded-lg p-3">
+          <p class="text-xs text-amber-900">
+            ⚠️ Les primes régionales Renolution ont été supprimées fin 2024. Restent disponibles :
+            Crédit EcoRéno, Monuments et Sites, primes communales.
+          </p>
+        </div>
+
+        <div class="mb-6">
+          <h4 class="font-semibold text-gray-800 mb-2">Primes toujours actives</h4>
+          <ul class="text-sm text-gray-700 space-y-1.5 list-disc list-inside">
+            <li>Monuments et Sites : jusqu'à 90% pour biens classés</li>
+            <li>Petit Patrimoine : jusqu'à 50% (max 5 000€)</li>
+            <li>Primes communales : 400€ à 6 000€ (19 communes)</li>
+          </ul>
+        </div>
+
+        <div>
+          <h4 class="font-semibold text-gray-800 mb-2">Crédit EcoRéno</h4>
+          <ul class="text-sm text-gray-700 space-y-1.5 list-disc list-inside">
+            <li>Hypothécaire : jusqu'à 120% de la valeur du bien</li>
+            <li>Consommation : 1 500€ à 25 000€, sans frais</li>
+            <li>Taux 2026 : 2,5% (revenus bas) à 3,5% (revenus moyens)</li>
+          </ul>
+        </div>
+
+        <%= link_to "Voir le détail Bruxelles →", simulation_primes_path(region: 'bruxelles'), class: "inline-block mt-6 text-accent-600 font-semibold hover:underline" %>
+      </div>
+    </div>
+
+    <p class="text-center text-sm text-gray-500 mt-8">
+      Montants et conditions à titre indicatif, sous réserve des barèmes officiels en vigueur.
+      Une analyse personnalisée permet de déterminer précisément vos droits.
+    </p>
+  </div>
+</section>

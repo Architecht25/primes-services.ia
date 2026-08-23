@@ -22,11 +22,6 @@
           🧮 Simulation
         <% end %>
 
-        <%= link_to ai_chat_path,
-            class: "text-gray-700 hover:text-primary-600 font-medium transition-colors #{'text-primary-600' if current_page?(ai_chat_path)}" do %>
-          🤖 Chat IA
-        <% end %>
-
         <%= link_to renovate_path,
             class: "text-gray-700 hover:text-secondary-600 font-medium transition-colors #{'text-secondary-600' if current_page?(renovate_path)}" do %>
           🚀 Ren0vate
@@ -37,44 +32,10 @@
           👥 À propos
         <% end %>
 
-        <!-- Dropdown Formulaires -->
-        <div class="relative" data-controller="dropdown">
-          <button
-            data-action="click->dropdown#toggle"
-            class="text-gray-700 hover:text-primary-600 font-medium transition-colors flex items-center space-x-1"
-          >
-            <span>📋 Formulaires de contact</span>
-            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
-            </svg>
-          </button>
-
-          <div
-            data-dropdown-target="menu"
-            class="absolute right-0 mt-2 w-56 bg-white rounded-md shadow-lg border border-gray-200 hidden"
-          >
-            <div class="py-1">
-              <%= link_to particulier_contacts_path, class: "block px-4 py-2 text-sm text-gray-700 hover:bg-primary-50 hover:text-primary-600" do %>
-                🏠 Particuliers
-              <% end %>
-              <%= link_to acp_contacts_path, class: "block px-4 py-2 text-sm text-gray-700 hover:bg-primary-50 hover:text-primary-600" do %>
-                🏢 Copropriétés (ACP)
-              <% end %>
-              <%= link_to entreprise_immo_contacts_path, class: "block px-4 py-2 text-sm text-gray-700 hover:bg-primary-50 hover:text-primary-600" do %>
-                🏗️ Entreprises & Professionnels
-              <% end %>
-              <div class="border-t border-gray-100 my-1"></div>
-              <%= link_to new_contact_path, class: "block px-4 py-2 text-sm text-primary-600 hover:bg-primary-50 font-medium" do %>
-                📋 Tous les formulaires
-              <% end %>
-            </div>
-          </div>
-        </div>
-
         <!-- CTA Principal -->
-        <%= link_to ai_chat_path,
+        <%= link_to new_contact_path,
             class: "bg-primary-600 text-white px-4 py-2 rounded-lg font-semibold hover:bg-primary-700 transition-colors" do %>
-          💬 Commencer
+          📋 Demander une analyse
         <% end %>
       </div>
 
@@ -111,11 +72,6 @@
           🧮 Simulation
         <% end %>
 
-        <%= link_to ai_chat_path,
-            class: "block px-3 py-2 text-gray-700 hover:text-primary-600 hover:bg-primary-50 rounded-md font-medium" do %>
-          🤖 Chat IA
-        <% end %>
-
         <%= link_to renovate_path,
             class: "block px-3 py-2 text-gray-700 hover:text-secondary-600 hover:bg-secondary-50 rounded-md font-medium" do %>
           🚀 Ren0vate
@@ -126,27 +82,10 @@
           👥 À propos
         <% end %>
 
-        <!-- Sous-menu Formulaires mobile -->
-        <div class="pl-4 space-y-1">
-          <p class="px-3 py-2 text-sm font-semibold text-gray-500">📋 Formulaires</p>
-          <%= link_to particulier_contacts_path, class: "block px-3 py-2 text-sm text-gray-700 hover:text-primary-600 hover:bg-primary-50 rounded-md" do %>
-            🏠 Particuliers
-          <% end %>
-          <%= link_to acp_contacts_path, class: "block px-3 py-2 text-sm text-gray-700 hover:text-primary-600 hover:bg-primary-50 rounded-md" do %>
-            🏢 Copropriétés (ACP)
-          <% end %>
-          <%= link_to entreprise_immo_contacts_path, class: "block px-3 py-2 text-sm text-gray-700 hover:text-primary-600 hover:bg-primary-50 rounded-md" do %>
-            🏗️ Entreprises & Professionnels
-          <% end %>
-          <%= link_to new_contact_path, class: "block px-3 py-2 text-sm text-gray-700 hover:text-primary-600 hover:bg-primary-50 rounded-md" do %>
-            📋 Tous les formulaires
-          <% end %>
-        </div>
-
         <!-- CTA Mobile -->
-        <%= link_to ai_chat_path,
+        <%= link_to new_contact_path,
             class: "block mx-3 mt-4 bg-primary-600 text-white px-4 py-2 rounded-lg font-semibold text-center hover:bg-primary-700 transition-colors" do %>
-          💬 Commencer maintenant
+          📋 Demander une analyse
         <% end %>
       </div>
     </div>

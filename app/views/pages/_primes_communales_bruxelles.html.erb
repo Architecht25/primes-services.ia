@@ -70,7 +70,7 @@
         <div class="flex items-start space-x-2">
           <span class="text-xl">💡</span>
           <div class="text-sm text-gray-700">
-            <strong>Astuce :</strong> Chaque commune a ses propres critères et délais. Contactez votre administration communale avant de débuter les travaux ou utilisez notre assistant IA pour identifier automatiquement les primes de votre commune.
+            <strong>Astuce :</strong> Chaque commune a ses propres critères et délais. Contactez votre administration communale avant de débuter les travaux ou demandez une analyse de situation pour identifier les primes de votre commune.
           </div>
         </div>
       </div>
@@ -81,9 +81,9 @@
           🚧 Rechercher ma commune
           <span class="ml-2 text-xs font-normal italic">(en chantier)</span>
         </button>
-        <%= link_to ai_chat_path,
+        <%= link_to new_contact_path,
             class: "inline-flex items-center px-5 py-3 bg-white text-amber-600 font-semibold rounded-lg hover:bg-amber-50 transition-colors border border-amber-300" do %>
-          💬 Poser une question
+          📋 Demander une analyse
         <% end %>
       </div>
     </div>
