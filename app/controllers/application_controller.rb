@@ -20,6 +20,9 @@ class ApplicationController < ActionController::Base
   def redirect_apex_to_www
     return unless request.host == APEX_HOST
 
-    redirect_to "#{request.protocol}#{CANONICAL_HOST}#{request.fullpath}", status: :moved_permanently
+    # allow_other_host: le host cible est une constante fixe définie ci-dessus,
+    # pas une entrée utilisateur — aucun risque d'open redirect ici.
+    redirect_to "#{request.protocol}#{CANONICAL_HOST}#{request.fullpath}",
+                status: :moved_permanently, allow_other_host: true
   end
 end
