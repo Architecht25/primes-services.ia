@@ -91,12 +91,13 @@ Rails.application.configure do
   config.active_record.attributes_for_inspect = [ :id ]
 
   # Enable DNS rebinding protection and other `Host` header attacks.
-  # Only "www" is bound as a custom domain on Heroku today (the bare apex
-  # redirects elsewhere at the DNS level) — keep the raw Heroku hostname
-  # allowed too since it's still directly reachable and used by Heroku's
-  # own tooling/health checks.
+  # Both the apex and "www" are attached to the Heroku app as of 2026-08-24
+  # (apex ALIASes directly to Heroku now — no more DNS-level redirect through
+  # a raw platform hostname). The apex is 301-redirected to "www" at the app
+  # level below to keep a single canonical host for SEO.
   config.hosts = [
     "www.primes-services.be",
+    "primes-services.be",
     "primes-services-ia-cc4318abe295.herokuapp.com"
   ]
 
