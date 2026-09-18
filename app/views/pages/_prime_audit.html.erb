@@ -25,30 +25,33 @@
             </p>
             <div class="bg-white rounded-lg px-4 py-3 border border-red-200 text-center">
               <p class="text-xs text-red-600 font-semibold uppercase tracking-wide mb-2">Temps restant pour bénéficier de cette prime</p>
-              <div id="countdown-audit" class="flex justify-center gap-4 text-red-800">
+              <div class="flex justify-center gap-4 text-red-800"
+                   data-controller="countdown"
+                   data-countdown-deadline-value="2026-09-30T23:59:59"
+                   data-countdown-expired-message-value="La prime n'est plus disponible.">
                 <div class="text-center">
-                  <span id="cd-audit-days" class="text-3xl font-bold block">--</span>
+                  <span data-countdown-target="days" class="text-3xl font-bold block">--</span>
                   <span class="text-xs font-medium">jours</span>
                 </div>
                 <div class="text-center">
                   <span class="text-3xl font-bold">:</span>
                 </div>
                 <div class="text-center">
-                  <span id="cd-audit-hours" class="text-3xl font-bold block">--</span>
+                  <span data-countdown-target="hours" class="text-3xl font-bold block">--</span>
                   <span class="text-xs font-medium">heures</span>
                 </div>
                 <div class="text-center">
                   <span class="text-3xl font-bold">:</span>
                 </div>
                 <div class="text-center">
-                  <span id="cd-audit-minutes" class="text-3xl font-bold block">--</span>
+                  <span data-countdown-target="minutes" class="text-3xl font-bold block">--</span>
                   <span class="text-xs font-medium">minutes</span>
                 </div>
                 <div class="text-center">
                   <span class="text-3xl font-bold">:</span>
                 </div>
                 <div class="text-center">
-                  <span id="cd-audit-seconds" class="text-3xl font-bold block">--</span>
+                  <span data-countdown-target="seconds" class="text-3xl font-bold block">--</span>
                   <span class="text-xs font-medium">secondes</span>
                 </div>
               </div>
@@ -56,30 +59,6 @@
           </div>
         </div>
       </div>
-
-      <script nonce="<%= content_security_policy_nonce %>">
-        (function() {
-          var deadline = new Date('2026-09-30T23:59:59');
-          function updateCountdown() {
-            var now = new Date();
-            var diff = deadline - now;
-            if (diff <= 0) {
-              document.getElementById('countdown-audit').innerHTML = '<span class="text-red-800 font-bold">La prime n\'est plus disponible.</span>';
-              return;
-            }
-            var days    = Math.floor(diff / (1000 * 60 * 60 * 24));
-            var hours   = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-            var minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
-            var seconds = Math.floor((diff % (1000 * 60)) / 1000);
-            document.getElementById('cd-audit-days').textContent    = String(days).padStart(3, '0');
-            document.getElementById('cd-audit-hours').textContent   = String(hours).padStart(2, '0');
-            document.getElementById('cd-audit-minutes').textContent = String(minutes).padStart(2, '0');
-            document.getElementById('cd-audit-seconds').textContent = String(seconds).padStart(2, '0');
-          }
-          updateCountdown();
-          setInterval(updateCountdown, 1000);
-        })();
-      </script>
 
       <div class="grid md:grid-cols-2 gap-4 mb-4">
         <div class="bg-white rounded-lg p-4">

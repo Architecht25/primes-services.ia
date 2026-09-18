@@ -7,8 +7,9 @@
   <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
 
     <!-- Badge "Nouveauté" -->
-    <div class="inline-block bg-amber-400 text-primary-900 px-6 py-2 rounded-full font-bold text-sm mb-8">
-      📢 Primes Services évolue
+    <div class="inline-flex items-center gap-2 bg-amber-400 text-primary-900 px-6 py-2 rounded-full font-bold text-sm mb-8">
+      <%= heroicon :megaphone, css_class: "w-4 h-4" %>
+      Primes Services évolue
     </div>
 
     <h1 class="text-4xl lg:text-6xl font-bold leading-tight mb-8">
@@ -33,15 +34,18 @@
     <!-- Statistiques 15 ans -->
     <div class="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-4xl mx-auto mb-12 mt-12">
       <div class="bg-white/10 rounded-lg p-6 backdrop-blur-sm border border-white/20">
-        <div class="text-3xl font-bold text-amber-300">15 ans</div>
+        <div class="text-3xl font-bold text-amber-300"
+             data-controller="counter" data-counter-end-value="15" data-counter-suffix-value=" ans">15 ans</div>
         <div class="text-sm text-primary-100">D'expertise terrain</div>
       </div>
       <div class="bg-white/10 rounded-lg p-6 backdrop-blur-sm border border-white/20">
-        <div class="text-3xl font-bold text-amber-300">+15.000</div>
+        <div class="text-3xl font-bold text-amber-300"
+             data-controller="counter" data-counter-end-value="15000" data-counter-prefix-value="+">+15.000</div>
         <div class="text-sm text-primary-100">Dossiers accompagnés</div>
       </div>
       <div class="bg-white/10 rounded-lg p-6 backdrop-blur-sm border border-white/20">
-        <div class="text-3xl font-bold text-amber-300">+100M€</div>
+        <div class="text-3xl font-bold text-amber-300"
+             data-controller="counter" data-counter-end-value="100" data-counter-prefix-value="+" data-counter-suffix-value="M€">+100M€</div>
         <div class="text-sm text-primary-100">De financements obtenus</div>
       </div>
     </div>
@@ -63,7 +67,7 @@
     <div class="grid md:grid-cols-2 gap-12 items-center mb-16">
       <!-- Avant -->
       <div class="bg-pearl-50 rounded-xl p-8">
-        <div class="text-4xl mb-4 text-center">📋</div>
+        <%= heroicon :clipboard_document_list, css_class: "w-12 h-12 mb-4 mx-auto text-primary-500" %>
         <h3 class="text-2xl font-bold text-primary-900 mb-4 text-center">Avant</h3>
         <ul class="space-y-3 text-primary-700">
           <li class="flex items-start">
@@ -87,7 +91,7 @@
 
       <!-- Maintenant -->
       <div class="bg-gradient-to-br from-primary-50 to-secondary-50 rounded-xl p-8 border-2 border-accent-400">
-        <div class="text-4xl mb-4 text-center">🚀</div>
+        <%= heroicon :rocket_launch, css_class: "w-12 h-12 mb-4 mx-auto text-secondary-500" %>
         <h3 class="text-2xl font-bold text-primary-900 mb-4 text-center">Aujourd'hui</h3>
         <ul class="space-y-3 text-primary-700">
           <li class="flex items-start">
@@ -130,8 +134,8 @@
         <div class="absolute top-0 right-0 w-32 h-32 bg-primary-100 rounded-full -mr-16 -mt-16"></div>
 
         <div class="relative">
-          <div class="w-16 h-16 bg-primary-600 rounded-xl flex items-center justify-center text-white text-3xl mb-6">
-            🧮
+          <div class="w-16 h-16 bg-primary-600 rounded-xl flex items-center justify-center text-white mb-6">
+            <%= heroicon :calculator, css_class: "w-8 h-8" %>
           </div>
 
           <h3 class="text-2xl font-bold text-primary-900 mb-4">
@@ -153,7 +157,7 @@
             </li>
             <li class="flex items-start">
               <span class="text-accent-400 mr-2">✓</span>
-              <span>Assistant IA pour vos questions</span>
+              <span>Wallonie, Flandre et Bruxelles couvertes</span>
             </li>
             <li class="flex items-start">
               <span class="text-accent-400 mr-2">✓</span>
@@ -162,8 +166,8 @@
           </ul>
 
           <%= link_to simulation_path,
-              class: "block w-full bg-primary-600 text-white text-center px-8 py-4 rounded-lg font-bold text-lg hover:bg-primary-700 transition-colors shadow-lg" do %>
-            🎯 Simuler mes primes et prêts
+              class: "flex items-center justify-center gap-2 w-full bg-primary-600 text-white text-center px-8 py-4 rounded-lg font-bold text-lg hover:bg-primary-700 transition-colors shadow-lg" do %>
+            <%= heroicon :calculator, css_class: "w-5 h-5" %> Simuler mes primes et prêts
           <% end %>
         </div>
       </div>
@@ -173,8 +177,8 @@
         <div class="absolute top-0 right-0 w-32 h-32 bg-secondary-100 rounded-full -mr-16 -mt-16"></div>
 
         <div class="relative">
-          <div class="w-16 h-16 bg-secondary-500 rounded-xl flex items-center justify-center text-white text-3xl mb-6">
-            🏗️
+          <div class="w-16 h-16 bg-secondary-500 rounded-xl flex items-center justify-center text-white mb-6">
+            <%= heroicon :wrench_screwdriver, css_class: "w-8 h-8" %>
           </div>
 
           <h3 class="text-2xl font-bold text-primary-900 mb-4">
@@ -205,8 +209,8 @@
           </ul>
 
           <%= link_to renovate_path,
-              class: "block w-full bg-secondary-500 text-white text-center px-8 py-4 rounded-lg font-bold text-lg hover:bg-secondary-600 transition-colors shadow-lg" do %>
-            🚀 Découvrir Ren0vate
+              class: "flex items-center justify-center gap-2 w-full bg-secondary-500 text-white text-center px-8 py-4 rounded-lg font-bold text-lg hover:bg-secondary-600 transition-colors shadow-lg" do %>
+            <%= heroicon :rocket_launch, css_class: "w-5 h-5" %> Découvrir Ren0vate
           <% end %>
         </div>
       </div>
@@ -262,13 +266,13 @@
 
     <div class="flex flex-col sm:flex-row gap-4 justify-center">
       <%= link_to simulation_path,
-          class: "bg-primary-600 text-white px-10 py-5 rounded-xl font-bold text-xl hover:bg-primary-700 transition-all shadow-lg transform hover:scale-105" do %>
-        🧮 Faire une simulation
+          class: "flex items-center justify-center gap-2 bg-primary-600 text-white px-10 py-5 rounded-xl font-bold text-xl hover:bg-primary-700 transition-all shadow-lg transform hover:scale-105" do %>
+        <%= heroicon :calculator, css_class: "w-5 h-5" %> Faire une simulation
       <% end %>
 
       <%= link_to new_contact_path,
-          class: "bg-pearl-100 text-primary-900 px-10 py-5 rounded-xl font-bold text-xl hover:bg-pearl-200 transition-all" do %>
-        📋 Demander une analyse
+          class: "flex items-center justify-center gap-2 bg-pearl-100 text-primary-900 px-10 py-5 rounded-xl font-bold text-xl hover:bg-pearl-200 transition-all" do %>
+        <%= heroicon :clipboard_document_list, css_class: "w-5 h-5" %> Demander une analyse
       <% end %>
     </div>
 

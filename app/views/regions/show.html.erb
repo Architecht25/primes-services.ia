@@ -30,11 +30,11 @@
         </p>
 
         <div class="flex flex-col sm:flex-row gap-4 justify-center">
-          <%= link_to simulation_primes_path(region: @region), class: "bg-white text-#{@region_info[:color]}-600 px-8 py-4 rounded-lg font-bold text-lg hover:bg-gray-100 transition" do %>
-            🧮 Calculer mes primes
+          <%= link_to simulation_primes_path(region: @region), class: "flex items-center justify-center gap-2 bg-white text-#{@region_info[:color]}-600 px-8 py-4 rounded-lg font-bold text-lg hover:bg-gray-100 transition" do %>
+            <%= heroicon :calculator, css_class: "w-5 h-5" %> Calculer mes primes
           <% end %>
-          <%= link_to new_contact_path, class: "bg-#{@region_info[:color]}-700 px-8 py-4 rounded-lg font-bold text-lg hover:bg-#{@region_info[:color]}-600 transition border-2 border-white" do %>
-            📋 Demander une analyse
+          <%= link_to new_contact_path, class: "flex items-center justify-center gap-2 bg-#{@region_info[:color]}-700 px-8 py-4 rounded-lg font-bold text-lg hover:bg-#{@region_info[:color]}-600 transition border-2 border-white" do %>
+            <%= heroicon :clipboard_document_list, css_class: "w-5 h-5" %> Demander une analyse
           <% end %>
         </div>
       </div>
@@ -46,17 +46,17 @@
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
         <div class="text-center p-6">
-          <div class="text-3xl mb-2">🏛️</div>
+          <%= heroicon :building_library, css_class: "w-8 h-8 mb-2 mx-auto text-gray-700" %>
           <h3 class="font-bold text-lg mb-2">Autorité</h3>
           <p class="text-gray-600"><%= @region_info[:authority] %></p>
         </div>
         <div class="text-center p-6">
-          <div class="text-3xl mb-2">📞</div>
+          <%= heroicon :phone, css_class: "w-8 h-8 mb-2 mx-auto text-gray-700" %>
           <h3 class="font-bold text-lg mb-2">Contact</h3>
           <p class="text-gray-600"><%= @region_info[:contact] %></p>
         </div>
         <div class="text-center p-6">
-          <div class="text-3xl mb-2">🌐</div>
+          <%= heroicon :globe_alt, css_class: "w-8 h-8 mb-2 mx-auto text-gray-700" %>
           <h3 class="font-bold text-lg mb-2">Site officiel</h3>
           <%= link_to @region_info[:website], @region_info[:website], target: '_blank', class: 'text-blue-600 hover:underline' %>
         </div>
@@ -135,15 +135,28 @@
         Questions fréquentes - Primes en <%= @region_info[:name] %>
       </h2>
 
-      <div class="space-y-6">
-        <% @faqs.each do |faq| %>
-          <div class="bg-gray-50 rounded-xl p-6">
-            <h3 class="font-bold text-xl mb-3 text-gray-900">
-              <%= faq[:question] %>
+      <div id="faq-accordion" data-accordion="collapse" class="space-y-4" data-controller="scroll-animation">
+        <% @faqs.each_with_index do |faq, index| %>
+          <div class="bg-gray-50 rounded-xl overflow-hidden">
+            <h3 id="faq-heading-<%= index %>">
+              <button type="button"
+                      class="flex items-center justify-between w-full p-6 font-bold text-xl text-left text-gray-900 gap-4"
+                      data-accordion-target="#faq-body-<%= index %>"
+                      aria-expanded="<%= index.zero? ? 'true' : 'false' %>"
+                      aria-controls="faq-body-<%= index %>">
+                <span><%= faq[:question] %></span>
+                <svg data-accordion-icon
+                     class="w-5 h-5 shrink-0 text-gray-500 transition-transform duration-200 <%= 'rotate-180' if index.zero? %>"
+                     fill="none" viewBox="0 0 10 6">
+                  <path stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" d="M9 5 5 1 1 5" />
+                </svg>
+              </button>
             </h3>
-            <p class="text-gray-700">
-              <%= faq[:answer] %>
-            </p>
+            <div id="faq-body-<%= index %>" class="<%= 'hidden' unless index.zero? %>" aria-labelledby="faq-heading-<%= index %>">
+              <p class="px-6 pb-6 text-gray-700">
+                <%= faq[:answer] %>
+              </p>
+            </div>
           </div>
         <% end %>
       </div>
