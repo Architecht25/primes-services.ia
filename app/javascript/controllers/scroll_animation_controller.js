@@ -4,6 +4,8 @@ export default class extends Controller {
   static values = { delay: { type: Number, default: 0 } }
 
   connect() {
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return
+
     this.element.style.opacity = "0"
     this.element.style.transform = "translateY(24px)"
     this.element.style.transition = "opacity 0.65s ease, transform 0.65s ease"

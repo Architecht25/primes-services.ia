@@ -1,10 +1,8 @@
 class ContactMailer < ApplicationMailer
-  ADMIN_EMAIL = "robin@primes-services.be"
-
   def new_submission_notification(contact)
     @contact = contact
     mail(
-      to: ADMIN_EMAIL,
+      to: ENV.fetch("TEAM_EMAIL", "robin@primes-services.be"),
       subject: "[Nouvelle demande] #{contact.name} (##{contact.id}) – #{contact.region&.humanize}"
     )
   end

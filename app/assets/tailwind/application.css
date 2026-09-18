@@ -6,6 +6,11 @@
 /* Forcer la génération des classes utilisées dynamiquement dans les vues */
 @source inline("grid-cols-1 grid-cols-2 grid-cols-3 grid-cols-4 md:grid-cols-2 md:grid-cols-3 lg:grid-cols-2 lg:grid-cols-3 lg:grid-cols-4 xl:grid-cols-4 gap-4 gap-6 gap-8");
 
+/* Couleurs par région (regions/show.html.erb compose bg-<%= @region_info[:color] %>-600 etc.
+   dynamiquement — blue/yellow/green — invisible au scanner statique de Tailwind) */
+@source inline("{from,to,bg,text}-{blue,yellow,green}-{50,100,600,700,800}");
+@source inline("hover:bg-{blue,yellow,green}-{600,700}");
+
 /* Classes avec valeurs arbitraires non détectables par le scanner */
 @layer utilities {
   .max-w-\[1600px\] { max-width: 1600px; }
