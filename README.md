@@ -1,244 +1,104 @@
-# 🚀 Primes Services IA - Assistant Spécialisé en Primes Belges
+# Primes Services IA
 
-## 📋 Description
+Site marketing et de génération de leads pour **Primes-Services** : il aide les
+particuliers, les copropriétés (ACP) et les entreprises à identifier les primes et
+prêts à la rénovation en Belgique, dans les trois régions (Wallonie, Flandre,
+Bruxelles-Capitale).
 
-**Primes Services IA** est une plateforme intelligente d'assistance pour l'obtention de primes et subsides en Belgique. L'application utilise l'intelligence artificielle pour analyser automatiquement les profils utilisateurs et proposer les aides les plus pertinentes selon leur situation géographique et leurs besoins spécifiques.
+Il comprend :
 
-## ✨ Fonctionnalités Principales
+- des **calculateurs de primes** et pages de prêts par région (`/simulation/:region`,
+  `/simulation/:region/primes`, `/simulation/:region/prets`)
+- un **formulaire de contact** à quatre profils (particulier, ACP, entreprise
+  immobilière, entreprise commerciale), protégé par Cloudflare Turnstile
+- un **espace d'administration** (`/admin`) : contacts, export, actions groupées,
+  supervision de sécurité
+- une **PWA** (manifeste, service worker, page hors ligne)
 
-### 🤖 Intelligence Artificielle Intégrée
-- **Chatbot conversationnel** spécialisé dans les primes belges
-- **Analyse automatique** des profils utilisateurs
-- **Suggestions personnalisées** selon la région et le type de projet
-- **Détection de complexité** avec redirection vers experts
+## Modèle de données
 
-### 📝 Formulaires Spécialisés (STI Pattern)
-- **Particuliers** : Propriétaires de maisons et appartements
-- **ACP (Associations de Copropriétaires)** : Syndics et copropriétés
-- **Entreprises Immobilières** : Promoteurs, constructeurs, gestionnaires
-- **Entreprises Commerciales** : PME, startups, industries
+Les soumissions de contact utilisent l'héritage de table unique (STI) sur
+`contact_submissions` :
 
-### 🏛️ Support Multi-Régional
-- **Wallonie** : Primes habitation, isolation, chauffage
-- **Flandre** : Mijn VerbouwPremie, aides flamandes
-- **Bruxelles-Capitale** : Renolution, Prime Energie
-
-### 🎯 Services Intelligents
-- **GeolocationService** : Spécificités locales et autorités compétentes
-- **EmailService** : Confirmations automatiques et analyses IA
-- **NaturalLanguageProcessor** : Analyse d'intention et extraction d'entités
-
-## 🛠️ Architecture Technique
-
-### Stack Principal
-- **Rails 8.0** avec PostgreSQL
-- **Tailwind CSS** pour le design responsive
-- **Stimulus Controllers** pour l'interactivité
-- **PWA Ready** (Progressive Web App)
-
-### Modèles de Données
-```ruby
-# STI (Single Table Inheritance)
+```
 ContactSubmission (base)
 ├── ParticulierContact
 ├── AcpContact
 ├── EntrepriseImmoContact
 └── EntrepriseCommContact
-
-# IA et Conversations
-AiConversation
 ```
 
-### Services Métier
-```ruby
+Autres tables : `renovate_clicks` (clics sortants), `security_logs`, `page_visits`,
+ainsi que `primes`, `calculations` et `ai_insights`. Les tables `solid_*` servent à
+Solid Queue, Solid Cache et Solid Cable.
+
+## Services
+
+```
 app/services/
-├── ai_chatbot_service.rb          # Orchestration IA principale
-├── natural_language_processor.rb  # Analyse NLP
-├── email_service.rb              # Communications automatiques
-└── geolocation_service.rb        # Données géographiques
+├── contact_export_service.rb       # export des contacts
+├── geolocation_service.rb          # détection de la région (IP, géocodage inverse)
+├── node_mailer_service.rb          # envoi d'emails
+├── pwa_cache_service.rb            # données et brouillons pour le cache PWA
+├── security_monitor_service.rb     # supervision et scan de sécurité
+└── turnstile_verification_service.rb  # vérification Cloudflare Turnstile
 ```
 
-## 🚀 Installation
+## Routes principales
 
-### Prérequis
-- Ruby 3.3.5
-- Rails 8.0
+| Route | Rôle |
+|-------|------|
+| `/` | page d'accueil |
+| `/contacts/new`, `POST /contacts` | formulaire de contact |
+| `/regions/:region`, `/regions/:region/villes` | pages région et villes |
+| `/pages/about`, `/pages/simulation`, `/pages/renovate` | pages statiques |
+| `/admin` | administration (connexion `admin/login`) |
+| `/api/geolocation/detect_by_ip`, `/api/geolocation/reverse` | géolocalisation |
+| `/api/cache/*` | données essentielles et brouillons de formulaire (PWA) |
+| `/ping`, `/up` | health checks |
+
+## Stack
+
+- Ruby 3.3.9, Rails 8.0.5
 - PostgreSQL
-- Node.js (pour les assets)
+- Hotwire via importmap, Propshaft, Tailwind CSS
+- Solid Queue, Solid Cache, Solid Cable (sans Redis)
+- Active Storage sur Amazon S3
+- Sentry pour le suivi des erreurs
+- HTTParty pour les appels à l'API Anthropic (Claude)
 
-### Configuration
+## Installation
+
 ```bash
-# Cloner le repository
-git clone https://github.com/Architecht25/primes-services.ia.git
-cd primes-services.ia
-
-# Installer les dépendances
 bundle install
-yarn install
-
-# Configuration base de données
-rails db:create
-rails db:migrate
-rails db:seed
-
-# Démarrer l'application
-bin/dev
+bin/rails db:create db:migrate db:seed
+bin/dev                  # serveur + Tailwind (Procfile.dev)
 ```
 
-### Variables d'environnement
-```env
-# Configuration IA (optionnel pour développement)
-OPENAI_API_KEY=your_openai_key_here
+## Variables d'environnement
 
-# Base de données
-DATABASE_URL=postgresql://username:password@localhost/primes_services_ia
-```
+Lues par le code :
 
-## 📱 Utilisation
+| Variable | Usage |
+|----------|-------|
+| `DATABASE_URL` | connexion PostgreSQL |
+| `ADMIN_USERNAME`, `ADMIN_PASSWORD` | accès à l'administration |
+| `TURNSTILE_SITE_KEY`, `TURNSTILE_SECRET_KEY` | anti-spam du formulaire (sans clé, le contrôle est désactivé) |
+| `SMTP_HOST`, `SMTP_PORT`, `SMTP_ADDRESS`, `SMTP_DOMAIN`, `SMTP_USERNAME`, `SMTP_PASSWORD`, `MAILER_FROM` | envoi d'emails |
+| `APP_HOST`, `APP_HOST_URL` | URL de l'application (liens dans les emails) |
+| `AWS_REGION`, `AWS_BUCKET`, `AWS_ACCESS_KEY_ID`, `AWS_SECRET_ACCESS_KEY` | stockage S3 |
+| `SENTRY_DSN` | suivi des erreurs |
+| `RAILS_MAX_THREADS`, `JOB_CONCURRENCY`, `RAILS_LOG_LEVEL`, `PORT` | réglages d'exécution |
 
-### Interface Utilisateur
-1. **Sélection de profil** sur `/contacts/new`
-2. **Formulaire adapté** selon le type d'utilisateur
-3. **Analyse IA automatique** et suggestions de primes
-4. **Suivi par email** avec récapitulatif personnalisé
+## Tests
 
-### API Endpoints
-```ruby
-# Formulaires de contact
-GET  /contacts/new           # Sélection profil
-GET  /contacts/particulier   # Formulaire particuliers
-GET  /contacts/acp          # Formulaire copropriétés
-POST /contacts              # Soumission formulaire
-GET  /contacts/:id          # Résultats et suggestions
-
-# IA Chatbot
-GET  /ai/chat              # Interface de chat
-POST /ai/send_message      # Envoi de message
-GET  /ai/suggestions       # Suggestions contextuelles
-```
-
-## 🎯 Fonctionnalités par Profil
-
-### 👤 Particuliers
-- Type de logement et travaux souhaités
-- Analyse des revenus pour calcul des primes
-- Suggestions d'isolation, chauffage, rénovation
-- Estimation budgétaire personnalisée
-
-### 🏢 Copropriétés (ACP)
-- Nombre de logements et type d'immeuble
-- Travaux collectifs (façade, toiture, chauffage)
-- Budget voté et urgence des travaux
-- Coordination avec syndic professionnel
-
-### 🏗️ Entreprises Immobilières
-- Activité (promotion, construction, gestion)
-- Échelle des projets et marché cible
-- Certifications environnementales
-- Optimisation fiscale et juridique
-
-### 🏭 Entreprises Commerciales
-- Secteur d'activité et taille d'entreprise
-- Type d'investissement (R&D, équipement, digital)
-- Marchés cibles (B2B, B2C, export)
-- Aides innovation et développement
-
-## 🧠 Intelligence Artificielle
-
-### Analyse Automatique
-```ruby
-# Exemple d'utilisation du service IA
-contact = ParticulierContact.create(...)
-ai_service = AiChatbotService.new
-suggestions = ai_service.generate_personalized_suggestions(contact)
-
-# Résultat : liste de primes pertinentes avec eligibilité
-```
-
-### NLP (Natural Language Processing)
-- **Extraction d'intention** : Identifier le type de demande
-- **Reconnaissance d'entités** : Région, type de travaux, budget
-- **Score de confiance** : Fiabilité de l'analyse
-- **Contexte conversationnel** : Historique des échanges
-
-## 📊 Base de Données
-
-### Tables Principales
-```sql
--- Contacts avec STI
-contact_submissions (type, name, email, region, ...)
-
--- Conversations IA
-ai_conversations (session_id, messages, status, ...)
-
--- Données métier (optionnel)
-primes, calculations, ai_insights
-```
-
-## 🔧 Développement
-
-### Architecture MVC
-```
-app/
-├── controllers/
-│   ├── ai_controller.rb           # Endpoints IA
-│   ├── contacts_controller.rb     # Gestion formulaires
-│   └── pages_controller.rb        # Pages statiques
-├── models/
-│   ├── contact_submission.rb      # Modèle base STI
-│   ├── particulier_contact.rb     # Spécialisations STI
-│   └── ai_conversation.rb         # Conversations IA
-├── services/
-│   └── [services métier]
-└── views/
-    ├── contacts/forms/            # Formulaires spécialisés
-    ├── shared/                    # Composants partagés
-    └── layouts/                   # Layout principal
-```
-
-## 🌐 Déploiement
-
-### Production avec Kamal
 ```bash
-# Configuration dans config/deploy.yml
-kamal setup    # Premier déploiement
-kamal deploy   # Déploiements suivants
+bin/rails test           # tests du dossier test/ (contrôleurs)
 ```
 
-## 📈 Roadmap
+## Déploiement
 
-### Version 1.1 (Q1 2026)
-- [ ] Intégration APIs officielles (SPW, VEA, Bruxelles Environnement)
-- [ ] Calculs automatiques de montants de primes
-- [ ] Dashboard administrateur
-
-### Version 1.2 (Q2 2026)
-- [ ] Application mobile (React Native)
-- [ ] Notifications push
-- [ ] Intégration avec Ren0vate
-
-## 👥 Contribution
-
-### Développement Local
-1. Fork le repository
-2. Créer une branche feature (`git checkout -b feature/amazing-feature`)
-3. Commit les changements (`git commit -m 'Add amazing feature'`)
-4. Push la branche (`git push origin feature/amazing-feature`)
-5. Ouvrir une Pull Request
-
-## 📄 Licence
-
-Ce projet est sous licence MIT.
-
-## 🤝 Support
-
-- **Email** : contact@architecht25.com
-- **GitHub Issues** : Pour les bugs et feature requests
-
-### Architecture 25
-Développé avec ❤️ par l'équipe **Architecture 25**
-Spécialistes en solutions numériques innovantes pour le secteur de la construction et des primes énergétiques.
-
----
-
-**Made in Belgium 🇧🇪 | Powered by Rails 🚂 | Enhanced by AI 🤖**
+- `Dockerfile` et `config/deploy.yml` pour Kamal. Le `Procfile` ne définit que le
+  processus `web`. Le champ `image` de `config/deploy.yml` est encore un placeholder
+  (`your-user/primes_services_ia`) et les serveurs ne sont pas renseignés : à compléter
+  avant le premier `kamal setup`.
