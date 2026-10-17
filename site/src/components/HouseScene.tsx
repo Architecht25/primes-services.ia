@@ -25,8 +25,8 @@ const LABEL: Record<Phase, string> = {
 };
 
 /**
- * Plan SVG (prérendu, toujours présent) → scène 3D temps réel chargée à la demande.
- * Repli sur le plan SVG si mouvement réduit, WebGL absent ou erreur de chargement.
+ * Scène 3D temps réel, chargée à la demande dès l'affichage de la page.
+ * Repli sur un plan fixe (sans animation) si mouvement réduit, WebGL absent ou erreur de chargement.
  */
 export function HouseScene() {
   const reduce = useReducedMotion();
@@ -34,42 +34,34 @@ export function HouseScene() {
   const inView = useInView(wrap, { margin: "100px" });
   const [Comp, setComp] = useState<ComponentType<House3DProps> | null>(null);
   const [ready, setReady] = useState(false);
-  const [failed, setFailed] = useState(false);
+  const [fallback, setFallback] = useState(false);
   const [phase, setPhase] = useState<Phase>("avant");
 
   useEffect(() => {
-    if (reduce || !hasWebGL()) return;
+    if (reduce || !hasWebGL()) { setFallback(true); return; }
     let alive = true;
-    const t0 = performance.now();
     import("./House3D")
-      .then((m) => {
-        // laisse le plan se dessiner (~3,5 s) avant de passer en 3D
-        const wait = Math.max(0, 3500 - (performance.now() - t0));
-        window.setTimeout(() => alive && setComp(() => m.House3D), wait);
-      })
-      .catch(() => alive && setFailed(true));
+      .then((m) => alive && setComp(() => m.House3D))
+      .catch(() => alive && setFallback(true));
     return () => { alive = false; };
   }, [reduce]);
 
   const onReady = useCallback(() => setReady(true), []);
   const onPhase = useCallback((p: Phase) => setPhase(p), []);
-  const show3d = !!Comp && !failed;
 
   return (
     <div ref={wrap} className="relative aspect-[600/540] w-full" role="img" aria-label="Maison de ville en 3D : la chaleur s'échappe avant rénovation, puis isolation et panneaux solaires après">
-      <div className={`absolute inset-0 transition-opacity duration-1000 ${show3d && ready ? "opacity-0" : "opacity-100"}`}>
-        <Blueprint className="h-full w-full p-4" />
-      </div>
+      {fallback && <Blueprint animated={false} className="h-full w-full p-4" />}
 
-      {show3d && Comp && (
-        <Boundary onError={() => setFailed(true)}>
-          <motion.div className="absolute inset-0" initial={{ opacity: 0 }} animate={{ opacity: ready ? 1 : 0 }} transition={{ duration: 1 }}>
+      {!fallback && Comp && (
+        <Boundary onError={() => setFallback(true)}>
+          <motion.div className="absolute inset-0" initial={{ opacity: 0 }} animate={{ opacity: ready ? 1 : 0 }} transition={{ duration: 0.8 }}>
             <Comp onPhase={onPhase} onReady={onReady} active={inView} />
           </motion.div>
         </Boundary>
       )}
 
-      {show3d && ready && (
+      {!fallback && Comp && ready && (
         <div aria-hidden="true" className="pointer-events-none absolute inset-x-0 bottom-3 flex justify-center">
           <AnimatePresence mode="wait">
             <motion.span

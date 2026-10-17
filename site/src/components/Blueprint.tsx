@@ -1,9 +1,9 @@
 import { motion, useReducedMotion } from "framer-motion";
 import { ease } from "../lib/motion";
 
-/** Élévation d'une maison de ville belge « dessinée » à l'écran : trait, isolation, panneaux solaires. */
-export function Blueprint({ className = "" }: { className?: string }) {
-  const reduce = useReducedMotion();
+/** Élévation d'une maison de ville belge : trait, isolation, panneaux solaires. Animée, ou fixe (`animated={false}`) pour le repli. */
+export function Blueprint({ className = "", animated = true }: { className?: string; animated?: boolean }) {
+  const reduce = useReducedMotion() || !animated;
   const draw = (delay: number, duration = 1.4) => ({
     initial: reduce ? false : { pathLength: 0, opacity: 0 },
     animate: { pathLength: 1, opacity: 1 },
