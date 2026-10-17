@@ -1,0 +1,22 @@
+<!doctype html>
+<html lang="fr-BE">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#0a1622" />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <!--head-->
+  </head>
+  <body>
+    <div id="root" data-page="__PAGE__"><!--app--></div>
+    <noscript>
+      <!-- Sans JavaScript, les éléments animés (opacité 0 au départ) restent visibles. -->
+      <style>
+        [style*="opacity: 0"], [style*="opacity:0"] { opacity: 1 !important; transform: none !important; }
+        [style*="translateY(105%)"], [style*="translateY(110%)"] { transform: none !important; }
+      </style>
+    </noscript>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>

@@ -1,0 +1,53 @@
+# Déploiement de la landing page statique (dossier site/) sur GitHub Pages.
+# Prérequis : Settings → Pages → Source = « GitHub Actions ».
+name: Landing page (GitHub Pages)
+
+on:
+  push:
+    branches: [main]
+    paths: ["site/**", ".github/workflows/pages.yml"]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+          cache-dependency-path: site/package-lock.json
+      - run: npm ci
+        working-directory: site
+      - run: npm run typecheck
+        working-directory: site
+      - run: npm run build
+        working-directory: site
+        env:
+          # Domaine canonique (sitemap, canonical, JSON-LD). Variable de dépôt facultative.
+          SITE_URL: ${{ vars.SITE_URL || 'https://www.primes-services.be' }}
+          # "/" avec domaine personnalisé ; "/primes-services.ia/" sur https://<org>.github.io/primes-services.ia/
+          BASE_PATH: ${{ vars.BASE_PATH || '/' }}
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: site/dist
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4
