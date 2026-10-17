@@ -1,0 +1,79 @@
+@import "tailwindcss";
+@import "@fontsource-variable/inter";
+@import "@fontsource-variable/fraunces";
+
+@theme {
+  --font-sans: "Inter Variable", ui-sans-serif, system-ui, sans-serif;
+  --font-display: "Fraunces Variable", ui-serif, Georgia, serif;
+
+  --color-ink: #0a1622;
+  --color-ink-2: #0d1b2a;
+  --color-marine: #1a3c5e;
+  --color-marine-2: #3f6484;
+  --color-emerald: #2e7d52;
+  --color-mint: #4db885;
+  --color-amber: #e8a020;
+  --color-amber-soft: #f6c766;
+  --color-amber-deep: #a35f00; /* ambre lisible (≥ 4,5:1) sur fonds clairs */
+  --color-pearl: #f4f7fa;
+  --color-pearl-2: #e9eef4;
+  --color-line: #d8e2ec;
+  --color-slate: #505c75;
+}
+
+:root { color-scheme: light; }
+html { scroll-behavior: smooth; scroll-padding-top: 5rem; }
+body {
+  font-family: var(--font-sans);
+  background: var(--color-pearl);
+  color: var(--color-ink-2);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+
+::selection { background: var(--color-mint); color: var(--color-ink); }
+
+:focus-visible { outline: 2px solid var(--color-amber); outline-offset: 3px; border-radius: 4px; }
+
+.font-display { font-variation-settings: "SOFT" 40, "WONK" 0; letter-spacing: -0.015em; }
+
+/* Quadrillage « papier millimétré » des plans d'architecte */
+.blueprint-grid {
+  background-image:
+    linear-gradient(to right, rgb(255 255 255 / 0.05) 1px, transparent 1px),
+    linear-gradient(to bottom, rgb(255 255 255 / 0.05) 1px, transparent 1px),
+    linear-gradient(to right, rgb(255 255 255 / 0.025) 1px, transparent 1px),
+    linear-gradient(to bottom, rgb(255 255 255 / 0.025) 1px, transparent 1px);
+  background-size: 96px 96px, 96px 96px, 24px 24px, 24px 24px;
+}
+.blueprint-grid-light {
+  background-image:
+    linear-gradient(to right, rgb(26 60 94 / 0.06) 1px, transparent 1px),
+    linear-gradient(to bottom, rgb(26 60 94 / 0.06) 1px, transparent 1px);
+  background-size: 64px 64px;
+}
+
+.grain::after {
+  content: ""; position: absolute; inset: 0; pointer-events: none; opacity: .07; mix-blend-mode: overlay;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
+}
+
+/* Bordure dégradée tournante pour les CTA principaux */
+@keyframes spin-slow { to { transform: rotate(360deg); } }
+@keyframes shine { 0% { transform: translateX(-120%) skewX(-18deg);} 60%,100% { transform: translateX(260%) skewX(-18deg);} }
+.btn-shine::after {
+  content: ""; position: absolute; inset: 0; width: 40%;
+  background: linear-gradient(90deg, transparent, rgb(255 255 255 / .55), transparent);
+  animation: shine 3.6s ease-in-out infinite;
+}
+@media (prefers-reduced-motion: reduce) { .btn-shine::after { animation: none; display: none; } }
+
+details > summary { list-style: none; }
+details > summary::-webkit-details-marker { display: none; }
+details[open] .faq-chevron { transform: rotate(45deg); }
+.faq-chevron { transition: transform .3s cubic-bezier(.2,.8,.2,1); }
+
+.region-wal { --r: var(--color-mint); }
+.region-vla { --r: var(--color-amber); }
+.region-bru { --r: #7aa5c7; }
