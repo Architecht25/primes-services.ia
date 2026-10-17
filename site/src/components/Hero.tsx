@@ -1,6 +1,6 @@
 import { useRef } from "react";
 import { motion, useScroll, useTransform, useReducedMotion } from "framer-motion";
-import { Blueprint } from "./Blueprint";
+import { HouseScene } from "./HouseScene";
 import { Icon } from "./Icon";
 import { Counter, ease } from "../lib/motion";
 import { RENOVATE, STATS } from "../content/site";
@@ -89,7 +89,7 @@ export function Hero() {
 
         <motion.div style={{ y: reduce ? 0 : yBlue }} className="relative mx-auto w-full max-w-lg">
           <div className="absolute inset-0 -z-10 rounded-[2rem] border border-white/10 bg-white/[0.03] backdrop-blur-sm" aria-hidden="true" />
-          <Blueprint className="h-auto w-full p-4" />
+          <HouseScene />
         </motion.div>
       </motion.div>
 
