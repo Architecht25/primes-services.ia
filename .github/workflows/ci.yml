@@ -58,22 +58,3 @@ jobs:
         # medium/high — sinon un simple avis (ex: date de fin de support Rails)
         # bloque le CI indéfiniment.
         run: bin/brakeman --no-pager --format text -w2
-
-  deploy:
-    name: Deploy to Heroku
-    needs: test
-    runs-on: ubuntu-latest
-    if: github.ref == 'refs/heads/main' && github.event_name == 'push'
-
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
-
-      - name: Deploy to Heroku via git push
-        env:
-          HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
-        run: |
-          git remote add heroku https://heroku:${HEROKU_API_KEY}@git.heroku.com/primes-services-ia.git
-          git push heroku main
