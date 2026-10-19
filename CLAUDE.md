@@ -33,7 +33,7 @@ Fonctions réelles aujourd'hui :
 | Storage | AWS S3 (Active Storage) — pas de Cloudinary |
 | Emails | Resend (SMTP) |
 | Analytics | Google Analytics |
-| Déploiement | Heroku (actif) ; config Kamal présente mais non branchée |
+| Déploiement | Landing page statique `site/` sur GitHub Pages (`www.primes-services.be`, workflow `pages.yml`). Déploiement Heroku de l'app Rails arrêté (job CI retiré) ; config Kamal présente mais non branchée |
 
 ## Commandes essentielles
 
@@ -51,19 +51,18 @@ bin/rails test:system            # Tests système (Capybara + Selenium)
 bin/rubocop                      # Linting (rubocop-rails-omakase)
 bin/brakeman --no-pager --format text -w2   # Sécurité (seuil confidence medium/high, cf. CI)
 
-# Production (Heroku)
-git push heroku main             # Déploiement manuel (voir aussi CI/CD ci-dessous)
-heroku logs --tail --app primes-services-ia
-heroku run rails console --app primes-services-ia
+# Production
+# Le site public est la landing page statique (site/) servie par GitHub Pages.
+# L'app Rails n'est plus déployée automatiquement (job Heroku retiré de la CI).
 ```
 
 ## CI/CD
 
-`.github/workflows/ci.yml` — pipeline la plus mature de la famille de repos Primes-Services (seule avec déploiement Heroku piloté par la CI) :
-1. **Job `test`** (push/PR sur `main`/`develop`) : Postgres 16 en service, `bin/rails db:schema:load`, `bin/rails test`, puis `bin/brakeman -w2`
-2. **Job `deploy`** : déclenché uniquement si `test` passe **et** push sur `main` → `git push heroku main` via `HEROKU_API_KEY` (secret GitHub)
+`.github/workflows/ci.yml` : un seul job `test` (push/PR sur `main`/`develop`) — Postgres 16 en service, `bin/rails db:schema:load`, `bin/rails test`, puis `bin/brakeman -w2`. Le job `deploy` Heroku a été retiré : plus aucun déploiement automatique de l'app Rails.
 
-Toute régression de test ou finding Brakeman medium/high bloque donc le déploiement automatique — ne pas contourner ce garde-fou.
+`.github/workflows/pages.yml` déploie la landing page statique (`site/`) sur GitHub Pages à chaque push sur `main` touchant `site/**`.
+
+Toute régression de test ou finding Brakeman medium/high fait échouer la CI — ne pas contourner ce garde-fou.
 
 ## Architecture
 
