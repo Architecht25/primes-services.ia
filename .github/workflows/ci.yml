@@ -9,7 +9,7 @@ on:
 jobs:
   test:
     name: Tests & Security
-    runs-on: ubuntu-24.04
+    runs-on: ubuntu-latest
 
     services:
       postgres:
@@ -38,7 +38,7 @@ jobs:
       - name: Set up Ruby
         uses: ruby/setup-ruby@v1
         with:
-          ruby-version: "3.3.9"
+          ruby-version: "3.3.13"
           bundler-cache: true
 
       - name: Set up Node (for assets)

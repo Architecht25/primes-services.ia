@@ -19,7 +19,7 @@ Fonctions réelles aujourd'hui :
 
 | Composant | Version |
 |-----------|---------|
-| Ruby | 3.3.9 |
+| Ruby | 3.3.13 |
 | Rails | ~> 8.0.3 (résolu 8.0.5.1) |
 | Bundler | 2.6.9 |
 | DB (dev + prod) | PostgreSQL (pas de SQLite) |

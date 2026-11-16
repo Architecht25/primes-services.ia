@@ -59,7 +59,7 @@ app/services/
 
 ## Stack
 
-- Ruby 3.3.9, Rails 8.0.5
+- Ruby 3.3.13, Rails 8.0.5
 - PostgreSQL
 - Hotwire via importmap, Propshaft, Tailwind CSS
 - Solid Queue, Solid Cache, Solid Cable (sans Redis)
