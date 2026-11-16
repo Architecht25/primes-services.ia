@@ -237,23 +237,19 @@ primes-services.ia/
 
 ### Générer le Sitemap
 ```bash
-# Local
 rake sitemap:refresh
-
-# Heroku
-heroku run rake sitemap:refresh
 ```
 
 ### Tester le Sitemap
 ```bash
 # Accessible publiquement
-https://primes-services-ia-cc4318abe295.herokuapp.com/sitemap.xml.gz
-https://primes-services-ia-cc4318abe295.herokuapp.com/sitemap.xml
+https://www.primes-services.be/sitemap.xml.gz
+https://www.primes-services.be/sitemap.xml
 ```
 
 ### Vérifier Robots.txt
 ```bash
-curl https://primes-services-ia-cc4318abe295.herokuapp.com/robots.txt
+curl https://www.primes-services.be/robots.txt
 ```
 
 ---

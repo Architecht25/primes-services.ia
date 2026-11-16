@@ -2,8 +2,8 @@ class ApplicationController < ActionController::Base
   # Only allow modern browsers supporting webp images, web push, badges, import maps, CSS nesting, and CSS :has.
   allow_browser versions: :modern
 
-  # L'apex primes-services.be et le sous-domaine www pointent tous les deux
-  # vers cette app sur Heroku. On force un seul host canonique (www) pour
+  # L'apex primes-services.be et le sous-domaine www peuvent tous les deux
+  # atteindre cette app. On force un seul host canonique (www) pour
   # éviter le contenu dupliqué en SEO et rester cohérent avec le sitemap.
   APEX_HOST = "primes-services.be"
   CANONICAL_HOST = "www.primes-services.be"
