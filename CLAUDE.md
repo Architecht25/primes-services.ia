@@ -33,7 +33,7 @@ Fonctions réelles aujourd'hui :
 | Storage | AWS S3 (Active Storage) — pas de Cloudinary |
 | Emails | Resend (SMTP) |
 | Analytics | Google Analytics |
-| Déploiement | Landing page statique `site/` sur GitHub Pages (`www.primes-services.be`, workflow `pages.yml`). Déploiement Heroku de l'app Rails arrêté (job CI retiré) ; config Kamal présente mais non branchée |
+| Déploiement | Landing page statique `site/` sur GitHub Pages (`www.primes-services.be`, workflow `pages.yml`). L'app Heroku `primes-services-ia` a été supprimée (2026-11-16) et l'app Rails n'est déployée nulle part ; config Kamal présente mais non branchée |
 
 ## Commandes essentielles
 
@@ -53,7 +53,8 @@ bin/brakeman --no-pager --format text -w2   # Sécurité (seuil confidence mediu
 
 # Production
 # Le site public est la landing page statique (site/) servie par GitHub Pages.
-# L'app Rails n'est plus déployée automatiquement (job Heroku retiré de la CI).
+# L'app Rails n'est plus déployée nulle part (app Heroku supprimée le 2026-11-16, job CI retiré).
+# Dump Postgres final conservé en local par le user (hors repo).
 ```
 
 ## CI/CD
@@ -124,10 +125,10 @@ SecurityLog     — événements de sécurité (event_type, severity, ip_address
 - **Rubocop** : `rubocop-rails-omakase`, pas de règle custom ajoutée dans `.rubocop.yml`.
 - **Migrations/Rails** : conventions standard Rails, rien de spécifique observé (pas de règle d'équipe documentée dans le repo au-delà du linting).
 
-## Variables d'environnement Heroku
+## Variables d'environnement (si l'app Rails est redéployée)
 
 ```
-DATABASE_URL              # PostgreSQL Heroku
+DATABASE_URL              # PostgreSQL
 APP_HOST                  # Host canonique (www.primes-services.be)
 SMTP_ADDRESS/PORT/DOMAIN/USERNAME/PASSWORD   # Resend SMTP
 TEAM_EMAIL                # Adresse équipe (notifications)
@@ -138,7 +139,6 @@ DEFAULT_REGION / SUPPORTED_REGIONS   # wallonie,flandre,bruxelles
 RENOVATE_BASE_URL         # Lien vers Ren0vate
 SENTRY_DSN                # Monitoring erreurs (actif seulement si renseigné, prod only)
 AWS_ACCESS_KEY_ID / AWS_SECRET_ACCESS_KEY / AWS_REGION / AWS_BUCKET   # Active Storage S3
-HEROKU_API_KEY            # Secret GitHub Actions pour le job deploy de la CI (pas une var Heroku)
 ```
 
 ## Points d'attention
@@ -149,7 +149,7 @@ HEROKU_API_KEY            # Secret GitHub Actions pour le job deploy de la CI (p
   - `db/schema.rb` garde les tables `ai_insights`, `calculations`, `primes`, `page_visits` sans modèle ni contrôleur correspondant
   - `README.md` est **obsolète** : il décrit `AiChatbotService`, `NaturalLanguageProcessor`, `EmailService`, des formulaires spécialisés par profil (`/contacts/particulier`, `/contacts/acp`...) et des routes `/ai/*` qui n'existent plus dans le code actuel — ne pas s'y fier pour l'architecture réelle, se référer à ce fichier et au code.
   - Traiter ces reliquats comme de la **dette à nettoyer**, pas comme une base à réactiver sans réflexion produit sur le retour de l'IA.
-- **Kamal configuré mais mort** : `.kamal/`, `config/deploy.yml` présents avec IP placeholder (`192.168.0.1`), host `app.example.com`, jamais adaptés au projet réel — le déploiement effectif passe exclusivement par Heroku (Procfile + CI). Ne pas supposer que Kamal est utilisable en l'état.
+- **Kamal configuré mais mort** : `.kamal/`, `config/deploy.yml` présents avec IP placeholder (`192.168.0.1`), host `app.example.com`, jamais adaptés au projet réel — l'ancien déploiement passait par Heroku (supprimé). Ne pas supposer que Kamal est utilisable en l'état.
 - **`NodeMailerService` mort** : `app/services/node_mailer_service.rb` appelle un script `emailer/mailer.js` **qui n'existe pas dans le repo**, pensé pour contourner les Security Defaults Azure AD d'un ancien setup SMTP Office 365. Le service n'est appelé nulle part — l'envoi d'email réel passe par `ActionMailer` + Resend SMTP (`config/environments/production.rb`, `smtp.resend.com` par défaut). Le `.env` réel documente encore l'ancien SMTP Office 365 (`SMTP_HOST=smtp.office365.com`), incohérent avec `.env.example` (Resend) — ne pas se fier au `.env` local comme référence de la config de prod.
 - **Routes API sans contrôleur** : `config/routes.rb` déclare `namespace :api` avec `geolocation#detect_by_ip`/`#reverse` et `cache#essential_data`/`#store_form_draft`/etc., mais **aucun contrôleur `Api::*` n'existe** dans `app/controllers` — ces routes lèveraient une erreur si elles étaient appelées. À corriger ou supprimer plutôt qu'à considérer comme fonctionnelles. Les services qui semblaient prévus pour les alimenter (`GeolocationService`, `PwaCacheService`) ont été supprimés (jamais appelés nulle part, et `PwaCacheService` référençait en plus des routes de formulaires par profil disparues ainsi qu'une méthode `ContactMailer.contact_confirmation` inexistante) — si ces routes API sont un jour implémentées, repartir de zéro plutôt que de les réactiver.
 - **`ContactMailer` lit désormais `TEAM_EMAIL`** : l'email de notification admin utilisait un `ADMIN_EMAIL` codé en dur, ignorant la variable d'env `TEAM_EMAIL` documentée plus haut. Corrigé pour lire `ENV.fetch("TEAM_EMAIL", "robin@primes-services.be")` — le fallback préserve le comportement actuel si la variable n'est pas positionnée sur un environnement donné.

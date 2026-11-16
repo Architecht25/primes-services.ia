@@ -13,11 +13,7 @@ Le système utilise HTTP Basic Authentication. Par défaut:
 ⚠️ **IMPORTANT**: Configurez vos propres identifiants en production via les variables d'environnement:
 
 ```bash
-# Heroku
-heroku config:set ADMIN_USERNAME=votre_username
-heroku config:set ADMIN_PASSWORD=votre_mot_de_passe_securise
-
-# Local (.env)
+# Variables d'environnement de l'hébergeur, ou en local (.env)
 ADMIN_USERNAME=admin
 ADMIN_PASSWORD=votre_mot_de_passe_securise
 ```
@@ -224,7 +220,7 @@ config.force_ssl = true
 ## Support
 
 Pour toute question ou problème:
-1. Vérifier les logs Rails: `heroku logs --tail`
+1. Vérifier les logs Rails (`log/production.log` ou ceux de l'hébergeur)
 2. Vérifier la console admin: `/admin/security`
 3. Consulter la documentation Rails
 

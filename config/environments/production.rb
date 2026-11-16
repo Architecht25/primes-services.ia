@@ -59,11 +59,8 @@ Rails.application.configure do
   config.action_mailer.delivery_method = :smtp
 
   # Set host to be used by links generated in mailer templates.
-  # NB: the bare apex (primes-services.be) currently redirects to the raw
-  # Heroku hostname at the DNS/registrar level — only "www" resolves to the
-  # app directly. Using the apex here would put a broken-looking redirect
-  # hop in every mailer link, so default to "www" until the apex redirect
-  # is fixed to point at https://www.primes-services.be instead.
+  # Default to the canonical "www" host: the apex is 301-redirected to it,
+  # so using the apex here would add a redirect hop to every mailer link.
   config.action_mailer.default_url_options = {
     host: ENV.fetch('APP_HOST', 'www.primes-services.be'),
     protocol: 'https'
@@ -91,14 +88,12 @@ Rails.application.configure do
   config.active_record.attributes_for_inspect = [ :id ]
 
   # Enable DNS rebinding protection and other `Host` header attacks.
-  # Both the apex and "www" are attached to the Heroku app as of 2026-08-24
-  # (apex ALIASes directly to Heroku now — no more DNS-level redirect through
-  # a raw platform hostname). The apex is 301-redirected to "www" at the app
-  # level below to keep a single canonical host for SEO.
+  # Both the apex and "www" are allowed; the apex is 301-redirected to "www"
+  # at the app level (ApplicationController) to keep a single canonical host
+  # for SEO.
   config.hosts = [
     "www.primes-services.be",
-    "primes-services.be",
-    "primes-services-ia-cc4318abe295.herokuapp.com"
+    "primes-services.be"
   ]
 
   # Skip DNS rebinding protection for the default health check endpoint.
