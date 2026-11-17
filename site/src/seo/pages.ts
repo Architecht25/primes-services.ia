@@ -1,4 +1,4 @@
-import { REGIONS, REGION_ORDER, type RegionSlug } from "../content/site";
+import { CLOSURE, REGIONS, REGION_ORDER, type RegionSlug } from "../content/site";
 import type { PageId } from "../App";
 
 export type PageMeta = {
@@ -13,9 +13,9 @@ export const PAGES: PageMeta[] = [
   {
     id: "home",
     path: "/",
-    title: "Primes Services – Aides à la rénovation en Belgique | Ren0vate",
+    title: "Primes Services – Aides à la rénovation en Belgique",
     description:
-      "Primes, subsides et prêts à taux 0 % pour rénover en Wallonie, Flandre et Bruxelles : ce qui reste en 2026, et comment tout gérer dans l'application Ren0vate.",
+      `Primes, subsides et prêts à taux 0 % pour rénover en Wallonie, Flandre et Bruxelles : ce qui reste en 2026. Primes Services arrête ses activités à partir de ${CLOSURE.activityEnd}.`,
   },
   ...REGION_ORDER.map((slug: RegionSlug): PageMeta => {
     const r = REGIONS[slug];
@@ -31,9 +31,9 @@ export const PAGES: PageMeta[] = [
 /** Anciennes URLs de l'application Rails → nouvelles cibles (pages de redirection statiques). */
 export const LEGACY_REDIRECTS: Record<string, string> = {
   "/pages/about/": "/",
-  "/pages/renovate/": "/#renovate",
+  "/pages/renovate/": "/",
   "/pages/simulation/": "/#regions",
-  "/contacts/new/": "/#contact",
+  "/contacts/new/": "/#arret",
   ...Object.fromEntries(
     REGION_ORDER.flatMap((s) => [
       [`/simulation/${s}/`, `/regions/${s}/`],

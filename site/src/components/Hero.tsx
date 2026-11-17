@@ -3,7 +3,7 @@ import { motion, useScroll, useTransform, useReducedMotion } from "framer-motion
 import { HouseScene } from "./HouseScene";
 import { Icon } from "./Icon";
 import { Counter, ease } from "../lib/motion";
-import { RENOVATE, STATS } from "../content/site";
+import { CLOSURE, STATS } from "../content/site";
 import { href } from "../lib/url";
 
 const TITLE = ["Primes,", "subsides", "et", "prêts", "à", "taux", "0 %", ":", "tout", "se", "gère", "dans"];
@@ -61,7 +61,7 @@ export function Hero() {
                 className="inline-block bg-gradient-to-r from-amber via-amber-soft to-amber bg-clip-text text-transparent"
                 initial={{ y: "105%", rotate: 4 }} animate={{ y: 0, rotate: 0 }} transition={{ duration: 0.9, ease, delay: 0.85 }}
               >
-                Ren0vate.
+                Belgique.
               </motion.span>
             </span>
           </h1>
@@ -71,18 +71,18 @@ export function Hero() {
             className="mt-8 max-w-xl text-lg leading-relaxed text-white/75"
           >
             Primes Services accompagne depuis plus de 15 ans les propriétaires en <strong className="font-semibold text-white">Wallonie, Flandre et Bruxelles</strong>.
-            Toute notre expertise des subsides vit aujourd'hui dans <strong className="font-semibold text-white">Ren0vate</strong>, l'application de gestion de chantier et de subsides.
+            Nos activités s'arrêtent à partir de <strong className="font-semibold text-white">{CLOSURE.activityEnd}</strong> : retrouvez ici l'état des aides régionales.
           </motion.p>
 
           <motion.div
             initial={{ opacity: 0, y: 18 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.8, ease, delay: 1.2 }}
             className="mt-10 flex flex-col gap-3 sm:flex-row"
           >
-            <a href={RENOVATE.url} className="btn-shine group relative inline-flex items-center justify-center gap-2 overflow-hidden rounded-full bg-amber px-7 py-4 font-semibold text-ink shadow-[0_10px_40px_-10px_rgba(232,160,32,0.7)] transition hover:bg-amber-soft">
-              Ouvrir Ren0vate <Icon name="arrow" className="h-5 w-5 transition group-hover:translate-x-1" />
+            <a href={href("/#regions")} className="btn-shine group relative inline-flex items-center justify-center gap-2 overflow-hidden rounded-full bg-amber px-7 py-4 font-semibold text-ink shadow-[0_10px_40px_-10px_rgba(232,160,32,0.7)] transition hover:bg-amber-soft">
+              Voir les aides par région <Icon name="arrow" className="h-5 w-5 transition group-hover:translate-x-1" />
             </a>
-            <a href={href("/#regions")} className="inline-flex items-center justify-center gap-2 rounded-full border border-white/20 px-7 py-4 font-medium text-white transition hover:border-white/50 hover:bg-white/5">
-              Voir les aides par région
+            <a href={href("/#arret")} className="inline-flex items-center justify-center gap-2 rounded-full border border-white/20 px-7 py-4 font-medium text-white transition hover:border-white/50 hover:bg-white/5">
+              Arrêt des activités
             </a>
           </motion.div>
         </div>

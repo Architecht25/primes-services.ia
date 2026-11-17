@@ -1,4 +1,4 @@
-import { GENERAL_FAQ, REGIONS, REGION_ORDER, RENOVATE, SITE, type Region } from "../content/site";
+import { CLOSURE, REGIONS, REGION_ORDER, SITE, type Region } from "../content/site";
 import { abs } from "../lib/url";
 import { PAGES, type PageMeta } from "./pages";
 
@@ -7,7 +7,6 @@ const ld = (o: unknown) => `<script type="application/ld+json">${JSON.stringify(
 
 const ORG_ID = `${SITE.url}/#organization`;
 const SITE_ID = `${SITE.url}/#website`;
-const APP_ID = `${RENOVATE.url}#software`;
 
 const faqLd = (items: { q: string; a: string }[]) => ({
   "@type": "FAQPage",
@@ -23,11 +22,9 @@ const organization = () => ({
   logo: { "@type": "ImageObject", url: abs("/logo-512.png"), width: 512, height: 512 },
   image: abs("/og.jpg"),
   description:
-    "Primes Services est une société belge de conseil en primes, subsides et prêts à taux 0 % pour la rénovation, active depuis plus de 15 ans en Wallonie, en Flandre et à Bruxelles. Elle exploite l'application Ren0vate.",
-  slogan: "Primes, subsides et prêts à taux 0 % : tout se gère dans Ren0vate.",
+    `Primes Services est une société belge de conseil en primes, subsides et prêts à taux 0 % pour la rénovation, active depuis plus de 15 ans en Wallonie, en Flandre et à Bruxelles. Elle arrête ses activités à partir de ${CLOSURE.activityEnd} ; il n'est plus possible de la contacter depuis le ${CLOSURE.contactEndLabel}.`,
+  slogan: "Primes, subsides et prêts à taux 0 % : ce qui reste ouvert en Belgique.",
   foundingDate: String(SITE.foundingYear),
-  email: SITE.email,
-  telephone: SITE.phone,
   areaServed: [
     { "@type": "Country", name: "Belgique" },
     { "@type": "AdministrativeArea", name: "Wallonie" },
@@ -39,36 +36,6 @@ const organization = () => ({
     "Prêts à taux 0 % pour la rénovation énergétique",
     "Rénopack", "Rénoprêt", "Mijn VerbouwPremie", "Mijn VerbouwLening", "Crédit EcoRéno",
     "Monuments et Sites", "Petit Patrimoine", "Primes communales",
-    "Gestion de chantier de rénovation",
-  ],
-  contactPoint: [
-    { "@type": "ContactPoint", contactType: "customer support", email: SITE.email, telephone: SITE.phone, availableLanguage: ["fr", "nl"], areaServed: "BE" },
-    { "@type": "ContactPoint", contactType: "technical support", email: SITE.techEmail, availableLanguage: ["fr"], areaServed: "BE", description: "Support technique et application Ren0vate" },
-  ],
-  sameAs: [RENOVATE.url],
-  owns: { "@id": APP_ID },
-});
-
-const renovateApp = () => ({
-  "@type": "SoftwareApplication",
-  "@id": APP_ID,
-  name: RENOVATE.name,
-  alternateName: "Ren0vate – le passeport numérique de votre logement",
-  url: RENOVATE.url,
-  description: RENOVATE.description,
-  applicationCategory: "BusinessApplication",
-  operatingSystem: "Web",
-  inLanguage: "fr",
-  countriesSupported: "BE",
-  provider: { "@id": ORG_ID },
-  offers: { "@type": "Offer", price: "0", priceCurrency: "EUR", description: "Premier projet gratuit ; fonctions multi-biens et professionnelles sur abonnement.", url: RENOVATE.pricing },
-  featureList: [
-    "Identification des primes et prêts à taux 0 % selon la région et les revenus",
-    "Gestion de chantier par lot : planning, avancement, messagerie",
-    "Comparateur de devis",
-    "Dossiers et documents avec alertes de pièces manquantes",
-    "Journal de chantier avec photos géolocalisées et procès-verbaux",
-    "Passeport numérique du logement et dossier d'intervention ultérieure (DIU)",
   ],
 });
 
@@ -105,8 +72,6 @@ export function headFor(page: PageMeta): string {
     graph.push(
       { "@type": "WebSite", "@id": SITE_ID, url: abs("/"), name: SITE.name, inLanguage: SITE.locale, publisher: { "@id": ORG_ID } },
       organization(),
-      renovateApp(),
-      { ...faqLd(GENERAL_FAQ), "@id": `${url}#faq` },
     );
   } else if (page.id !== "notfound") {
     const r = REGIONS[page.id];
@@ -135,7 +100,7 @@ export function headFor(page: PageMeta): string {
     `<meta property="og:image" content="${abs("/og.jpg")}" />`,
     `<meta property="og:image:width" content="1200" />`,
     `<meta property="og:image:height" content="630" />`,
-    `<meta property="og:image:alt" content="Primes Services – aides à la rénovation en Belgique et application Ren0vate" />`,
+    `<meta property="og:image:alt" content="Primes Services – aides à la rénovation en Belgique" />`,
     `<meta name="twitter:card" content="summary_large_image" />`,
     `<meta name="twitter:title" content="${esc(page.title)}" />`,
     `<meta name="twitter:description" content="${esc(page.description)}" />`,

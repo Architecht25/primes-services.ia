@@ -43,9 +43,9 @@ const overlay = Buffer.from(`<svg xmlns="http://www.w3.org/2000/svg" width="1200
   ${logoPaths}
   <text x="160" y="118" font-family="DejaVu Sans, Arial, sans-serif" font-size="30" font-weight="700" fill="#ffffff">Primes Services</text>
   <text x="70" y="330" font-family="DejaVu Serif, Georgia, serif" font-size="68" font-weight="700" fill="#ffffff">Primes, subsides et prêts</text>
-  <text x="70" y="412" font-family="DejaVu Serif, Georgia, serif" font-size="68" font-weight="700" fill="#ffffff">à taux 0 % : tout se gère</text>
-  <text x="70" y="494" font-family="DejaVu Serif, Georgia, serif" font-size="68" font-weight="700" fill="#e8a020">dans Ren0vate.</text>
-  <text x="70" y="568" font-family="DejaVu Sans, Arial, sans-serif" font-size="26" fill="#b8cad8">Wallonie · Flandre · Bruxelles — aides à la rénovation 2026</text>
+  <text x="70" y="412" font-family="DejaVu Serif, Georgia, serif" font-size="68" font-weight="700" fill="#ffffff">à taux 0 % : ce qui reste</text>
+  <text x="70" y="494" font-family="DejaVu Serif, Georgia, serif" font-size="68" font-weight="700" fill="#e8a020">ouvert en Belgique.</text>
+  <text x="70" y="568" font-family="DejaVu Sans, Arial, sans-serif" font-size="26" fill="#b8cad8">Wallonie · Flandre · Bruxelles — arrêt des activités en janvier 2027</text>
 </svg>`);
 await sharp(path.join(src, "daan-oosters-jmbUa-u_Uts-unsplash.jpg"))
   .resize(1200, 630, { fit: "cover", position: "centre" })

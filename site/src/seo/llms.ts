@@ -1,8 +1,8 @@
-import { GENERAL_FAQ, KIND_LABEL, REGIONS, REGION_ORDER, RENOVATE, SITE, STATS } from "../content/site";
+import { CLOSURE, KIND_LABEL, REGIONS, REGION_ORDER, SITE, STATS } from "../content/site";
 import { abs } from "../lib/url";
 import { LEGACY_REDIRECTS, PAGES } from "./pages";
 
-const intro = `Primes Services est une société belge de conseil en primes, subsides et prêts à taux 0 % pour la rénovation (Wallonie, Flandre, Bruxelles-Capitale), active depuis ${SITE.foundingYear}. Toutes les nouvelles demandes passent exclusivement par Ren0vate, son application de gestion de chantier et de subsides.`;
+const intro = `Primes Services est une société belge de conseil en primes, subsides et prêts à taux 0 % pour la rénovation (Wallonie, Flandre, Bruxelles-Capitale), active depuis ${SITE.foundingYear}. Primes Services arrête ses activités à partir de ${CLOSURE.activityEnd} ; il n'est plus possible de la contacter depuis le ${CLOSURE.contactEndLabel}.`;
 
 /** /llms.txt — index concis pour les agents et moteurs IA (spécification llmstxt.org). */
 export function llmsTxt(): string {
@@ -13,17 +13,12 @@ export function llmsTxt(): string {
 Informations vérifiées le ${SITE.verifiedLabel}. Indicatif : seules les administrations régionales font foi. Langue : français (Belgique).
 
 ## Pages
-- [Accueil](${abs("/")}): présentation de Primes Services, de Ren0vate et des aides par région
+- [Accueil](${abs("/")}): présentation de Primes Services, arrêt des activités et aides par région
 ${REGION_ORDER.map((s) => `- [${REGIONS[s].name}](${abs(`/regions/${s}/`)}): ${REGIONS[s].headline}`).join("\n")}
 
-## Application
-- [Ren0vate](${RENOVATE.url}): ${RENOVATE.description}
-- [Tarifs Ren0vate](${RENOVATE.pricing}): premier projet gratuit, fonctions professionnelles sur abonnement
-
-## Contact
-- Courriel : ${SITE.email}
-- Support technique / Ren0vate : ${SITE.techEmail}
-- Téléphone : ${SITE.phone}
+## Arrêt des activités
+- Primes Services arrête ses activités à partir de ${CLOSURE.activityEnd}.
+- Il n'est plus possible de contacter Primes Services depuis le ${CLOSURE.contactEndLabel}. Pour un dossier de prime ou de prêt, s'adresser à l'administration de sa région (liens officiels sur chaque page régionale).
 
 ## Optional
 - [Version texte complète](${abs("/llms-full.txt")}): toutes les aides, conditions et questions fréquentes en Markdown
@@ -70,11 +65,8 @@ Dernière vérification : ${SITE.verifiedLabel}. Les informations sont indicativ
 ## Chiffres clés
 ${STATS.map((s) => `- ${s.prefix}${s.value.toLocaleString("fr-BE")}${s.suffix} ${s.label}`).join("\n")}
 
-## Ren0vate
-${RENOVATE.name} – ${RENOVATE.tagline}. ${RENOVATE.description}
-- Application : ${RENOVATE.url}
-- Inscription : ${RENOVATE.signup}
-- Tarifs : ${RENOVATE.pricing} (premier projet gratuit ; fonctions multi-biens et professionnelles sur abonnement)
+## Arrêt des activités
+Primes Services arrête ses activités à partir de ${CLOSURE.activityEnd}. Il n'est plus possible de la contacter depuis le ${CLOSURE.contactEndLabel}. Pour toute question sur une prime ou un prêt, s'adresser à l'administration de sa région (liens officiels dans chaque section régionale).
 
 ## Aujourd'hui et à venir
 - En vigueur depuis le 1er mars 2026 – Flandre : Mijn VerbouwLening (4 000 à 60 000 €, 25 ans maximum, 1,5 % / 0,5 % / 0 % selon la catégorie) et Mijn VerbouwPremie.
@@ -88,13 +80,8 @@ ${regions}
 
 ---
 
-## Questions générales
-${GENERAL_FAQ.map((f) => `**${f.q}**\n${f.a}`).join("\n\n")}
-
-## Contact
-- Courriel : ${SITE.email}
-- Support technique / Ren0vate : ${SITE.techEmail}
-- Téléphone : ${SITE.phone}
+## Pas de coordonnées de contact
+Aucune coordonnée de contact n'est publiée : voir « Arrêt des activités » ci-dessus.
 `;
 }
 

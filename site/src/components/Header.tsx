@@ -3,13 +3,9 @@ import { AnimatePresence, motion, useScroll, useSpring } from "framer-motion";
 import { LogoMark } from "./Logo";
 import { Icon } from "./Icon";
 import { href } from "../lib/url";
-import { RENOVATE } from "../content/site";
 
 const NAV = [
   { label: "Aides par région", to: "/#regions" },
-  { label: "Ren0vate", to: "/#renovate" },
-  { label: "Questions", to: "/#faq" },
-  { label: "Contact", to: "/#contact" },
 ];
 
 export function Header({ solid = false }: { solid?: boolean }) {
@@ -31,10 +27,10 @@ export function Header({ solid = false }: { solid?: boolean }) {
               <a key={n.to} href={href(n.to)} className="text-sm text-white/75 transition hover:text-white">{n.label}</a>
             ))}
             <a
-              href={RENOVATE.url}
+              href={href("/#arret")}
               className="group inline-flex items-center gap-2 rounded-full bg-amber px-4 py-2 text-sm font-semibold text-ink transition hover:bg-amber-soft"
             >
-              Ouvrir Ren0vate <Icon name="arrowUpRight" className="h-4 w-4 transition group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+              Arrêt des activités <Icon name="arrow" className="h-4 w-4 transition group-hover:translate-x-0.5" />
             </a>
           </nav>
 
@@ -66,8 +62,8 @@ export function Header({ solid = false }: { solid?: boolean }) {
             {NAV.map((n) => (
               <a key={n.to} href={href(n.to)} onClick={() => setOpen(false)} className="block border-b border-white/10 py-4 text-lg text-white/90">{n.label}</a>
             ))}
-            <a href={RENOVATE.url} className="mt-5 flex items-center justify-center gap-2 rounded-full bg-amber px-5 py-3 font-semibold text-ink">
-              Ouvrir Ren0vate <Icon name="arrowUpRight" className="h-4 w-4" />
+            <a href={href("/#arret")} onClick={() => setOpen(false)} className="mt-5 flex items-center justify-center gap-2 rounded-full bg-amber px-5 py-3 font-semibold text-ink">
+              Arrêt des activités <Icon name="arrow" className="h-4 w-4" />
             </a>
           </motion.nav>
         )}

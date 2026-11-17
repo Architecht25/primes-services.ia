@@ -22,7 +22,7 @@ export function Shift() {
           </h2>
           <p className="mt-6 max-w-2xl text-lg leading-relaxed text-white/70">
             Les trois régions belges orientent leur soutien vers des prêts à taux 0 % ou réduit, souvent assortis d'un audit énergétique préalable.
-            Mieux vaut piloter l'ensemble — financement, devis, chantier — depuis un seul outil.
+            Vérifiez toujours les conditions auprès de l'administration régionale avant de lancer vos travaux.
           </p>
         </Reveal>
 

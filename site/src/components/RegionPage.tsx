@@ -2,7 +2,7 @@ import { motion } from "framer-motion";
 import { Reveal, ease } from "../lib/motion";
 import { Icon } from "./Icon";
 import { Faq } from "./Sections";
-import { KIND_LABEL, REGIONS, REGION_ORDER, RENOVATE, SITE, type Region } from "../content/site";
+import { KIND_LABEL, REGIONS, REGION_ORDER, CLOSURE, SITE, type Region } from "../content/site";
 import { href, regionPath } from "../lib/url";
 
 export function RegionPage({ r }: { r: Region }) {
@@ -59,14 +59,14 @@ export function RegionPage({ r }: { r: Region }) {
         </div>
       </section>
 
-      <section className="bg-marine py-20 text-white">
-        <div className="mx-auto flex max-w-5xl flex-col items-start justify-between gap-8 px-5 sm:px-8 md:flex-row md:items-center">
+      <section className="bg-marine py-16 text-white">
+        <div className="mx-auto flex max-w-5xl flex-col items-start justify-between gap-6 px-5 sm:px-8 md:flex-row md:items-center">
           <Reveal>
-            <h2 className="font-display text-3xl font-semibold sm:text-4xl">Calculez votre financement dans Ren0vate</h2>
-            <p className="mt-3 max-w-xl text-white/70">Indiquez votre région, vos revenus et vos travaux : Ren0vate identifie les aides applicables à votre cas et pilote le chantier jusqu'au dépôt des dossiers.</p>
+            <h2 className="font-display text-2xl font-semibold sm:text-3xl">Primes Services arrête ses activités à partir de {CLOSURE.activityEnd}</h2>
+            <p className="mt-3 max-w-xl text-white/70">Plus de contact possible depuis le {CLOSURE.contactEndLabel}. Pour votre dossier, adressez-vous à l'administration indiquée ci-dessous.</p>
           </Reveal>
-          <a href={RENOVATE.signup} className="btn-shine group relative inline-flex shrink-0 items-center gap-2 overflow-hidden rounded-full bg-amber px-7 py-4 font-semibold text-ink transition hover:bg-amber-soft">
-            Ouvrir Ren0vate <Icon name="arrow" className="h-5 w-5 transition group-hover:translate-x-1" />
+          <a href={href("/#arret")} className="inline-flex shrink-0 items-center gap-2 rounded-full border border-white/25 px-6 py-3 font-medium transition hover:bg-white/10">
+            En savoir plus <Icon name="arrow" className="h-4 w-4" />
           </a>
         </div>
       </section>

@@ -3,7 +3,7 @@ import { motion, useScroll, useTransform, useReducedMotion } from "framer-motion
 import { Reveal } from "../lib/motion";
 import { Icon } from "./Icon";
 import { LogoMark } from "./Logo";
-import { RENOVATE, SITE } from "../content/site";
+import { CLOSURE, SITE } from "../content/site";
 import { href } from "../lib/url";
 
 export function ImageBand() {
@@ -29,7 +29,7 @@ export function ImageBand() {
             Rénover, c'est d'abord <span className="text-amber">bien financer</span>.
           </p>
           <p className="mt-6 max-w-xl text-lg text-white/75">
-            Un bâti ancien, des règles qui changent d'une région à l'autre : Ren0vate vous montre ce qui est encore ouvert
+            Un bâti ancien, des règles qui changent d'une région à l'autre : renseignez-vous sur ce qui est encore ouvert
             avant le premier coup de marteau.
           </p>
         </Reveal>
@@ -45,7 +45,7 @@ export function About() {
         <Reveal>
           <p className="text-xs font-medium uppercase tracking-[0.2em] text-emerald">À propos</p>
           <h2 className="font-display mt-4 text-4xl font-semibold leading-tight text-marine sm:text-5xl">
-            Primes Services : 15 ans de subsides, désormais dans un outil
+            Primes Services : 15 ans au service des propriétaires
           </h2>
           <p className="mt-6 text-lg leading-relaxed text-slate">
             Depuis {SITE.foundingYear}, Primes Services conseille particuliers, copropriétés et entreprises pour obtenir les primes,
@@ -53,24 +53,24 @@ export function About() {
             100 millions d'euros de financements obtenus.
           </p>
           <p className="mt-4 text-lg leading-relaxed text-slate">
-            Les régions finançant désormais la rénovation surtout par des prêts, notre savoir-faire est incarné dans <strong className="text-marine">Ren0vate</strong>,
-            notre application de gestion de chantier et de subsides, tenue à jour des dispositifs régionaux.
+            Primes Services arrête ses activités à partir de <strong className="text-marine">{CLOSURE.activityEnd}</strong>. Ce site reste en ligne
+            pour vous orienter vers les aides régionales encore ouvertes et vers les administrations compétentes.
           </p>
         </Reveal>
 
         <Reveal delay={2} className="grid items-start gap-4 sm:grid-cols-2">
           <div className="rounded-3xl bg-marine p-7 text-white">
-            <p className="text-xs font-semibold uppercase tracking-widest text-mint">Aujourd'hui</p>
+            <p className="text-xs font-semibold uppercase tracking-widest text-mint">Arrêt des activités</p>
             <ul className="mt-4 space-y-2.5">
-              {["Un seul outil : Ren0vate", "Prêts à taux 0 % et primes encore ouvertes", "Chantier, devis et dossiers au même endroit"].map((t) => (
+              {[`Depuis le ${CLOSURE.contactEndLabel} : plus de contact possible`, `À partir de ${CLOSURE.activityEnd} : activités arrêtées`, "Aides par région : consultables sur ce site"].map((t) => (
                 <li key={t} className="flex gap-2"><Icon name="check" className="mt-1 h-4 w-4 shrink-0 text-mint" />{t}</li>
               ))}
             </ul>
           </div>
           <div className="rounded-3xl border border-line bg-pearl p-7">
-            <p className="text-xs font-semibold uppercase tracking-widest text-slate">À venir</p>
+            <p className="text-xs font-semibold uppercase tracking-widest text-slate">À venir dans les aides</p>
             <ul className="mt-4 space-y-2.5 text-slate">
-              {["Printemps 2027 : prêts à 0 % annoncés à Bruxelles", "2027 : taux de Mijn VerbouwLening ajusté", "1er janvier 2028 : Agence wallonne de l'Habitation"].map((t) => (
+              {["Printemps 2027 : prêts à 0 % annoncés à Bruxelles", "2027 : taux de Mijn VerbouwLening ajusté", "1er janvier 2028 : Agence wallonne de l'Habitation"].map((t) => (
                 <li key={t} className="flex gap-2"><span className="text-pearl-600">→</span>{t}</li>
               ))}
             </ul>
@@ -108,36 +108,31 @@ export function Faq({ items, title = "Questions fréquentes", id = "faq", tone =
   );
 }
 
-export function ContactCta() {
+export function ClosureNotice() {
   return (
-    <section id="contact" className="blueprint-grid grain relative isolate overflow-hidden bg-ink py-24 text-white sm:py-32">
-      <div className="pointer-events-none absolute left-1/2 top-0 -z-10 h-[30rem] w-[50rem] -translate-x-1/2 rounded-full bg-emerald/25 blur-[140px]" aria-hidden="true" />
-      <div className="mx-auto max-w-5xl px-5 text-center sm:px-8">
+    <section id="arret" aria-labelledby="arret-titre" className="blueprint-grid grain relative isolate overflow-hidden bg-ink py-24 text-white sm:py-32">
+      <div className="pointer-events-none absolute left-1/2 top-0 -z-10 h-[30rem] w-[50rem] -translate-x-1/2 rounded-full bg-amber/15 blur-[140px]" aria-hidden="true" />
+      <div className="mx-auto max-w-4xl px-5 text-center sm:px-8">
         <Reveal>
           <LogoMark className="mx-auto mb-8 h-14 w-14 text-mint" />
-          <h2 className="font-display text-4xl font-semibold leading-tight sm:text-6xl">
-            Votre projet commence <span className="text-amber">dans Ren0vate</span>.
+          <p className="mx-auto inline-flex rounded-full border border-amber/40 bg-amber/10 px-4 py-1.5 text-xs font-medium uppercase tracking-[0.18em] text-amber">Information importante</p>
+          <h2 id="arret-titre" className="font-display mt-6 text-4xl font-semibold leading-tight sm:text-6xl">
+            Primes Services arrête ses activités à partir de <span className="text-amber">{CLOSURE.activityEnd}</span>.
           </h2>
-          <p className="mx-auto mt-6 max-w-2xl text-lg text-white/70">
-            Pour tout dossier de rénovation, créez votre projet sur l'application : financement, devis et chantier au même endroit.
+          <p className="mx-auto mt-6 max-w-2xl text-lg leading-relaxed text-white/70">
+            Nous remercions les particuliers, copropriétés et entreprises qui nous ont fait confiance depuis {SITE.foundingYear}.
           </p>
-          <div className="mt-10 flex flex-col items-center justify-center gap-3 sm:flex-row">
-            <a href={RENOVATE.signup} className="btn-shine group relative inline-flex items-center gap-2 overflow-hidden rounded-full bg-amber px-8 py-4 text-lg font-semibold text-ink transition hover:bg-amber-soft">
-              Ouvrir Ren0vate <Icon name="arrow" className="h-5 w-5 transition group-hover:translate-x-1" />
-            </a>
-          </div>
         </Reveal>
 
-        <Reveal delay={3} className="mx-auto mt-20 max-w-2xl rounded-3xl border border-white/15 bg-white/[0.04] p-8 backdrop-blur sm:p-10">
-          <h3 className="font-display text-2xl font-semibold">Une question avant de vous lancer ?</h3>
-          <p className="mt-2 text-white/65">Pour toute demande particulière — partenariat, presse, cas atypique — vous pouvez me contacter directement.</p>
-          <p className="mt-2 text-sm text-white/50">Question technique ou sur l'application Ren0vate : <a className="underline underline-offset-4 hover:text-white" href={`mailto:${SITE.techEmail}`}>{SITE.techEmail}</a></p>
-          <div className="mt-7 flex flex-col justify-center gap-3 sm:flex-row">
-            <a href={`mailto:${SITE.email}`} className="inline-flex items-center justify-center gap-2 rounded-full border border-white/25 px-6 py-3 font-medium transition hover:bg-white/10">
-              <Icon name="mail" className="h-4 w-4 text-mint" /> {SITE.email}
-            </a>
-            <a href={`tel:${SITE.phoneHref}`} className="inline-flex items-center justify-center gap-2 rounded-full border border-white/25 px-6 py-3 font-medium transition hover:bg-white/10">
-              <Icon name="phone" className="h-4 w-4 text-mint" /> {SITE.phone}
+        <Reveal delay={2} className="mx-auto mt-12 max-w-2xl rounded-3xl border border-white/15 bg-white/[0.04] p-8 text-left backdrop-blur sm:p-10">
+          <h3 className="font-display text-2xl font-semibold">Il n'est plus possible de nous contacter depuis le {CLOSURE.contactEndLabel}.</h3>
+          <p className="mt-3 leading-relaxed text-white/70">
+            Le formulaire et les coordonnées de contact ne sont plus proposés sur ce site. Pour toute question sur une prime ou un prêt,
+            adressez-vous directement à l'administration de votre région : les liens officiels sont indiqués sur chaque page régionale.
+          </p>
+          <div className="mt-7 flex flex-col gap-3 sm:flex-row">
+            <a href={href("/#regions")} className="btn-shine group relative inline-flex items-center justify-center gap-2 overflow-hidden rounded-full bg-amber px-7 py-3.5 font-semibold text-ink transition hover:bg-amber-soft">
+              Voir les aides par région <Icon name="arrow" className="h-5 w-5 transition group-hover:translate-x-1" />
             </a>
           </div>
         </Reveal>
@@ -166,13 +161,11 @@ export function Footer() {
             </ul>
           </nav>
           <div>
-            <p className="text-sm font-semibold text-white">Contact</p>
-            <ul className="mt-3 space-y-2 text-sm">
-              <li><a className="hover:text-white" href={RENOVATE.url}>Ren0vate – l'application</a></li>
-              <li><a className="hover:text-white" href={`mailto:${SITE.email}`}>{SITE.email}</a></li>
-              <li><a className="hover:text-white" href={`mailto:${SITE.techEmail}`}>{SITE.techEmail} <span className="text-white/65">(support Ren0vate)</span></a></li>
-              <li><a className="hover:text-white" href={`tel:${SITE.phoneHref}`}>{SITE.phone}</a></li>
-            </ul>
+            <p className="text-sm font-semibold text-white">Arrêt des activités</p>
+            <p className="mt-3 text-sm leading-relaxed">
+              Primes Services arrête ses activités à partir de {CLOSURE.activityEnd}. Plus de contact possible depuis le {CLOSURE.contactEndLabel}.
+            </p>
+            <p className="mt-3 text-sm"><a className="underline underline-offset-4 hover:text-white" href={href("/#arret")}>En savoir plus</a></p>
           </div>
         </div>
         <div className="mt-12 border-t border-white/10 pt-6 text-xs leading-relaxed text-white/50">
