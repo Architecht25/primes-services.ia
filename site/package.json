@@ -3,7 +3,7 @@
   "private": true,
   "version": "1.0.0",
   "type": "module",
-  "description": "Landing page statique Primes Services (GitHub Pages) – passerelle vers Ren0vate",
+  "description": "Landing page statique Primes Services (GitHub Pages)",
   "scripts": {
     "dev": "vite",
     "build": "node scripts/build.mjs",

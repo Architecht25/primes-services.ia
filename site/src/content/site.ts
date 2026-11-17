@@ -9,71 +9,23 @@ export const SITE = {
   // Domaine canonique (surchargeable au build : SITE_URL=https://… npm run build)
   url: ((import.meta.env.VITE_SITE_URL as string | undefined) ?? "https://www.primes-services.be").replace(/\/$/, ""),
   locale: "fr-BE",
-  email: "robin@primes-services.be",
-  // Support technique et contact Ren0vate
-  techEmail: "robin@architecht.be",
-  phone: "+32 485 04 37 45",
-  phoneHref: "+32485043745",
   foundingYear: 2010,
   // Date de dernière vérification manuelle des dispositifs (à mettre à jour à chaque revue).
   verifiedISO: "2026-10-17",
   verifiedLabel: "17 octobre 2026",
 } as const;
 
-export const RENOVATE = {
-  name: "Ren0vate",
-  url: "https://www.ren0vate.be/fr",
-  signup: "https://www.ren0vate.be/fr/users/inscription",
-  pricing: "https://www.ren0vate.be/fr/pricing",
-  tagline: "Le passeport numérique de votre logement",
-  description:
-    "Ren0vate est l'application de gestion de chantier et de subsides de Primes Services : elle identifie les primes et prêts à taux 0 % applicables, compare les devis, suit les lots de travaux, centralise les documents et prépare le dossier technique du logement.",
+/** Arrêt des activités : à modifier ici uniquement (affiché sur l'accueil, les pages région, le JSON-LD et llms.txt). */
+export const CLOSURE = {
+  activityEnd: "janvier 2027",
+  contactEndISO: "2026-11-15",
+  contactEndLabel: "15 novembre 2026",
 } as const;
 
 export const STATS = [
   { value: 15, prefix: "+", suffix: " ans", label: "d'expertise en primes et subsides belges" },
   { value: 15000, prefix: "+", suffix: "", label: "dossiers accompagnés" },
   { value: 100, prefix: "+", suffix: " M€", label: "de financements obtenus pour les ménages" },
-] as const;
-
-export const RENOVATE_FEATURES = [
-  {
-    icon: "target",
-    title: "Primes & prêts identifiés",
-    text: "Calcul des primes, du Rénopack, de Mijn VerbouwLening ou du Crédit EcoRéno selon votre région, vos revenus et vos travaux.",
-  },
-  {
-    icon: "hammer",
-    title: "Gestion de chantier par lot",
-    text: "Toiture, isolation, menuiseries, électricité… planning, échéances, avancement et messagerie par lot de travaux.",
-  },
-  {
-    icon: "scale",
-    title: "Comparateur de devis",
-    text: "Comparez les offres des entrepreneurs et mesurez l'impact de chacune sur votre financement.",
-  },
-  {
-    icon: "folder",
-    title: "Dossiers et documents",
-    text: "Factures, permis, attestations : tout est centralisé, avec alertes en cas de pièce manquante avant dépôt.",
-  },
-  {
-    icon: "camera",
-    title: "Journal de chantier",
-    text: "Observations datées, photos géolocalisées, procès-verbaux de réception et suivi des garanties.",
-  },
-  {
-    icon: "vault",
-    title: "Passeport numérique du logement",
-    text: "Le dossier d'intervention ultérieure (DIU) se constitue au fil des travaux et reste exportable pour la vente ou la location.",
-  },
-] as const;
-
-export const RENOVATE_STEPS = [
-  { n: "01", title: "Créez votre projet", text: "Inscription gratuite : le premier projet se gère sans frais sur Ren0vate." },
-  { n: "02", title: "Décrivez vos travaux", text: "Région, revenus, état du bien, lots de travaux envisagés." },
-  { n: "03", title: "Obtenez votre plan de financement", text: "Primes encore ouvertes et prêts à taux 0 % applicables, calculés pour votre cas." },
-  { n: "04", title: "Pilotez le chantier", text: "Devis, entrepreneurs, avancement, documents et dépôt des dossiers, au même endroit." },
 ] as const;
 
 export type Scheme = {
@@ -318,35 +270,6 @@ export const REGIONS: Record<RegionSlug, Region> = {
 };
 
 export const REGION_ORDER: RegionSlug[] = ["wallonie", "flandre", "bruxelles"];
-
-export const GENERAL_FAQ = [
-  {
-    q: "Qu'est-ce que Primes Services ?",
-    a: "Primes Services est une société belge de conseil en primes, subsides et prêts à taux 0 % pour la rénovation, active depuis plus de 15 ans en Wallonie, en Flandre et à Bruxelles. Elle a accompagné plus de 15 000 dossiers et contribué à obtenir plus de 100 millions d'euros de financements.",
-  },
-  {
-    q: "Quel est le lien entre Primes Services et Ren0vate ?",
-    a: "Ren0vate est l'application de gestion de chantier et de subsides de Primes Services. Toutes les nouvelles demandes passent exclusivement par Ren0vate : l'application identifie les primes et prêts à taux 0 % applicables, suit le chantier et prépare les dossiers.",
-  },
-  {
-    q: "Ren0vate est-il gratuit ?",
-    a: "Le premier projet se gère gratuitement sur Ren0vate. Les fonctionnalités multi-biens et professionnelles sont proposées sur abonnement (voir la page tarifs de Ren0vate).",
-  },
-  {
-    q: "Quelles aides à la rénovation restent disponibles en Belgique en 2026 ?",
-    a: "En Wallonie : le Rénopack, le Rénoprêt, les primes communales et Monuments et Sites. En Flandre : Mijn VerbouwLening, Mijn VerbouwPremie et les primes communales. À Bruxelles : Monuments et Sites, Petit Patrimoine, les primes communales et le Crédit EcoRéno, avec des prêts à taux 0 % annoncés pour le printemps 2027.",
-  },
-  {
-    q: "Comment contacter Primes Services ?",
-    a: `Pour un dossier de rénovation, créez votre projet sur Ren0vate. Pour toute autre question (partenariat, presse, demande particulière), écrivez à ${SITE.email} ou appelez le ${SITE.phone}. Pour une question technique ou sur l'application Ren0vate : ${SITE.techEmail}.`,
-  },
-  {
-    q: "Les informations de ce site sont-elles officielles ?",
-    a: "Non. Primes Services n'est pas un organisme public. Les informations sont indicatives, vérifiées le " +
-      SITE.verifiedLabel +
-      " à partir de sources publiques ; seules les administrations régionales font foi. Les liens officiels sont indiqués pour chaque région.",
-  },
-];
 
 export const KIND_LABEL: Record<Scheme["kind"], string> = {
   pret: "Prêt",
